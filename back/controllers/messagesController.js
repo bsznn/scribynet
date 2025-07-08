@@ -142,7 +142,6 @@ export const deleteMessage = async (req, res) => {
 	}
 };
 
-// Ajouter une réponse à un message
 export const addResponse = async (req, res) => {
 	try {
 		const { userId, content } = req.body;
@@ -163,7 +162,6 @@ export const addResponse = async (req, res) => {
 	}
 };
 
-// Marquer un message comme lu
 export const markAsRead = async (req, res) => {
 	try {
 		const message = await Message.findByIdAndUpdate(
