@@ -1,0 +1,42 @@
+.last-chapters__container {
+	padding: 1rem;
+	background-color: var(--lightBeige);
+	color: var(--darkMarron);
+	font-family: var(--fontRegular);
+	box-shadow: var(--shadow);
+	border-radius: 8px;
+	width: 310px;
+	margin: 0 auto;
+}
+
+.last-chapters__title {
+	color: var(--darkMarron);
+	text-align: left;
+}
+
+.last-chapters__link {
+	text-decoration: none;
+}
+
+.last-chapters__error {
+	font-size: 1rem;
+	color: var(--errorColor);
+	text-align: center;
+	margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+	.last-chapters__title {
+		font-size: 1.75rem;
+	}
+
+	.last-chapters__list {
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	}
+}
+
+@media (min-width: 1200px) {
+	.last-chapters__list {
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	}
+}

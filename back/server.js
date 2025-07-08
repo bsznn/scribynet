@@ -1,15 +1,14 @@
-import express from "express"; // Framework web
-import dotenv from "dotenv"; // Variables d'environnement
-import connectDB from "./config/db.js"; // Connexion à MongoDB
 import cors from "cors"; // Middleware CORS
-import bookRouter from "./routes/bookRouter.js"; // Routes livres
-import userRouter from "./routes/userRouter.js"; // Routes utilisateurs
-import commentRouter from "./routes/commentRouter.js"; // Routes commentaires
-import chapterRouter from "./routes/chapterRouter.js"; // Routes chapitres
+import dotenv from "dotenv"; // Variables d'environnement
+import express from "express"; // Framework web
+import connectDB from "./config/db.js"; // Connexion à MongoDB
 import answerRouter from "./routes/answerRouter.js"; // Routes réponses
+import bookRouter from "./routes/bookRouter.js"; // Routes livres
 import categoryRouter from "./routes/categoryRouter.js"; // Routes catégories
-import conversationRouter from "./routes/conversationRouter.js"; // Routes catégories
-
+import chapterRouter from "./routes/chapterRouter.js"; // Routes chapitres
+import commentRouter from "./routes/commentRouter.js"; // Routes commentaires
+import userRouter from "./routes/userRouter.js"; // Routes utilisateurs
+import messageRouter from "./routes/messageRouter.js";
 
 const app = express();
 
@@ -17,10 +16,12 @@ const app = express();
 app.use(express.json()); // Analyse JSON
 app.use(express.urlencoded({ extended: true })); // Analyse URL encodée
 app.use(express.static("public")); // Fichiers statiques
-app.use(cors({
-  origin: "http://localhost:5173", // Origine autorisée
-  credentials: true, // Cookies autorisés
-}));
+app.use(
+	cors({
+		origin: "http://localhost:5173", // Origine autorisée
+		credentials: true, // Cookies autorisés
+	}),
+);
 
 dotenv.config(); // Variables d'environnement
 
@@ -33,9 +34,9 @@ app.use(commentRouter);
 app.use(answerRouter);
 app.use(chapterRouter);
 app.use(categoryRouter);
-app.use(conversationRouter);
+app.use(messageRouter);
 
 // Démarrage du serveur
 app.listen(process.env.PORT, () => {
-  console.log(`Serveur lancé à : ${process.env.BASE_URL}`);
+	console.log(`Serveur lancé à : ${process.env.BASE_URL}`);
 });
