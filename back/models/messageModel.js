@@ -8,7 +8,10 @@ const responseSchema = new mongoose.Schema({
 	},
 	content: { type: String, required: true },
 	createdAt: { type: Date, default: Date.now },
+	responses: [],
 });
+
+responseSchema.add({ responses: [responseSchema] });
 
 const messageSchema = new mongoose.Schema(
 	{

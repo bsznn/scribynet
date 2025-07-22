@@ -6,6 +6,8 @@ import {
 	updateMessage,
 	deleteMessage,
 	addResponse,
+	updateResponse,
+	deleteResponse,
 	markAsRead,
 	getConversation,
 } from "../controllers/messagesController.js";
@@ -41,9 +43,32 @@ messageRouter.delete(
 	deleteMessage,
 );
 
-messageRouter.get("/messages/conversation/:user2Id", isLogged, getConversation);
+messageRouter.get(
+	"/messages/conversation/:conversationId",
+	isLogged,
+	getConversation,
+);
 
-messageRouter.post("/messages/:id/responses", isLogged, addResponse);
+messageRouter.post(
+	"/messages/:id/responses",
+	isLogged,
+	isAuthorized(["admin", "user"]),
+	addResponse,
+);
+
+messageRouter.put(
+	"/messages/:messageId/responses/:responseId",
+	isLogged,
+	isAuthorized(["admin", "user"]),
+	updateResponse,
+);
+
+messageRouter.delete(
+	"/messages/:messageId/responses/:responseId",
+	isLogged,
+	isAuthorized(["admin", "user"]),
+	deleteResponse,
+);
 
 messageRouter.patch("/messages/:id/read", isLogged, markAsRead);
 

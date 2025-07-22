@@ -9,6 +9,7 @@ import chapterRouter from "./routes/chapterRouter.js"; // Routes chapitres
 import commentRouter from "./routes/commentRouter.js"; // Routes commentaires
 import userRouter from "./routes/userRouter.js"; // Routes utilisateurs
 import messageRouter from "./routes/messageRouter.js";
+import giftRouter from "./routes/giftRouter.js";
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use(answerRouter);
 app.use(chapterRouter);
 app.use(categoryRouter);
 app.use(messageRouter);
+app.use(giftRouter);
 
 // Démarrage du serveur
 app.listen(process.env.PORT, () => {
