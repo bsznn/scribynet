@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Hammersmith+One&family=Italianno&family=Libertinus+Sans&family=Montserrat:wght@400;500;600;700&display=swap");
+
 :root {
 	/* Palette beige et marron */
 	--lightBeige: #f5f1e6;
@@ -38,6 +40,7 @@
 	--fontRegular: "Montserrat", sans-serif;
 	--fontTitle: "Hammersmith One", sans-serif;
 	--fontLogo: "Italianno", cursive;
+	--fontScript: "Libertinus Sans", sans-serif;
 
 	--shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
 }

@@ -45,7 +45,7 @@ body {
 
 .header__title {
 	font-family: var(--fontLogo);
-	font-size: 1.4rem;
+	font-size: 2rem;
 	margin: 0;
 	color: var(--lightBeige);
 }
