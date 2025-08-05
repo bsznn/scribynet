@@ -5,5 +5,10 @@
 	"scripts": {
 		"lint": "biome check --write ./",
 		"lint-unsafe": "biome check --write --unsafe ./"
+	},
+	"dependencies": {
+		"@stripe/react-stripe-js": "^3.9.0",
+		"@stripe/stripe-js": "^7.8.0",
+		"stripe": "^18.4.0"
 	}
 }

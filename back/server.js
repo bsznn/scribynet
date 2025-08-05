@@ -1,13 +1,13 @@
-import cors from "cors"; // Middleware CORS
-import dotenv from "dotenv"; // Variables d'environnement
-import express from "express"; // Framework web
-import connectDB from "./config/db.js"; // Connexion à MongoDB
-import answerRouter from "./routes/answerRouter.js"; // Routes réponses
-import bookRouter from "./routes/bookRouter.js"; // Routes livres
-import categoryRouter from "./routes/categoryRouter.js"; // Routes catégories
-import chapterRouter from "./routes/chapterRouter.js"; // Routes chapitres
-import commentRouter from "./routes/commentRouter.js"; // Routes commentaires
-import userRouter from "./routes/userRouter.js"; // Routes utilisateurs
+import cors from "cors";
+import dotenv from "dotenv";
+import express from "express";
+import connectDB from "./config/db.js";
+import answerRouter from "./routes/answerRouter.js";
+import bookRouter from "./routes/bookRouter.js";
+import categoryRouter from "./routes/categoryRouter.js";
+import chapterRouter from "./routes/chapterRouter.js";
+import commentRouter from "./routes/commentRouter.js";
+import userRouter from "./routes/userRouter.js";
 import messageRouter from "./routes/messageRouter.js";
 import giftRouter from "./routes/giftRouter.js";
 
