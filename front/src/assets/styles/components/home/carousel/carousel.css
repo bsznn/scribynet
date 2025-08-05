@@ -4,8 +4,8 @@
 	display: flex;
 	align-items: center;
 	gap: 1rem;
-	overflow-x: visible; /* pour que les flèches restent visibles */
-	font-family: var(--fontRegular); /* police par défaut pour le container */
+	overflow-x: visible;
+	font-family: var(--fontRegular);
 }
 
 .carousel__title {
@@ -13,7 +13,7 @@
 	font-family: var(--fontTitle);
 	font-size: 1rem;
 	font-weight: 600;
-	color: var(--marron);
+	color: var(--darkMarron);
 	white-space: nowrap;
 	user-select: none;
 	display: flex;
@@ -108,7 +108,7 @@
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
-	background-color: var(--marron);
+	background-color: var(--darkMarron);
 	color: var(--lightBeige);
 	border: none;
 	border-radius: 50%;

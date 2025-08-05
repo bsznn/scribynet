@@ -1,7 +1,19 @@
-import React from 'react'
+import React from "react";
+import Carousel from "../../components/home/carousel/Carousel";
+import PopularBooks from "../../components/home/books/PopularBooks";
+import NewestBooks from "../../components/home/books/NewestBooks";
 
 export default function Home() {
-  return (
-    <div>Home</div>
-  )
+	return (
+		<div>
+			<div>
+				<Carousel />
+			</div>
+
+			<div>
+				<PopularBooks />
+				<NewestBooks />
+			</div>
+		</div>
+	);
 }

@@ -1,47 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Italianno&display=swap');
-
 :root {
-    /*variables globales */
-    --lightViolet: #EEECF2;
-    --mediumViolet: #9D8099;
-    --darkViolet: #291527;
-    --green: #717873;
-    --pink: E6D5E3;
-    --black: #000000
-    --white: #fff;
+	/* Palette beige et marron */
+	--lightBeige: #f5f1e6;
+	--mediumBeige: #d9cbb3;
+	--darkBeige: #b6a58a;
 
-    --lightGreen: #DFF4E8;
-    --mediumGreen: #A8D5BA;
-    --darkGreen: #527D62;
-    --hoverLightGreen: #BDE2C5;
-    --hoverDarkGreen: #3B6B4E;
+	--lightMarron: #d7bfa8;
+	--mediumMarron: #7a6d68;
+	--darkMarron: #423c39;
 
-    --darkKhakiGreen: #6B705C; /* Vert kaki foncé */
-    --softOrange: #D4A373; /* Orange doux */
-    --lightKhakiGreen: #B7B78A; /* Vert kaki clair */
-    --hoverOrange: #E3B98D; /* Orange plus clair pour hover */
-    --hoverDarkKhakiGreen: #5A6149; /* Vert kaki foncé pour hover */
-  
-    --hoverLightViolet: #D8D3E3; 
-    --hoverMediumViolet: #7D677B; 
-    --hoverDarkViolet: #6b3c6a; 
-    --hoverGreen: #4A504A; 
-    --hoverPink: #D0BFCF;
-    --hoverBlack: #1A1A1A; 
-    --hoverWhite: #E5E5E5;
-    
-    --transitionColor: color 0.3s ease-in-out;
-    --transitionBG: background-color 0.3s ease-in-out;
-    --transitionOpacity: opacity 0.5s ease-in-out;
-    --transitionBS: box-shadow 0.3s ease;
-    --transition: 0.3s ease-in-out;
+	--green: #4a6354;
+	--greenLight: #769a82;
 
-  
-    --fontRegular: "Montserrat", sans-serif;
-    --fontTitle: "Hammersmith One", sans-serif;
-    --fontLogo: "Italianno", cursive;
+	/* Hover */
+	--hoverLightBeige: #e7e1d6;
+	--hoverMediumBeige: #c8baa2;
+	--hoverDarkBeige: #9e8c76;
 
-    --shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+	--hoverLightMarron: #cdb099;
+	--hoverMediumMarron: #6c5f5b;
+	--hoverDarkMarron: #645a56;
+
+	--hoverGreen: #6b8b71;
+
+	/* Autres couleurs */
+	--pink: #e6d5e3;
+	--black: #000000;
+	--white: #ffffff;
+
+	/* Transitions */
+	--transitionColor: color 0.3s ease-in-out;
+	--transitionBG: background-color 0.3s ease-in-out;
+	--transitionOpacity: opacity 0.5s ease-in-out;
+	--transitionBS: box-shadow 0.3s ease;
+	--transition: 0.3s ease-in-out;
+
+	/* Typographies */
+	--fontRegular: "Montserrat", sans-serif;
+	--fontTitle: "Hammersmith One", sans-serif;
+	--fontLogo: "Italianno", cursive;
+
+	--shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
 }
