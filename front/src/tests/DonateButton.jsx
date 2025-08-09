@@ -5,12 +5,13 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 export default function DonateButton({
 	senderId,
 	receiverId,
+	price,
 	amount,
 	content,
 }) {
 	const handleClick = async () => {
 		const response = await fetch(
-			"http://localhost:5000/api/stripe/create-checkout-session",
+			"http://localhost:5000/stripe/create-checkout-session",
 			{
 				method: "POST",
 				headers: {
@@ -28,7 +29,7 @@ export default function DonateButton({
 		const text = await response.text();
 		console.log("Réponse brute du serveur :", text);
 
-		const data = await res.json();
+		const data = await response.json();
 		if (data.url) {
 			window.location.href = data.url;
 		}

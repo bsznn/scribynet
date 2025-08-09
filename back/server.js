@@ -10,6 +10,7 @@ import commentRouter from "./routes/commentRouter.js";
 import userRouter from "./routes/userRouter.js";
 import messageRouter from "./routes/messageRouter.js";
 import giftRouter from "./routes/giftRouter.js";
+import stripeRouter from "./routes/stripeRouter.js";
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use(chapterRouter);
 app.use(categoryRouter);
 app.use(messageRouter);
 app.use(giftRouter);
+app.use(stripeRouter);
 
 // Démarrage du serveur
 app.listen(process.env.PORT, () => {

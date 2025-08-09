@@ -16,7 +16,12 @@ export default function Home() {
 				<NewestBooks />
 			</div>
 
-			<DonateButton />
+			<DonateButton
+				content="Don!"
+				price={500}
+				senderId="sender1"
+				receiverId="receiver1"
+			/>
 		</div>
 	);
 }
