@@ -1,0 +1,10 @@
+@media (min-width: 768px) {
+	.home__categories-chapters {
+		display: flex;
+		gap: 1rem;
+	}
+
+	.home__categories-chapters > * {
+		flex: 1; /* largeur égale */
+	}
+}

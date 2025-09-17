@@ -1,4 +1,7 @@
+import Stripe from "stripe";
 import Gift from "../models/giftModel.js";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const getAllGifts = async (req, res) => {
 	try {
@@ -55,28 +58,48 @@ export const createGift = async (req, res) => {
 				.json({ error: "receiverId, senderId et price sont requis" });
 		}
 
-		if (req.body.senderId === req.body.receiverId) {
+		if (senderId === receiverId) {
 			return res.status(403).json({
 				error: "Vous ne pouvez pas vous envoyer un don.",
 			});
 		}
 
-		if (req.body.senderId !== req.userId) {
+		if (senderId !== req.userId) {
 			return res.status(403).json({
 				error: "Vous n'êtes pas autorisé à envoyer un don.",
 			});
 		}
 
-		const newGift = new Gift({
-			content,
-			price,
-			senderId,
-			receiverId,
+		// Création de la session Stripe
+		const session = await stripe.checkout.sessions.create({
+			payment_method_types: ["card"],
+			line_items: [
+				{
+					price_data: {
+						currency: "eur",
+						product_data: {
+							name: "Don utilisateur",
+							description: content || "Don entre utilisateurs",
+						},
+						unit_amount: price * 100, // en centimes
+					},
+					quantity: 1,
+				},
+			],
+			mode: "payment",
+			success_url: `${process.env.CLIENT_URL}/gift/success?session_id={CHECKOUT_SESSION_ID}`,
+			cancel_url: `${process.env.CLIENT_URL}/gift/cancel`,
+			metadata: {
+				senderId,
+				receiverId,
+				content,
+				price,
+			},
 		});
 
-		const savedGift = await newGift.save();
-		res.status(201).json(savedGift);
+		res.status(200).json({ url: session.url });
 	} catch (err) {
-		res.status(400).json({ error: err.message });
+		console.error("Erreur création cadeau avec Stripe:", err);
+		res.status(500).json({ error: err.message });
 	}
 };

@@ -32,7 +32,9 @@ export default function LastChapters() {
 							to={`/livre/${oneLastUpdate._id}`}
 							className="last-chapters__link"
 						>
-							<p className="last-chapters__title">{oneLastUpdate.title}</p>
+							<p className="last-chapters__chapter-title">
+								{oneLastUpdate.title}
+							</p>
 						</NavLink>
 					</article>
 				))}

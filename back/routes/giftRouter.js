@@ -34,11 +34,22 @@ giftRouter.get(
 	isAuthorized(["admin", "user"]),
 	getGiftsSentByUser,
 );
+
 giftRouter.post(
 	"/gifts/new",
 	isLogged,
 	isAuthorized(["admin", "user"]),
 	createGift,
 );
+
+giftRouter.get("/gifts/success", (req, res) => {
+	res.send("<h1>Paiement réussi 🎉</h1><p>Merci pour votre don !</p>");
+});
+
+giftRouter.get("/gifts/cancel", (req, res) => {
+	res.send(
+		"<h1>Paiement annulé ❌</h1><p>Le paiement n'a pas été finalisé.</p>",
+	);
+});
 
 export default giftRouter;

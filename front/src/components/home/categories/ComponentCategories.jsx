@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
+import "../../../assets/styles/components/home/categories/component-categories.css";
+
 export default function ComponentCategories() {
 	const [categories, setCategories] = useState([]);
 	const [err, setErr] = useState();
