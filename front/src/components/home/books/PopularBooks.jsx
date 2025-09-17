@@ -24,7 +24,7 @@ export default function PopularBooks() {
 
 	return (
 		<div className="component-books">
-			<section className="component-books__section">
+			<section className="component-books__section" id="popular-books__section">
 				<div className="component-books__header">
 					<h3 className="component-books__title">Histoires populaires</h3>
 				</div>

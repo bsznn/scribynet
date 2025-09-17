@@ -53,3 +53,17 @@
 		text-align: left;
 	}
 }
+
+@media (min-width: 1200px) {
+	.categories__container {
+		width: 1150px;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		margin-top: 20px;
+	}
+}
+@media (min-width: 1400px) {
+	.categories__container {
+		width: 1340px;
+	}
+}

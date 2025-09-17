@@ -1,10 +1,36 @@
 @media (min-width: 768px) {
-	.home__categories-chapters {
+	.home__aside {
 		display: flex;
 		gap: 1rem;
 	}
 
-	.home__categories-chapters > * {
-		flex: 1; /* largeur égale */
+	.home__aside > * {
+		flex: 1;
+	}
+}
+
+@media (min-width: 1200px) {
+	.home__section {
+		position: relative;
+		max-width: 1175px;
+		margin: 0 auto;
+	}
+
+	.home__aside {
+		display: block;
+		position: absolute;
+		width: 420px;
+		top: 30px;
+		right: 0px;
+	}
+}
+
+@media (min-width: 1400px) {
+	.home__section {
+		max-width: 1340px;
+	}
+
+	.home__aside {
+		width: 500px;
 	}
 }

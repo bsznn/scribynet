@@ -7,15 +7,16 @@ import LastChapters from "../../components/home/chapters/LastChapters";
 
 import "../../assets/styles/pages/home/home.css";
 import News from "../../components/home/news/News";
+import Authors from "../../components/home/authors/Authors";
 
 export default function Home() {
 	return (
-		<div>
+		<div className="home">
 			<div>
 				<Carousel />
 			</div>
 
-			<div>
+			<div className="home__section">
 				<div>
 					<PopularBooks />
 					<NewestBooks />
@@ -24,8 +25,11 @@ export default function Home() {
 					<ComponentCategories />
 				</div>
 
-				<div className="home__categories-chapters">
-					<LastChapters />
+				<div className="home__aside">
+					<div>
+						<LastChapters />
+						<Authors />
+					</div>
 					<News />
 				</div>
 			</div>
