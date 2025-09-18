@@ -30,7 +30,7 @@ const Authors = () => {
 		<section className="authors">
 			<h1 className="authors__title">Auteurs</h1>
 			<section className="authors__list">
-				{authors.map((oneAuthor) => (
+				{authors.slice(0, 6).map((oneAuthor) => (
 					<article key={oneAuthor._id} className="authors__item">
 						<ul className="authors__image-wrapper">
 							<li>

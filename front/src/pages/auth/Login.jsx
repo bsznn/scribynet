@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import { Link, useNavigate } from "react-router-dom";
 
 import "../../assets/styles/pages/auth/login.css";
+import { GrBackTen } from "react-icons/gr";
 
 export default function Login() {
 	const [inputs, setInputs] = useState({
@@ -104,3 +105,7 @@ export default function Login() {
 		</main>
 	);
 }
+
+// pour le style :
+// fond marron, header et footer supprimé, avec en haut juste le logo et un bouton go back
+// pour le footer mettre juste le coopyright toujours sur fond marron

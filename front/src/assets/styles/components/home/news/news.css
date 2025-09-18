@@ -1,7 +1,5 @@
-/* news-section.css */
-
 .news-section__container {
-	padding: 1rem;
+	padding: 0 1rem 1rem;
 	max-width: 1200px;
 	margin: 0 auto;
 }
@@ -71,9 +69,17 @@
 }
 
 @media (min-width: 768px) {
+	.news-section__container {
+		padding: 1rem;
+	}
 	.news-section__title {
 		font-size: 1.3rem;
 		text-align: left;
+	}
+}
+@media (min-width: 1200px) {
+	.news-section__container {
+		padding: 2rem 1rem 1rem;
 	}
 }
 

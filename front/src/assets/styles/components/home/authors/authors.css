@@ -1,6 +1,6 @@
 .authors {
-	margin: 1rem auto;
-	padding: 1rem;
+	margin: 0.5rem auto;
+	padding: 1rem 1rem 0;
 	max-width: 900px;
 	font-family: var(--fontRegular);
 }
@@ -115,7 +115,7 @@
 
 @media (min-width: 1400px) {
 	.authors__image {
-		width: 65px;
-		height: 65px;
+		width: 75px;
+		height: 75px;
 	}
 }
