@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../../../assets/styles/components/home/carousel/carousel.css";
 import defaultCover from "../../../assets/images/default-book.jpg";
 

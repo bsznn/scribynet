@@ -5,7 +5,7 @@
 .categories__title {
 	font-family: var(--fontTitle);
 	font-size: 1rem;
-	color: var(--darkMarron);
+	color: var(--lightBeige);
 	text-transform: uppercase;
 	margin: 0 0 20px 0;
 	padding: 0;
@@ -27,7 +27,7 @@
 	border: 1px solid var(--mediumMarron);
 	border-radius: 25px;
 	text-decoration: none;
-	color: var(--darkMarron);
+	color: var(--lightBeige);
 	font-family: var(--fontRegular);
 	font-weight: 600;
 	font-size: 0.85rem;
@@ -60,6 +60,7 @@
 		flex-wrap: wrap;
 		justify-content: flex-start;
 		margin-top: 20px;
+		margin-bottom: 20px;
 	}
 }
 @media (min-width: 1400px) {

@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function Authors() {
-  return (
-    <div>Authors</div>
-  )
+	return <div>Authors</div>;
 }

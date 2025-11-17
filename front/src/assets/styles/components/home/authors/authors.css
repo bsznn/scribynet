@@ -8,7 +8,7 @@
 .authors__title {
 	font-family: var(--fontTitle);
 	font-size: 1rem;
-	color: var(--darkMarron);
+	color: var(--lightBeige);
 	text-transform: uppercase;
 	margin: 0 0 20px 0;
 	padding: 0;
@@ -47,9 +47,9 @@
 }
 
 .authors__item {
-	display: flex;
+	/* display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: center; */
 	text-align: center;
 }
 
@@ -85,7 +85,7 @@
 .authors__name {
 	font-size: 0.95rem;
 	font-weight: 500;
-	color: var(--darkMarron);
+	color: var(--lightBeige);
 	transition: var(--transitionColor);
 }
 
@@ -110,6 +110,7 @@
 @media (min-width: 1200px) {
 	.authors {
 		margin: 0;
+		padding: 2.5rem 1rem 0;
 	}
 }
 

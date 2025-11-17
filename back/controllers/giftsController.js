@@ -87,8 +87,8 @@ export const createGift = async (req, res) => {
 				},
 			],
 			mode: "payment",
-			success_url: `${process.env.CLIENT_URL}/gift/success?session_id={CHECKOUT_SESSION_ID}`,
-			cancel_url: `${process.env.CLIENT_URL}/gift/cancel`,
+			success_url: `http://localhost:5173/gift/success?session_id={CHECKOUT_SESSION_ID}`,
+			cancel_url: `http://localhost:5173/gift/cancel`,
 			metadata: {
 				senderId,
 				receiverId,

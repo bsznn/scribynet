@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { token } from "../../../context/token";
-
 import defaultImage from "../../../assets/images/default-profile.jpg";
+import { token } from "../../../context/token";
 import "../../../assets/styles/components/home/authors/authors.css";
 import { useAuth } from "../../../context/AuthContext";
 

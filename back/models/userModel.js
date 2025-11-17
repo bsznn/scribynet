@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			unique: true,
 			lowercase: true,
-			required: true,
+			required: true, //mettre messages d'erreur
 			trim: true,
 		},
 		// Mot de passe de l'utilisateur (obligatoire, sans espaces)

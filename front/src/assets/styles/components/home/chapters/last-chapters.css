@@ -8,16 +8,16 @@
 .last-chapters__title {
 	font-family: var(--fontTitle);
 	font-size: 1rem;
-	color: var(--darkMarron);
+	color: var(--lightBeige);
 	text-transform: uppercase;
 	margin: 0 0 20px 0;
 	padding: 0;
 }
 
 .last-chapters__list {
-	display: block; /* pas flex */
+	display: block;
 	width: 100%;
-	height: 200px; /* hauteur fixe, modifie selon besoin */
+	height: 200px;
 	border-bottom: 2px solid var(--mediumBeige);
 	background-color: var(--lightBeige);
 	border-radius: 10px;
@@ -35,7 +35,7 @@
 
 .last-chapters__item {
 	list-style: none;
-	margin-bottom: 0.4rem; /* espacement vertical entre items */
+	margin-bottom: 0.4rem;
 }
 
 .last-chapters__link {

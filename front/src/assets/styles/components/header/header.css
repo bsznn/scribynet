@@ -3,7 +3,9 @@
 body {
 	margin: 0;
 	padding: 0;
-	color: var(--darkMarron);
+	height: 100%;
+	color: var(--lightMarron);
+	background-color: var(--darkMarron);
 	transition: all 0.3s ease;
 	font-family: var(--fontRegular);
 }
@@ -14,7 +16,6 @@ body {
 	justify-content: space-between;
 	padding: 0.8rem 1.5rem;
 	background-color: var(--darkMarron);
-	box-shadow: var(--shadow);
 	font-family: var(--fontRegular);
 	position: relative;
 	height: 40px;

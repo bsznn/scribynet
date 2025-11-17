@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
 import {
-	FaLinkedin,
-	FaXTwitter,
 	FaGithub,
-	FaYoutube,
+	FaLinkedin,
 	FaSlack,
+	FaXTwitter,
+	FaYoutube,
 } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 import logo from "../../assets/images/logo.png";
 import "../../assets/styles/components/footer/footer.css";

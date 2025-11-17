@@ -113,7 +113,7 @@ export const deleteMessage = async (req, res) => {
 };
 
 const findResponseById = (responses, id) => {
-	for (let response of responses) {
+	for (const response of responses) {
 		if (response._id.toString() === id.toString()) {
 			return response;
 		}

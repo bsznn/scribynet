@@ -1,17 +1,17 @@
 import express from "express";
 import {
-	createMessage,
-	getAllMessages,
-	getMessageById,
-	updateMessage,
-	deleteMessage,
 	addResponse,
-	updateResponse,
+	createMessage,
+	deleteMessage,
 	deleteResponse,
-	markAsRead,
+	getAllMessages,
 	getConversation,
+	getMessageById,
+	markAsRead,
+	updateMessage,
+	updateResponse,
 } from "../controllers/messagesController.js";
-import { isLogged, isAuthorized } from "../middlewares/auth.js";
+import { isAuthorized, isLogged } from "../middlewares/auth.js";
 import { updateFiles } from "../middlewares/multer.js";
 
 const messageRouter = express.Router();

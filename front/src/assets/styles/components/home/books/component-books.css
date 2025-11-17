@@ -18,7 +18,7 @@
 .component-books__title {
 	font-family: var(--fontTitle);
 	font-size: 1rem;
-	color: var(--darkMarron);
+	color: var(--lightBeige);
 	text-transform: uppercase;
 	margin: 0;
 }

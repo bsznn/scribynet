@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export const Readers = () => {
-  return (
-    <div>Readers</div>
-  )
-}
+	return <div>Readers</div>;
+};

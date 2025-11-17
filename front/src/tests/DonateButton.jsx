@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
-export default function DonationButton({ senderId }) {
+export default function DonateButton() {
 	const [content, setContent] = useState("");
 	const [price, setPrice] = useState("");
 	const [receiverId, setReceiverId] = useState("");
 	const [users, setUsers] = useState([]);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [filteredUsers, setFilteredUsers] = useState([]);
+
+	const auth = useAuth();
+	const [senderId, setSenderId] = useState(auth.user.id);
 
 	useEffect(() => {
 		// Récupérer tous les utilisateurs au chargement du composant

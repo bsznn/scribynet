@@ -36,10 +36,8 @@ export const isLogged = (req, res, next) => {
 // Middleware pour vérifier les autorisations en fonction des rôles
 export const isAuthorized = (roles) => {
 	return async (req, res, next) => {
-		// Récupérer l'utilisateur à partir de l'ID stocké dans la requête
 		const user = await User.findById(req.userId);
 
-		// Vérifier si l'utilisateur existe
 		if (!user) {
 			return res.status(404).json({ message: "Utilisateur introuvable" });
 		}

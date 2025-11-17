@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineHome, AiOutlineLogin } from "react-icons/ai";
-import { NavLink, useNavigate } from "react-router-dom";
-import { RiMenu3Fill } from "react-icons/ri";
 import { GrClose } from "react-icons/gr";
 import { IoMdLogOut } from "react-icons/io";
-import { useAuth } from "../../context/AuthContext";
+import { RiMenu3Fill } from "react-icons/ri";
+import { NavLink, useNavigate } from "react-router-dom";
 import defaultImage from "../../assets/images/default-profile.jpg";
-
 import Logo from "../../assets/images/logo-4.jpg";
+import { useAuth } from "../../context/AuthContext";
 import "../../assets/styles/components/header/header.css";
 
 export default function Header() {

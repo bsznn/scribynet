@@ -1,10 +1,10 @@
 import express from "express";
 import {
+	createGift,
 	getAllGifts,
 	getGiftById,
 	getGiftsReceivedByUser,
 	getGiftsSentByUser,
-	createGift,
 } from "../controllers/giftsController.js";
 import { isAuthorized, isLogged } from "../middlewares/auth.js";
 
