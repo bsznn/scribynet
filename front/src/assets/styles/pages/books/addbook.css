@@ -1,0 +1,155 @@
+.addbook {
+	min-height: 100vh;
+	padding: 4rem 0;
+	display: flex;
+	justify-content: center;
+}
+
+/* SECTION FORMULAIRE */
+.addbook__section {
+	background: var(--mediumBeige);
+	padding: 3rem 3.5rem;
+	border-radius: 16px;
+	width: 90%;
+	max-width: 800px;
+	box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.addbook__form {
+	display: flex;
+	flex-direction: column;
+	gap: 1.6rem;
+}
+
+.addbook__title {
+	font-size: 2rem;
+	font-weight: 700;
+	text-align: center;
+	color: var(--darkMarron);
+	margin-bottom: 1rem;
+}
+
+/* LABELS */
+.addbook__label {
+	font-size: 1.1rem;
+	font-weight: 600;
+	color: var(--darkMarron);
+}
+
+/* INPUTS & TEXTAREAS */
+.addbook__input,
+.addbook__textarea,
+.addbook__select {
+	width: 100%;
+	padding: 0.9rem 1rem;
+	border-radius: 10px;
+	border: 1px solid var(--darkBeige);
+	background: var(--lightBeige);
+	color: var(--darkMarron);
+	font-size: 1rem;
+	transition:
+		border 0.2s ease,
+		background 0.2s ease;
+}
+
+.addbook__input:focus,
+.addbook__textarea:focus,
+.addbook__select:focus {
+	border-color: var(--green);
+	background: var(--hoverLightBeige);
+	outline: none;
+}
+
+/* TEXTAREA */
+.addbook__textarea {
+	min-height: 120px;
+	resize: vertical;
+}
+
+/* FILE INPUT */
+.addbook__file {
+	background: none;
+	border: none;
+	font-size: 1rem;
+	color: var(--mediumMarron);
+	cursor: pointer;
+}
+
+.addbook__file:hover {
+	color: var(--darkMarron);
+}
+
+/* SELECT MULTIPLE */
+.addbook__select {
+	height: 120px;
+}
+
+/* QUILL */
+.addbook__quill .ql-toolbar {
+	background: var(--lightBeige);
+	border-radius: 8px 8px 0 0;
+	border: 1px solid var(--darkBeige);
+}
+
+.addbook__quill .ql-container {
+	background: var(--lightBeige);
+	border: 1px solid var(--darkBeige);
+	color: var(--darkMarron);
+	border-radius: 0 0 8px 8px;
+	min-height: 200px;
+}
+
+/* ERREURS */
+.addbook__error {
+	color: var(--orange);
+	font-size: 0.95rem;
+}
+
+/* BOUTON */
+.addbook__button {
+	margin-top: 1rem;
+	padding: 0.9rem;
+	font-size: 1.2rem;
+	font-weight: 600;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	background: var(--orange); /* ORANGE ici */
+	color: white;
+	transition:
+		background 0.25s ease,
+		transform 0.1s ease;
+}
+
+.addbook__button:hover {
+	background: var(--hoverLightMarron); /* léger marron orangé au hover */
+	transform: scale(1.03);
+}
+
+.addbook__button:active {
+	transform: scale(0.98);
+}
+
+/* ERREUR SI NON CONNECTÉ */
+.addbook__section--error {
+	text-align: center;
+	padding: 3rem;
+	color: var(--darkMarron);
+}
+
+.addbook__error-box {
+	background: var(--lightBeige);
+	padding: 2rem;
+	border-radius: 12px;
+	border: 1px solid var(--mediumBeige);
+}
+
+.addbook__link {
+	color: var(--green);
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.addbook__link:hover {
+	color: var(--hoverGreen);
+}
