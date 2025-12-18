@@ -8,11 +8,15 @@ import LastChapters from "../../components/home/chapters/LastChapters";
 import "../../assets/styles/pages/home/home.css";
 import Authors from "../../components/home/authors/Authors";
 import News from "../../components/home/news/News";
+import Head from "../../components/home/head/Head";
 // import DonateButton from "../../tests/DonateButton";
 
 export default function Home() {
 	return (
 		<div className="home">
+			<div>
+				<Head />
+			</div>
 			<div>
 				<Carousel />
 			</div>

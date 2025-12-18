@@ -1,5 +1,9 @@
+.carousel {
+	background: var(--darkOrange)
+}
+
 .carousel__container {
-	margin: 0 auto;
+	margin: 20px auto 0;
 	padding: 1rem;
 	display: flex;
 	align-items: center;
@@ -127,5 +131,11 @@
 		min-width: calc((100% - 2.4rem) / 5);
 		max-width: calc((100% - 2.4rem) / 5);
 		height: 80px;
+	}
+}
+
+@media (min-width: 1200px){
+	.carousel__title {
+		font-size: 1.3rem;
 	}
 }

@@ -18,7 +18,7 @@
 .component-books__title {
 	font-family: var(--fontTitle);
 	font-size: 1rem;
-	color: var(--lightBeige);
+	color: var(--darkMarron);
 	text-transform: uppercase;
 	margin: 0;
 }
@@ -92,21 +92,21 @@
 		text-align: left;
 	}
 
-	.component-books__title {
-		font-size: 1.3rem;
-		text-align: left;
-	}
-
 	.component-books__list {
 		gap: 1rem;
 	}
 
 	.component-books__item {
-		width: 150px;
+		width: 140px;
 	}
 }
 
 @media (min-width: 1200px) {
+	.component-books__title {
+		font-size: 1.3rem;
+		text-align: left;
+	}
+
 	.component-books__list {
 		width: 720px;
 		flex-wrap: wrap;

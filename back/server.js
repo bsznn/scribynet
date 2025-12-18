@@ -15,19 +15,19 @@ import userRouter from "./routes/userRouter.js";
 const app = express();
 
 // Middlewares
-app.use(express.json()); // Analyse JSON
-app.use(express.urlencoded({ extended: true })); // Analyse URL encodée
-app.use(express.static("public")); // Fichiers statiques
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
+app.use(express.static("public")); 
 app.use(
 	cors({
-		origin: "http://localhost:5173", // Origine autorisée
-		credentials: true, // Cookies autorisés
+		origin: "http://localhost:5173", 
+		credentials: true, 
 	}),
 );
 
-dotenv.config(); // Variables d'environnement
+dotenv.config(); 
 
-connectDB(); // Connexion à MongoDB
+connectDB(); 
 
 // Routes
 app.use(bookRouter);

@@ -34,6 +34,7 @@ export const AddBook = () => {
 			.then((res) => {
 				setInputs({
 					...inputs,
+					categoryId: res.data,
 					categories: res.data,
 				});
 			})
@@ -182,7 +183,7 @@ export const AddBook = () => {
 							name="categories"
 							id="categories"
 							className="addbook__select"
-							value={inputs.categoryId}
+							value={inputs.categories}
 							onChange={handleChange}
 						>
 							{inputs.categories.map((category, index) => (

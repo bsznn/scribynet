@@ -41,100 +41,102 @@ export default function Header() {
 
 	return (
 		<header className="header">
-			<button
-				type="button"
-				onClick={handleClick}
-				className="header__burger-button"
-			>
-				{toggle ? <GrClose /> : <RiMenu3Fill />}
-			</button>
-			<NavLink to="/" className="header__branding" onClick={closeMenu}>
-				<h1 className="header__title">Scriby'Net</h1>
-				<img className="header__logo" src={Logo} alt="logo" />
-			</NavLink>
-
-			<section
-				className={`header__top ${isMobile && !toggle ? "hidden" : "visible"}`}
-			>
-				<nav
-					className={`header__nav ${isMobile ? (toggle ? "visible" : "hidden") : "visible"}`}
+			<div className="header__content">
+				<button
+					type="button"
+					onClick={handleClick}
+					className="header__burger-button"
 				>
-					<li className="header__nav-item">
-						<NavLink
-							to="/"
-							className="header__nav-link"
-							id="nav-link__home--2"
-							onClick={closeMenu}
-						>
-							Accueil
-						</NavLink>
-					</li>
-					<li className="header__nav-item">
-						<NavLink
-							to="/a-propos"
-							className="header__nav-link"
-							onClick={closeMenu}
-						>
-							À propos
-						</NavLink>
-					</li>
-					<li className="header__nav-item">
-						<NavLink
-							to="/histoires"
-							className="header__nav-link"
-							onClick={closeMenu}
-						>
-							Histoires
-						</NavLink>
-					</li>
-					<li className="header__nav-item">
-						<NavLink
-							to="/categories"
-							className="header__nav-link"
-							onClick={closeMenu}
-						>
-							Catégories
-						</NavLink>
-					</li>
-					<li className="header__nav-item">
-						<NavLink
-							to="/publier-histoire"
-							className="header__nav-link"
-							onClick={closeMenu}
-						>
-							Publier
-						</NavLink>
-					</li>
-				</nav>
-			</section>
+					{toggle ? <GrClose /> : <RiMenu3Fill />}
+				</button>
+				<NavLink to="/" className="header__branding" onClick={closeMenu}>
+					<h1 className="header__title">Scriby'Net</h1>
+					<img className="header__logo" src={Logo} alt="logo" />
+				</NavLink>
 
-			<div className="header__right-group">
-				{auth.user ? (
-					<div className="header__user-mobile">
-						<div className="header__user-info">
-							<img
-								className="header__user-image"
-								src={profileImage}
-								alt={auth.user?.image?.alt || "Image de profil par défaut"}
-							/>
-
-							<span className="header__user-text">{auth.user.login}</span>
-						</div>
-						<button onClick={handleLogout} className="header__dropdown-item">
-							<span className="header__user-text">Déconnexion</span>{" "}
-							<IoMdLogOut />
-						</button>
-					</div>
-				) : (
-					<NavLink
-						to="/se-connecter"
-						className="header__auth-mobile"
-						onClick={closeMenu}
+				<section
+					className={`header__top ${isMobile && !toggle ? "hidden" : "visible"}`}
+				>
+					<nav
+						className={`header__nav ${isMobile ? (toggle ? "visible" : "hidden") : "visible"}`}
 					>
-						<span className="header__auth-text">Connexion</span>{" "}
-						<AiOutlineLogin />
-					</NavLink>
-				)}
+						<li className="header__nav-item">
+							<NavLink
+								to="/"
+								className="header__nav-link"
+								id="nav-link__home--2"
+								onClick={closeMenu}
+							>
+								Accueil
+							</NavLink>
+						</li>
+						<li className="header__nav-item">
+							<NavLink
+								to="/a-propos"
+								className="header__nav-link"
+								onClick={closeMenu}
+							>
+								À propos
+							</NavLink>
+						</li>
+						<li className="header__nav-item">
+							<NavLink
+								to="/histoires"
+								className="header__nav-link"
+								onClick={closeMenu}
+							>
+								Histoires
+							</NavLink>
+						</li>
+						<li className="header__nav-item">
+							<NavLink
+								to="/categories"
+								className="header__nav-link"
+								onClick={closeMenu}
+							>
+								Catégories
+							</NavLink>
+						</li>
+						<li className="header__nav-item">
+							<NavLink
+								to="/publier-histoire"
+								className="header__nav-link"
+								onClick={closeMenu}
+							>
+								Publier
+							</NavLink>
+						</li>
+					</nav>
+				</section>
+
+				<div className="header__right-group">
+					{auth.user ? (
+						<div className="header__user-mobile">
+							<div className="header__user-info">
+								<img
+									className="header__user-image"
+									src={profileImage}
+									alt={auth.user?.image?.alt || "Image de profil par défaut"}
+								/>
+
+								<span className="header__user-text">{auth.user.login}</span>
+							</div>
+							<button onClick={handleLogout} className="header__dropdown-item">
+								<span className="header__user-text">Déconnexion</span>{" "}
+								<IoMdLogOut />
+							</button>
+						</div>
+					) : (
+						<NavLink
+							to="/se-connecter"
+							className="header__auth-mobile"
+							onClick={closeMenu}
+						>
+							<span className="header__auth-text">Connexion</span>{" "}
+							<AiOutlineLogin />
+						</NavLink>
+					)}
+				</div>
 			</div>
 		</header>
 	);

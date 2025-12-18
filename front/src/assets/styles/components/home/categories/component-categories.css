@@ -5,7 +5,7 @@
 .categories__title {
 	font-family: var(--fontTitle);
 	font-size: 1rem;
-	color: var(--lightBeige);
+	color: var(--darkMarron);
 	text-transform: uppercase;
 	margin: 0 0 20px 0;
 	padding: 0;
@@ -27,7 +27,7 @@
 	border: 1px solid var(--mediumMarron);
 	border-radius: 25px;
 	text-decoration: none;
-	color: var(--lightBeige);
+	color: var(--darkMarron);
 	font-family: var(--fontRegular);
 	font-weight: 600;
 	font-size: 0.85rem;
@@ -47,14 +47,11 @@
 	text-align: center;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1200px) {
 	.categories__title {
 		font-size: 1.3rem;
 		text-align: left;
 	}
-}
-
-@media (min-width: 1200px) {
 	.categories__container {
 		width: 1150px;
 		flex-wrap: wrap;

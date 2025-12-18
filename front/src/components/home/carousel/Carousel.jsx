@@ -39,9 +39,8 @@ export default function Carousel() {
 		fetchBooks();
 	}, []);
 
-	// Gestion du scroll auto uniquement en desktop
 	const handleMouseMove = (e) => {
-		if (window.innerWidth <= 768) return; // pas d'effet sur mobile
+		if (window.innerWidth <= 768) return; 
 
 		const container = carouselRef.current;
 		if (!container) return;
@@ -73,38 +72,40 @@ export default function Carousel() {
 	if (error) return <p>{error}</p>;
 
 	return (
-		<div className="carousel__container">
-			<h2 className="carousel__title">Notre sélection</h2>
-			<div
-				className="carousel__list"
-				ref={carouselRef}
-				onMouseMove={handleMouseMove}
-				onMouseLeave={stopScroll}
-			>
-				{books.length > 0 ? (
-					books.map((book) => {
-						const coverUrl = book.image?.src?.trim()
-							? `http://localhost:5000/assets/img/${book.image.src.trim()}`
-							: defaultCover;
-						return (
-							<div
-								key={book._id}
-								className="carousel__item"
-								style={{
-									backgroundImage: `url(${coverUrl})`,
-								}}
-								title={`${book.title} - ${book.userId?.login || "Auteur inconnu"}`}
-							>
-								<h3 className="carousel__item-title">{book.title}</h3>
-								<p className="carousel__item-author">
-									{book.userId?.login || "Nom auteur non trouvé"}
-								</p>
-							</div>
-						);
-					})
-				) : (
-					<p>Aucun livre trouvé.</p>
-				)}
+		<div className="carousel">
+			<div className="carousel__container">
+				<h2 className="carousel__title">Notre sélection</h2>
+				<div
+					className="carousel__list"
+					ref={carouselRef}
+					onMouseMove={handleMouseMove}
+					onMouseLeave={stopScroll}
+				>
+					{books.length > 0 ? (
+						books.map((book) => {
+							const coverUrl = book.image?.src?.trim()
+								? `http://localhost:5000/assets/img/${book.image.src.trim()}`
+								: defaultCover;
+							return (
+								<div
+									key={book._id}
+									className="carousel__item"
+									style={{
+										backgroundImage: `url(${coverUrl})`,
+									}}
+									title={`${book.title} - ${book.userId?.login || "Auteur inconnu"}`}
+								>
+									<h3 className="carousel__item-title">{book.title}</h3>
+									<p className="carousel__item-author">
+										{book.userId?.login || "Nom auteur non trouvé"}
+									</p>
+								</div>
+							);
+						})
+					) : (
+						<p>Aucun livre trouvé.</p>
+					)}
+				</div>
 			</div>
 		</div>
 	);

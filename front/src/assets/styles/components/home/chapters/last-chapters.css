@@ -8,7 +8,7 @@
 .last-chapters__title {
 	font-family: var(--fontTitle);
 	font-size: 1rem;
-	color: var(--lightBeige);
+	color: var(--darkMarron);
 	text-transform: uppercase;
 	margin: 0 0 20px 0;
 	padding: 0;
@@ -63,7 +63,7 @@
 	margin-top: 1rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1200px) {
 	.last-chapters__title {
 		font-size: 1.3rem;
 		text-align: left;

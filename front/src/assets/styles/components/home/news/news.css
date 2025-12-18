@@ -7,7 +7,7 @@
 .news-section__title {
 	font-family: var(--fontTitle);
 	font-size: 1rem;
-	color: var(--lightBeige);
+	color: var(--darkMarron);
 	text-transform: uppercase;
 	margin: 0 0 20px 0;
 	padding: 0;
@@ -72,14 +72,15 @@
 	.news-section__container {
 		padding: 1rem;
 	}
-	.news-section__title {
-		font-size: 1.3rem;
-		text-align: left;
-	}
 }
 @media (min-width: 1200px) {
 	.news-section__container {
 		padding: 3.7rem 1rem 1rem;
+	}
+
+	.news-section__title {
+		font-size: 1.3rem;
+		text-align: left;
 	}
 }
 

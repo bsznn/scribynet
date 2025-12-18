@@ -10,11 +10,15 @@
 	--mediumMarron: #7a6d68;
 	--darkMarron: #423c39;
 
+	--headerMarron : #dad1ce;
+	--bodyBeige : #f0ece1ff;
+
 	--green: #4a6354;
 	--greenLight: #769a82;
 
 	/* --orange: #c08a56; */
-	--orange: #db986b;
+	--orange: #d28b4d;
+	--darkOrange : #6a3300;
 
 	/* Hover */
 	--hoverLightBeige: #e7e1d6;
@@ -26,11 +30,6 @@
 	--hoverDarkMarron: #645a56;
 
 	--hoverGreen: #6b8b71;
-
-	/* Autres couleurs */
-	--pink: #e6d5e3;
-	--black: #000000;
-	--white: #ffffff;
 
 	/* Transitions */
 	--transitionColor: color 0.3s ease-in-out;
