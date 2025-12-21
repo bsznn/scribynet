@@ -9,37 +9,29 @@ import "../../assets/styles/pages/home/home.css";
 import Authors from "../../components/home/authors/Authors";
 import News from "../../components/home/news/News";
 import Head from "../../components/home/head/Head";
+import Ads from "../../components/home/ads/ads";
 // import DonateButton from "../../tests/DonateButton";
 
 export default function Home() {
 	return (
 		<div className="home">
-			<div>
-				<Head />
-			</div>
-			<div>
-				<Carousel />
-			</div>
+			<Head />
+			<Carousel />
 
-			{/* <DonateButton /> */}
+		<div className="home__section  home__books">
+			<div><PopularBooks /></div>
+			<div className="home__newestBooks"><NewestBooks /></div>
+			<div className="home__ads"><Ads /></div>
 
-			<div className="home__section">
+			<ComponentCategories />
+			<div className="home__aside">
 				<div>
-					<PopularBooks />
-					<NewestBooks />
+					<LastChapters />
+					<Authors />
 				</div>
-				<div>
-					<ComponentCategories />
-				</div>
-
-				<div className="home__aside">
-					<div>
-						<LastChapters />
-						<Authors />
-					</div>
-					<News />
-				</div>
+				<News />
 			</div>
 		</div>
+	</div>
 	);
 }

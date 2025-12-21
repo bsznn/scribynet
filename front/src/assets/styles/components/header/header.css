@@ -11,7 +11,7 @@ body {
 }
 
 .header {
-	background-color: var(--darkMarron);
+	background-color: var(--bodyBeige);
 }
 
 .header__content {
@@ -33,7 +33,7 @@ body {
 
 .header__branding {
 	display: flex;
-	color: var(--lightBeige);
+	margin-top: 10px;
 	text-decoration: none;
 	user-select: none;
 	z-index: 10000;
@@ -44,18 +44,18 @@ body {
 
 .header__branding:hover {
 	transform: scale(1.05);
-	color: var(--hoverLightBeige);
+	color: var(--hoverDarkMarron);
 }
 
 .header__title {
-	font-family: var(--fontLogo);
-	font-size: 2rem;
-	margin: 0;
-	color: var(--lightBeige);
+	font-family: var(--fontTitle);
+	font-size: 1.3rem;
+	margin-top: 9px;
+	color: var(--darkMarron);
 }
 
 .header__title:hover {
-	color: var(--hoverLightBeige);
+	color: var(--hoverDarkMarron);
 }
 
 .header__logo {
@@ -67,21 +67,20 @@ body {
 	display: flex;
 	align-items: center;
 	gap: 1rem;
-	color: var(--lightBeige);
 }
 
 .header__burger-button {
 	background: none;
 	border: none;
 	font-size: 1.8rem;
-	color: var(--lightBeige);
+	color: var(--darkMarron);
 	cursor: pointer;
 	transition: var(--transitionColor);
 	z-index: 10000;
 }
 
 .header__burger-button:hover {
-	color: var(--hoverLightBeige);
+	color: var(--hoverDarkMarron);
 	transform: scale(1.1);
 }
 
@@ -119,7 +118,18 @@ body {
 .header__auth-text {
 	display: none;
 	text-transform: capitalize;
+	color: var(--lightBeige);
+	font-weight: 600;
 }
+
+.header__user-info .header__user-text {
+	color: var(--darkMarron);
+}
+
+.header__user-info .header__user-text:hover {
+	color: var(--hoverDarkMarron);
+}
+
 
 .header__user-mobile button {
 	border: none;
@@ -159,7 +169,7 @@ body {
 	left: 0;
 	width: 100vw;
 	height: 100vh;
-	background-color: var(--darkMarron);
+	background-color: var(--bodyBeige);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -171,12 +181,13 @@ body {
 
 .header__nav-link {
 	text-decoration: none;
-	color: var(--lightBeige);
+	color: var(--darkMarron);
 	transition: var(--transitionColor);
+	font-weight: 600;
 }
 
 .header__nav-link:hover {
-	color: var(--hoverLightBeige);
+	color: var(--hoverDarkMarron);
 	transform: scale(1.1);
 }
 
@@ -207,10 +218,9 @@ body {
 	transform: scale(1.05);
 }
 
-/* Tablette styles */
 @media (min-width: 768px) {
 	.header__content {
-		padding: 1rem 3rem;
+		padding: 1rem;
 	}
 
 	.header__burger-button {
@@ -272,6 +282,15 @@ body {
 	.header__content {
 		width: 1085px;
 		margin: auto;
+	}
+
+	.header__title {
+		font-size: 1.5rem;
+	}
+
+	.header__logo {
+		height: 35px;
+		width: 35px;
 	}
 }
 

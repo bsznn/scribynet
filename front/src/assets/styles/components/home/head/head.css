@@ -1,82 +1,64 @@
-.Head {
-  background: var(--headerMarron);
-}
-
-.Head__images {
+.head {
   position: relative;
+  margin: 0;
+  padding: 0;
+
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding: 20px 30px;
-  gap: 16px;
+  align-items: center;
+
+  height: 350px;
+  font-family: var(--fontTitle);
+  text-align: center;
+  overflow: hidden;
 }
 
-
-.Head__image--desktop {
-  width: 33.33%;
-  border-radius: 14px;
-  object-fit: cover;
+/* Overlay pour lisibilité du texte */
+.head::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(66, 60, 57, 0.65); /* --darkMarron avec opacité */
+  z-index: 1;
 }
 
-.Head__image--active,
-.Head__arrow {
-  display: none;
+/* Texte */
+.head__text {
+  position: relative;
+  z-index: 2;
+
+  color: var(--lightBeige);
+  font-family: var(--fontTitle);
+  font-weight: 400; /* pas en gras */
+  font-size: 1.4rem;
+  max-width: 700px;
+  padding: 0 1rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
 }
 
-@media (max-width: 768px) {
-  .Head__images {
-    justify-content: center;
-  }
+/* Bouton */
+.head__button {
+  position: relative;
+  z-index: 2;
 
-  .Head__image--desktop {
-    display: none;
-  }
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
 
-  .Head__image--active {
-    display: block;
-    width: 85%;
-    border-radius: 16px;
-  }
+  background-color: var(--hoverLightBeige);
+  color: var(--darkMarron);
 
-  .Head__arrow {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--darkMarron);
-    color: var(--lightBeige);
-    border: none;
-    font-size: 2rem;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
+  font-family: var(--fontRegular);
+  font-weight: 600;
+  font-size: 1rem;
 
-  .Head__arrow--left {
-    left: 10px;
-  }
-
-  .Head__arrow--right {
-    right: 10px;
-  }
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
 }
 
-@media (min-width: 1200px) {
-    .Head__images {
-      width: 1120px;
-      margin: auto;
-
-    }
+.head__button:hover {
+  background-color: var(--lightBeige);
+  color: var(--blackMarron);
+  transform: translateY(-2px);
 }
-
-@media (min-width: 1400px) {
-    .Head__images {
-      width: 1300px;
-
-    }
-}
-
-
-

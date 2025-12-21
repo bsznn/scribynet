@@ -38,14 +38,6 @@
 
 .component-books__item {
 	flex: 0 0 auto;
-	width: 120px;
-	text-align: center;
-	background-color: var(--mediumBeige);
-	border: 1px solid var(--darkBeige);
-	border-radius: 8px;
-	box-shadow: var(--shadow);
-	overflow: hidden;
-	transition: transform 0.3s ease;
 }
 
 .component-books__item:hover {
@@ -62,12 +54,11 @@
 	flex-direction: column;
 	align-items: center;
 	gap: 0.5rem;
-	padding: 1rem;
 }
 
 .component-books__image {
 	width: 100%;
-	height: auto;
+	height: 230px;
 	border-bottom: 1px solid var(--darkBeige);
 }
 
@@ -98,6 +89,10 @@
 
 	.component-books__item {
 		width: 140px;
+	}
+
+	component-books__image {
+    	height: auto;
 	}
 }
 

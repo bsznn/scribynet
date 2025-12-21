@@ -5,7 +5,7 @@ import { IoMdLogOut } from "react-icons/io";
 import { RiMenu3Fill } from "react-icons/ri";
 import { NavLink, useNavigate } from "react-router-dom";
 import defaultImage from "../../assets/images/default-profile.jpg";
-import Logo from "../../assets/images/logo-4.jpg";
+import Logo from "../../assets/images/logo.png";
 import { useAuth } from "../../context/AuthContext";
 import "../../assets/styles/components/header/header.css";
 
