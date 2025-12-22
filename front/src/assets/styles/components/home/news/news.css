@@ -81,9 +81,6 @@
 
 @media (min-width: 1400px) {
 	.news-section__container {
-		padding: 26.3rem 1rem 0.3rem;
-	}
-	.news-block__content {
-		padding: 1.2rem;
+		padding: 26.3rem 1rem 3.1rem;
 	}
 }

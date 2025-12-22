@@ -7,7 +7,7 @@ import {
 } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo-white.jpg";
 import "../../assets/styles/components/footer/footer.css";
 
 const Footer = () => {
@@ -42,9 +42,6 @@ const Footer = () => {
 					</a>
 					<a href="https://youtube.com" target="_blank" rel="noreferrer">
 						<FaYoutube className="footer__icon" />
-					</a>
-					<a href="https://slack.com" target="_blank" rel="noreferrer">
-						<FaSlack className="footer__icon" />
 					</a>
 				</div>
 			</div>

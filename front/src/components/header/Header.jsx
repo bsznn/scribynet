@@ -30,6 +30,19 @@ export default function Header() {
 		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
+	useEffect(() => {
+		if (toggle && isMobile) {
+			document.body.style.overflow = "hidden";
+		} else {
+			document.body.style.overflow = "";
+		}
+
+		return () => {
+			document.body.style.overflow = "";
+		};
+	}, [toggle, isMobile]);
+
+
 	const handleClick = () => setToggle(!toggle);
 
 	const handleLogout = () => {
