@@ -2,7 +2,7 @@
 	border-right: none;
 	display: flex;
 	flex-direction: column;
-	padding: 1rem;
+	padding: 0.5rem 1rem 1.5rem;
 }
 
 .last-chapters__title {
@@ -61,6 +61,11 @@
 	margin-top: 1rem;
 }
 
+@media (min-width: 768px) {
+	.last-chapters__container {
+		padding: 0 1rem 1.5rem;
+	}
+}
 @media (min-width: 1200px) {
 	.last-chapters__title {
 		font-size: 1.3rem;

@@ -101,16 +101,13 @@ body {
 	border-radius: 50px;
 	background-color: var(--mediumMarron);
 	box-shadow: var(--shadow);
-	transition:
-		var(--transitionBG),
-		var(--transitionColor),
-		transform 0.3s ease;
+  	transition: var(--transition);
 }
 
 .header__auth-mobile:hover,
 .header__dropdown-item:hover {
 	background-color: var(--hoverMediumMarron);
-	transform: scale(1.1);
+  	transform: translateY(-2px);
 	color: var(--lightBeige);
 }
 
@@ -145,7 +142,7 @@ body {
 
 .header__user-mobile button:hover {
 	color: var(--hoverLightBeige);
-	transform: scale(1.05);
+  	transform: translateY(-2px);
 }
 
 .header__top {
@@ -213,6 +210,7 @@ body {
 .header__user-info {
 	display: flex;
 	align-items: center;
+	transition: var(--transition);
 }
 
 .header__user-info:hover {

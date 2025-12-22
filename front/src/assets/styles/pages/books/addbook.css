@@ -1,134 +1,260 @@
+/* Conteneur principal */
 .addbook {
-	min-height: 100vh;
-	padding: 4rem 0;
+	min-height: 80vh;
+	padding: 2rem;
+	background-color: var(--bodyBeige);
 	display: flex;
 	justify-content: center;
+	align-items: flex-start;
+	font-family: var(--fontRegular);
+	color: var(--darkMarron);
 }
 
-/* SECTION FORMULAIRE */
+/* Section contenant le formulaire */
 .addbook__section {
-	background: var(--mediumBeige);
-	padding: 3rem 3.5rem;
-	border-radius: 16px;
-	width: 90%;
-	max-width: 800px;
-	box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
-}
-
-.addbook__form {
-	display: flex;
-	flex-direction: column;
-	gap: 1.6rem;
-}
-
-.addbook__title {
-	font-size: 2rem;
-	font-weight: 700;
-	text-align: center;
-	color: var(--darkMarron);
-	margin-bottom: 1rem;
-}
-
-/* LABELS */
-.addbook__label {
-	font-size: 1.1rem;
-	font-weight: 600;
-	color: var(--darkMarron);
-}
-
-/* INPUTS & TEXTAREAS */
-.addbook__input,
-.addbook__textarea,
-.addbook__select {
+	background: white;
+	padding: 2.5rem 3rem;
+	border-radius: 12px;
+	box-shadow: var(--shadow);
+	background-color: var(--mediumMarron);
 	width: 100%;
-	padding: 0.9rem 1rem;
-	border-radius: 10px;
-	border: 1px solid var(--darkBeige);
-	background: var(--lightBeige);
-	color: var(--darkMarron);
-	font-size: 1rem;
-	transition:
-		border 0.2s ease,
-		background 0.2s ease;
+	max-width: 700px;
 }
 
-.addbook__input:focus,
-.addbook__textarea:focus,
-.addbook__select:focus {
-	border-color: var(--green);
-	background: var(--hoverLightBeige);
-	outline: none;
+/* Titre principal */
+.addbook__title {
+	font-family: var(--fontTitle);
+	font-size: 2rem;
+	color: var(--lightBeige);
+	margin-bottom: 1.5rem;
+	text-align: center;
+	letter-spacing: 1.5px;
 }
 
-/* TEXTAREA */
-.addbook__textarea {
-	min-height: 120px;
-	resize: vertical;
+/* Onglets */
+.addbook__tabs {
+	display: flex;
+	justify-content: center;
+	gap: 2rem;
+	margin-bottom: 2rem;
+	border-bottom: 2px solid var(--mediumBeige);
 }
 
-/* FILE INPUT */
-.addbook__file {
+.addbook__tab {
 	background: none;
 	border: none;
-	font-size: 1rem;
-	color: var(--mediumMarron);
+	padding: 0.75rem 2rem;
+	font-family: var(--fontTitle);
+	font-size: 1.1rem;
+	color: var(--lightBeige);
 	cursor: pointer;
+	position: relative;
+	transition: var(--transition);
+	border-radius: 8px 8px 0 0;
+}
+
+.addbook__tab:hover {
+	color: var(--hoverLightBeige);
+}
+
+.addbook__tab.active {
+	color: var(--darkMarron);
+	background-color: var(--lightBeige);
+}
+
+/* Contenu de l'onglet */
+.addbook__tab-content {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Labels */
+.addbook__label {
+	font-weight: 600;
+	font-size: 1rem;
+	margin-bottom: 0.4rem;
+	color: var(--lightBeige);
+}
+
+/* Input classique (titre, chapitre title) */
+.addbook__input {
+	padding: 0.6rem 1rem;
+	font-size: 1rem;
+	border: 1.8px solid var(--mediumBeige);
+	border-radius: 8px;
+	transition: var(--transition);
+	font-family: var(--fontRegular);
+	color: var(--darkMarron);
+}
+
+.addbook__input:focus {
+	border-color: var(--darkMarron);
+	outline: none;
+	box-shadow: 0 0 6px var(--orange);
+}
+
+/* Input fichier */
+.addbook__file {
+	border: 1.5px solid var(--mediumBeige);
+	padding: 0.5rem 0.5rem;
+	border-radius: 6px;
+	cursor: pointer;
+	color: var(--lightBeige);
+	transition: var(--transition);
 }
 
 .addbook__file:hover {
+	border-color: var(--darkMarron);
+	color: var(--hoverLightBeige);
+}
+
+/* Textarea description */
+.addbook__textarea {
+	min-height: 100px;
+	padding: 1rem;
+	font-family: var(--fontRegular);
+	font-size: 1rem;
+	resize: vertical;
+	border: 1.8px solid var(--mediumBeige);
+	border-radius: 8px;
+	transition: var(--transition);
 	color: var(--darkMarron);
 }
 
-/* SELECT MULTIPLE */
-.addbook__select {
-	height: 120px;
+.addbook__textarea:focus {
+	border-color: var(--darkMarron);
+	outline: none;
 }
 
-/* QUILL */
-.addbook__quill .ql-toolbar {
-	background: var(--lightBeige);
-	border-radius: 8px 8px 0 0;
-	border: 1px solid var(--darkBeige);
+/* Composant React Select */
+.css-yk16xz-control {
+	border-radius: 8px !important;
+	border: 1.8px solid var(--mediumBeige) !important;
+	font-family: var(--fontRegular) !important;
+	transition: var(--transition) !important;
 }
 
-.addbook__quill .ql-container {
-	background: var(--lightBeige);
-	border: 1px solid var(--darkBeige);
+.css-yk16xz-control:hover {
+	border-color: var(--darkMarron) !important;
+}
+
+.css-1uccc91-singleValue {
 	color: var(--darkMarron);
-	border-radius: 0 0 8px 8px;
-	min-height: 200px;
-}
-
-/* ERREURS */
-.addbook__error {
-	color: var(--orange);
-	font-size: 0.95rem;
-}
-
-/* BOUTON */
-.addbook__button {
-	margin-top: 1rem;
-	padding: 0.9rem;
-	font-size: 1.2rem;
 	font-weight: 600;
+}
+
+.css-1okebmr-indicatorSeparator {
+	display: none;
+}
+
+/* React Quill (éditeur rich text) */
+.addbook__quill {
+	height: 250px;
+	border-radius: 8px;
+	border: 1.8px solid var(--mediumBeige);
+	transition: var(--transition);
+	font-family: var(--fontRegular);
+}
+
+.addbook__quill:hover,
+.addbook__quill:focus-within {
+	border-color: var(--darkMarron);
+	box-shadow: 0 0 8px var(--darkMarron);
+}
+
+/* Boutons */
+
+/* Bouton Publier (onglet 2) */
+.addbook__button {
+	background-color: var(--orange);
+	color: white;
 	border: none;
+	padding: 0.9rem 2.5rem;
+	font-family: var(--fontTitle);
+	font-weight: 700;
+	font-size: 1.1rem;
 	border-radius: 10px;
 	cursor: pointer;
-	background: var(--orange); /* ORANGE ici */
-	color: white;
-	transition:
-		background 0.25s ease,
-		transform 0.1s ease;
+	transition: background-color 0.3s ease;
+	align-self: flex-start;
+	margin-top: 1rem;
 }
 
 .addbook__button:hover {
-	background: var(--hoverLightMarron); /* léger marron orangé au hover */
-	transform: scale(1.03);
+	background-color: #bb783b;
 }
 
-.addbook__button:active {
-	transform: scale(0.98);
+/* Bouton Continuer (onglet 1) */
+.addbook__button--continue {
+	background-color: var(--orange);
+	color: white;
+	border: none;
+	padding: 0.75rem 2rem;
+	font-family: var(--fontTitle);
+	font-weight: 600;
+	font-size: 1rem;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	width: fit-content;
+	margin-top: 1.25rem;
+	align-self: flex-start;
 }
+
+.addbook__button--continue:hover {
+	background-color: #bb783b;
+}
+
+/* Message d'erreur description (si tu veux le garder) */
+.addbook__error {
+	color: #c45b5b;
+	font-weight: 600;
+	font-size: 0.9rem;
+	margin-top: -1rem;
+	margin-bottom: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+	.addbook__section {
+		padding: 1.5rem 1.5rem;
+	}
+
+	.addbook__tabs {
+		gap: 1rem;
+	}
+
+	.addbook__tab {
+		padding: 0.5rem 1rem;
+		font-size: 1rem;
+	}
+
+	.addbook__input,
+	.addbook__textarea {
+		font-size: 0.9rem;
+	}
+
+	.addbook__button,
+	.addbook__button--continue {
+		padding: 0.7rem 1.8rem;
+		font-size: 1rem;
+	}
+}
+
 
 /* ERREUR SI NON CONNECTÉ */
 .addbook__section--error {

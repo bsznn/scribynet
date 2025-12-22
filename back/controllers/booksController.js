@@ -93,7 +93,7 @@ export const addBook = async (req, res) => {
 
 		// Récupérer les ObjectId des catégories
 		const categoryIds = await Category.find({
-			name: { $in: parseCategories }, // Recherche les noms dans la collection
+			_id: { $in: parseCategories },
 		}).select("_id");
 
 		if (categoryIds.length === 0) {

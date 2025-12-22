@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill-new";
+import Select from "react-select";
 import "react-quill-new/dist/quill.snow.css";
 import axios from "axios";
 import { token } from "../../context/token";
@@ -15,13 +16,14 @@ export const AddBook = () => {
 		title: "",
 		description: "",
 		categories: [],
-		categoryId: [],
+		selectedCategories: [],
 		image: null,
 		chapterContent: "",
 		chapterTitle: "",
 	});
 
 	const [descriptionError, setDescriptionError] = useState(false);
+	const [activeTab, setActiveTab] = useState("book");
 
 	const auth = useAuth();
 	const navigate = useNavigate();
@@ -32,11 +34,10 @@ export const AddBook = () => {
 		axios
 			.get("http://localhost:5000/categories")
 			.then((res) => {
-				setInputs({
-					...inputs,
-					categoryId: res.data,
+				setInputs((prev) => ({
+					...prev,
 					categories: res.data,
-				});
+				}));
 			})
 			.catch((err) => {
 				console.log(err);
@@ -57,9 +58,13 @@ export const AddBook = () => {
 			setInputs({ ...inputs, image: e.target.files[0] });
 		} else if (name === "categories") {
 			const options = Array.from(e.target.options)
-				.filter((option) => option.selected)
-				.map((option) => option.value);
-			setInputs({ ...inputs, categoryId: options });
+				.filter(option => option.selected)
+				.map(option => option.value);
+
+			setInputs(prev => ({
+				...prev,
+				selectedCategories: options,
+			}));
 		} else {
 			setInputs({ ...inputs, [name]: value });
 		}
@@ -75,7 +80,7 @@ export const AddBook = () => {
 		if (
 			inputs.title.trim() === "" ||
 			inputs.description.trim() === "" ||
-			inputs.categoryId.length <= 0 ||
+			inputs.selectedCategories.length === 0 ||
 			inputs.chapterContent.trim() === "" ||
 			inputs.chapterTitle.trim() === ""
 		) {
@@ -90,7 +95,7 @@ export const AddBook = () => {
 
 		formData.append("title", inputs.title);
 		formData.append("description", inputs.description);
-		formData.append("categories", JSON.stringify(inputs.categoryId));
+		formData.append("categories", JSON.stringify(inputs.selectedCategories));
 		formData.append("image", inputs.image);
 
 		const chapter = [
@@ -110,8 +115,8 @@ export const AddBook = () => {
 					description: "",
 					chapterContent: "",
 					chapterTitle: "",
-					categories: [],
-					categoryId: [],
+					categories: [],          
+					selectedCategories: [],  
 					image: null,
 				});
 				alert(res.data.message);
@@ -133,91 +138,140 @@ export const AddBook = () => {
 					>
 						<h2 className="addbook__title">Publier un livre</h2>
 
-						<label htmlFor="image" className="addbook__label">
-							Couverture de livre :
-						</label>
-						<input
-							className="addbook__file"
-							onChange={handleChange}
-							type="file"
-							id="image"
-							name="image"
-						/>
+						{/* Onglets */}
+						<div className="addbook__tabs">
+							<button
+								type="button"
+								className={`addbook__tab ${activeTab === "book" ? "active" : ""}`}
+								onClick={() => setActiveTab("book")}
+							>
+								Informations
+							</button>
 
-						<label htmlFor="title" className="addbook__label">
-							Titre :
-						</label>
-						<input
-							className="addbook__input"
-							onChange={handleChange}
-							value={inputs.title}
-							type="text"
-							id="title"
-							name="title"
-							placeholder="Titre"
-						/>
+							<button
+								type="button"
+								className={`addbook__tab ${activeTab === "chapter" ? "active" : ""}`}
+								onClick={() => setActiveTab("chapter")}
+							>
+								Chapitre
+							</button>
+						</div>
 
-						<label htmlFor="description" className="addbook__label">
-							Description :
-						</label>
-						<textarea
-							className="addbook__textarea"
-							onChange={handleChange}
-							value={inputs.description}
-							id="description"
-							name="description"
-							placeholder="Description"
-						/>
+						{/* Onglet 1 : Infos livre */}
+						{activeTab === "book" && (
+							<div className="addbook__tab-content">
+								<label htmlFor="image" className="addbook__label">
+									Couverture de livre :
+								</label>
+								<input
+									className="addbook__file"
+									onChange={handleChange}
+									type="file"
+									id="image"
+									name="image"
+								/>
 
-						{descriptionError && (
-							<p className="addbook__error">
-								La description ne peut pas dépasser 250 caractères.
-							</p>
+								<label htmlFor="title" className="addbook__label">
+									Titre :
+								</label>
+								<input
+									className="addbook__input"
+									onChange={handleChange}
+									value={inputs.title}
+									type="text"
+									id="title"
+									name="title"
+									placeholder="Titre"
+								/>
+
+								<label htmlFor="description" className="addbook__label">
+									Description :
+								</label>
+								<textarea
+									className="addbook__textarea"
+									onChange={handleChange}
+									value={inputs.description}
+									id="description"
+									name="description"
+									placeholder="Description"
+								/>
+
+								{descriptionError && (
+									<p className="addbook__error">
+										La description ne peut pas dépasser 250 caractères.
+									</p>
+								)}
+
+								<label htmlFor="categories" className="addbook__label">
+									Catégories :
+								</label>
+								<Select
+									isMulti
+									options={inputs.categories.map(c => ({
+										value: c._id,
+										label: c.name,
+									}))}
+									onChange={(values) =>
+										setInputs(prev => ({
+											...prev,
+											selectedCategories: values.map(v => v.value),
+										}))
+									}
+								/>
+
+								<button
+									type="button"
+									className="addbook__button--continue"
+									onClick={() => {
+										if (
+											inputs.title.trim() === "" ||
+											inputs.description.trim() === "" ||
+											inputs.selectedCategories.length === 0 ||
+											descriptionError
+										) {
+											alert("Veuillez remplir correctement tous les champs de l'onglet Informations.");
+											return;
+										}
+										setActiveTab("chapter");
+									}}
+								>
+									Continuer
+								</button>
+							</div>
 						)}
 
-						<label htmlFor="categories" className="addbook__label">
-							Catégories :
-						</label>
-						<select
-							multiple
-							name="categories"
-							id="categories"
-							className="addbook__select"
-							value={inputs.categories}
-							onChange={handleChange}
-						>
-							{inputs.categories.map((category, index) => (
-								<option value={category._id} key={index}>
-									{category.name}
-								</option>
-							))}
-						</select>
+						{/* Onglet 2 : Chapitre */}
+						{activeTab === "chapter" && (
+							<div className="addbook__tab-content">
+								<label htmlFor="chapterTitle" className="addbook__label">
+									Titre du chapitre :
+								</label>
+								<input
+									className="addbook__input"
+									onChange={handleChange}
+									value={inputs.chapterTitle}
+									type="text"
+									id="chapterTitle"
+									name="chapterTitle"
+									placeholder="Titre du chapitre"
+								/>
 
-						<label htmlFor="chapterTitle" className="addbook__label">
-							Titre du chapitre :
-						</label>
-						<input
-							className="addbook__input"
-							onChange={handleChange}
-							value={inputs.chapterTitle}
-							type="text"
-							id="chapterTitle"
-							name="chapterTitle"
-							placeholder="Titre du chapitre"
-						/>
+								<label htmlFor="chapterContent" className="addbook__label">
+									Contenu du chapitre :
+								</label>
+								<ReactQuill
+									className="addbook__quill"
+									theme="snow"
+									value={inputs.chapterContent}
+									onChange={handleQuill}
+									placeholder="Il était une fois..."
+								/>
 
-						<label htmlFor="chapterContent" className="addbook__label">
-							Contenu du chapitre :
-						</label>
-						<ReactQuill
-							className="addbook__quill"
-							theme="snow"
-							value={inputs.chapterContent}
-							onChange={handleQuill}
-							placeholder="Il était une fois..."
-						/>
-
-						<button className="addbook__button">Valider</button>
+								<button className="addbook__button" type="submit">
+									Publier
+								</button>
+							</div>
+						)}
 					</form>
 				</section>
 			) : (

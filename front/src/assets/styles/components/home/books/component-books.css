@@ -37,6 +37,7 @@
 }
 
 .component-books__item {
+	transition: var(--transition);
 	flex: 0 0 auto;
 }
 
