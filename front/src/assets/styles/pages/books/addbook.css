@@ -1,7 +1,8 @@
 /* Conteneur principal */
 .addbook {
+	position: relative; 
 	min-height: 80vh;
-	padding: 2rem;
+    padding: 3rem 2rem 5rem;	
 	background-color: var(--bodyBeige);
 	display: flex;
 	justify-content: center;
@@ -9,6 +10,15 @@
 	font-family: var(--fontRegular);
 	color: var(--darkMarron);
 }
+
+.addbook:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(66, 60, 57, 0.65); /* fond foncé semi-transparent */
+  z-index: 0;
+}
+
 
 /* Section contenant le formulaire */
 .addbook__section {
@@ -19,6 +29,8 @@
 	background-color: var(--mediumMarron);
 	width: 100%;
 	max-width: 700px;
+	margin-top: 30px;
+	z-index: 1;
 }
 
 /* Titre principal */
@@ -104,7 +116,6 @@
 .addbook__input:focus {
 	border-color: var(--darkMarron);
 	outline: none;
-	box-shadow: 0 0 6px var(--orange);
 }
 
 /* Input fichier */
@@ -118,7 +129,6 @@
 }
 
 .addbook__file:hover {
-	border-color: var(--darkMarron);
 	color: var(--hoverLightBeige);
 }
 
@@ -127,10 +137,10 @@
 	min-height: 100px;
 	padding: 1rem;
 	font-family: var(--fontRegular);
+	border: 1.8px solid var(--mediumBeige);
 	font-size: 1rem;
 	resize: vertical;
-	border: 1.8px solid var(--mediumBeige);
-	border-radius: 8px;
+ 	border-radius: 8px;
 	transition: var(--transition);
 	color: var(--darkMarron);
 }
@@ -140,83 +150,44 @@
 	outline: none;
 }
 
-/* Composant React Select */
-.css-yk16xz-control {
-	border-radius: 8px !important;
-	border: 1.8px solid var(--mediumBeige) !important;
-	font-family: var(--fontRegular) !important;
-	transition: var(--transition) !important;
-}
-
-.css-yk16xz-control:hover {
-	border-color: var(--darkMarron) !important;
-}
-
-.css-1uccc91-singleValue {
-	color: var(--darkMarron);
-	font-weight: 600;
-}
-
-.css-1okebmr-indicatorSeparator {
-	display: none;
-}
-
 /* React Quill (éditeur rich text) */
-.addbook__quill {
-	height: 250px;
-	border-radius: 8px;
-	border: 1.8px solid var(--mediumBeige);
-	transition: var(--transition);
+
+.ql-toolbar.ql-snow {
+    background: var(--lightBeige);
+    border: 1px solid var(--darkMarron);
+}
+
+.ql-container {
+	height: 550px;
 	font-family: var(--fontRegular);
 }
 
-.addbook__quill:hover,
-.addbook__quill:focus-within {
-	border-color: var(--darkMarron);
-	box-shadow: 0 0 8px var(--darkMarron);
+.ql-editor {
+    border: 1px solid var(--darkMarron);
+	background-color: white;
 }
 
 /* Boutons */
 
 /* Bouton Publier (onglet 2) */
-.addbook__button {
-	background-color: var(--orange);
-	color: white;
+.addbook__button, .addbook__button--continue {
+ 	border-radius: 50px;
+	background-color: var(--lightBeige);
+	color: var(--darkMarron);	
 	border: none;
-	padding: 0.9rem 2.5rem;
+	padding: 0.75rem 2.5rem;
 	font-family: var(--fontTitle);
-	font-weight: 700;
+	font-weight: 600;
 	font-size: 1.1rem;
-	border-radius: 10px;
 	cursor: pointer;
-	transition: background-color 0.3s ease;
-	align-self: flex-start;
+	transition: var(--transition);
+	align-self: center;
 	margin-top: 1rem;
 }
 
-.addbook__button:hover {
-	background-color: #bb783b;
-}
-
-/* Bouton Continuer (onglet 1) */
-.addbook__button--continue {
-	background-color: var(--orange);
-	color: white;
-	border: none;
-	padding: 0.75rem 2rem;
-	font-family: var(--fontTitle);
-	font-weight: 600;
-	font-size: 1rem;
-	border-radius: 8px;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
-	width: fit-content;
-	margin-top: 1.25rem;
-	align-self: flex-start;
-}
-
-.addbook__button--continue:hover {
-	background-color: #bb783b;
+.addbook__button:hover, .addbook__button--continue:hover {
+	background-color: var(--hoverLightBeige);
+	transform: translateY(-2px);
 }
 
 /* Message d'erreur description (si tu veux le garder) */
@@ -270,10 +241,14 @@
 	border: 1px solid var(--mediumBeige);
 }
 
+.addbook__error-box h2 {
+	color: var(--darkMarron);
+}
+
 .addbook__link {
-	color: var(--green);
+	color: var(--mediumMarron);
 	font-weight: bold;
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 .addbook__link:hover {

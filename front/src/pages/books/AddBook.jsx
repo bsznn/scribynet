@@ -5,6 +5,8 @@ import "react-quill-new/dist/quill.snow.css";
 import axios from "axios";
 import { token } from "../../context/token";
 import "../../assets/styles/pages/books/addbook.css";
+import headImage from "../../assets/images/header-home/grass.jpg";
+
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -127,8 +129,92 @@ export const AddBook = () => {
 			});
 	};
 
+	const sectionStyle = {
+		backgroundImage: `url(https://images.pexels.com/photos/16030459/pexels-photo-16030459.jpeg?_gl=1*7yjt4y*_ga*NDI0NjMwMjIzLjE3NjYwNjA1NTk.*_ga_8JE65Q40S6*czE3NjY0NDMwOTMkbzUkZzEkdDE3NjY0NDM1NTgkajQ4JGwwJGgw)`,
+		backgroundSize: "cover",
+		backgroundPosition: "center",
+		backgroundRepeat: "no-repeat",
+	};
+
+	const selectStyles = {
+		control: (base, state) => ({
+			...base,
+			borderColor: state.isFocused
+				? "var(--mediumMarron)"
+				: "var(--lightBeige)",
+			boxShadow: "none",
+			borderWidth: "2px",
+			borderRadius: "8px",
+			"&:hover": {
+				borderColor: "var(--mediumMarron)",
+			},
+		}),
+
+		menu: (base) => ({
+			...base,
+			borderRadius: "8px",
+			boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+		}),
+
+		option: (base, state) => ({
+			...base,
+			backgroundColor: state.isSelected
+				? "var(--lightBeige)"     
+				: state.isFocused
+				? "var(--lightBeige)"     
+				: "transparent",
+
+			color: "var(--mediumMarron)",
+			cursor: "pointer",
+
+			"&:active": {
+				backgroundColor: "var(--lightBeige)",
+			},
+			}),
+
+
+		singleValue: (base) => ({
+			...base,
+			color: "var(--mediumMarron)",
+			fontWeight: 600,
+		}),
+
+		multiValue: (base) => ({
+			...base,
+			backgroundColor: "var(--lightBeige)",
+			borderRadius: "6px",
+		}),
+
+		multiValueLabel: (base) => ({
+			...base,
+			color: "var(--mediumMarron)",
+			fontWeight: 500,
+		}),
+
+		multiValueRemove: (base) => ({
+			...base,
+			color: "var(--mediumMarron)",
+			"&:hover": {
+				backgroundColor: "var(--mediumMarron)",
+				color: "var(--lightBeige)",
+			},
+		}),
+
+		dropdownIndicator: (base) => ({
+			...base,
+			color: "var(--mediumMarron)",
+			"&:hover": {
+				color: "var(--darkMarron)",
+			},
+		}),
+
+		indicatorSeparator: () => ({
+			display: "none",
+		}),
+	};
+
 	return (
-		<main className="addbook">
+		<main className="addbook" style={sectionStyle}>
 			{auth.user ? (
 				<section className="addbook__section">
 					<form
@@ -207,6 +293,8 @@ export const AddBook = () => {
 								</label>
 								<Select
 									isMulti
+									placeholder="Ajoute..."
+									styles={selectStyles}
 									options={inputs.categories.map(c => ({
 										value: c._id,
 										label: c.name,
