@@ -5,8 +5,8 @@ import "react-quill-new/dist/quill.snow.css";
 import axios from "axios";
 import { token } from "../../context/token";
 import "../../assets/styles/pages/books/addbook.css";
-import headImage from "../../assets/images/header-home/grass.jpg";
 
+import headImage from "../../assets/images/form/fond-addbook.jpeg";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -130,7 +130,7 @@ export const AddBook = () => {
 	};
 
 	const sectionStyle = {
-		backgroundImage: `url(https://images.pexels.com/photos/16030459/pexels-photo-16030459.jpeg?_gl=1*7yjt4y*_ga*NDI0NjMwMjIzLjE3NjYwNjA1NTk.*_ga_8JE65Q40S6*czE3NjY0NDMwOTMkbzUkZzEkdDE3NjY0NDM1NTgkajQ4JGwwJGgw)`,
+		backgroundImage: `url(${headImage})`,
 		backgroundSize: "cover",
 		backgroundPosition: "center",
 		backgroundRepeat: "no-repeat",
