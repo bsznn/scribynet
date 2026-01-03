@@ -1,8 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 import "../../assets/styles/pages/books/books.css";
+import fondImage from "../../assets/images/fond/fond-books.jpeg";
+import defaultImage from "../../assets/images/default-bookWhite.jpg";
+
 
 export default function Books() {
 	const [books, setBooks] = useState([]);
@@ -13,7 +19,11 @@ export default function Books() {
 	const [search, setSearch] = useState("");
 	const [filter, setFilter] = useState("title");
 
-	const BOOKS_PER_PAGE = 6;
+	const auth = useAuth();
+	const navigate = useNavigate();
+
+
+	const BOOKS_PER_PAGE = 12;
 
 	// 🔹 Fetch des livres
 	useEffect(() => {
@@ -80,21 +90,41 @@ export default function Books() {
 	};
 
 	const sectionStyle = {
-		backgroundImage: `url("https://images.pexels.com/photos/97076/pexels-photo-97076.jpeg?_gl=1*rcgczk*_ga*NDI0NjMwMjIzLjE3NjYwNjA1NTk.*_ga_8JE65Q40S6*czE3NjY1MjA4MjMkbzckZzEkdDE3NjY1MjM5NDUkajUzJGwwJGgw")`,
+		backgroundImage: `url(${fondImage})`,
 		backgroundSize: "cover",
 		backgroundPosition: "center",
 		backgroundRepeat: "no-repeat",
 	};
 
+	const handleDeleteBook = (id) => {
+		const confirmDelete = window.confirm(
+			"Êtes-vous sûr de vouloir supprimer ce livre ?"
+		);
+
+		if (!confirmDelete) return;
+
+		axios
+			.delete(`http://localhost:5000/books/delete/${id}/${auth.user._id}`, {
+				headers: {
+					Authorization: `Bearer ${auth.token}`,
+				},
+			})
+			.then(() => {
+				setBooks((prev) => prev.filter((book) => book._id !== id));
+			})
+			.catch(() => {
+				alert("Impossible de supprimer le livre !");
+			});
+	};
 
 	return (
 		<main className="Books">
-			<section className="Books__header" style={sectionStyle}>
-				<article className="Books__headerContent">
-					<h1 className="Books__title">Livres</h1>
-					<section className="Books__search">
+			<section className="books__header" style={sectionStyle}>
+				<article className="books__headerContent">
+					<h1 className="books__title">Histoires</h1>
+					<section className="books__search">
 						<input
-							className="Books__search-input"
+							className="books__search-input"
 							type="text"
 							placeholder="Rechercher..."
 							value={search}
@@ -102,7 +132,7 @@ export default function Books() {
 						/>
 
 						<select
-							className="Books__search-select"
+							className="books__search-select"
 							value={filter}
 							onChange={(e) => setFilter(e.target.value)}
 						>
@@ -115,72 +145,114 @@ export default function Books() {
 				</article>
 			</section>
 
-			{err && <p className="Books__error">{err}</p>}
+			{err && <p className="books__error">{err}</p>}
 
-			<section className="Books__list">
+			<section className="books__list">
 				{currentBooks.length === 0 && (
-					<p className="Books__empty">Aucun livre trouvé</p>
+					<p className="books__empty">Aucune histoire trouvée.</p>
 				)}
 
 				{currentBooks.map((oneBook) => (
+
 					<NavLink
 						to={`/livre/${oneBook._id}`}
 						key={oneBook._id}
-						className="Books__link"
+						className="books__link"
 					>
-						<article className="Books__card">
-							<div className="Books__card-header">
+						<article className="books__card">
+							<div className="books__card-header">
 								<img
-									className="Books__image"
-									src={`http://localhost:5000/assets/img/${oneBook.image.src}`}
-									alt={oneBook.image.alt}
+									className="books__image"
+									src={
+										oneBook.image?.src
+											? `http://localhost:5000/assets/img/${oneBook.image.src}`
+											: defaultImage
+									}
+									alt={oneBook.image?.alt || "Image par défaut"}
+									aria-label="newest-books"
+									title={oneBook.image?.alt || "Image par défaut"}
 								/>
-								<div className="Books__meta">
-									<h3 className="Books__card-title">
+								<div className="books__meta">
+									<h3 className="books__card-title">
 										{oneBook.title}
 									</h3>
-									<span className="Books__author">
+									<span className="books__author">
 										Par {oneBook.userId.login}
 									</span>
 								</div>
 							</div>
 
-							<div className="Books__card-body">
-								<p className="Books__description">
-									{oneBook.description}
+							<div className="books__card-body">
+								<p className="books__description">
+									{oneBook.description.length > 150
+									? oneBook.description.slice(0, 150) + "..."
+									: oneBook.description}								
 								</p>
 
-								<div className="Books__categories">
+								<div className="books__categories">
 									{oneBook.categoryId?.map((cat, index) => (
 										<span
 											key={index}
-											className="Books__category"
+											className="books__category"
 										>
 											#{cat.name}
 										</span>
 									))}
 								</div>
 
-								<div className="Books__dates">
-									<span>
-										Créé le{" "}
-										{new Date(oneBook.createdAt).toLocaleDateString()}
-									</span>
-									<span>
-										Modifié le{" "}
-										{new Date(oneBook.updatedAt).toLocaleDateString()}
-									</span>
+								<div className="books__settings">
+									<div className="books__dates">
+										<span>
+											Créé le{" "}
+											{new Date(oneBook.createdAt).toLocaleDateString()}
+										</span>
+										<span>
+											Modifié le{" "}
+											{new Date(oneBook.updatedAt).toLocaleDateString()}
+										</span>
+									</div>
+
+									{auth?.user?.id && oneBook?.userId?._id === auth.user.id && (
+										<ul className="books__actions">
+											<li>
+											<button
+												className="books__icon-btn"
+												onClick={(e) => {
+												navigate(`/modifier-histoire/${oneBook._id}`);
+												}}
+												title="Modifier"
+												aria-label="Modifier le livre"
+											>
+												<FiEdit />
+											</button>
+											</li>
+
+											<li>
+											<button
+												className="books__icon-btn delete"
+												onClick={(e) => {
+												handleDeleteBook(oneBook._id);
+												}}
+												title="Supprimer"
+												aria-label="Supprimer le livre"
+											>
+												<FiTrash2 />
+											</button>
+											</li>
+										</ul>
+									)}
 								</div>
 							</div>
+
 						</article>
 					</NavLink>
 				))}
 			</section>
 
 			{/* ⏮️ Pagination */}
-			<section className="Books__pagination">
+			<section className="books__pagination">
 				<button
-					className="Books__button"
+					className="books__button"
 					onClick={prevBook}
 					disabled={currentPage === 0}
 				>
@@ -188,7 +260,7 @@ export default function Books() {
 				</button>
 
 				<button
-					className="Books__button"
+					className="books__button"
 					onClick={nextBook}
 					disabled={(currentPage + 1) * BOOKS_PER_PAGE >= filteredBooks.length}
 				>

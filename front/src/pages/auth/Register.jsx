@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../assets/styles/pages/auth/register.css";
 
-import grassImage from "../../assets/images/header-home/grass.jpg";
-
 export default function Register() {
 	const [inputs, setInputs] = useState({
 		login: "",
@@ -12,121 +10,94 @@ export default function Register() {
 		password: "",
 	});
 
-	const [err, setErr] = useState();
+	const [err, setErr] = useState("");
 	const navigate = useNavigate();
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setInputs({ ...inputs, [name]: value });
-		setErr();
+		setErr("");
 	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		if (
-			inputs.email.trim() === "" ||
-			inputs.password.trim() === "" ||
-			inputs.login.trim() === ""
-		) {
-			return setErr("Veuillez remplir tous les champs.");
+		if (!inputs.login || !inputs.email || !inputs.password) {
+			setErr("Veuillez remplir tous les champs.");
+			return;
 		}
 
 		axios
 			.post("http://localhost:5000/register", inputs)
-			.then(() => {
-				navigate("/se-connecter");
-			})
-			.catch((error) => {
-				if (error.response && error.response.status === 401) {
-					window.alert("Identifiant ou mot de passe incorrect");
-				} else {
-					window.alert(
-						"Une erreur s'est produite. Veuillez réessayer plus tard.",
-					);
-				}
-			});
-	};
-
-	const sectionStyle = {
-		backgroundImage: `url(${grassImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-		minHeight: "100vh",
+			.then(() => navigate("/se-connecter"))
+			.catch(() => setErr("Une erreur est survenue."));
 	};
 
 	return (
 		<main className="register">
 			<section className="register__section">
-				<form
-					className="register__form"
-					onSubmit={handleSubmit}
-					style={sectionStyle}
-				>
-					<h2 className="register__title">Inscription</h2>
+				<div className="register__container">
 
-					<div className="register__field">
-						<label htmlFor="login" className="register__label">
-							Nom d'utilisateur :
-						</label>
-						<input
-							className="register__input"
-							type="text"
-							name="login"
-							id="login"
-							onChange={handleChange}
-							value={inputs.login}
-							placeholder="azerty"
-						/>
-					</div>
+					{/* ===== SIGN UP ===== */}
+					<form className="register__form" onSubmit={handleSubmit}>
+						<h2 className="register__title">Inscription</h2>
 
-					<div className="register__field">
-						<label htmlFor="email" className="register__label">
-							Adresse mail :
-						</label>
-						<input
-							className="register__input"
-							type="email"
-							name="email"
-							id="email"
-							onChange={handleChange}
-							value={inputs.email}
-							placeholder="azerty@azerty.fr"
-						/>
-					</div>
+						<div className="register__field material">
+							<input
+								type="text"
+								name="login"
+								value={inputs.login}
+								onChange={handleChange}
+								required
+							/>
+							<label>Nom d'utilisateur</label>
+							<span className="bar" />
+						</div>
 
-					<div className="register__field">
-						<label htmlFor="password" className="register__label">
-							Mot de passe :
-						</label>
-						<input
-							className="register__input"
-							type="password"
-							name="password"
-							id="password"
-							onChange={handleChange}
-							value={inputs.password}
-							placeholder="Mot de passe"
-						/>
-					</div>
+						<div className="register__field material">
+							<input
+								type="email"
+								name="email"
+								value={inputs.email}
+								onChange={handleChange}
+								required
+							/>
+							<label>Adresse mail</label>
+							<span className="bar" />
+						</div>
 
-					<button className="register__button" type="submit">
-						S'inscrire
-					</button>
+						<div className="register__field material">
+							<input
+								type="password"
+								name="password"
+								value={inputs.password}
+								onChange={handleChange}
+								required
+							/>
+							<label>Mot de passe</label>
+							<span className="bar" />
+						</div>
 
-					<p className="register__redirect">
-						Déjà inscrit ?
-						<Link to="/se-connecter" className="register__link">
-							{" "}
-							Connectez-vous !
+						<button className="register__button">S'inscrire</button>
+
+						{err && <span className="register__error">{err}</span>}
+					</form>
+
+					{/* ===== SIGN IN SIDE ===== */}
+					<div className="register__side">
+						<h2>Déjà inscrit ?</h2>
+						<p>
+							Connectez-vous pour accéder à votre espace personnel
+							et retrouver vos contenus.
+						</p>
+
+						<Link to="/se-connecter" className="register__side-button">
+							Se connecter
 						</Link>
-					</p>
+					</div>
 
-					{err && <span className="register__error">{err}</span>}
-				</form>
+				</div>
 			</section>
 		</main>
 	);
-
 }

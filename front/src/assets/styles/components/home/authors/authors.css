@@ -87,7 +87,7 @@
 }
 
 .authors__link:hover .authors__name {
-	color: var(--green);
+	color: var(--hoverDarkMarron);
 }
 
 @media (min-width: 768px) {

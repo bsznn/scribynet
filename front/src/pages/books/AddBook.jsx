@@ -11,7 +11,7 @@ import headImage from "../../assets/images/form/fond-addbook.jpeg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
-const MAX_DESCRIPTION_LENGTH = 250;
+const MAX_DESCRIPTION_LENGTH = 150;
 
 export const AddBook = () => {
 	const [inputs, setInputs] = useState({
@@ -90,7 +90,7 @@ export const AddBook = () => {
 		}
 
 		if (descriptionError) {
-			return alert("La description ne peut pas dépasser 250 caractères.");
+			return alert("La description ne peut pas dépasser 150 caractères.");
 		}
 
 		const formData = new FormData();

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import "../../../assets/styles/components/home/carousel/carousel.css";
 import defaultCover from "../../../assets/images/default-book.jpg";
+import { NavLink } from "react-router-dom";
 
 export default function Carousel() {
 	const [books, setBooks] = useState([]);
@@ -86,25 +87,34 @@ export default function Carousel() {
 							const coverUrl = book.image?.src?.trim()
 								? `http://localhost:5000/assets/img/${book.image.src.trim()}`
 								: defaultCover;
+
 							return (
-								<div
+								<NavLink
 									key={book._id}
-									className="carousel__item"
-									style={{
-										backgroundImage: `url(${coverUrl})`,
-									}}
-									title={`${book.title} - ${book.userId?.login || "Auteur inconnu"}`}
+									to={`/histoire/${book._id}`}
+									className="carousel__link"
+									title={`${book.title} - ${
+										book.userId?.login || "Auteur inconnu"
+									}`}
 								>
-									<h3 className="carousel__item-title">{book.title}</h3>
-									<p className="carousel__item-author">
-										{book.userId?.login || "Nom auteur non trouvé"}
-									</p>
-								</div>
+									<div
+										className="carousel__item"
+										style={{
+											backgroundImage: `url(${coverUrl})`,
+										}}
+									>
+										<h3 className="carousel__item-title">{book.title}</h3>
+										<p className="carousel__item-author">
+											{book.userId?.login || "Nom auteur non trouvé"}
+										</p>
+									</div>
+								</NavLink>
 							);
 						})
 					) : (
 						<p>Aucun livre trouvé.</p>
 					)}
+
 				</div>
 			</div>
 		</div>

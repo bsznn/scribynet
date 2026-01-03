@@ -24,7 +24,7 @@
 .addbook__section {
 	background: white;
 	padding: 2.5rem 3rem;
-	border-radius: 12px;
+	border-radius: 18px;
 	box-shadow: var(--shadow);
 	background-color: var(--mediumMarron);
 	width: 100%;
@@ -182,7 +182,6 @@
 	cursor: pointer;
 	transition: var(--transition);
 	align-self: center;
-	margin-top: 1rem;
 }
 
 .addbook__button:hover, .addbook__button--continue:hover {
@@ -229,6 +228,7 @@
 
 /* ERREUR SI NON CONNECTÉ */
 .addbook__section--error {
+	position: relative;
 	text-align: center;
 	padding: 3rem;
 	color: var(--darkMarron);
@@ -237,7 +237,7 @@
 .addbook__error-box {
 	background: var(--lightBeige);
 	padding: 2rem;
-	border-radius: 12px;
+	border-radius: 18px;
 	border: 1px solid var(--mediumBeige);
 }
 
@@ -252,5 +252,5 @@
 }
 
 .addbook__link:hover {
-	color: var(--hoverGreen);
+	color: var(--hoverMediumMarron);
 }

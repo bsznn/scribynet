@@ -3,10 +3,13 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../../../assets/styles/components/home/books/component-books.css";
 import defaultImage from "../../../assets/images/default-book.jpg";
+import { useParams } from "react-router-dom";
+
 
 export default function PopularBooks() {
 	const [booksPopulars, setBooksPopulars] = useState([]);
 	const [err, setErr] = useState();
+	const { id } = useParams();
 
 	// Fonction pour récupérer les livres postés par un utilisateur
 	useEffect(() => {
@@ -31,8 +34,14 @@ export default function PopularBooks() {
 				{/* Affichage des livres populaires */}
 				<div className="component-books__list">
 					{booksPopulars.map((oneBookPopular) => (
-						<article className="component-books__item" key={oneBookPopular._id}>
-							<NavLink to={`/`} className="component-books__link">
+						<article
+							className="component-books__item"
+							key={oneBookPopular._id}
+						>
+							<NavLink
+								to={`/histoire/${oneBookPopular._id}`}
+								className="component-books__link"
+							>
 								<span className="component-books__content">
 									<img
 										className="component-books__image"
@@ -42,7 +51,6 @@ export default function PopularBooks() {
 												: defaultImage
 										}
 										alt={oneBookPopular.image?.alt || "Image par défaut"}
-										aria-label="popular-books"
 										title={oneBookPopular.image?.alt || "Image par défaut"}
 									/>
 									<p className="component-books__text">
@@ -53,6 +61,7 @@ export default function PopularBooks() {
 						</article>
 					))}
 				</div>
+
 				{err && <p className="component-books__error">{err}</p>}
 			</section>
 		</div>

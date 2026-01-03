@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../../../assets/styles/components/home/books/component-books.css";
 import defaultImage from "../../../assets/images/default-book.jpg";
+import { useParams } from "react-router-dom";
 
 export default function NewestBooks() {
 	const [newBooks, setNewBooks] = useState([]);
 	const [err, setErr] = useState();
+	const { id } = useParams();
 
 	// Fonction pour récupérer les livres postés par un utilisateur
 	useEffect(() => {
@@ -31,8 +33,14 @@ export default function NewestBooks() {
 				{/* Affichage des livres populaires */}
 				<div className="component-books__list">
 					{newBooks.map((oneNewBook) => (
-						<article className="component-books__item" key={oneNewBook._id}>
-							<NavLink to={`/`} className="component-books__link">
+						<article
+							className="component-books__item"
+							key={oneNewBook._id}
+						>
+							<NavLink
+								to={`/histoire/${oneNewBook._id}`}
+								className="component-books__link"
+							>
 								<span className="component-books__content">
 									<img
 										className="component-books__image"
@@ -42,10 +50,11 @@ export default function NewestBooks() {
 												: defaultImage
 										}
 										alt={oneNewBook.image?.alt || "Image par défaut"}
-										aria-label="newest-books"
 										title={oneNewBook.image?.alt || "Image par défaut"}
 									/>
-									<p className="component-books__text">{oneNewBook.title}</p>
+									<p className="component-books__text">
+										{oneNewBook.title}
+									</p>
 								</span>
 							</NavLink>
 						</article>
