@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../assets/styles/pages/auth/register.css";
+import fondImage from "../../assets/images/fond/3.jpg";
+
 
 export default function Register() {
 	const [inputs, setInputs] = useState({
@@ -33,9 +35,16 @@ export default function Register() {
 			.catch(() => setErr("Une erreur est survenue."));
 	};
 
+	const sectionStyle = {
+		backgroundImage: `url(${fondImage})`,
+		backgroundSize: "cover",
+		backgroundPosition: "center",
+		backgroundRepeat: "no-repeat",
+	};
+
 	return (
 		<main className="register">
-			<section className="register__section">
+			<section className="register__section" style={sectionStyle}>
 				<div className="register__container">
 
 					{/* ===== SIGN UP ===== */}
