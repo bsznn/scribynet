@@ -1,12 +1,11 @@
 /* Conteneur principal */
 .addbook {
 	position: relative; 
-	min-height: 100vh;
-    padding: 3rem 2rem 5rem;	
+	min-height: 90vh;
 	background-color: var(--bodyBeige);
 	display: flex;
 	justify-content: center;
-	align-items: flex-start;
+	align-items: center;
 	font-family: var(--fontRegular);
 	color: var(--darkMarron);
 }
@@ -15,7 +14,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(66, 60, 57, 0.65); /* fond foncé semi-transparent */
+  background: rgba(66, 60, 57, 0.65); 
   z-index: 0;
 }
 
@@ -23,7 +22,8 @@
 /* Section contenant le formulaire */
 .addbook__section {
 	background: white;
-	padding: 2.5rem 3rem;
+	padding: 7.5rem 3rem;
+    margin: 0 1rem;	
 	border-radius: 18px;
 	box-shadow: var(--shadow);
 	background-color: var(--mediumMarron);
@@ -38,7 +38,7 @@
 	font-family: var(--fontTitle);
 	font-size: 2rem;
 	color: var(--lightBeige);
-	margin-bottom: 1.5rem;
+	margin-bottom: 2.5rem;
 	text-align: center;
 	letter-spacing: 1.5px;
 }
@@ -182,6 +182,7 @@
 	cursor: pointer;
 	transition: var(--transition);
 	align-self: center;
+	margin-top: 1rem;
 }
 
 .addbook__button:hover, .addbook__button--continue:hover {
@@ -230,7 +231,7 @@
 .addbook__section--error {
 	position: relative;
 	text-align: center;
-	padding: 3rem;
+    padding: 0 1rem 6rem;
 	color: var(--darkMarron);
 }
 
