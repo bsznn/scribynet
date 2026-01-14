@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../../assets/styles/pages/auth/register.css";
+import "../../assets/styles/pages/auth/form.css";
 import fondImage from "../../assets/images/fond/3.jpg";
 
 
@@ -71,7 +71,7 @@ export default function Register() {
 								onChange={handleChange}
 								required
 							/>
-							<label>Adresse mail</label>
+							<label>Email</label>
 							<span className="bar" />
 						</div>
 

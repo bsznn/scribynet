@@ -1,9 +1,9 @@
 /* ====== CONTAINER GLOBAL ====== */
 .aboutContact {
   min-height: 100vh;
-  background-image: url("https://images.pexels.com/photos/1883377/pexels-photo-1883377.jpeg");
-  background-size: cover;
-  background-position: center;
+  /* background-image: url("https://images.pexels.com/photos/1883377/pexels-photo-1883377.jpeg"); */
+  /* background-size: cover;
+  background-position: center; */
   position: relative;
   font-family: var(--fontRegular);
   color: var(--lightBeige);
@@ -14,7 +14,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(66, 60, 57, 0.75); /* darkMarron */
+  background: rgba(66, 60, 57, 0.65); /* darkMarron */
 }
 
 /* ====== LAYOUT ====== */
@@ -153,7 +153,6 @@
 }
 
 /* ====== BOUTON ====== */
-/* ====== BOUTON ====== */
 .aboutContact__button {
   display:block;
     border-radius: 50px;
@@ -167,8 +166,7 @@
     cursor: pointer;
     transition: var(--transition);
     align-self: center;
-      margin: 2rem auto 0
-x
+    margin: 2rem auto 0;
 }
 
 .aboutContact__button:hover {

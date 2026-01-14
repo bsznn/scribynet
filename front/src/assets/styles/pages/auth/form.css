@@ -1,22 +1,18 @@
 /* ===== GLOBAL ===== */
-.register {
+.register, .login {
 	font-family: var(--fontRegular);
 }
 
 /* ===== BACKGROUND ===== */
-.register__section {
+.register__section, .login__section {
 	min-height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	position: relative;
-
-	/* background-image: url("https://images.pexels.com/photos/12341423/pexels-photo-12341423.jpeg");
-	background-size: cover;
-	background-position: center; */
 }
 
-.register__section::before {
+.register__section::before, .login__section::before {
 	content: "";
 	position: absolute;
 	inset: 0;
@@ -25,7 +21,7 @@
 }
 
 /* ===== CONTAINER ===== */
-.register__container {
+.register__container, .login__container {
 	position: relative;
 	z-index: 2;
 	display: grid;
@@ -35,22 +31,26 @@
 }
 
 /* ===== FORM ===== */
-.register__form {
-	padding: 3rem 2.5rem;
+.register__form, .login__form{
+	padding: 1rem 2.5rem 3rem;
 	background: linear-gradient(
 		145deg,
 		var(--lightBeige),
 		var(--bodyBeige),
 		var(--mediumBeige)
 	);
-  margin: 4rem 1rem 0;
-  border-top-left-radius: 18px;
-  border-top-right-radius: 18px
+	margin: 4rem 1rem 0;
+	border-top-left-radius: 18px;
+	border-top-right-radius: 18px
+}
+
+.login__form {
+	padding: 1.5rem 2.5rem 2.5rem;
 }
 
 /* ===== SIDE PANEL ===== */
-.register__side {
-	padding: 3rem 2.5rem;
+.register__side, .login__side {
+	padding: 1.5rem 2.5rem 2rem;
 	background: var(--mediumMarron);
 	color: var(--lightBeige);
 	display: flex;
@@ -67,18 +67,24 @@
 
 /* ===== TITLES ===== */
 .register__title,
-.register__side h2 {
+.register__side h2,
+.login__title,
+.login__side h2  {
 	font-family: var(--fontTitle);
 	font-size: 1.8rem;
 }
 
-.register__title {
+.register__title, .login__title {
 	color: var(--darkMarron);
 	margin-bottom: 2rem;
 	text-align: center
 }
 
-.register__title::before {
+.register__side h2, .login__side h2 {
+	margin-bottom: 0.5rem;
+}
+
+.register__title::before, .login__title::before {
   content: "◐"; 
   display: block;
   font-size: 2rem;
@@ -87,19 +93,19 @@
 }
 
 /* ===== TEXT ===== */
-.register__side p {
+.register__side p, .login__side p {
 	font-size: 0.9rem;
 	line-height: 1.5;
 	opacity: 0.9;
 }
 
 /* ===== MATERIAL INPUTS ===== */
-.register__field.material {
+.register__field.material, .login__field.material {
 	position: relative;
 	margin-bottom: 2.2rem;
 }
 
-.register__field.material input {
+.register__field.material input, .login__field.material input {
 	width: 100%;
 	border: none;
 	border-bottom: 2px solid rgba(122, 109, 104, 0.35);
@@ -109,11 +115,11 @@
 	color: var(--darkMarron);
 }
 
-.register__field.material input:focus {
+.register__field.material input:focus, .login__field.material input:focus  {
 	outline: none;
 }
 
-.register__field.material label {
+.register__field.material label, .login__field.material label  {
 	position: absolute;
 	left: 0.2rem;
 	top: 50%;
@@ -124,7 +130,7 @@
 	transition: 0.3s ease;
 }
 
-.register__field.material .bar {
+.register__field.material .bar, .login__field.material .bar {
 	position: absolute;
 	left: 0;
 	bottom: 0;
@@ -135,39 +141,45 @@
 }
 
 .register__field.material input:focus ~ label,
-.register__field.material input:valid ~ label {
+.register__field.material input:valid ~ label,
+.login__field.material input:focus ~ label,
+.login__field.material input:valid ~ label  {
 	top: -0.6rem;
 	font-size: 0.75rem;
 	color: var(--darkMarron);
 }
 
-.register__field.material input:focus ~ .bar {
+.register__field.material input:focus ~ .bar, .login__field.material input:focus ~ .bar {
 	width: 100%;
 }
 
 /* ===== BUTTONS ===== */
-.register__button {
+.register__button, .login__button  {
   padding: 0.75rem 2.5rem;
 	border-radius: 50px;
 	border: none;
 	cursor: pointer;
-  display: flex;
-  margin: 0 auto;
-  font-size: 1rem;
+	display: flex;
+	margin: 0 auto;
+	font-size: 1rem;
 	font-family: var(--fontTitle);
 	background: var(--mediumMarron);
 	color: var(--lightBeige);
 	transition: 0.3s ease;
 }
 
-.register__button:hover {
+.login__button {
+	padding: 0.75rem 1.7rem;
+}
+
+.register__button:hover, .login__button:hover {
 	transform: translateY(-2px);
 	background: var(--hoverMediumMarron);
 }
 
-.register__side-button {
+.register__side-button, .login__side-button {
 	margin-top: 1rem;
-	padding: 0.7rem 1.5rem;
+	padding: 0.6rem 1.5rem;
 	border-radius: 50px;
 	border: 2px solid var(--lightBeige);
 	color: var(--lightBeige);
@@ -176,12 +188,16 @@
 	transition: 0.3s ease;
 }
 
-.register__side-button:hover {
+.login__side-button {
+	padding: 0.6rem 2.5rem;
+}
+
+.register__side-button:hover, .login__side-button:hover  {
 	background: var(--lightBeige);
 	color: var(--mediumMarron);
 }
 
-.register__side::after {
+.register__side::after, .login__side::after  {
   content: "◑"; 
   display: block;
   font-size: 2rem;
@@ -191,7 +207,7 @@
 
 
 /* ===== ERROR ===== */
-.register__error {
+.register__error, .login__error {
 	display: block;
 	margin-top: 1rem;
 	text-align: center;
@@ -201,23 +217,28 @@
 
 /* ===== RESPONSIVE ===== */
 @media (min-width: 768px) {
-	.register__container {
+	.register__container, .login__container {
     grid-template-columns: 1fr 1fr;
     border-radius: 18px;
     padding: 0 1rem;
   }
 
-  .register__form, .register__side{
+  .register__form, .register__side, .login__form, .login__side {
     margin: 0;
     border-radius: 0;
   }
 
-  .register__form {
+  .login__form {
+	padding: 4rem 2.5rem 5rem;
+	}
+
+
+  .register__form, .login__form {
     border-bottom-left-radius: 18px;
     border-top-left-radius: 18px;
   }
   
-  .register__side {
+  .register__side, .login__side {
     border-bottom-right-radius: 18px;
     border-top-right-radius: 18px;
   }

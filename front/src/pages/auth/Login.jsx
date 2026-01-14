@@ -2,13 +2,9 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
+import fondImage from "../../assets/images/fond/3.jpg";
 
-import "../../assets/styles/pages/auth/login.css";
-import { GrBackTen } from "react-icons/gr";
-import Ballon from "../../assets/images/form/ballon.jpg";
-import Fond from "../../assets/images/form/fond.jpg";
-import PasswordImage from "../../assets/images/form/password.jpg";
-import UserImage from "../../assets/images/form/user.jpg";
+import "../../assets/styles/pages/auth/form.css";
 
 export default function Login() {
 	const [inputs, setInputs] = useState({
@@ -55,87 +51,64 @@ export default function Login() {
 			});
 	};
 
-	return (
-		<main className="container__login">
-			<div className="login">
-				<section className="login__section">
-					<article className="login__left">
-						<img
-							src={Ballon}
-							alt="formulaire visuel"
-							className="login__ballon"
-							id="ballon1"
-						/>
-						<p className="login__text">
-							Connectez-vous dès maintenant pour profiter de notre plateforme.
-						</p>
-						<img
-							src={Ballon}
-							alt="formulaire visuel"
-							className="login__ballon"
-						/>
-					</article>
+	const sectionStyle = {
+		backgroundImage: `url(${fondImage})`,
+		backgroundSize: "cover",
+		backgroundPosition: "center",
+		backgroundRepeat: "no-repeat",
+	};
 
-					<form onSubmit={handleSubmit} className="login__form">
-						<img src={Fond} alt="formulaire fond" className="login__fond" />
-						<h2 className="login__title login__title--mobile">Connexion</h2>
-						<div className="login__line"></div>
-						<label htmlFor="email" className="login__label">
-							Email
-						</label>
-						<div className="login__blocInput">
-							<img
-								src={UserImage}
-								alt="user icône"
-								className="login__inputImage"
-							/>
+	return (
+		<main className="login">
+			<section className="login__section" style={sectionStyle}>
+				<div className="login__container">
+
+					<form className="login__form" onSubmit={handleSubmit}>
+						<h2 className="login__title">Connexion</h2>
+						<div className="login__field material">
 							<input
-								className="login__input"
 								type="email"
 								name="email"
-								id="email"
-								onChange={handleChange}
 								value={inputs.email}
-								placeholder="azerty@azerty.fr"
+								onChange={handleChange}
+								required
 							/>
+							<label>Email</label>
+							<span className="bar" />
 						</div>
 
-						<label htmlFor="password" className="login__label">
-							Mot de passe
-						</label>
-
-						<div className="login__blocInput">
-							<img
-								src={PasswordImage}
-								alt="password icône"
-								className="login__inputImage"
-							/>
+						<div className="login__field material">
 							<input
-								className="login__input"
 								type="password"
 								name="password"
-								id="password"
-								onChange={handleChange}
 								value={inputs.password}
-								placeholder="Mot de passe"
+								onChange={handleChange}
+								required
 							/>
+							<label>Mot de passe</label>
+							<span className="bar" />
 						</div>
 
-						<div>
-							<button className="login__button">Se connecter</button>
-						</div>
-
-						<p className="login__signup">
-							Pas de compte ?
-							<Link to="/s-inscrire" className="login__signup-link">
-								Inscrivez-vous !
-							</Link>
-						</p>
+						<button className="login__button">Se connecter</button>
 
 						{err && <span className="login__error">{err}</span>}
 					</form>
-				</section>
-			</div>
+
+					{/* ===== SIGN IN SIDE ===== */}
+					<div className="login__side">
+						<h2>Pas de compte ?</h2>
+						<p>
+							Inscrivez-vous pour accéder à votre espace personnel
+							et retrouver vos contenus.
+						</p>
+
+						<Link to="/s-inscrire" className="login__side-button">
+							S'inscrire
+						</Link>
+					</div>
+
+				</div>
+			</section>
 		</main>
 	);
 }

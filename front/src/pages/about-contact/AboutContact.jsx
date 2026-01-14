@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { FiMapPin, FiPhone, FiMail } from "react-icons/fi";
+import fondImage from "../../assets/images/fond/fond-arbre.jpeg";
+
 
 import "../../assets/styles/pages/about-contact/about-contact.css"
 
@@ -35,15 +37,16 @@ export default function AboutContact() {
     }
     };
 
-      const sectionStyle = {
-        backgroundImage: `url(https://images.pexels.com/photos/1883377/pexels-photo-1883377.jpeg?_gl=1*1493kz*_ga*NDI0NjMwMjIzLjE3NjYwNjA1NTk.*_ga_8JE65Q40S6*czE3NjY2ODU1NDYkbzgkZzEkdDE3NjY2ODg5MjckajM1JGwwJGgw)`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      };
+    const sectionStyle = {
+      backgroundSize: "cover",
+      backgroundImage : `url(${fondImage})`,
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+    };
+
 
   return (
-    <main className="aboutContact">
+    <main className="aboutContact" style={sectionStyle}>
       <div className="aboutContact__content">
        <section className="aboutContact__infos">
         <h1 className="aboutContact__title">Nos coordonnées</h1>
