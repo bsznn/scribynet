@@ -12,6 +12,8 @@ import { Readers } from "./pages/readers/Readers";
 import "./app.css";
 import AboutContact from "./pages/about-contact/AboutContact";
 import Book from "./pages/books/Book";
+import ChapterUpdate from "./components/chapters/ChapterUpdate";
+import ChapterAdd from "./components/chapters/AddChapter";
 
 function App() {
 	return (
@@ -28,6 +30,11 @@ function App() {
 				<Route path="/publier-histoire" element={<AddBook />} />
 				<Route path="/modifier-histoire" element={<EditBook />} />
 				<Route path="/a-propos" element={<AboutContact />} />
+				<Route
+					path="/modifier-chapitre/:bookId/:chapterId"
+					element={<ChapterUpdate />}
+				/>
+				<Route path="/ajouter-chapitre/:bookId" element={<ChapterAdd />} />
 			</Routes>
 		</div>
 	);

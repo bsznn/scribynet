@@ -20,13 +20,12 @@
 }
 
 .books__header::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(66, 60, 57, 0.65);
-  z-index: 0;
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: rgba(66, 60, 57, 0.65);
+	z-index: 0;
 }
-
 
 .books__headerContent {
 	padding: 5rem;
@@ -118,7 +117,9 @@
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
-	transition: transform 0.25s ease, box-shadow 0.25s ease;
+	transition:
+		transform 0.25s ease,
+		box-shadow 0.25s ease;
 }
 
 .books__card:hover {
@@ -183,7 +184,6 @@
 	height: 100px;
 }
 
-
 /* =========================
    CATEGORIES
 ========================= */
@@ -218,54 +218,54 @@
 }
 
 .books__dates {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 12px;
-  font-size: 0.8rem;
-  color: var(--mediumMarron);
-  font-family: var(--fontRegular);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-top: 12px;
+	font-size: 0.8rem;
+	color: var(--mediumMarron);
+	font-family: var(--fontRegular);
 }
 
 /* Dates */
 .books__dates span {
-  white-space: nowrap;
-  opacity: 0.85;
+	white-space: nowrap;
+	opacity: 0.85;
 }
 
 /* Actions (icônes) */
 .books__actions {
-  display: flex;
-  justify-content:center;
-  gap: 4px;
-  list-style: none;
-  padding: 0;
-  margin-top: 10px;
+	display: flex;
+	justify-content: center;
+	gap: 4px;
+	list-style: none;
+	padding: 0;
+	margin-top: 10px;
 }
 
 .books__icon-btn {
-  background: transparent;
-  border: none;
-  color: var(--darkMarron);
-  font-size: 1.1rem;
-  cursor: pointer;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    var(--transitionColor),
-    transform 0.2s ease;
+	background: transparent;
+	border: none;
+	color: var(--darkMarron);
+	font-size: 1.1rem;
+	cursor: pointer;
+	padding: 4px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition:
+		var(--transitionColor),
+		transform 0.2s ease;
 }
 
 .books__icon-btn:hover {
-  transform: scale(1.15);
-  color: var(--hoverDarkMarron);
+	transform: scale(1.15);
+	color: var(--hoverDarkMarron);
 }
 
 .books__icon-btn.delete:hover {
-  color: var(--hoverDarkMarron);
+	color: var(--hoverDarkMarron);
 }
 
 /* =========================
@@ -293,7 +293,7 @@
 
 .books__button:hover:not(:disabled) {
 	background-color: var(--darkMarron);
-	color: var(--lightBeige)
+	color: var(--lightBeige);
 }
 
 .books__button:disabled {
@@ -307,17 +307,16 @@
 		margin-bottom: 3rem;
 	}
 
-	.books__headerContent, .books__list {
-        width: 1100px;
-        margin: 0 auto;	
+	.books__headerContent,
+	.books__list {
+		width: 1100px;
+		margin: 0 auto;
 	}
 }
 
 @media (min-width: 1400px) {
-	.books__headerContent, .books__list {
-        width: 1265px;
+	.books__headerContent,
+	.books__list {
+		width: 1265px;
 	}
 }
-
-
-

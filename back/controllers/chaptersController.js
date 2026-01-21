@@ -6,21 +6,23 @@ export const addChapter = async (req, res) => {
 		const { bookId } = req.params;
 		const book = await Book.findById(bookId);
 
-		// Vérifier si l'utilisateur est autorisé à ajouter un chapitre
+		if (!book) {
+			return res.status(404).json({ message: "Livre non trouvé" });
+		}
+
 		if (!bookId || !req.userId) {
 			return res.status(401).json({ message: "Non autorisé" });
 		}
 
-		// Vérifier si l'utilisateur est l'auteur du livre
-		if (book.userId !== req.userId) {
+		if (book.userId.toString() !== req.userId) {
 			throw new Error(
 				"Vous ne pouvez ajouter des chapitres qu'à vos propres livres",
 			);
 		}
 
 		const { chapters } = req.body;
+		console.log("chapters:", chapters);
 
-		// Vérifier si le tableau chapters existe et contient des données
 		if (!chapters || !Array.isArray(chapters) || chapters.length === 0) {
 			return res.status(400).json({
 				message: "Les données du chapitre sont manquantes ou invalides",
@@ -29,7 +31,6 @@ export const addChapter = async (req, res) => {
 
 		const { chapterTitle, chapterContent } = chapters[0];
 
-		// Vérifier si les champs du chapitre sont vides
 		if (
 			!chapterTitle ||
 			!chapterContent ||
@@ -44,14 +45,14 @@ export const addChapter = async (req, res) => {
 		const chapter = {
 			content: chapterContent,
 			title: chapterTitle,
-			date: new Date(), // Date actuelle du serveur
+			date: new Date(),
 		};
 
 		await Book.updateOne({ _id: bookId }, { $push: { chapters: chapter } });
 
 		res.status(200).json({ message: "Le chapitre a bien été ajouté" });
 	} catch (error) {
-		console.log(error);
+		console.error("Erreur dans addChapter:", error);
 		res.status(500).json({
 			message: "Impossible d'ajouter de nouveaux chapitres",
 			error: error.message,
@@ -63,34 +64,35 @@ export const addChapter = async (req, res) => {
 export const updateChapter = async (req, res) => {
 	try {
 		const { bookId, chapterId } = req.params;
-		const { chapterTitle, chapterContent } = req.body.chapters[0];
+		const { title, content } = req.body.chapters[0];
 
 		const book = await Book.findById(bookId);
+		if (!book) {
+			return res.status(404).json({ message: "Livre introuvable" });
+		}
 
 		const chapter = book.chapters.id(chapterId);
-
-		// Vérifier si le chapitre existe
 		if (!chapter) {
 			return res.status(404).json({ message: "Ce chapitre est introuvable" });
 		}
 
-		// Mettre à jour les champs du chapitre si fournis dans la requête
-		if (chapterTitle) {
-			chapter.title = chapterTitle;
-		}
+		console.log("Avant:", chapter);
 
-		if (chapterContent) {
-			chapter.content = chapterContent;
-		}
+		chapter.title = title;
+		chapter.content = content;
 
 		await book.save();
 
-		res
-			.status(200)
-			.json({ message: "Le chapitre a été modifié avec succès !" });
+		console.log("Après:", chapter);
+
+		res.status(200).json({
+			message: "Le chapitre a été modifié avec succès !",
+		});
 	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: "Impossible de modifier le chapitre !" });
+		console.error(error);
+		res.status(500).json({
+			message: "Impossible de modifier le chapitre !",
+		});
 	}
 };
 

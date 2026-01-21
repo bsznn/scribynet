@@ -1,209 +1,204 @@
 /* ====== CONTAINER GLOBAL ====== */
 .aboutContact {
-  min-height: 90vh;
-  position: relative;
-  font-family: var(--fontRegular);
-  color: var(--lightBeige);
+	min-height: 90vh;
+	position: relative;
+	font-family: var(--fontRegular);
+	color: var(--lightBeige);
 }
 
 /* Overlay sombre marron */
 .aboutContact::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(66, 60, 57, 0.65); 
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: rgba(66, 60, 57, 0.65);
 }
 
 /* ====== LAYOUT ====== */
 .aboutContact__content {
-  position: relative;
-  max-width: 1200px;
-  margin: 0 auto;
-  grid-template-columns: 1fr;
-  gap: 40px;
-  padding: 80px 24px 90px;
+	position: relative;
+	max-width: 1200px;
+	margin: 0 auto;
+	grid-template-columns: 1fr;
+	gap: 40px;
+	padding: 80px 24px 90px;
 }
 
 /* ====== INFOS CONTACT ====== */
 .aboutContact__infos {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 28px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 28px;
 }
 
 .aboutContact__infoItem {
-  display: flex;
-  align-items: flex-start;
-  gap: 18px;
-  padding: 18px;
-  border-radius: 14px;
-  background: rgba(245, 241, 230, 0.08); /* lightBeige translucide */
-  transition: var(--transition);
+	display: flex;
+	align-items: flex-start;
+	gap: 18px;
+	padding: 18px;
+	border-radius: 14px;
+	background: rgba(245, 241, 230, 0.08); /* lightBeige translucide */
+	transition: var(--transition);
 }
 
 .aboutContact__infoItem:hover {
-  background: rgba(245, 241, 230, 0.15);
+	background: rgba(245, 241, 230, 0.15);
 }
 
 /* ====== MODERN INFOS ====== */
 .aboutContact__infos {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
 }
 
 .aboutContact__infoCard {
-  display: grid;
-  grid-template-columns: 72px 1fr;
-  gap: 24px;
-  padding: 26px 28px;
-  background: rgba(245, 241, 230, 0.08);
-  border-radius: 18px;
-  backdrop-filter: blur(6px);
+	display: grid;
+	grid-template-columns: 72px 1fr;
+	gap: 24px;
+	padding: 26px 28px;
+	background: rgba(245, 241, 230, 0.08);
+	border-radius: 18px;
+	backdrop-filter: blur(6px);
 }
 
 .aboutContact__iconWrapper {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(
-    145deg,
-    var(--mediumBeige),
-    var(--darkBeige)
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--darkMarron);
-  font-size: 1.8rem;
-  align-self: center;
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	background: linear-gradient(145deg, var(--mediumBeige), var(--darkBeige));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--darkMarron);
+	font-size: 1.8rem;
+	align-self: center;
 }
 
 .aboutContact__label {
-  font-family: var(--fontTitle);
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--darkBeige);
-  display: block;
-  margin-bottom: 6px;
+	font-family: var(--fontTitle);
+	font-size: 0.75rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--darkBeige);
+	display: block;
+	margin-bottom: 6px;
 }
 
 .aboutContact__infoCard p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--lightBeige);
+	font-size: 0.95rem;
+	line-height: 1.6;
+	color: var(--lightBeige);
 }
-
 
 /* ====== CARD CONTACT ====== */
 .aboutContact__contact {
-  background: var(--lightBeige);
-  color: var(--darkMarron);
-  border-radius: 18px;
-  box-shadow: var(--shadow);
-  padding: 32px;
-  margin-top: 30px;
+	background: var(--lightBeige);
+	color: var(--darkMarron);
+	border-radius: 18px;
+	box-shadow: var(--shadow);
+	padding: 32px;
+	margin-top: 30px;
 }
 
 .aboutContact__subtitle {
-  font-family: var(--fontTitle);
-  font-size: 2rem;
-  margin-bottom: 28px;
-  color: var(--mediumMarron);
+	font-family: var(--fontTitle);
+	font-size: 2rem;
+	margin-bottom: 28px;
+	color: var(--mediumMarron);
 }
 
 /* ====== FORM ====== */
 .aboutContact__field {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 20px;
 }
 
 .aboutContact__label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 6px;
+	font-size: 0.9rem;
+	font-weight: 600;
+	margin-bottom: 6px;
 }
 
 .aboutContact__input,
 .aboutContact__textarea {
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid var(--mediumBeige);
-  padding: 10px 6px;
-  font-size: 0.95rem;
-  font-family: var(--fontRegular);
-  color: var(--darkMarron);
-  outline: none;
-  transition: border-color var(--transition);
+	background: transparent;
+	border: none;
+	border-bottom: 2px solid var(--mediumBeige);
+	padding: 10px 6px;
+	font-size: 0.95rem;
+	font-family: var(--fontRegular);
+	color: var(--darkMarron);
+	outline: none;
+	transition: border-color var(--transition);
 }
 
 .aboutContact__input::placeholder,
 .aboutContact__textarea::placeholder {
-  color: var(--mediumBeige);
+	color: var(--mediumBeige);
 }
 
 .aboutContact__input:focus,
 .aboutContact__textarea:focus {
-  border-bottom-color: var(--darkBeige);
+	border-bottom-color: var(--darkBeige);
 }
 
 /* ====== BOUTON ====== */
 .aboutContact__button {
-  display:block;
-    border-radius: 50px;
-    background-color: var(--mediumMarron);
-    color: var(--lightBeige);
-    border: none;
-    padding: 0.75rem 2.5rem;
-    font-family: var(--fontTitle);
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: var(--transition);
-    align-self: center;
-    margin: 2rem auto 0;
+	display: block;
+	border-radius: 50px;
+	background-color: var(--mediumMarron);
+	color: var(--lightBeige);
+	border: none;
+	padding: 0.75rem 2.5rem;
+	font-family: var(--fontTitle);
+	font-weight: 600;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: var(--transition);
+	align-self: center;
+	margin: 2rem auto 0;
 }
 
 .aboutContact__button:hover {
-  background-color: var(--hoverMediumMarron);
-  transform: translateY(-2px);
+	background-color: var(--hoverMediumMarron);
+	transform: translateY(-2px);
 }
 
 /* ====== STATUS MESSAGE ====== */
 .aboutContact__status {
-  margin-top: 16px;
-  font-size: 0.9rem;
-  color: var(--mediumMarron);
+	margin-top: 16px;
+	font-size: 0.9rem;
+	color: var(--mediumMarron);
 }
 
 /* ====== MAP ====== */
 .aboutContact__map {
-  grid-column: 1 / -1;
+	grid-column: 1 / -1;
 }
 
 .aboutContact__map .aboutContact__subtitle {
-  color: var(--lightBeige)
+	color: var(--lightBeige);
 }
 
 .aboutContact__mapWrapper {
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: var(--shadow);
+	border-radius: 14px;
+	overflow: hidden;
+	box-shadow: var(--shadow);
 }
 
 /* ====== RESPONSIVE ====== */
 @media (min-width: 990px) {
-  .aboutContact__content {
-    padding: 100px 24px 80px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-  }
+	.aboutContact__content {
+		padding: 100px 24px 80px;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 64px;
+	}
 
-  .aboutContact__contact {
-      padding: 42px;
-  }
+	.aboutContact__contact {
+		padding: 42px;
+	}
 }

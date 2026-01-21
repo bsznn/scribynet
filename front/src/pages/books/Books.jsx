@@ -9,7 +9,6 @@ import "../../assets/styles/pages/books/books.css";
 import fondImage from "../../assets/images/fond/fond-books.jpeg";
 import defaultImage from "../../assets/images/default-bookWhite.jpg";
 
-
 export default function Books() {
 	const [books, setBooks] = useState([]);
 	const [currentBooks, setCurrentBooks] = useState([]);
@@ -21,7 +20,6 @@ export default function Books() {
 
 	const auth = useAuth();
 	const navigate = useNavigate();
-
 
 	const BOOKS_PER_PAGE = 12;
 
@@ -53,9 +51,7 @@ export default function Books() {
 		if (filter === "category") {
 			return (
 				book.categoryId &&
-				book.categoryId.some((cat) =>
-					cat.name.toLowerCase().includes(value)
-				)
+				book.categoryId.some((cat) => cat.name.toLowerCase().includes(value))
 			);
 		}
 
@@ -98,13 +94,13 @@ export default function Books() {
 
 	const handleDeleteBook = (id) => {
 		const confirmDelete = window.confirm(
-			"Êtes-vous sûr de vouloir supprimer ce livre ?"
+			"Êtes-vous sûr de vouloir supprimer cette histoire?",
 		);
 
 		if (!confirmDelete) return;
 
 		axios
-			.delete(`http://localhost:5000/books/delete/${id}/${auth.user._id}`, {
+			.delete(`http://localhost:5000/books/delete/${id}/${auth.user.id}`, {
 				headers: {
 					Authorization: `Bearer ${auth.token}`,
 				},
@@ -113,7 +109,7 @@ export default function Books() {
 				setBooks((prev) => prev.filter((book) => book._id !== id));
 			})
 			.catch(() => {
-				alert("Impossible de supprimer le livre !");
+				alert("Impossible de supprimer l'histoire !");
 			});
 	};
 
@@ -141,7 +137,6 @@ export default function Books() {
 							<option value="category">Catégorie</option>
 						</select>
 					</section>
-
 				</article>
 			</section>
 
@@ -153,9 +148,8 @@ export default function Books() {
 				)}
 
 				{currentBooks.map((oneBook) => (
-
 					<NavLink
-						to={`/livre/${oneBook._id}`}
+						to={`/histoire/${oneBook._id}`}
 						key={oneBook._id}
 						className="books__link"
 					>
@@ -173,9 +167,7 @@ export default function Books() {
 									title={oneBook.image?.alt || "Image par défaut"}
 								/>
 								<div className="books__meta">
-									<h3 className="books__card-title">
-										{oneBook.title}
-									</h3>
+									<h3 className="books__card-title">{oneBook.title}</h3>
 									<span className="books__author">
 										Par {oneBook.userId.login}
 									</span>
@@ -185,16 +177,13 @@ export default function Books() {
 							<div className="books__card-body">
 								<p className="books__description">
 									{oneBook.description.length > 150
-									? oneBook.description.slice(0, 150) + "..."
-									: oneBook.description}								
+										? oneBook.description.slice(0, 150) + "..."
+										: oneBook.description}
 								</p>
 
 								<div className="books__categories">
 									{oneBook.categoryId?.map((cat, index) => (
-										<span
-											key={index}
-											className="books__category"
-										>
+										<span key={index} className="books__category">
 											#{cat.name}
 										</span>
 									))}
@@ -203,8 +192,7 @@ export default function Books() {
 								<div className="books__settings">
 									<div className="books__dates">
 										<span>
-											Créé le{" "}
-											{new Date(oneBook.createdAt).toLocaleDateString()}
+											Créé le {new Date(oneBook.createdAt).toLocaleDateString()}
 										</span>
 										<span>
 											Modifié le{" "}
@@ -215,35 +203,36 @@ export default function Books() {
 									{auth?.user?.id && oneBook?.userId?._id === auth.user.id && (
 										<ul className="books__actions">
 											<li>
-											<button
-												className="books__icon-btn"
-												onClick={(e) => {
-												navigate(`/modifier-histoire/${oneBook._id}`);
-												}}
-												title="Modifier"
-												aria-label="Modifier le livre"
-											>
-												<FiEdit />
-											</button>
+												<button
+													className="books__icon-btn"
+													onClick={(e) => {
+														navigate(`/modifier-histoire/${oneBook.id}`);
+													}}
+													title="Modifier"
+													aria-label="Modifier le livre"
+												>
+													<FiEdit />
+												</button>
 											</li>
 
 											<li>
-											<button
-												className="books__icon-btn delete"
-												onClick={(e) => {
-												handleDeleteBook(oneBook._id);
-												}}
-												title="Supprimer"
-												aria-label="Supprimer le livre"
-											>
-												<FiTrash2 />
-											</button>
+												<button
+													className="books__icon-btn delete"
+													onClick={(e) => {
+														e.preventDefault();
+														e.stopPropagation();
+														handleDeleteBook(oneBook.id);
+													}}
+													title="Supprimer"
+													aria-label="Supprimer le livre"
+												>
+													<FiTrash2 />
+												</button>
 											</li>
 										</ul>
 									)}
 								</div>
 							</div>
-
 						</article>
 					</NavLink>
 				))}
