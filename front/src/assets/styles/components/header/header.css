@@ -23,7 +23,6 @@ body {
 	position: relative;
 	height: 40px;
 	color: var(--lightBeige);
-	animation: slideDown 0.5s ease-in-out;
 
 	svg {
 		width: 30px;
@@ -178,7 +177,6 @@ body {
 	list-style: none;
 	z-index: 9998;
 	overflow: hidden;
-	animation: slideDown 0.4s ease forwards;
 }
 
 .header__nav-link {
@@ -336,16 +334,5 @@ body {
 @media (min-width: 1400px) {
 	.header__content {
 		width: 1250px;
-	}
-}
-
-@keyframes slideDown {
-	from {
-		opacity: 0;
-		transform: translateY(-20px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
 	}
 }

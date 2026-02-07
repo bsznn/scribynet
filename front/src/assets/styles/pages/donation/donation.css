@@ -1,0 +1,184 @@
+/* donation.css */
+
+.donation {
+	background-color: var(--bodyBeige);
+	font-family: var(--fontRegular);
+	color: var(--mediumMarron);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+
+.donation::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: rgba(66, 60, 57, 0.65);
+}
+
+.donation__area {
+	position: relative;
+	z-index: 1;
+	background: var(--bodyBeige); /* fond clair beige */
+	font-family: var(--fontRegular);
+	color: var(--darkMarron);
+	margin: 4rem 0;
+}
+
+.donation__content {
+	position: relative;
+	background-color: var(--bodyBeige);
+	min-height: 86vh;
+	padding: 1rem 1.5rem 3rem;
+}
+
+.donation__title {
+	font-family: var(--fontTitle);
+	font-weight: 700;
+	font-size: 2rem;
+	color: var(--darkMarron);
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+.donation__description {
+	font-family: var(--fontRegular);
+	font-size: 1.2rem;
+	line-height: 1.5;
+	margin-bottom: 20px;
+	color: var(--mediumMarron);
+	white-space: pre-line;
+	text-align: justify;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.donation__label {
+	font-weight: 600;
+	font-size: 1rem;
+	color: var(--darkMarron);
+}
+
+.donation__textarea {
+	min-height: 100px;
+	font-family: var(--fontRegular);
+	font-size: 1rem;
+	color: var(--mediumMarron);
+	border: 1.8px solid var(--mediumBeige);
+	border-radius: 8px;
+	resize: vertical;
+	transition: var(--transition);
+}
+
+.donation__textarea:focus {
+	outline: none;
+	border-color: var(--darkMarron);
+}
+
+.donation__select {
+	padding: 10px 12px;
+	font-size: 1rem;
+	font-family: var(--fontRegular);
+	border-radius: 8px;
+	border: 1.8px solid var(--mediumBeige);
+	color: var(--mediumMarron);
+	appearance: none;
+	background-color: var(--lightBeige);
+	transition: var(--transition);
+	cursor: pointer;
+}
+
+.donation__select:focus {
+	outline: none;
+	border-color: var(--darkMarron);
+}
+
+.donation__input {
+	padding: 10px 12px;
+	font-size: 1rem;
+	font-family: var(--fontRegular);
+	border-radius: 8px;
+	border: 1.8px solid var(--mediumBeige);
+	color: var(--mediumMarron);
+	transition: var(--transition);
+}
+
+.donation__input:focus {
+	outline: none;
+	border-color: var(--darkMarron);
+}
+
+.donation__help-text {
+	font-size: 0.9rem;
+	color: var(--darkMarron);
+	font-style: italic;
+	text-align: center;
+	margin-top: 5px;
+}
+
+.donation__submit {
+	display: flex;
+	border-radius: 50px;
+	background-color: var(--mediumMarron);
+	color: var(--lightBeige);
+	border: none;
+	padding: 0.75rem 2.5rem;
+	font-family: var(--fontTitle);
+	font-weight: 600;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: var(--transition);
+	align-self: center;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.donation__submit:hover {
+	background-color: var(--hoverMediumMarron);
+	transform: translateY(-2px);
+}
+
+/* Styles de base (mobile-first) : on garde ceux donnés précédemment */
+
+/* ------------------- */
+/* LAYOUT TABLETTE+DESKTOP */
+/* ------------------- */
+@media (min-width: 768px) {
+	.donation__area {
+		width: 100%;
+	}
+	.donation__content {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		justify-content: center;
+		margin: 0 auto;
+		align-items: center;
+		gap: 0 40px;
+		padding: 40px 30px;
+		max-width: 900px;
+	}
+
+	/* Le texte (h3 + p) à gauche */
+	.donation__title,
+	.gift__description {
+		grid-column: 1 / 2;
+		align-self: start;
+	}
+
+	/* Le formulaire à droite */
+	form {
+		grid-column: 2 / 3;
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* Centrer verticalement si tu veux */
+	.donation__content {
+		align-items: center;
+	}
+}

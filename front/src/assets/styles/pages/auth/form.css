@@ -1,10 +1,12 @@
 /* ===== GLOBAL ===== */
-.register, .login {
+.register,
+.login {
 	font-family: var(--fontRegular);
 }
 
 /* ===== BACKGROUND ===== */
-.register__section, .login__section {
+.register__section,
+.login__section {
 	min-height: 90vh;
 	display: flex;
 	align-items: center;
@@ -12,7 +14,8 @@
 	position: relative;
 }
 
-.register__section::before, .login__section::before {
+.register__section::before,
+.login__section::before {
 	content: "";
 	position: absolute;
 	inset: 0;
@@ -21,17 +24,19 @@
 }
 
 /* ===== CONTAINER ===== */
-.register__container, .login__container {
+.register__container,
+.login__container {
 	position: relative;
 	z-index: 2;
 	display: grid;
-  	grid-template-columns: 1fr;
+	grid-template-columns: 1fr;
 	max-width: 820px;
 	width: 100%;
 }
 
 /* ===== FORM ===== */
-.register__form, .login__form{
+.register__form,
+.login__form {
 	padding: 1rem 2.5rem 3rem;
 	background: linear-gradient(
 		145deg,
@@ -41,7 +46,7 @@
 	);
 	margin: 4rem 1rem 0;
 	border-top-left-radius: 18px;
-	border-top-right-radius: 18px
+	border-top-right-radius: 18px;
 }
 
 .login__form {
@@ -49,7 +54,8 @@
 }
 
 /* ===== SIDE PANEL ===== */
-.register__side, .login__side {
+.register__side,
+.login__side {
 	padding: 1.5rem 2.5rem 2rem;
 	background: var(--mediumMarron);
 	color: var(--lightBeige);
@@ -59,53 +65,58 @@
 	align-items: center;
 	text-align: center;
 	order: 1;
-  	margin: 0 1rem 4rem;
+	margin: 0 1rem 4rem;
 	border-bottom-left-radius: 18px;
-  	border-bottom-right-radius: 18px
-	
+	border-bottom-right-radius: 18px;
 }
 
 /* ===== TITLES ===== */
 .register__title,
 .register__side h2,
 .login__title,
-.login__side h2  {
+.login__side h2 {
 	font-family: var(--fontTitle);
 	font-size: 1.8rem;
 }
 
-.register__title, .login__title {
+.register__title,
+.login__title {
 	color: var(--darkMarron);
 	margin-bottom: 2rem;
-	text-align: center
+	text-align: center;
 }
 
-.register__side h2, .login__side h2 {
+.register__side h2,
+.login__side h2 {
 	margin-bottom: 0.5rem;
 }
 
-.register__title::before, .login__title::before {
-  content: "◐"; 
-  display: block;
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-  color: var(--darkMarron)
+.register__title::before,
+.login__title::before {
+	content: "◐";
+	display: block;
+	font-size: 2rem;
+	margin-bottom: 0.5rem;
+	color: var(--darkMarron);
 }
 
 /* ===== TEXT ===== */
-.register__side p, .login__side p {
+.register__side p,
+.login__side p {
 	font-size: 0.9rem;
 	line-height: 1.5;
 	opacity: 0.9;
 }
 
 /* ===== MATERIAL INPUTS ===== */
-.register__field.material, .login__field.material {
+.register__field.material,
+.login__field.material {
 	position: relative;
 	margin-bottom: 2.2rem;
 }
 
-.register__field.material input, .login__field.material input {
+.register__field.material input,
+.login__field.material input {
 	width: 100%;
 	border: none;
 	border-bottom: 2px solid rgba(122, 109, 104, 0.35);
@@ -115,11 +126,13 @@
 	color: var(--darkMarron);
 }
 
-.register__field.material input:focus, .login__field.material input:focus  {
+.register__field.material input:focus,
+.login__field.material input:focus {
 	outline: none;
 }
 
-.register__field.material label, .login__field.material label  {
+.register__field.material label,
+.login__field.material label {
 	position: absolute;
 	left: 0.2rem;
 	top: 50%;
@@ -130,7 +143,8 @@
 	transition: 0.3s ease;
 }
 
-.register__field.material .bar, .login__field.material .bar {
+.register__field.material .bar,
+.login__field.material .bar {
 	position: absolute;
 	left: 0;
 	bottom: 0;
@@ -143,19 +157,21 @@
 .register__field.material input:focus ~ label,
 .register__field.material input:valid ~ label,
 .login__field.material input:focus ~ label,
-.login__field.material input:valid ~ label  {
+.login__field.material input:valid ~ label {
 	top: -0.6rem;
 	font-size: 0.75rem;
 	color: var(--darkMarron);
 }
 
-.register__field.material input:focus ~ .bar, .login__field.material input:focus ~ .bar {
+.register__field.material input:focus ~ .bar,
+.login__field.material input:focus ~ .bar {
 	width: 100%;
 }
 
 /* ===== BUTTONS ===== */
-.register__button, .login__button  {
-  padding: 0.75rem 2.5rem;
+.register__button,
+.login__button {
+	padding: 0.75rem 2.5rem;
 	border-radius: 50px;
 	border: none;
 	cursor: pointer;
@@ -172,12 +188,14 @@
 	padding: 0.75rem 1.7rem;
 }
 
-.register__button:hover, .login__button:hover {
+.register__button:hover,
+.login__button:hover {
 	transform: translateY(-2px);
 	background: var(--hoverMediumMarron);
 }
 
-.register__side-button, .login__side-button {
+.register__side-button,
+.login__side-button {
 	margin-top: 1rem;
 	padding: 0.6rem 1.5rem;
 	border-radius: 50px;
@@ -192,22 +210,24 @@
 	padding: 0.6rem 2.5rem;
 }
 
-.register__side-button:hover, .login__side-button:hover  {
+.register__side-button:hover,
+.login__side-button:hover {
 	background: var(--lightBeige);
 	color: var(--mediumMarron);
 }
 
-.register__side::after, .login__side::after  {
-  content: "◑"; 
-  display: block;
-  font-size: 2rem;
-  margin-top: 1rem;
-  color: var(--lightBeige)
+.register__side::after,
+.login__side::after {
+	content: "◑";
+	display: block;
+	font-size: 2rem;
+	margin-top: 1rem;
+	color: var(--lightBeige);
 }
 
-
 /* ===== ERROR ===== */
-.register__error, .login__error {
+.register__error,
+.login__error {
 	display: block;
 	margin-top: 1rem;
 	text-align: center;
@@ -217,29 +237,36 @@
 
 /* ===== RESPONSIVE ===== */
 @media (min-width: 768px) {
-	.register__container, .login__container {
-    grid-template-columns: 1fr 1fr;
-    border-radius: 18px;
-    padding: 0 1rem;
-  }
-
-  .register__form, .register__side, .login__form, .login__side {
-    margin: 0;
-    border-radius: 0;
-  }
-
-  .login__form {
-	padding: 4rem 2.5rem 5rem;
+	.register__container,
+	.login__container {
+		display: flex;
+		border-radius: 18px;
+		padding: 0 1rem;
 	}
 
+	.register__form,
+	.register__side,
+	.login__form,
+	.login__side {
+		margin: 0;
+		border-radius: 0;
+		width: 50%;
+	}
 
-  .register__form, .login__form {
-    border-bottom-left-radius: 18px;
-    border-top-left-radius: 18px;
-  }
-  
-  .register__side, .login__side {
-    border-bottom-right-radius: 18px;
-    border-top-right-radius: 18px;
-  }
+	.login__form {
+		padding: 4rem 2.5rem 5rem;
+	}
+
+	.register__form,
+	.login__form {
+		border-bottom-left-radius: 18px;
+		border-top-left-radius: 18px;
+		width: 50%;
+	}
+
+	.register__side,
+	.login__side {
+		border-bottom-right-radius: 18px;
+		border-top-right-radius: 18px;
+	}
 }

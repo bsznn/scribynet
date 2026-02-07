@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { AiOutlineHome, AiOutlineLogin } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import { AiOutlineLogin } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoMdLogOut } from "react-icons/io";
 import { RiMenu3Fill } from "react-icons/ri";
@@ -123,7 +123,11 @@ export default function Header() {
 				</section>
 
 				<div className="header__right-group">
-					<NavLink to="/faire-don" className="header__don-mobile">
+					<NavLink
+						to="/faire-don"
+						className="header__don-mobile"
+						onClick={closeMenu}
+					>
 						<span>Don</span>
 					</NavLink>
 					{auth.user ? (
@@ -137,7 +141,11 @@ export default function Header() {
 
 								<span className="header__user-text">{auth.user.login}</span>
 							</div>
-							<button onClick={handleLogout} className="header__dropdown-item">
+							<button
+								type="button"
+								onClick={handleLogout}
+								className="header__dropdown-item"
+							>
 								<span className="header__user-text">Déconnexion</span>{" "}
 								<IoMdLogOut />
 							</button>

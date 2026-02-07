@@ -18,6 +18,7 @@ import AddComment from "../../components/comments/AddComment";
 import Comments from "../../components/comments/Comments";
 
 import "../../assets/styles/pages/books/book.css";
+import fondImage from "../../assets/images/fond/fond-book.jpeg";
 
 const Book = () => {
 	const [book, setBook] = useState(null);
@@ -107,8 +108,7 @@ const Book = () => {
 	};
 
 	const sectionStyle = {
-		backgroundImage:
-			"url(https://images.pexels.com/photos/8858784/pexels-photo-8858784.jpeg?_gl=1*5ejgrl*_ga*NDI0NjMwMjIzLjE3NjYwNjA1NTk.*_ga_8JE65Q40S6*czE3NjkxMDgwOTMkbzE0JGcxJHQxNzY5MTA4MzQ3JGoyJGwwJGgw)",
+		backgroundImage: `url(${fondImage})`,
 		backgroundSize: "cover",
 		backgroundPosition: "center",
 		backgroundRepeat: "no-repeat",

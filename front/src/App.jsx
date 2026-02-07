@@ -15,9 +15,9 @@ import AboutContact from "./pages/about-contact/AboutContact";
 import Book from "./pages/books/Book";
 import ChapterUpdate from "./components/chapters/ChapterUpdate";
 import ChapterAdd from "./components/chapters/AddChapter";
-import Donation from "./pages/gifts/Donation";
-import DonationSuccess from "./pages/gifts/DonationSuccess";
-import DonationCancel from "./pages/gifts/DonationCancel";
+import Donation from "./pages/donation/Donation";
+import DonationSuccess from "./pages/donation/DonationSuccess";
+import DonationCancel from "./pages/donation/DonationCancel";
 
 const Home = lazy(() => import("./pages/home/Home"));
 
