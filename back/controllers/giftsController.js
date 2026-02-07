@@ -5,7 +5,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const getAllGifts = async (req, res) => {
 	try {
-		const gifts = await Gift.find().populate("senderId receiverId");
+		const gifts = await Gift.find().populate("senderId");
 		res.status(200).json(gifts);
 	} catch (err) {
 		res.status(500).json({ error: err.message });
@@ -14,9 +14,7 @@ export const getAllGifts = async (req, res) => {
 
 export const getGiftById = async (req, res) => {
 	try {
-		const gift = await Gift.findById(req.params.id).populate(
-			"senderId receiverId",
-		);
+		const gift = await Gift.findById(req.params.id).populate("senderId");
 		if (!gift) return res.status(404).json({ error: "Gift non trouvé" });
 		res.status(200).json(gift);
 	} catch (err) {
@@ -27,9 +25,7 @@ export const getGiftById = async (req, res) => {
 export const getGiftsReceivedByUser = async (req, res) => {
 	try {
 		const { userId } = req.params;
-		const gifts = await Gift.find({ receiverId: userId }).populate(
-			"senderId receiverId",
-		);
+		const gifts = await Gift.find({ receiverId: userId }).populate("senderId");
 		res.status(200).json(gifts);
 	} catch (err) {
 		res.status(500).json({ error: err.message });
@@ -39,9 +35,7 @@ export const getGiftsReceivedByUser = async (req, res) => {
 export const getGiftsSentByUser = async (req, res) => {
 	try {
 		const { userId } = req.params;
-		const gifts = await Gift.find({ senderId: userId }).populate(
-			"senderId receiverId",
-		);
+		const gifts = await Gift.find({ senderId: userId }).populate("senderId");
 		res.status(200).json(gifts);
 	} catch (err) {
 		res.status(500).json({ error: err.message });
@@ -50,56 +44,82 @@ export const getGiftsSentByUser = async (req, res) => {
 
 export const createGift = async (req, res) => {
 	try {
-		const { content, price, senderId, receiverId } = req.body;
+		const { content, price } = req.body;
+		const senderId = req.userId;
 
-		if (!receiverId || !senderId || !price) {
-			return res
-				.status(400)
-				.json({ error: "receiverId, senderId et price sont requis" });
+		if (!price) {
+			return res.status(400).json({ error: "Le montant est requis" });
 		}
 
-		if (senderId === receiverId) {
-			return res.status(403).json({
-				error: "Vous ne pouvez pas vous envoyer un don.",
-			});
-		}
-
-		if (senderId !== req.userId) {
-			return res.status(403).json({
-				error: "Vous n'êtes pas autorisé à envoyer un don.",
-			});
-		}
-
-		// Création de la session Stripe
 		const session = await stripe.checkout.sessions.create({
 			payment_method_types: ["card"],
+			mode: "payment",
 			line_items: [
 				{
 					price_data: {
 						currency: "eur",
 						product_data: {
-							name: "Don utilisateur",
-							description: content || "Don entre utilisateurs",
+							name: "Don à la plateforme",
+							description: content || "Soutien au créateur",
 						},
-						unit_amount: price * 100, // en centimes
+						unit_amount: price * 100,
 					},
 					quantity: 1,
 				},
 			],
-			mode: "payment",
-			success_url: `http://localhost:5173/gift/success?session_id={CHECKOUT_SESSION_ID}`,
-			cancel_url: `http://localhost:5173/gift/cancel`,
+			success_url: `http://localhost:5173/don-succes?session_id={CHECKOUT_SESSION_ID}`,
+			cancel_url: `http://localhost:5173/don-annule`,
 			metadata: {
 				senderId,
-				receiverId,
 				content,
-				price,
+				type: "platform_donation",
 			},
 		});
 
 		res.status(200).json({ url: session.url });
 	} catch (err) {
-		console.error("Erreur création cadeau avec Stripe:", err);
+		console.error(err);
 		res.status(500).json({ error: err.message });
+	}
+};
+
+export const saveDonationFromSession = async (req, res) => {
+	const { sessionId } = req.body;
+
+	if (!sessionId) {
+		return res.status(400).json({ error: "Session ID requis" });
+	}
+
+	try {
+		const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+		if (session.payment_status !== "paid") {
+			return res.status(400).json({ error: "Paiement non confirmé" });
+		}
+
+		let gift = await Gift.findOne({ stripeSessionId: sessionId });
+
+		if (gift) {
+			if (!gift.isValidated) {
+				gift.isValidated = true;
+				await gift.save();
+			}
+			return res.status(200).json({ message: "Don déjà enregistré", gift });
+		}
+
+		gift = new Gift({
+			senderId: session.metadata.senderId,
+			content: session.metadata.content || "",
+			price: session.amount_total / 100,
+			stripeSessionId: sessionId,
+			isValidated: true,
+		});
+
+		await gift.save();
+
+		res.status(201).json({ message: "Don enregistré", gift });
+	} catch (error) {
+		console.error("Erreur enregistrement don :", error);
+		res.status(500).json({ error: "Erreur serveur" });
 	}
 };

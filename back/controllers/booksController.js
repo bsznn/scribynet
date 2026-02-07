@@ -33,8 +33,12 @@ export const getOneBook = async (req, res) => {
 			return res.status(404).json({ message: "Aucun livre trouvé" });
 		}
 
-		// Incrémenter le nombre de vues du livre
-		book.views += 1;
+		// // Incrémenter le nombre de vues du livre
+		// console.log("BEFORE INCR", book.views);
+
+		// book.views += 1;
+
+		// console.log("AFTER INCR", book.views);
 		await book.save();
 
 		res.status(200).json(book);
@@ -163,6 +167,21 @@ export const likeBook = async (req, res) => {
 			message: "Impossible de traiter l'action de like",
 			error: error.message,
 		});
+	}
+};
+
+// Ajouter une vue
+export const addView = async (req, res) => {
+	try {
+		await Book.findByIdAndUpdate(
+			req.params.id,
+			{ $inc: { views: 1 } },
+			{ new: true },
+		);
+
+		res.status(200).json({ message: "Vue ajoutée" });
+	} catch (error) {
+		res.status(500).json({ message: "Erreur vue" });
 	}
 };
 

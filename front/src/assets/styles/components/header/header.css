@@ -40,6 +40,7 @@ body {
 	gap: 5px;
 	transition: var(--transition);
 	cursor: pointer;
+	padding-left: 45px;
 }
 
 .header__branding:hover {
@@ -48,6 +49,7 @@ body {
 }
 
 .header__title {
+	display: none;
 	font-family: var(--fontTitle);
 	font-size: 1.3rem;
 	margin-top: 9px;
@@ -59,17 +61,19 @@ body {
 }
 
 .header__logo {
-	height: 30px;
-	width: 30px;
+	height: 35px;
+	width: 35px;
+	padding-bottom: 15px;
 }
 
 .header__right-group {
 	display: flex;
 	align-items: center;
-	gap: 1rem;
+	gap: 0.5rem;
 }
 
 .header__burger-button {
+	position: absolute;
 	background: none;
 	border: none;
 	font-size: 1.8rem;
@@ -77,6 +81,7 @@ body {
 	cursor: pointer;
 	transition: var(--transitionColor);
 	z-index: 10000;
+	padding-top: 10px;
 }
 
 .header__burger-button:hover {
@@ -101,13 +106,13 @@ body {
 	border-radius: 50px;
 	background-color: var(--mediumMarron);
 	box-shadow: var(--shadow);
-  	transition: var(--transition);
+	transition: var(--transition);
 }
 
 .header__auth-mobile:hover,
 .header__dropdown-item:hover {
 	background-color: var(--hoverMediumMarron);
-  	transform: translateY(-2px);
+	transform: translateY(-2px);
 	color: var(--lightBeige);
 }
 
@@ -127,7 +132,6 @@ body {
 	color: var(--hoverDarkMarron);
 }
 
-
 .header__user-mobile button {
 	border: none;
 	cursor: pointer;
@@ -142,7 +146,7 @@ body {
 
 .header__user-mobile button:hover {
 	color: var(--hoverLightBeige);
-  	transform: translateY(-2px);
+	transform: translateY(-2px);
 }
 
 .header__top {
@@ -162,7 +166,7 @@ body {
 
 .header__top.visible {
 	position: fixed;
-	top: 56px; 
+	top: 56px;
 	left: 0;
 	width: 100vw;
 	height: calc(100vh - 56px);
@@ -173,7 +177,7 @@ body {
 	align-items: center;
 	list-style: none;
 	z-index: 9998;
-	overflow: hidden; 
+	overflow: hidden;
 	animation: slideDown 0.4s ease forwards;
 }
 
@@ -217,17 +221,39 @@ body {
 	transform: scale(1.05);
 }
 
+.header__don-mobile {
+	padding: 0.45rem 1rem;
+	height: 30px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	background-color: var(--darkMarron);
+	color: var(--lightBeige);
+
+	font-family: var(--fontGift);
+	font-weight: 600;
+	letter-spacing: 0.4px;
+	font-size: 1.3rem;
+
+	text-decoration: none;
+}
+
+.header__don-mobile:hover {
+	background-color: var(--hoverDarkMarron);
+}
+
 @media (min-width: 768px) {
 	.header__content {
 		padding: 1rem;
 	}
 
-	.header__burger-button {
-		display: none;
+	.header__logo {
+		height: 40px;
+		width: 40px;
 	}
 
-	.header__right-group {
-		gap: 2rem;
+	.header__burger-button {
+		display: none;
 	}
 
 	.header__top {
@@ -256,6 +282,13 @@ body {
 		all: unset;
 		display: block;
 	}
+
+	.header__don-mobile {
+		font-size: 1.7rem;
+	}
+	.header__branding {
+		padding-left: 0;
+	}
 }
 
 @media (min-width: 990px) {
@@ -275,27 +308,34 @@ body {
 	.header__user-mobile button {
 		margin-left: 10px;
 	}
+
+	.header__right-group {
+		gap: 1rem;
+	}
 }
 
-@media (min-width: 1200px){
+@media (min-width: 1200px) {
 	.header__content {
 		width: 1085px;
 		margin: auto;
 	}
 
 	.header__title {
+		display: flex;
 		font-size: 1.5rem;
+		margin-top: 14px;
+		padding-right: 0.3rem;
 	}
 
 	.header__logo {
-		height: 35px;
-		width: 35px;
+		height: 40px;
+		width: 40px;
 	}
 }
 
-@media (min-width: 1400px){
+@media (min-width: 1400px) {
 	.header__content {
-		width: 1250px
+		width: 1250px;
 	}
 }
 

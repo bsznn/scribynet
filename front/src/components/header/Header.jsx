@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineHome, AiOutlineLogin } from "react-icons/ai";
-import { GrClose } from "react-icons/gr";
+import { AiOutlineClose } from "react-icons/ai";
 import { IoMdLogOut } from "react-icons/io";
 import { RiMenu3Fill } from "react-icons/ri";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -42,7 +42,6 @@ export default function Header() {
 		};
 	}, [toggle, isMobile]);
 
-
 	const handleClick = () => setToggle(!toggle);
 
 	const handleLogout = () => {
@@ -55,17 +54,18 @@ export default function Header() {
 	return (
 		<header className="header">
 			<div className="header__content">
+				<NavLink to="/" className="header__branding" onClick={closeMenu}>
+					<h1 className="header__title">Scriby'Net</h1>
+					<img className="header__logo" src={Logo} alt="logo" />
+				</NavLink>
+
 				<button
 					type="button"
 					onClick={handleClick}
 					className="header__burger-button"
 				>
-					{toggle ? <GrClose /> : <RiMenu3Fill />}
+					{toggle ? <AiOutlineClose /> : <RiMenu3Fill />}
 				</button>
-				<NavLink to="/" className="header__branding" onClick={closeMenu}>
-					<h1 className="header__title">Scriby'Net</h1>
-					<img className="header__logo" src={Logo} alt="logo" />
-				</NavLink>
 
 				<section
 					className={`header__top ${isMobile && !toggle ? "hidden" : "visible"}`}
@@ -123,6 +123,9 @@ export default function Header() {
 				</section>
 
 				<div className="header__right-group">
+					<NavLink to="/faire-don" className="header__don-mobile">
+						<span>Don</span>
+					</NavLink>
 					{auth.user ? (
 						<div className="header__user-mobile">
 							<div className="header__user-info">

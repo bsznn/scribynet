@@ -10,9 +10,9 @@
 	--mediumMarron: #7a6d68;
 	--darkMarron: #423c39;
 
-	--bodyBeige : #f0ece1ff;
+	--bodyBeige: #f0ece1ff;
 
-	/* --orange: #c08a56; */
+	/* Utilisée pour la gestion des erreurs */
 	--orange: #d28b4d;
 
 	/* Hover */
@@ -24,8 +24,6 @@
 	--hoverMediumMarron: #6c5f5b;
 	--hoverDarkMarron: #645a56;
 
-	--hoverGreen: #6b8b71;
-
 	/* Transitions */
 	--transitionColor: color 0.3s ease-in-out;
 	--transitionBG: background-color 0.3s ease-in-out;
@@ -36,9 +34,8 @@
 	/* Typographies */
 	--fontRegular: "Montserrat", sans-serif;
 	--fontTitle: "Hammersmith One", sans-serif;
-	--fontLogo: "Italianno", cursive;
+	--fontGift: "Italianno", cursive;
 	--fontScript: "Libertinus Sans", sans-serif;
 
 	--shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-

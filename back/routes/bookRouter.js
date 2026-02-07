@@ -1,6 +1,7 @@
 import express from "express";
 import {
 	addBook,
+	addView,
 	deleteBook,
 	getAllBooks,
 	getBooksByCategoryName,
@@ -73,14 +74,6 @@ bookRouter.put(
 	updateBook,
 );
 
-// Ajouter un like à un livre
-bookRouter.put(
-	"/books/likes/:id",
-	isLogged,
-	isAuthorized(["admin", "user"]), // Vérifie si l'utilisateur est autorisé
-	likeBook,
-);
-
 // Supprimer un livre
 bookRouter.delete(
 	"/books/delete/:id/:userId",
@@ -88,5 +81,16 @@ bookRouter.delete(
 	isAuthorized(["admin", "user"]), // Vérifie si l'utilisateur est autorisé
 	deleteBook,
 );
+
+// Ajouter un like à un livre
+bookRouter.put(
+	"/books/likes/:id",
+	isLogged,
+	isAuthorized(["admin", "user"]),
+	likeBook,
+);
+
+// Ajouter une vue à un livre
+bookRouter.post("/books/:id/view", addView);
 
 export default bookRouter;

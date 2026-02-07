@@ -4,7 +4,6 @@ const giftSchema = new mongoose.Schema(
 	{
 		content: {
 			type: String,
-			required: true,
 		},
 		price: {
 			type: Number,
@@ -19,10 +18,9 @@ const giftSchema = new mongoose.Schema(
 			ref: "User",
 			required: true,
 		},
-		receiverId: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "User",
-			required: true,
+		// optionnel mais très utile
+		stripeSessionId: {
+			type: String,
 		},
 	},
 	{
@@ -30,6 +28,4 @@ const giftSchema = new mongoose.Schema(
 	},
 );
 
-const Gift = mongoose.model("Gift", giftSchema);
-
-export default Gift;
+export default mongoose.model("Gift", giftSchema);

@@ -5,6 +5,7 @@ import {
 	getGiftById,
 	getGiftsReceivedByUser,
 	getGiftsSentByUser,
+	saveDonationFromSession,
 } from "../controllers/giftsController.js";
 import { isAuthorized, isLogged } from "../middlewares/auth.js";
 
@@ -41,6 +42,8 @@ giftRouter.post(
 	isAuthorized(["admin", "user"]),
 	createGift,
 );
+
+giftRouter.post("/api/donations", saveDonationFromSession);
 
 giftRouter.get("/gifts/success", (req, res) => {
 	res.send("<h1>Paiement réussi 🎉</h1><p>Merci pour votre don !</p>");

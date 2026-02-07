@@ -5,6 +5,7 @@ import { useAuth } from "../../context/AuthContext";
 import { token } from "../../context/token";
 import DOMPurify from "dompurify";
 import LikeCounter from "../../components/likes/LikeCounter";
+import { useRef } from "react";
 
 import { IoEyeSharp } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
@@ -16,6 +17,8 @@ import { IoIosSettings } from "react-icons/io";
 import AddComment from "../../components/comments/AddComment";
 import Comments from "../../components/comments/Comments";
 
+import "../../assets/styles/pages/books/book.css";
+
 const Book = () => {
 	const [book, setBook] = useState(null);
 	const [categories, setCategories] = useState([]);
@@ -26,6 +29,7 @@ const Book = () => {
 	const [commentUpdate, setCommentUpdate] = useState(0);
 	const [likeUpdate, setLikeUpdate] = useState(0);
 	const [showComments, setShowComments] = useState(false);
+	const hasViewed = useRef(false);
 
 	const { id } = useParams();
 	const auth = useAuth();
@@ -44,8 +48,12 @@ const Book = () => {
 			});
 
 		getComments();
-	}, [id, commentUpdate, likeUpdate]);
 
+		if (!hasViewed.current) {
+			axios.post(`http://localhost:5000/books/${id}/view`);
+			hasViewed.current = true;
+		}
+	}, [id]);
 	const handleDelete = (bookId, chapterId) => {
 		if (!window.confirm("Supprimer ce chapitre ?")) return;
 
@@ -98,32 +106,43 @@ const Book = () => {
 		setLikeUpdate((prev) => prev + 1);
 	};
 
+	const sectionStyle = {
+		backgroundImage:
+			"url(https://images.pexels.com/photos/8858784/pexels-photo-8858784.jpeg?_gl=1*5ejgrl*_ga*NDI0NjMwMjIzLjE3NjYwNjA1NTk.*_ga_8JE65Q40S6*czE3NjkxMDgwOTMkbzE0JGcxJHQxNzY5MTA4MzQ3JGoyJGwwJGgw)",
+		backgroundSize: "cover",
+		backgroundPosition: "center",
+		backgroundRepeat: "no-repeat",
+	};
+
 	return (
-		<main className="m-container">
-			<section className="bk-section">
+		<div className="book" style={sectionStyle}>
+			<div className="book__content">
 				{err && <span>{err}</span>}
+
 				{book && (
 					<>
-						<section className="bk-section-livre">
-							<article className="article-livre">
+						{/* ===== HEADER / INFOS LIVRE ===== */}
+						<section className="book__header">
+							<article className="book__cover">
 								<img
-									className="bk-img"
+									className="book__image"
 									src={`http://localhost:5000/assets/img/${book.image.src}`}
 									alt={book.image.alt}
 									aria-label="book-image"
 									title={book.image.alt}
 								/>
 							</article>
-							<article className="bk-article1">
-								<ul className="bk-ul1">
+
+							<article className="book__info">
+								<ul className="book__main">
 									<li>
-										<h2 className="bk-title">{book.title}</h2>
-										<pre className="bk-author"> Par {book.userId.login}</pre>
+										<h2 className="book__title">{book.title}</h2>
+										<pre className="book__author">Par {book.userId.login}</pre>
 									</li>
 
-									<ul className="bk-ul2">
-										<li className="description">{book.description}</li>
-										<li className="categories">
+									<ul className="book__details">
+										<li className="book__description">{book.description}</li>
+										<li className="book__categories">
 											{categories &&
 												categories.map((category, index) => (
 													<span key={index}>#{category.name} </span>
@@ -132,21 +151,21 @@ const Book = () => {
 									</ul>
 								</ul>
 
-								<ul className="bk-ul3">
-									<li>
-										<IoEyeSharp className="book-icon" id="bic1" />
+								<ul className="book__stats">
+									<li className="book__stat">
+										<IoEyeSharp className="book__icon book__icon--view" />
 										<pre>{book.views}</pre>
 									</li>
-									<li>
-										<FaHeart className="book-icon" id="bic2" />
-										{/* {book.likes} */} <pre>{book.likes.length}</pre>
+
+									<li className="book__stat">
+										<FaHeart className="book__icon book__icon--like" />
+										<pre>{book.likes.length}</pre>
 									</li>
 
-									<li>
+									<li className="book__stat">
 										<FaComment
-											className="book-icon"
-											id="bic3"
-											onClick={() => handleComment("bk-ul7")}
+											className="book__icon book__icon--comment"
+											onClick={() => handleComment("book__comments")}
 										/>
 										<pre>{book.comments.length}</pre>
 									</li>
@@ -154,64 +173,85 @@ const Book = () => {
 							</article>
 						</section>
 
-						<section className="section-chapitre">
+						{/* ===== CHAPITRES ===== */}
+						<section className="book__chapters">
 							{handleCurrentChapter.length > 0 &&
 								handleCurrentChapter.map((chapter, index) => (
-									<article key={index} className="bk-article2">
-										<ul className="bk-ul4">
+									<article key={index} className="book__chapter">
+										<ul className="book__chapter-content">
 											<li>
-												<h4>{chapter.title}</h4>
+												<h4 className="book__chapter-title">{chapter.title}</h4>
 											</li>
 											<li>
 												<p
-													className="description"
+													className="book__chapter-text"
 													dangerouslySetInnerHTML={{
 														__html: DOMPurify.sanitize(chapter.content),
 													}}
 												/>
 											</li>
 										</ul>
-										{auth.user && auth.user.id === book.userId._id ? (
-											<ul className="bk-ul5">
+
+										{/* Actions auteur */}
+										{auth.user && auth.user.id === book.userId._id && (
+											<ul className="book__chapter-actions">
 												<li>
 													<Link
 														to={`/modifier-chapitre/${book._id}/${chapter._id}`}
+														className="book__action"
 													>
-														<IoIosSettings className="profile-icon" />
-														<p className="bk-text-none">Modifier</p>
+														<IoIosSettings className="book__action-icon" />
+														<p className="book__text-hidden">Modifier</p>
 													</Link>
 												</li>
-												<li onClick={() => handleDelete(book._id, chapter._id)}>
-													<MdDelete className="profile-icon" />
-													<p className="bk-text-none">Supprimer</p>
+												<li
+													className="book__action"
+													onClick={() => handleDelete(book._id, chapter._id)}
+												>
+													<MdDelete className="book__action-icon" />
+													<p className="book__text-hidden">Supprimer</p>
 												</li>
 											</ul>
-										) : null}
-										<span className="page-button">
-											<button onClick={prevChapter} className="page-buttonL">
+										)}
+
+										{/* Pagination */}
+										<span className="book__pagination">
+											<button
+												type="button"
+												onClick={prevChapter}
+												className="book__pagination-btn book__pagination-btn--prev"
+											>
 												Précédent
 											</button>
-											<button onClick={nextChapter} className="page-buttonR">
+											<button
+												type="button"
+												onClick={nextChapter}
+												className="book__pagination-btn book__pagination-btn--next"
+											>
 												Suivant
 											</button>
 										</span>
 									</article>
 								))}
 
-							<article className="bk-article3">
-								<ul className="bk-ul6">
-									<span>
+							{/* ===== ACTIONS GLOBALES ===== */}
+							<article className="book__actions">
+								<ul className="book__actions-list">
+									<span className="book__actions-group">
 										{auth.user && auth.user.id === book.userId._id && (
 											<li>
-												<Link to={`/ajouter-chapitre/${book._id}`}>
-													<IoIosAddCircle className="chapter-button" />
-													<p className="bk-text-none">Nouveau</p>
+												<Link
+													to={`/ajouter-chapitre/${book._id}`}
+													className="book__action"
+												>
+													<IoIosAddCircle className="book__action-icon" />
+													<p className="book__text-hidden">Nouveau</p>
 												</Link>
 											</li>
 										)}
 
 										{auth.user && (
-											<li>
+											<li className="book__like">
 												<LikeCounter likeAdd={handleLikeUpdate} />
 											</li>
 										)}
@@ -219,8 +259,9 @@ const Book = () => {
 								</ul>
 							</article>
 
+							{/* ===== COMMENTAIRES ===== */}
 							{auth.user && (
-								<ul className="bk-ul7" id="bk-ul7">
+								<ul className="book__comments" id="book__comments">
 									<li>
 										<AddComment bookId={id} commentAdd={handleCommentUpdate} />
 										<p>
@@ -238,8 +279,8 @@ const Book = () => {
 						</section>
 					</>
 				)}
-			</section>
-		</main>
+			</div>
+		</div>
 	);
 };
 
