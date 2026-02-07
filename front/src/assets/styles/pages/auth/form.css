@@ -82,7 +82,6 @@
 .register__title,
 .login__title {
 	color: var(--darkMarron);
-	margin-bottom: 2rem;
 	text-align: center;
 }
 
@@ -112,7 +111,7 @@
 .register__field.material,
 .login__field.material {
 	position: relative;
-	margin-bottom: 2.2rem;
+	margin-bottom: 1rem;
 }
 
 .register__field.material input,

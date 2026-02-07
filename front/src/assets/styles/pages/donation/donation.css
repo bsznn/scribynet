@@ -29,7 +29,7 @@
 .donation__content {
 	position: relative;
 	background-color: var(--bodyBeige);
-	min-height: 86vh;
+	min-height: 70vh;
 	padding: 1rem 1.5rem 3rem;
 }
 
