@@ -1,0 +1,121 @@
+/* ===== Base : Mobile first ===== */
+.donation-success,
+.donation-cancel {
+	min-height: 82vh;
+	font-family: var(--fontRegular);
+	color: var(--mediumMarron);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	padding: 1.5rem;
+}
+
+.donation-success::before,
+.donation-cancel::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: rgba(66, 60, 57, 0.65);
+	z-index: 0;
+}
+
+.donation-success__container,
+.donation-cancel__container {
+	position: relative;
+	z-index: 1;
+	background: rgba(245, 241, 230, 0.95);
+	box-shadow: var(--shadow);
+	padding: 2rem;
+	width: 100%;
+	max-width: 100%;
+	text-align: center;
+	animation: fadeInUp 0.8s ease forwards;
+}
+
+.donation-success__icon,
+.donation-cancel__icon {
+	width: 90px;
+	height: 90px;
+	margin: 0 auto 1.2rem;
+	border-radius: 50%;
+	background: var(--lightBeige);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: var(--shadow);
+	animation: pop 0.6s ease forwards;
+}
+
+.donation-success__icon img,
+.donation-cancel__icon img {
+	width: 65%;
+}
+
+.donation-success__title,
+.donation-cancel__title {
+	font-family: var(--fontTitle);
+	font-size: 1.5rem;
+	color: var(--darkMarron);
+}
+
+.donation-success__message,
+.donation-cancel__message {
+	font-size: 1rem;
+	line-height: 1.5;
+	color: var(--mediumMarron);
+}
+
+/* ===== ≥ 768px (tablette) ===== */
+@media (min-width: 768px) {
+	.donation-success,
+	.donation-cancel {
+		padding: 2.5rem;
+	}
+
+	.donation-success__container,
+	.donation-cancel__container {
+		max-width: 520px;
+		padding: 2.5rem 3rem;
+	}
+
+	.donation-success__icon,
+	.donation-cancel__icon {
+		width: 110px;
+		height: 110px;
+		margin-bottom: 1.5rem;
+	}
+
+	.donation-success__title,
+	.donation-cancel__title {
+		font-size: 1.8rem;
+	}
+
+	.donation-success__message,
+	.donation-cancel__message {
+		font-size: 1.05rem;
+	}
+}
+
+/* ===== Animations ===== */
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes pop {
+	from {
+		transform: scale(0.85);
+		opacity: 0;
+	}
+	to {
+		transform: scale(1);
+		opacity: 1;
+	}
+}

@@ -4,7 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import "../../assets/styles/pages/donation/donation.css";
 import { BsGift } from "react-icons/bs";
 
-// import fondImage from "../../assets/images/fond/fond-form2.jpg";
+import fondImage from "../../assets/images/fond/fond-don.jpeg";
 
 export default function Donation() {
 	const [content, setContent] = useState("");
@@ -53,8 +53,7 @@ export default function Donation() {
 	};
 
 	const sectionStyle = {
-		// backgroundImage: `url(${fondImage})`,
-		backgroundImage: `url(https://images.pexels.com/photos/5750121/pexels-photo-5750121.jpeg?_gl=1*1hu6ndy*_ga*NDI0NjMwMjIzLjE3NjYwNjA1NTk.*_ga_8JE65Q40S6*czE3NzA0OTI2MzQkbzE4JGcxJHQxNzcwNDkyODk3JGo2MCRsMCRoMA..)`,
+		backgroundImage: `url(${fondImage})`,
 		backgroundSize: "cover",
 		backgroundPosition: "center",
 		backgroundRepeat: "no-repeat",

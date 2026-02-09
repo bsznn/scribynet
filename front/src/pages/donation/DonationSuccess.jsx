@@ -1,5 +1,9 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import gift from "../../assets/images/donation/gift.jpg";
+import fondImage from "../../assets/images/fond/fond-don.jpeg";
+
+import "../../assets/styles/pages/donation/donation-component.css";
 
 export default function DonationSuccess() {
 	const location = useLocation();
@@ -29,10 +33,27 @@ export default function DonationSuccess() {
 		}
 	}, [sessionId]);
 
+	const sectionStyle = {
+		backgroundImage: `url(${fondImage})`,
+		backgroundSize: "cover",
+		backgroundPosition: "center",
+		backgroundRepeat: "no-repeat",
+	};
+
 	return (
-		<div style={{ textAlign: "center", marginTop: "50px" }}>
-			<h1>🎉 Merci pour votre don !</h1>
-			<p>Votre paiement a été confirmé avec succès.</p>
+		<div className="donation-success" style={sectionStyle}>
+			<div className="donation-success__container">
+				<div className="donation-success__icon">
+					<img src={gift} alt="Gift" aria-label="Don confirmé" />
+				</div>
+
+				<div className="donation-success__content">
+					<h1 className="donation-success__title">🎉 Merci pour votre don !</h1>
+					<p className="donation-success__message">
+						Votre paiement a été confirmé avec succès.
+					</p>
+				</div>
+			</div>
 		</div>
 	);
 }
