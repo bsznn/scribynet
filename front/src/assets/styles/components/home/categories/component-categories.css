@@ -1,8 +1,8 @@
-.categories__container {
+.component-categories__container {
 	padding: 2.5rem 1rem;
 }
 
-.categories__title {
+.component-categories__title {
 	font-family: var(--fontTitle);
 	font-size: 1rem;
 	color: var(--darkMarron);
@@ -11,17 +11,17 @@
 	padding: 0;
 }
 
-.categories__list {
+.component-categories__list {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.6rem;
 }
 
-.categories__item {
+.component-categories__item {
 	display: inline-block;
 }
 
-.categories__link {
+.component-categories__link {
 	display: inline-block;
 	padding: 0.4rem 0.9rem;
 	border: 1px solid var(--mediumMarron);
@@ -34,33 +34,35 @@
 	transition: var(--transition);
 }
 
-.categories__link:hover {
+.component-categories__link:hover {
 	border-color: var(--hoverDarkMarron);
 	color: var(--hoverDarkMarron);
 	transform: scale(1.05);
 }
 
-.categories__error {
-	color: red;
+.component-categories__error {
+	color: var(--orange);
 	font-size: 0.85rem;
 	margin-top: 1rem;
 	text-align: center;
 }
 
 @media (min-width: 1200px) {
-	.categories__title {
+	.component-categories__title {
 		font-size: 1.3rem;
 		text-align: left;
 	}
-	.categories__container {
+
+	.component-categories__container {
 		width: 1150px;
 		flex-wrap: wrap;
 		justify-content: flex-start;
 		padding: 1rem 1rem 3rem;
 	}
 }
+
 @media (min-width: 1400px) {
-	.categories__container {
+	.component-categories__container {
 		width: 1340px;
 	}
 }

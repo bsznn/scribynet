@@ -4,8 +4,9 @@ import { useAuth } from "../../context/AuthContext";
 import { token } from "../../context/token";
 
 import Answer from "./Answer";
+import "../../assets/styles/components/answers/answers.css";
 
-const Answers = ({ bookId, commentId, updateAnswer }) => {
+const Answers = ({ bookId, commentId, updateAnswer, onAnswerDeleted }) => {
 	const [answers, setAnswers] = useState([]);
 	const [err, setErr] = useState();
 
@@ -35,11 +36,9 @@ const Answers = ({ bookId, commentId, updateAnswer }) => {
 
 	return (
 		<section className="answers">
-			<h5 className="answers__title">Réponses au commentaire :</h5>
-
 			{answers.length === 0 && (
 				<p className="answers__none">
-					Il semble que ce commentaire n'ait encore reçu aucune réponse.
+					Aucune réponse n’a encore été publiée sous ce commentaire.
 				</p>
 			)}
 
@@ -49,6 +48,10 @@ const Answers = ({ bookId, commentId, updateAnswer }) => {
 						bookId={bookId}
 						commentId={commentId}
 						answerId={oneAnswer._id}
+						onAnswerDeleted={() => {
+							getAnswers();
+							if (onAnswerDeleted) onAnswerDeleted();
+						}}
 					/>
 				</div>
 			))}

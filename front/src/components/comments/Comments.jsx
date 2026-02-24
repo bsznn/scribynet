@@ -3,6 +3,7 @@ import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { token } from "../../context/token";
 import Comment from "./Comment";
+import "../../assets/styles/components/comments/comments.css";
 
 const Comments = ({ bookId, updateComment }) => {
 	const [comments, setComments] = useState([]);
@@ -30,17 +31,19 @@ const Comments = ({ bookId, updateComment }) => {
 
 	return (
 		<section className="comments">
-			<h2 className="comments__title">Tous les commentaires :</h2>
-
 			{comments.length === 0 && (
 				<p className="comments__empty">
-					Il semble que cette publication n'ait encore reçu aucun commentaire.
+					Aucun commentaire n’a encore été publié sous cette histoire.
 				</p>
 			)}
 
 			{comments.map((oneComment) => (
 				<section className="comments__item" key={oneComment._id}>
-					<Comment bookId={bookId} commentId={oneComment._id} />
+					<Comment
+						bookId={bookId}
+						commentId={oneComment._id}
+						onCommentDelete={updateComment}
+					/>
 				</section>
 			))}
 		</section>

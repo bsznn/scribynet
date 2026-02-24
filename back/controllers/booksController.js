@@ -188,22 +188,31 @@ export const addView = async (req, res) => {
 // Modifier un livre
 export const updateBook = async (req, res) => {
 	try {
-		const book = await Book.findById(req.params.id);
+		const { id } = req.params;
 
-		if (!book || !req.userId) {
+		const book = await Book.findById(id);
+
+		if (!book) {
+			return res.status(404).json({ message: "Livre non trouvé" });
+		}
+
+		if (!req.userId) {
 			return res.status(401).json({ message: "Non autorisé" });
 		}
 
-		if (book.userId !== req.userId) {
-			throw new Error("Vous ne pouvez mettre à jour que vos propres livres");
+		// Vérifie que l'utilisateur est le propriétaire
+		if (book.userId.toString() !== req.userId) {
+			return res.status(403).json({
+				message: "Vous ne pouvez modifier que vos propres livres",
+			});
 		}
 
 		const { title, description, categories } = req.body;
 
-		// Construire l'objet de mise à jour de manière conditionnelle
 		const updateObject = {};
 
-		if (title) {
+		// 🔹 TITLE
+		if (title !== undefined) {
 			if (title.trim() === "") {
 				return res
 					.status(400)
@@ -212,7 +221,8 @@ export const updateBook = async (req, res) => {
 			updateObject.title = title;
 		}
 
-		if (description) {
+		// 🔹 DESCRIPTION
+		if (description !== undefined) {
 			if (description.trim() === "") {
 				return res
 					.status(400)
@@ -221,60 +231,48 @@ export const updateBook = async (req, res) => {
 			updateObject.description = description;
 		}
 
-		if (categories) {
-			if (!Array.isArray(categories) || categories.length === 0) {
-				return res
-					.status(400)
-					.json({ message: "Les catégories doivent être un tableau non vide" });
-			}
+		// 🔹 CATEGORIES (compatible FormData)
+		if (categories !== undefined) {
+			const parsedCategories =
+				typeof categories === "string" ? JSON.parse(categories) : categories;
 
-			// Récupérer les ObjectId des catégories dans la base de données
-			const categoryIds = await Category.find({ name: { $in: categories } })
-				.then((categories) => categories.map((category) => category._id))
-				.catch((error) => {
-					return res.status(400).json({
-						message: "Impossible de trouver certaines catégories",
-						error: error.message,
-					});
-				});
-
-			// Vérifier si toutes les catégories ont été trouvées
-			if (categoryIds.length !== categories.length) {
+			if (!Array.isArray(parsedCategories) || parsedCategories.length === 0) {
 				return res.status(400).json({
-					message: "Certaines catégories n'ont pas été trouvées",
+					message: "Les catégories doivent être un tableau non vide",
 				});
 			}
 
-			updateObject.categoryId = categoryIds; // Mettre à jour avec les ObjectId des catégories
+			// Vérifie que les catégories existent
+			const existingCategories = await Category.find({
+				_id: { $in: parsedCategories },
+			}).select("_id");
+
+			if (existingCategories.length !== parsedCategories.length) {
+				return res.status(400).json({
+					message: "Certaines catégories n'existent pas",
+				});
+			}
+
+			updateObject.categoryId = existingCategories.map((cat) => cat._id);
 		}
 
-		// Gérer l'image
+		// 🔹 IMAGE
 		if (req.file) {
 			updateObject.image = {
 				src: req.file.filename,
 				alt: req.file.originalname,
 			};
-		} else {
-			updateObject.image = { src: book.image.src, alt: book.image.alt };
 		}
 
-		// Mettre à jour le livre
-		const updatedBook = await Book.findByIdAndUpdate(
-			req.params.id,
-			updateObject,
-			{
-				new: true,
-			},
-		);
+		// 🔹 UPDATE
+		const updatedBook = await Book.findByIdAndUpdate(id, updateObject, {
+			new: true,
+		});
 
-		if (!updatedBook) {
-			throw new Error("Impossible de mettre à jour le livre");
-		}
-
-		res.status(200).json(updatedBook);
+		return res.status(200).json(updatedBook);
 	} catch (error) {
-		console.log(error);
-		res.status(500).json({
+		console.error("Erreur updateBook :", error);
+		return res.status(500).json({
 			message: "Impossible de mettre à jour le livre",
 			error: error.message,
 		});

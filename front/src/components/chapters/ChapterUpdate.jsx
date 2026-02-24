@@ -5,6 +5,9 @@ import axios from "axios";
 import { token } from "../../context/token";
 import { useNavigate, useParams } from "react-router-dom";
 
+import "../../assets/styles/components/chapters/updatechapter.css";
+import headImage from "../../assets/images/form/fond-addbook.jpeg";
+
 const ChapterUpdate = () => {
 	const [inputs, setInputs] = useState({
 		chapterContent: "",
@@ -88,8 +91,15 @@ const ChapterUpdate = () => {
 			});
 	};
 
+	const sectionStyle = {
+		backgroundImage: `url(${headImage})`,
+		backgroundSize: "cover",
+		backgroundPosition: "center",
+		backgroundRepeat: "no-repeat",
+	};
+
 	return (
-		<section className="updatechapter">
+		<section className="updatechapter" style={sectionStyle}>
 			<form onSubmit={handleSubmit} className="updatechapter__form">
 				<h2 className="updatechapter__title">Modifier un chapitre</h2>
 
@@ -115,7 +125,9 @@ const ChapterUpdate = () => {
 					onChange={handleQuill}
 				/>
 
-				<button className="updatechapter__button">Valider</button>
+				<button type="submit" className="updatechapter__button">
+					Valider
+				</button>
 			</form>
 		</section>
 	);

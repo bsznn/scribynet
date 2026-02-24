@@ -3,6 +3,7 @@ import axios from "axios";
 import { token } from "../../context/token";
 import { IoIosSend } from "react-icons/io";
 import { useAuth } from "../../context/AuthContext";
+import "../../assets/styles/components/comments/comments.css";
 
 const AddComment = ({ bookId, commentAdd }) => {
 	const [inputs, setInputs] = useState({
@@ -81,7 +82,7 @@ const AddComment = ({ bookId, commentAdd }) => {
 
 						<button className="addcomment__button">
 							<IoIosSend className="addcomment__icon" />
-							<span className="addcomment__button-text">↪️ Commenter</span>
+							<span className="addcomment__button-text">Commenter</span>
 						</button>
 					</article>
 				</form>

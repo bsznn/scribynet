@@ -40,12 +40,6 @@ const LikeCounter = ({ likeAdd }) => {
 				setLikes(res.data.likes);
 				setLiked((prevLiked) => !prevLiked);
 
-				if (!liked) {
-					alert("Vous avez liké avec succès le livre !");
-				} else {
-					alert("Vous avez enlevé votre like !");
-				}
-
 				likeAdd();
 			})
 			.catch((err) => {
@@ -54,27 +48,13 @@ const LikeCounter = ({ likeAdd }) => {
 	};
 
 	return (
-		<button onClick={handleLike} className="btn-likecounter">
+		<button
+			type="button"
+			onClick={handleLike}
+			className={`btn-likecounter ${liked ? "active" : ""}`}
+		>
 			<p className="bk-text-none2">J'aime</p>
-			{liked ? (
-				<>
-					<FaHeart
-						style={{
-							color: "var(--hoverOrange)",
-							fontSize: "1.2em",
-						}}
-					></FaHeart>
-				</>
-			) : (
-				<>
-					<FaHeart
-						style={{
-							color: "var(--white)",
-							fontSize: "1.2em",
-						}}
-					/>
-				</>
-			)}
+			<FaHeart className="like-icon" />
 		</button>
 	);
 };

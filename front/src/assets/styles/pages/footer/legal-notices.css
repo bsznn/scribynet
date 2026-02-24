@@ -1,0 +1,126 @@
+/* =========================
+   Base (mobile first)
+========================= */
+
+.legal-notices {
+	position: relative;
+	min-height: 90vh;
+	background-color: var(--bodyBeige);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: var(--fontRegular);
+	color: var(--darkMarron);
+}
+
+.legal-notices::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: rgba(66, 60, 57, 0.65);
+	z-index: 0;
+}
+
+.legal-notices__container {
+	position: relative;
+	width: 100%;
+	margin: 4rem 0;
+	padding: 2rem;
+	background-color: var(--bodyBeige);
+	z-index: 1;
+}
+
+.legal-notices__content {
+	margin: 0 auto;
+	text-align: justify;
+}
+
+.legal-notices__title {
+	font-family: var(--fontTitle);
+	font-size: 1.6rem;
+	margin-bottom: 2rem;
+	color: var(--darkMarron);
+}
+
+.legal-notices__section {
+	margin-bottom: 2rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid var(--mediumBeige);
+}
+
+.legal-notices__section:last-child {
+	border-bottom: none;
+}
+
+.legal-notices__subtitle {
+	font-size: 1.1rem;
+	font-weight: 600;
+	margin-bottom: 0.6rem;
+	color: var(--mediumMarron);
+}
+
+.legal-notices p {
+	font-size: 0.95rem;
+	margin-bottom: 0.6rem;
+}
+
+.legal-notices a {
+	color: var(--mediumMarron);
+	text-decoration: none;
+	transition: var(--transitionColor);
+}
+
+.legal-notices a:hover {
+	color: var(--darkMarron);
+	text-decoration: underline;
+}
+
+/* =========================
+   ≥ 768px (tablette)
+========================= */
+
+@media (min-width: 768px) {
+	.legal-notices__title {
+		font-size: 1.9rem;
+	}
+
+	.legal-notices__subtitle {
+		font-size: 1.2rem;
+	}
+
+	.legal-notices p {
+		font-size: 1rem;
+	}
+}
+
+/* =========================
+   ≥ 1200px (desktop)
+========================= */
+
+@media (min-width: 1200px) {
+	.legal-notices__content {
+		width: 1100px;
+	}
+
+	.legal-notices__subtitle {
+		font-size: 1.3rem;
+	}
+
+	.legal-notices p {
+		font-size: 1.05rem;
+	}
+}
+
+/* =========================
+   ≥ 1400px (large screens)
+========================= */
+
+@media (min-width: 1400px) {
+	.legal-notices__content {
+		width: 1250px;
+	}
+
+	.legal-notices p {
+		font-size: 1.1rem;
+	}
+}

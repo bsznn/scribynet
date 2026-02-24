@@ -2,7 +2,7 @@
    BOOKS – GLOBAL
 ========================= */
 
-.Books {
+.books {
 	background-color: var(--bodyBeige);
 	font-family: var(--fontRegular);
 	color: var(--blackMarron);
@@ -174,14 +174,18 @@
 	flex-direction: column;
 	gap: 0.8rem;
 }
+
 .books__description {
 	font-size: 0.9rem;
 	line-height: 1.45;
+	color: var(--darkMarron);
+
+	height: 100px;
+	overflow: hidden;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 3;
-	color: var(--darkMarron);
-	height: 100px;
+	-webkit-line-clamp: 5;
+	text-overflow: ellipsis;
 }
 
 /* =========================
@@ -190,16 +194,20 @@
 
 .books__categories {
 	display: flex;
-	flex-wrap: wrap;
+	flex-wrap: nowrap; /* une seule ligne */
 	gap: 0.4rem;
+	overflow: hidden; /* cache le reste si ça dépasse */
+	align-items: center;
 }
 
-.books__category {
+.books__category,
+.books__more {
 	font-size: 0.75rem;
 	padding: 0.25rem 0.7rem;
 	border-radius: 20px;
 	background-color: var(--darkMarron);
 	color: var(--lightBeige);
+	flex-shrink: 0; /* empêche les tags de rétrécir */
 	transition: var(--transition);
 }
 
@@ -213,8 +221,11 @@
 
 .books__settings {
 	border-top: 1px solid var(--mediumBeige);
-	padding-top: 0.6rem;
-	height: 60px;
+	height: 65px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 }
 
 .books__dates {
@@ -238,34 +249,41 @@
 .books__actions {
 	display: flex;
 	justify-content: center;
-	gap: 4px;
+	align-items: center;
+	gap: 8px;
 	list-style: none;
-	padding: 0;
+	margin-bottom: -10px;
 	margin-top: 10px;
+	padding-left: 0;
+}
+
+.books__actions svg {
+	width: 16px;
+	height: 16px;
 }
 
 .books__icon-btn {
-	background: transparent;
-	border: none;
-	color: var(--darkMarron);
-	font-size: 1.1rem;
-	cursor: pointer;
-	padding: 4px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	transition:
-		var(--transitionColor),
-		transform 0.2s ease;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background-color: var(--lightBeige);
+	border: 1px solid var(--mediumBeige);
+	color: var(--darkMarron);
+	cursor: pointer;
+	transition: all 0.25s ease;
 }
 
 .books__icon-btn:hover {
-	transform: scale(1.15);
-	color: var(--hoverDarkMarron);
+	transform: translateY(-3px);
+	background-color: var(--darkMarron);
+	color: var(--lightBeige);
 }
 
 .books__icon-btn.delete:hover {
-	color: var(--hoverDarkMarron);
+	background-color: var(--darkMarron);
 }
 
 /* =========================

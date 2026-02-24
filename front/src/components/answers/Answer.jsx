@@ -6,7 +6,9 @@ import { IoIosSettings } from "react-icons/io";
 import { IoIosSend } from "react-icons/io";
 import { token } from "../../context/token";
 
-const Answer = ({ bookId, commentId, answerId }) => {
+import "../../assets/styles/components/answers/answers.css";
+
+const Answer = ({ bookId, commentId, answerId, onAnswerDeleted }) => {
 	const [answer, setAnswer] = useState("");
 	const [showUpdateForm, setShowUpdateForm] = useState(false);
 	const [updateContent, setUpdateContent] = useState("");
@@ -27,6 +29,7 @@ const Answer = ({ bookId, commentId, answerId }) => {
 						headers: token(),
 					},
 				);
+				if (onAnswerDeleted) onAnswerDeleted();
 				setAnswer(null);
 				alert("Votre réponse a bien été supprimée !");
 			} catch (err) {
@@ -108,50 +111,48 @@ const Answer = ({ bookId, commentId, answerId }) => {
 							</ul>
 
 							{showUpdateForm ? (
-								<ul className="answer-ul">
-									<li>
-										<textarea
-											className="answer__update--content"
-											value={updateContent}
-											onChange={(e) => setUpdateContent(e.target.value)}
-										/>
-									</li>
-
-									<li>
-										<button onClick={handleUpdate}>
-											<IoIosSend />
-											<p className="answer__button--none"> ↪️ Valider</p>
+								<div className="answer__edit">
+									<textarea
+										className="answer__textarea"
+										value={updateContent}
+										onChange={(e) => setUpdateContent(e.target.value)}
+									/>
+									<div className="answer__edit-actions">
+										<button
+											type="button"
+											onClick={handleUpdate}
+											className="answer__update-btn"
+										>
+											<IoIosSend className="answer__icon" />
+											<span>Valider</span>
 										</button>
-									</li>
-								</ul>
+									</div>
+								</div>
 							) : (
-								<span>
-									<p className="answer__content">{answer.content}</p>
-								</span>
+								<p className="answer__content">{answer.content}</p>
 							)}
-						</article>
 
-						<article className="answer__article--two">
-							Posté le {new Date(answer.date).toLocaleDateString()} à{" "}
-							{new Date(answer.date).toLocaleTimeString()}
-						</article>
+							<article className="answer__article--two">
+								Posté le {new Date(answer.date).toLocaleDateString()} à{" "}
+								{new Date(answer.date).toLocaleTimeString()}
+							</article>
 
-						{auth.user &&
-							(auth.user.id === answer.userId._id ||
-								auth.user.role === "admin") && (
-								<article>
-									<ul className="answer__buttons">
-										<li onClick={toggleUpdateForm}>
-											<IoIosSettings />
-											<p className="name-none">⚙️ Modifier</p>
-										</li>
-										<li onClick={handleDelete}>
-											<MdDelete />
-											<p className="name-none">🗑️ Supprimer</p>
-										</li>
+							{auth.user &&
+								(auth.user.id === answer.userId._id ||
+									auth.user.role === "admin") && (
+									<ul className="answer__actions">
+										<div className="answer__actions-list">
+											<li className="answer__action" onClick={toggleUpdateForm}>
+												<IoIosSettings className="answer__action-icon" />
+											</li>
+
+											<li className="answer__action" onClick={handleDelete}>
+												<MdDelete className="answer__action-icon" />
+											</li>
+										</div>
 									</ul>
-								</article>
-							)}
+								)}
+						</article>
 
 						{err && <span>{err}</span>}
 					</>

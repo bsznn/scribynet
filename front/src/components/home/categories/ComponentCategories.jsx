@@ -21,23 +21,24 @@ export default function ComponentCategories() {
 				setErr("Impossible de charger les données");
 			});
 	}, []);
+
 	return (
-		<div className="categories__container">
-			<h2 className="categories__title">Catégories</h2>
-			<section className="categories__list">
+		<div className="component-categories__container">
+			<h2 className="component-categories__title">Catégories</h2>
+			<section className="component-categories__list">
 				{/* Affichage des catégories */}
 				{categories.map((category) => (
-					<article key={category._id} className="categories__item">
+					<article key={category._id} className="component-categories__item">
 						<NavLink
 							to={`/categorie/${category._id}`}
-							className="categories__link"
+							className="component-categories__link"
 						>
-							<p className="categories__name">{category.name}</p>
+							<p className="component-categories__name">{category.name}</p>
 						</NavLink>
 					</article>
 				))}
 				{/* Affichage d'une erreur si elle existe */}
-				{err && <p className="categories__error">{err}</p>}
+				{err && <p className="component-categories__error">{err}</p>}
 			</section>
 		</div>
 	);

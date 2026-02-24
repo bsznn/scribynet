@@ -11,7 +11,7 @@ import headImage from "../../assets/images/form/fond-addbook.jpeg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
-const MAX_DESCRIPTION_LENGTH = 150;
+const MAX_DESCRIPTION_LENGTH = 500;
 
 export const AddBook = () => {
 	const [inputs, setInputs] = useState({
@@ -55,15 +55,16 @@ export const AddBook = () => {
 				setDescriptionError(false);
 			} else {
 				setDescriptionError(true);
+				alert("Vous ne pouvez dépasser 500 caractères !");
 			}
 		} else if (name === "image") {
 			setInputs({ ...inputs, image: e.target.files[0] });
 		} else if (name === "categories") {
 			const options = Array.from(e.target.options)
-				.filter(option => option.selected)
-				.map(option => option.value);
+				.filter((option) => option.selected)
+				.map((option) => option.value);
 
-			setInputs(prev => ({
+			setInputs((prev) => ({
 				...prev,
 				selectedCategories: options,
 			}));
@@ -90,7 +91,7 @@ export const AddBook = () => {
 		}
 
 		if (descriptionError) {
-			return alert("La description ne peut pas dépasser 150 caractères.");
+			return alert("La description ne peut pas dépasser 500 caractères.");
 		}
 
 		const formData = new FormData();
@@ -117,8 +118,8 @@ export const AddBook = () => {
 					description: "",
 					chapterContent: "",
 					chapterTitle: "",
-					categories: [],          
-					selectedCategories: [],  
+					categories: [],
+					selectedCategories: [],
 					image: null,
 				});
 				alert(res.data.message);
@@ -159,10 +160,10 @@ export const AddBook = () => {
 		option: (base, state) => ({
 			...base,
 			backgroundColor: state.isSelected
-				? "var(--lightBeige)"     
+				? "var(--lightBeige)"
 				: state.isFocused
-				? "var(--lightBeige)"     
-				: "transparent",
+					? "var(--lightBeige)"
+					: "transparent",
 
 			color: "var(--mediumMarron)",
 			cursor: "pointer",
@@ -170,8 +171,7 @@ export const AddBook = () => {
 			"&:active": {
 				backgroundColor: "var(--lightBeige)",
 			},
-			}),
-
+		}),
 
 		singleValue: (base) => ({
 			...base,
@@ -222,7 +222,7 @@ export const AddBook = () => {
 						encType="multipart/form-data"
 						className="addbook__form"
 					>
-						<h2 className="addbook__title">Publier un livre</h2>
+						<h2 className="addbook__title">Publier</h2>
 
 						{/* Onglets */}
 						<div className="addbook__tabs">
@@ -295,14 +295,14 @@ export const AddBook = () => {
 									isMulti
 									placeholder="Ajoute..."
 									styles={selectStyles}
-									options={inputs.categories.map(c => ({
+									options={inputs.categories.map((c) => ({
 										value: c._id,
 										label: c.name,
 									}))}
 									onChange={(values) =>
-										setInputs(prev => ({
+										setInputs((prev) => ({
 											...prev,
-											selectedCategories: values.map(v => v.value),
+											selectedCategories: values.map((v) => v.value),
 										}))
 									}
 								/>
@@ -317,7 +317,9 @@ export const AddBook = () => {
 											inputs.selectedCategories.length === 0 ||
 											descriptionError
 										) {
-											alert("Veuillez remplir correctement tous les champs de l'onglet Informations.");
+											alert(
+												"Veuillez remplir correctement tous les champs de l'onglet Informations.",
+											);
 											return;
 										}
 										setActiveTab("chapter");

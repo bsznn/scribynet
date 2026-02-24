@@ -1,0 +1,177 @@
+/* =========================
+   CONTENEUR PRINCIPAL
+   ========================= */
+.addcategory,
+.editcategory {
+	position: relative;
+	min-height: 90vh;
+	background-color: var(--bodyBeige);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: var(--fontRegular);
+	color: var(--darkMarron);
+}
+
+.addcategory::before,
+.editcategory::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: rgba(66, 60, 57, 0.65);
+	z-index: 0;
+}
+
+/* =========================
+   SECTION FORMULAIRE
+   ========================= */
+.addcategory__section,
+.editcategory__section {
+	background-color: var(--mediumMarron);
+	padding: 3rem 2.5rem;
+	margin: 4rem 1rem;
+	border-radius: 18px;
+	box-shadow: var(--shadow);
+	width: 100%;
+	z-index: 1;
+}
+
+/* =========================
+   TITRE
+   ========================= */
+.addcategory__title,
+.editcategory__title {
+	font-family: var(--fontTitle);
+	font-size: 1.6rem;
+	color: var(--lightBeige);
+	margin-bottom: 2rem;
+	text-align: center;
+	letter-spacing: 1.2px;
+}
+
+/* =========================
+   LABELS / INPUTS
+   ========================= */
+.addcategory__label,
+.editcategory__label {
+	font-weight: 600;
+	font-size: 0.95rem;
+	color: var(--lightBeige);
+}
+
+.addcategory__input,
+.editcategory__input {
+	padding: 0.6rem 1rem;
+	font-size: 0.95rem;
+	border: 1.8px solid var(--mediumBeige);
+	border-radius: 8px;
+	font-family: var(--fontRegular);
+	color: var(--darkMarron);
+	transition: var(--transition);
+}
+
+.addcategory__input:focus,
+.editcategory__input:focus {
+	border-color: var(--darkMarron);
+	outline: none;
+}
+
+/* =========================
+   INPUT FILE
+   ========================= */
+.addcategory__file,
+.editcategory__file {
+	border: 1.5px solid var(--mediumBeige);
+	padding: 0.5rem;
+	border-radius: 6px;
+	cursor: pointer;
+	color: var(--lightBeige);
+}
+
+.addcategory__file:hover,
+.editcategory__file:hover {
+	color: var(--hoverLightBeige);
+}
+
+/* =========================
+   BOUTON
+   ========================= */
+.addcategory__button,
+.editcategory__button {
+	align-self: center;
+	margin-top: 1.5rem;
+	border-radius: 50px;
+	background-color: var(--lightBeige);
+	color: var(--darkMarron);
+	border: none;
+	padding: 0.7rem 1.8rem;
+	font-family: var(--fontTitle);
+	font-size: 1rem;
+	cursor: pointer;
+	transition: var(--transition);
+}
+
+.addcategory__button:hover,
+.editcategory__button:hover {
+	background-color: var(--hoverLightBeige);
+	transform: translateY(-2px);
+}
+
+/* =========================
+   ERREUR NON CONNECTÉ
+   ========================= */
+.addcategory__section--error,
+.editcategory__section--error {
+	text-align: center;
+	padding: 0 1rem 6rem;
+	color: var(--darkMarron);
+	z-index: 1;
+}
+
+.addcategory__error-box,
+.editcategory__error-box {
+	background: var(--lightBeige);
+	padding: 2rem;
+	border-radius: 18px;
+	border: 1px solid var(--mediumBeige);
+}
+
+.addcategory__link,
+.editcategory__link {
+	color: var(--mediumMarron);
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.addcategory__link:hover,
+.editcategory__link:hover {
+	color: var(--hoverMediumMarron);
+}
+
+/* =========================
+   BREAKPOINT ≥ 768px
+   ========================= */
+@media (min-width: 768px) {
+	.addcategory__section,
+	.editcategory__section {
+		margin: 5rem auto;
+		max-width: 600px;
+	}
+
+	.addcategory__title,
+	.editcategory__title {
+		font-size: 2rem;
+		margin-bottom: 2.5rem;
+	}
+
+	.addcategory__input,
+	.editcategory__input {
+		font-size: 1rem;
+	}
+
+	.addcategory__button,
+	.editcategory__button {
+		padding: 0.75rem 2.5rem;
+		font-size: 1.1rem;
+	}
+}

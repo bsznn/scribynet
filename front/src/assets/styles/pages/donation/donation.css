@@ -27,8 +27,11 @@
 .donation__content {
 	position: relative;
 	background-color: var(--bodyBeige);
-	min-height: 70vh;
+	min-height: 77vh;
 	padding: 1rem 1.5rem 3rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 .donation__title {

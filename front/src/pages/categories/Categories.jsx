@@ -6,8 +6,13 @@ import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { token } from "../../context/token";
 
+import defaultImage from "../../assets/images/default-categories.jpg";
+import "../../assets/styles/pages/categories/categories.css";
+
 export default function Categories() {
 	const [categories, setCategories] = useState([]);
+	const [search, setSearch] = useState("");
+	const [showAll, setShowAll] = useState(false);
 	const [error, setError] = useState(null);
 
 	const auth = useAuth();
@@ -15,10 +20,7 @@ export default function Categories() {
 	useEffect(() => {
 		axios
 			.get("http://localhost:5000/categories/")
-			.then((res) => {
-				console.log(res);
-				setCategories(res.data);
-			})
+			.then((res) => setCategories(res.data))
 			.catch((error) => {
 				console.log(error);
 				setError("Impossible de charger les catégories");
@@ -35,98 +37,131 @@ export default function Categories() {
 				.delete(`http://localhost:5000/categories/delete/${id}`, {
 					headers: token(),
 				})
-				.then((res) => {
-					console.log(res.data.message);
-					setCategories((prevCategories) =>
-						prevCategories.filter((category) => category._id !== id),
+				.then(() => {
+					setCategories((prev) =>
+						prev.filter((category) => category._id !== id),
 					);
 					alert("La catégorie a été supprimée avec succès !");
 				})
-				.catch((err) => {
+				.catch(() => {
 					alert("Impossible de supprimer la catégorie !");
 				});
 		}
 	};
 
+	const filteredCategories = categories.filter((category) =>
+		category.name.toLowerCase().includes(search.toLowerCase()),
+	);
+
+	// Gestion affichage 12 premiers éléments
+	const displayedCategories = showAll
+		? filteredCategories
+		: filteredCategories.slice(0, 12);
+
+	const sectionStyle = {
+		backgroundImage:
+			"url(https://images.pexels.com/photos/29087509/pexels-photo-29087509.jpeg?_gl=1*1l7uz2t*_ga*NDI0NjMwMjIzLjE3NjYwNjA1NTk.*_ga_8JE65Q40S6*czE3NzE1ODEyMTckbzIzJGcxJHQxNzcxNTgxMjkwJGo1OSRsMCRoMA..)",
+		backgroundSize: "cover",
+		backgroundPosition: "center",
+		backgroundRepeat: "no-repeat",
+	};
+
 	return (
-		<main>
-			{error && <p>{error}</p>}
+		<div className="categories">
+			{error && <p className="categories__error">{error}</p>}
 
-			<section>
-				<h1>Catégories</h1>
+			{/* Header */}
+			<section className="categories__header" style={sectionStyle}>
+				<article className="categories__headerContent">
+					<span>
+						<h1 className="categories__title">Catégories</h1>
 
-				<ul>
-					{/* <li>
-            <img
-              src=""
-              alt="category-title"
-            />
-          </li>
-          <li>
-            <p>
-              Découvrez les catégories sur Scribify : votre outil indispensable
-              pour organiser et structurer vos écrits selon thèmes et genres.
-              Simplifiez la navigation et la gestion de votre contenu en
-              regroupant vos œuvres de manière logique. Les catégories offrent
-              une expérience de lecture fluide pour vos lecteurs tout en vous
-              permettant de suivre facilement vos progrès d'écriture et
-              d'explorer de nouveaux thèmes et genres littéraires.
-            </p>
-            <li>
-              <img
-                src=""
-                alt="fond-lune"
-              />
-            </li>
-          </li> */}
-					<li>
 						{auth.user && auth.user.role === "admin" && (
-							<Link to={`/`}>
-								<IoIosAddCircle />
+							<Link to={`/categories/new`} className="categories__add">
+								<IoIosAddCircle size={28} />
 							</Link>
 						)}
-					</li>
-				</ul>
+					</span>
+					<div className="categories__search">
+						<input
+							type="text"
+							placeholder="Rechercher une catégorie..."
+							value={search}
+							onChange={(e) => setSearch(e.target.value)}
+							className="categories__search-input"
+						/>
+					</div>
+				</article>
 			</section>
 
-			<section>
-				{categories.map((category) => (
-					<section key={category._id}>
-						<article>
-							{category.image && (
+			{/* Liste */}
+			<section className="categories__list">
+				{displayedCategories.length > 0 ? (
+					displayedCategories.map((category) => (
+						<NavLink
+							key={category._id}
+							to={`/categories/${category._id}`}
+							className="categories__card"
+						>
+							<div className="categories__image-wrapper">
 								<img
-									src={`http://localhost:5000/assets/img/${category.image.src}`}
-									alt={category.image.alt}
-									aria-label="category-image"
-									title={category.image.alt}
+									className="categories__image"
+									src={
+										category.image?.src
+											? `http://localhost:5000/assets/img/${category.image.src}`
+											: defaultImage
+									}
+									alt={category.image?.alt || "Image par défaut"}
+									title={category.image?.alt || "Image par défaut"}
 								/>
+							</div>
+
+							<div className="categories__content">
+								<h3 className="categories__name">{category.name}</h3>
+							</div>
+
+							{auth.user && auth.user.role === "admin" && (
+								<div
+									className="categories__actions"
+									onClick={(e) => e.preventDefault()}
+								>
+									<Link
+										to={`/modifier-categorie/${category._id}`}
+										className="categories__edit"
+									>
+										<IoIosSettings size={22} />
+									</Link>
+
+									<button
+										type="button"
+										onClick={(e) => {
+											e.preventDefault();
+											handleDelete(category._id);
+										}}
+										className="categories__delete"
+									>
+										<MdDelete size={22} />
+									</button>
+								</div>
 							)}
-						</article>
-
-						<article>
-							<NavLink to={`/`}>
-								<h3>{category.name}</h3>
-							</NavLink>
-						</article>
-
-						{auth.user && auth.user.role === "admin" ? (
-							<article>
-								<Link to={`/}`}>
-									<IoIosSettings />
-								</Link>
-
-								<span onClick={() => handleDelete(category._id)}>
-									<MdDelete />
-								</span>
-							</article>
-						) : (
-							<article>
-								<img src="" alt="logo-image" />
-							</article>
-						)}
-					</section>
-				))}
+						</NavLink>
+					))
+				) : (
+					<p className="categories__no-result">Aucune catégorie trouvée.</p>
+				)}
 			</section>
-		</main>
+
+			{filteredCategories.length > 12 && (
+				<div className="categories__more">
+					<button
+						type="button"
+						className="categories__more-btn"
+						onClick={() => setShowAll(!showAll)}
+					>
+						{showAll ? "Voir moins" : "Voir plus"}
+					</button>
+				</div>
+			)}
+		</div>
 	);
 }

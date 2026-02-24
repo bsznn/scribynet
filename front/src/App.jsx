@@ -7,7 +7,6 @@ import { AddBook } from "./pages/books/AddBook";
 import Books from "./pages/books/Books";
 import Categories from "./pages/categories/Categories";
 //import Home from "./pages/home/Home";
-import EditBook from "./pages/books/EditBook";
 import { Readers } from "./pages/readers/Readers";
 
 import "./app.css";
@@ -18,6 +17,11 @@ import ChapterAdd from "./components/chapters/AddChapter";
 import Donation from "./pages/donation/Donation";
 import DonationSuccess from "./pages/donation/DonationSuccess";
 import DonationCancel from "./pages/donation/DonationCancel";
+import { EditBook } from "./pages/books/EditBook";
+import LegalNotices from "./pages/footer/LegalNotices";
+import PrivacyPolicy from "./pages/footer/PrivacyPolicy";
+import { AddCategory } from "./pages/categories/AddCategory";
+import { EditCategory } from "./pages/categories/EditCategory";
 
 const Home = lazy(() => import("./pages/home/Home"));
 
@@ -36,12 +40,12 @@ function App() {
 				<Route path="/se-connecter" element={<Login />} />
 				<Route path="/s-inscrire" element={<Register />} />
 				<Route path="/histoires" element={<Books />} />
+				<Route path="/modifier-histoire/:id" element={<EditBook />} />
 				<Route path="/histoire/:id" element={<Book />} />
 				<Route path="/auteurs" element={<Authors />} />
 				<Route path="/lecteurs" element={<Readers />} />
 				<Route path="/categories" element={<Categories />} />
 				<Route path="/publier-histoire" element={<AddBook />} />
-				<Route path="/modifier-histoire" element={<EditBook />} />
 				<Route path="/a-propos" element={<AboutContact />} />
 				<Route
 					path="/modifier-chapitre/:bookId/:chapterId"
@@ -51,6 +55,10 @@ function App() {
 				<Route path="/faire-don" element={<Donation />} />
 				<Route path="/don-succes" element={<DonationSuccess />} />
 				<Route path="/don-annule" element={<DonationCancel />} />
+				<Route path="/mentions-legales" element={<LegalNotices />} />
+				<Route path="/politique-confidentialite" element={<PrivacyPolicy />} />
+				<Route path="/categories/new" element={<AddCategory />} />
+				<Route path="/modifier-categorie/:id" element={<EditCategory />} />
 			</Routes>
 		</div>
 	);

@@ -5,6 +5,9 @@ import axios from "axios";
 import { token } from "../../context/token";
 import { useNavigate, useParams } from "react-router-dom";
 
+import "../../assets/styles/components/chapters/addchapter.css";
+import headImage from "../../assets/images/form/fond-addbook.jpeg";
+
 const ChapterAdd = () => {
 	const [inputs, setInputs] = useState({
 		chapterContent: "",
@@ -67,8 +70,15 @@ const ChapterAdd = () => {
 		}
 	};
 
+	const sectionStyle = {
+		backgroundImage: `url(${headImage})`,
+		backgroundSize: "cover",
+		backgroundPosition: "center",
+		backgroundRepeat: "no-repeat",
+	};
+
 	return (
-		<section className="addchapter">
+		<section className="addchapter" style={sectionStyle}>
 			{message && <span className="addchapter__success">{message}</span>}
 
 			<div className="addchapter__container">

@@ -96,22 +96,41 @@ export const updateChapter = async (req, res) => {
 	}
 };
 
-// Supprimer un chapitre d'un livre
 export const deleteChapter = async (req, res) => {
 	try {
 		const { bookId, chapterId } = req.params;
-		const book = await Book.updateOne(
+
+		// 1️⃣ On supprime le chapitre
+		const result = await Book.updateOne(
 			{ _id: bookId },
 			{ $pull: { chapters: { _id: chapterId } } },
 		);
 
-		if (!book) {
+		if (result.matchedCount === 0) {
 			return res.status(404).json({ message: "Livre non trouvé" });
 		}
 
-		res.status(200).json({ message: "Le chapitre a été supprimé avec succès" });
+		// 2️⃣ On récupère le livre mis à jour
+		const updatedBook = await Book.findById(bookId);
+
+		// 3️⃣ Si plus aucun chapitre → on supprime le livre
+		if (updatedBook && updatedBook.chapters.length === 0) {
+			await Book.findByIdAndDelete(bookId);
+
+			return res.status(200).json({
+				message: "Dernier chapitre supprimé, livre supprimé automatiquement",
+				bookDeleted: true,
+			});
+		}
+
+		res.status(200).json({
+			message: "Le chapitre a été supprimé avec succès",
+			bookDeleted: false,
+		});
 	} catch (_error) {
-		res.status(500).json({ message: "Le chapitre n'a pas pu être supprimé" });
+		res.status(500).json({
+			message: "Le chapitre n'a pas pu être supprimé",
+		});
 	}
 };
 

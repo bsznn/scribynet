@@ -4,6 +4,8 @@ import { IoIosSend } from "react-icons/io";
 import axios from "axios";
 import { token } from "../../context/token";
 
+import "../../assets/styles/components/answers/answers.css";
+
 const AddAnswer = ({ bookId, commentId, answerAdd }) => {
 	const [inputs, setInputs] = useState({
 		content: "",
@@ -80,9 +82,9 @@ const AddAnswer = ({ bookId, commentId, answerAdd }) => {
 						name="content"
 						placeholder="Votre réponse"
 					/>
-					<button className="addanswer__button">
+					<button type="submit" className="addanswer__button">
 						<IoIosSend className="icon-none" />
-						<p className="name-none"> ↪️ Répondre</p>
+						<p className="name-none">Répondre</p>
 					</button>
 				</article>
 			</form>

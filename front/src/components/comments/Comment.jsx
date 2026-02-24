@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { token } from "../../context/token";
+import "../../assets/styles/components/comments/comments.css";
 
 import AddAnswer from "../answers/AddAnswer";
 import Answers from "../answers/Answers";
@@ -11,7 +12,7 @@ import { MdDelete } from "react-icons/md";
 import { RiQuestionAnswerFill } from "react-icons/ri";
 import { IoIosSend } from "react-icons/io";
 
-const Comment = ({ bookId, commentId }) => {
+const Comment = ({ bookId, commentId, onCommentDelete }) => {
 	const [comment, setComment] = useState("");
 	const [showAnswerInput, setShowAnswerInput] = useState(false);
 	const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -77,8 +78,11 @@ const Comment = ({ bookId, commentId }) => {
 					{ headers: token() },
 				)
 				.then((res) => {
-					setComment(null);
+					setComment(null); // supprime le commentaire localement
 					alert(res.data.message);
+
+					// ⚡ Notifie le parent pour mettre à jour le compteur
+					if (onCommentDelete) onCommentDelete();
 				})
 				.catch((err) => {
 					alert("Impossible de supprimer le commentaire !");
@@ -105,57 +109,66 @@ const Comment = ({ bookId, commentId }) => {
 	return (
 		<section className="comment">
 			{comment && (
-				<>
-					<article className="comment__card">
-						<span className="comment__user">
-							<img
-								className="comment__avatar"
-								src={`http://localhost:5000/assets/img/${comment.userId.image.src}`}
-								alt={comment.userId.image.alt}
+				<article className="comment__card">
+					<span className="comment__user">
+						<img
+							className="comment__avatar"
+							src={`http://localhost:5000/assets/img/${comment.userId.image.src}`}
+							alt={comment.userId.image.alt}
+						/>
+						<h5 className="comment__username">{comment.userId.login}</h5>
+					</span>
+
+					{showUpdateForm ? (
+						<div className="comment__edit">
+							<textarea
+								className="comment__textarea"
+								value={updateContent}
+								onChange={(e) => setUpdateContent(e.target.value)}
 							/>
-							<h5 className="comment__username">{comment.userId.login}</h5>
-						</span>
-
-						{showUpdateForm ? (
-							<>
-								<textarea
-									className="comment__content"
-									value={updateContent}
-									onChange={(e) => setUpdateContent(e.target.value)}
-								/>
-								<button onClick={handleUpdate} className="comment__button">
+							<div className="comment__edit-actions">
+								<button
+									type="button"
+									onClick={handleUpdate}
+									className="comment__update-btn"
+								>
 									<IoIosSend className="comment__icon" />
-									<span className="comment__text">↪️ Valider</span>
+									<span>Valider</span>
 								</button>
-							</>
-						) : (
-							<p className="comment__content">{comment.content}</p>
-						)}
-					</article>
+							</div>
+						</div>
+					) : (
+						<p className="comment__content">{comment.content}</p>
+					)}
 
-					<article className="comment__meta">
+					<div className="comment__meta">
 						Posté le {new Date(comment.date).toLocaleDateString()} à{" "}
 						{new Date(comment.date).toLocaleTimeString()}
-					</article>
+					</div>
 
-					<article>
+					<div>
 						<ul className="comment__actions">
-							{auth.user.id === comment.userId._id && (
-								<li onClick={toggleUpdateForm}>
-									<IoIosSettings className="comment__action-icon" />
-									<span className="comment__text">⚙️ Modifier</span>
+							<div className="comment__actions-list">
+								{auth.user.id === comment.userId._id && (
+									<li className="comment__action" onClick={toggleUpdateForm}>
+										<IoIosSettings className="comment__action-icon" />
+									</li>
+								)}
+
+								<li className="comment__action" onClick={handleDelete}>
+									<MdDelete className="comment__action-icon" />
 								</li>
-							)}
 
-							<li onClick={handleDelete}>
-								<MdDelete className="comment__action-icon" />
-								<span className="comment__text">🗑️ Supprimer</span>
-							</li>
-
-							<li onClick={toggleAnswerInput}>
-								<RiQuestionAnswerFill className="comment__action-icon comment__action-icon--answer" />
-								<span className="comment__text">🗨️ Réponses</span>
-							</li>
+								<li
+									className="comment__action comment__action--answer"
+									onClick={toggleAnswerInput}
+								>
+									<RiQuestionAnswerFill className="comment__action-icon" />
+									<span className="comment__text">
+										{comment.answers?.length || 0}
+									</span>
+								</li>
+							</div>
 						</ul>
 
 						{showAnswerInput && (
@@ -165,19 +178,20 @@ const Comment = ({ bookId, commentId }) => {
 								answerAdd={handleAnswerUpdate}
 							/>
 						)}
-					</article>
 
-					{showAnswerInput && (
-						<section className="comment__answers">
-							<Answers
-								bookId={bookId}
-								commentId={commentId}
-								answerUpdate={answerUpdate}
-								key={answerUpdate}
-							/>
-						</section>
-					)}
-				</>
+						{showAnswerInput && (
+							<div className="comment__answers">
+								<Answers
+									bookId={bookId}
+									commentId={commentId}
+									answerUpdate={answerUpdate}
+									onAnswerDeleted={handleAnswerUpdate}
+									key={answerUpdate}
+								/>
+							</div>
+						)}
+					</div>
+				</article>
 			)}
 		</section>
 	);

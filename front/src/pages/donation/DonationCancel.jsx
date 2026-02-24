@@ -19,7 +19,7 @@ export default function DonationCancel() {
 				</div>
 
 				<div className="donation-cancel__content">
-					<h1 className="donation-cancel__title">Paiement annulé ❌</h1>
+					<h1 className="donation-cancel__title">Paiement annulé</h1>
 					<p className="donation-cancel__message">
 						Vous pouvez réessayer à tout moment.{" "}
 					</p>

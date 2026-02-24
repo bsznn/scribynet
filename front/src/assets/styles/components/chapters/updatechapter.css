@@ -1,0 +1,141 @@
+/* =========================
+   CONTENEUR PRINCIPAL
+   ========================= */
+.updatechapter {
+	position: relative;
+	min-height: 90vh;
+	background-color: var(--bodyBeige);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: var(--fontRegular);
+	color: var(--darkMarron);
+}
+
+.updatechapter::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: rgba(66, 60, 57, 0.65);
+	z-index: 0;
+}
+
+/* =========================
+   FORMULAIRE
+   ========================= */
+.updatechapter__form {
+	background-color: var(--mediumMarron);
+	padding: 3rem 2.5rem;
+	margin: 4rem 1rem;
+	border-radius: 18px;
+	box-shadow: var(--shadow);
+	width: 100%;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+/* =========================
+   TITRE
+   ========================= */
+.updatechapter__title {
+	font-family: var(--fontTitle);
+	font-size: 1.6rem;
+	color: var(--lightBeige);
+	margin-bottom: 2rem;
+	text-align: center;
+	letter-spacing: 1.2px;
+}
+
+/* =========================
+   LABELS / INPUTS
+   ========================= */
+.updatechapter__label {
+	font-weight: 600;
+	font-size: 0.95rem;
+	color: var(--lightBeige);
+}
+
+.updatechapter__input {
+	padding: 0.6rem 1rem;
+	font-size: 0.95rem;
+	border: 1.8px solid var(--mediumBeige);
+	border-radius: 8px;
+	font-family: var(--fontRegular);
+	color: var(--darkMarron);
+	transition: var(--transition);
+	margin-bottom: 1rem;
+}
+
+.updatechapter__input:focus {
+	border-color: var(--darkMarron);
+	outline: none;
+}
+
+/* =========================
+   REACT QUILL
+   ========================= */
+.updatechapter__editor .ql-toolbar.ql-snow {
+	background: var(--lightBeige);
+	border: 1px solid var(--darkMarron);
+}
+
+.updatechapter__editor .ql-container {
+	height: 300px;
+	font-family: var(--fontRegular);
+}
+
+.updatechapter__editor .ql-editor {
+	border: 1px solid var(--darkMarron);
+	background-color: white;
+}
+
+/* =========================
+   BOUTON
+   ========================= */
+.updatechapter__button {
+	align-self: center;
+	margin-top: 1rem;
+	border-radius: 50px;
+	background-color: var(--lightBeige);
+	color: var(--darkMarron);
+	border: none;
+	padding: 0.7rem 1.8rem;
+	font-family: var(--fontTitle);
+	font-size: 1rem;
+	cursor: pointer;
+	transition: var(--transition);
+}
+
+.updatechapter__button:hover {
+	background-color: var(--hoverLightBeige);
+	transform: translateY(-2px);
+}
+
+/* =========================
+   BREAKPOINT ≥ 768px
+   ========================= */
+@media (min-width: 768px) {
+	.updatechapter__form {
+		margin: 5rem auto;
+		max-width: 700px;
+	}
+
+	.updatechapter__title {
+		font-size: 2rem;
+		margin-bottom: 2.5rem;
+	}
+
+	.updatechapter__input {
+		font-size: 1rem;
+	}
+
+	.updatechapter__editor .ql-container {
+		height: 550px;
+	}
+
+	.updatechapter__button {
+		padding: 0.75rem 2.5rem;
+		font-size: 1.1rem;
+	}
+}

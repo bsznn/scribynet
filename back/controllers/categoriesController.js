@@ -3,10 +3,10 @@ import Category from "../models/categoryModel.js";
 // Fonction pour ajouter une catégorie générale par l'administrateur
 export const addGeneralCategory = async (req, res) => {
 	try {
-		const { name, description } = req.body;
+		const { name } = req.body;
 
 		// Vérifier que les champs requis ne sont pas vides
-		if (name.trim() === "" || description.trim() === "") {
+		if (name.trim() === "") {
 			return res.status(401).json({
 				message: "Veuillez remplir tous les champs !",
 			});
@@ -15,7 +15,6 @@ export const addGeneralCategory = async (req, res) => {
 		// Créer une nouvelle catégorie avec les détails fournis
 		const category = new Category({
 			name,
-			description,
 			image: {
 				src: req.file ? req.file.filename : "",
 				alt: req.file ? req.file.originalname : "",
@@ -37,57 +36,42 @@ export const addGeneralCategory = async (req, res) => {
 // Modifier une catégorie en général (pour l'administrateur)
 export const updateCategoryByAdmin = async (req, res) => {
 	try {
-		// Rechercher la catégorie par ID dans la base de données
 		const category = await Category.findById(req.params.id);
 
-		// Vérifier si la catégorie existe
 		if (!category) {
 			return res.status(404).json({ message: "Catégorie non trouvée" });
 		}
 
-		// Extraire les champs à mettre à jour à partir du corps de la requête
-		const { name, description } = req.body;
+		const { name } = req.body;
 
-		// Vérifier que les champs requis ne sont pas vides
-		if (
-			!name ||
-			name.trim() === "" ||
-			!description ||
-			description.trim() === ""
-		) {
+		if (!name || name.trim() === "") {
 			return res
 				.status(400)
 				.json({ message: "Veuillez remplir tous les champs !" });
 		}
 
-		// Construire l'objet de mise à jour
+		// ⭐ Construire un objet update propre
 		const updateObject = {
-			name,
-			description,
+			name: name,
+			image: category.image, // par défaut on garde l'image existante
 		};
 
-		// Mettre à jour l'image si une nouvelle image est fournie
+		// ⭐ Si nouvelle image uploadée
 		if (req.file) {
 			updateObject.image = {
 				src: req.file.filename,
 				alt: req.file.originalname,
 			};
-		} else {
-			// Conserver l'image existante si aucune nouvelle image n'est fournie
-			updateObject.image = { src: category.image.src, alt: category.image.alt };
 		}
 
-		// Mettre à jour la catégorie avec les nouveaux détails
 		const updatedCategory = await Category.findByIdAndUpdate(
 			req.params.id,
 			updateObject,
 			{ new: true },
 		);
 
-		// Envoyer la réponse avec la catégorie mise à jour
 		res.status(200).json(updatedCategory);
 	} catch (error) {
-		// Gérer les erreurs lors de la mise à jour de la catégorie
 		console.log(error);
 		res.status(500).json({
 			message: "Impossible de mettre à jour la catégorie",
