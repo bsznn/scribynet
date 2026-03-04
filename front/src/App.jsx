@@ -22,6 +22,7 @@ import LegalNotices from "./pages/footer/LegalNotices";
 import PrivacyPolicy from "./pages/footer/PrivacyPolicy";
 import { AddCategory } from "./pages/categories/AddCategory";
 import { EditCategory } from "./pages/categories/EditCategory";
+import Profile from "./pages/profile/Profile";
 
 const Home = lazy(() => import("./pages/home/Home"));
 
@@ -59,6 +60,7 @@ function App() {
 				<Route path="/politique-confidentialite" element={<PrivacyPolicy />} />
 				<Route path="/categories/new" element={<AddCategory />} />
 				<Route path="/modifier-categorie/:id" element={<EditCategory />} />
+				<Route path="/profil" element={<Profile />} />
 			</Routes>
 		</div>
 	);

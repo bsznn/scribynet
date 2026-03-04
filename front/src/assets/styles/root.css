@@ -38,4 +38,5 @@
 	--fontScript: "Libertinus Sans", sans-serif;
 
 	--shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+	--shadowDropdown: 0 12px 20px -8px rgba(0, 0, 0, 0.18);
 }

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { AiOutlineLogin } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
-import { IoMdLogOut } from "react-icons/io";
 import { RiMenu3Fill } from "react-icons/ri";
 import { NavLink, useNavigate } from "react-router-dom";
 import defaultImage from "../../assets/images/default-profile.jpg";
@@ -14,6 +13,12 @@ export default function Header() {
 	const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 	const auth = useAuth();
 	const navigate = useNavigate();
+
+	const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+
+	const toggleUserDropdown = () => {
+		setUserDropdownOpen(!userDropdownOpen);
+	};
 
 	const profileImage =
 		auth.user?.image?.src && auth.user.image.src !== "default-profil.png"
@@ -119,6 +124,45 @@ export default function Header() {
 								Publier
 							</NavLink>
 						</li>
+
+						{isMobile && auth.user && (
+							<div className="header__mobile-user-block">
+								<NavLink
+									to="/profil"
+									className="header__nav-link"
+									onClick={closeMenu}
+								>
+									Profil
+								</NavLink>
+
+								<NavLink
+									to="/dashboard"
+									className="header__nav-link"
+									onClick={closeMenu}
+								>
+									Dashboard
+								</NavLink>
+
+								<NavLink
+									to="/messagerie"
+									className="header__nav-link"
+									onClick={closeMenu}
+								>
+									Messagerie
+								</NavLink>
+
+								<button
+									type="button"
+									onClick={() => {
+										handleLogout();
+										closeMenu();
+									}}
+									className="header__logout-mobile"
+								>
+									Déconnexion
+								</button>
+							</div>
+						)}
 					</nav>
 				</section>
 
@@ -131,24 +175,55 @@ export default function Header() {
 						<span>Don</span>
 					</NavLink>
 					{auth.user ? (
-						<div className="header__user-mobile">
-							<div className="header__user-info">
+						/* DESKTOP UNIQUEMENT */
+						<div className="header__user-wrapper">
+							<div
+								className="header__user-info"
+								onClick={!isMobile ? toggleUserDropdown : undefined}
+							>
 								<img
 									className="header__user-image"
 									src={profileImage}
-									alt={auth.user?.image?.alt || "Image de profil par défaut"}
+									alt="Image de profil"
 								/>
-
 								<span className="header__user-text">{auth.user.login}</span>
 							</div>
-							<button
-								type="button"
-								onClick={handleLogout}
-								className="header__dropdown-item"
-							>
-								<span className="header__user-text">Déconnexion</span>{" "}
-								<IoMdLogOut />
-							</button>
+
+							{!isMobile && userDropdownOpen && (
+								<div className="header__dropdown">
+									<NavLink
+										to="/profil"
+										className="header__dropdown-link"
+										onClick={() => setUserDropdownOpen(false)}
+									>
+										Profil
+									</NavLink>
+
+									<NavLink
+										to="/dashboard"
+										className="header__dropdown-link"
+										onClick={() => setUserDropdownOpen(false)}
+									>
+										Dashboard
+									</NavLink>
+
+									<NavLink
+										to="/messagerie"
+										className="header__dropdown-link"
+										onClick={() => setUserDropdownOpen(false)}
+									>
+										Messagerie
+									</NavLink>
+
+									<button
+										type="button"
+										onClick={handleLogout}
+										className="header__dropdown-link logout"
+									>
+										Déconnexion
+									</button>
+								</div>
+							)}
 						</div>
 					) : (
 						<NavLink
@@ -156,7 +231,7 @@ export default function Header() {
 							className="header__auth-mobile"
 							onClick={closeMenu}
 						>
-							<span className="header__auth-text">Connexion</span>{" "}
+							<span className="header__auth-text">Connexion</span>
 							<AiOutlineLogin />
 						</NavLink>
 					)}

@@ -99,7 +99,7 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 	gap: 2rem;
-	padding: 1rem 5%;
+	padding: 1rem;
 }
 
 .books__link {
@@ -141,7 +141,6 @@
 .books__image {
 	width: 80px;
 	height: 110px;
-	border-radius: 8px;
 	box-shadow: var(--shadow);
 }
 

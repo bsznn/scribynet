@@ -201,8 +201,8 @@ body {
 }
 
 .header__user-image {
-	width: 30px;
-	height: 30px;
+	width: 35px;
+	height: 35px;
 	border-radius: 50%;
 	object-fit: cover;
 	border: 2px solid var(--lightBeige);
@@ -213,10 +213,6 @@ body {
 	display: flex;
 	align-items: center;
 	transition: var(--transition);
-}
-
-.header__user-info:hover {
-	transform: scale(1.05);
 }
 
 .header__don-mobile {
@@ -238,6 +234,39 @@ body {
 
 .header__don-mobile:hover {
 	background-color: var(--hoverDarkMarron);
+}
+
+/* MOBILE USER BLOCK DANS BURGER */
+.header__mobile-user-block {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.header__mobile-user-info {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	font-weight: 600;
+	color: var(--darkMarron);
+}
+
+.header__logout-mobile {
+	background: none;
+	border: none;
+	color: var(--darkMarron);
+	font-weight: 600;
+	cursor: pointer;
+	font-size: 1rem;
+	font-family: var(--fontRegular);
+	transition: var(--transition);
+	padding: 0;
+}
+
+.header__logout-mobile:hover {
+	color: var(--hoverDarkMarron);
+	transform: scale(1.1);
 }
 
 @media (min-width: 768px) {
@@ -287,6 +316,66 @@ body {
 	.header__branding {
 		padding-left: 0;
 	}
+
+	.header__user-info {
+		cursor: pointer;
+	}
+
+	/* WRAPPER */
+	.header__user-wrapper {
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
+
+	/* DROPDOWN */
+	.header__dropdown {
+		position: absolute;
+		top: 52px;
+		right: -25px;
+		background-color: var(--bodyBeige);
+		display: flex;
+		flex-direction: column;
+		min-width: 160px;
+		padding: 0.5rem 0;
+		z-index: 9999;
+		box-shadow: var(--shadowDropdown);
+		animation: dropdownFade 0.2s ease-in-out;
+	}
+
+	/* LIENS */
+	.header__dropdown-link {
+		padding: 0.6rem 1rem;
+		text-decoration: none;
+		color: var(--darkMarron);
+		font-weight: 600;
+		background: none;
+		border: none;
+		text-align: left;
+		cursor: pointer;
+		transition: var(--transition);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 1rem;
+		font-family: var(--fontRegular);
+	}
+
+	.header__dropdown-link:hover {
+		background-color: var(--mediumBeige);
+	}
+
+	/* Animation */
+	@keyframes dropdownFade {
+		from {
+			opacity: 0;
+			transform: translateY(-5px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
 }
 
 @media (min-width: 990px) {
@@ -305,10 +394,6 @@ body {
 
 	.header__user-mobile button {
 		margin-left: 10px;
-	}
-
-	.header__right-group {
-		gap: 1rem;
 	}
 }
 

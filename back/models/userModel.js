@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema(
 			lowercase: true,
 			required: true,
 			trim: true,
+			maxlength: 20,
 		},
 		// Adresse email de l'utilisateur (unique, en minuscules, obligatoire, sans espaces)
 		email: {
@@ -32,7 +33,7 @@ const userSchema = new mongoose.Schema(
 			trim: true,
 			maxlength: 250,
 			required: true,
-			default: "Veuillez ajouter une description !",
+			default: "Votre bio attend ses premiers mots… à vous de jouer !",
 		},
 		// Image associée à l'utilisateur (chemin source et texte alternatif)
 		image: {
