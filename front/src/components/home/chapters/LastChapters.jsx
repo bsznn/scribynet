@@ -29,7 +29,7 @@ export default function LastChapters() {
 				{lastUpdates.map((oneLastUpdate) => (
 					<article key={oneLastUpdate._id} className="last-chapters__item">
 						<NavLink
-							to={`/livre/${oneLastUpdate._id}`}
+							to={`/histoire/${oneLastUpdate._id}`}
 							className="last-chapters__link"
 						>
 							<p className="last-chapters__chapter-title">

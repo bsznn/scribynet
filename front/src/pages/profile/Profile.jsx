@@ -35,7 +35,7 @@ const Profile = () => {
 				headers: token(),
 			})
 			.then((res) => setBooks(res.data))
-			.catch(() => setErr("Impossible de charger vos livres !"));
+			.catch(() => setErr("Impossible de charger vos histoires !"));
 	}, [auth.user.id]);
 
 	useEffect(() => {
@@ -86,13 +86,13 @@ const Profile = () => {
 	};
 
 	const handleDeleteBook = (id) => {
-		if (window.confirm("Êtes-vous sûr de vouloir supprimer ce livre ?")) {
+		if (window.confirm("Êtes-vous sûr de vouloir supprimer cette histoire ?")) {
 			axios
 				.delete(`http://localhost:5000/books/delete/${id}/${auth.user.id}`, {
 					headers: token(),
 				})
 				.then(() => setBooks((prev) => prev.filter((b) => b._id !== id)))
-				.catch(() => alert("Impossible de supprimer le livre !"));
+				.catch(() => alert("Impossible de supprimer l'histoire !"));
 		}
 	};
 
@@ -294,7 +294,7 @@ const Profile = () => {
 																		navigate(`/modifier-histoire/${book._id}`);
 																	}}
 																	title="Modifier"
-																	aria-label="Modifier le livre"
+																	aria-label="Modifier l'histoire"
 																>
 																	<IoIosSettings />
 																</button>
@@ -310,7 +310,7 @@ const Profile = () => {
 																		handleDeleteBook(book._id);
 																	}}
 																	title="Supprimer"
-																	aria-label="Supprimer le livre"
+																	aria-label="Supprimer l'histoire"
 																>
 																	<MdDelete />
 																</button>
@@ -361,7 +361,7 @@ const Profile = () => {
 							{newBooks.slice(0, 12).map((book) => (
 								<div key={book._id} className="profile__new-book">
 									<Link
-										to={`/livre/${book._id}`}
+										to={`/histoire/${book._id}`}
 										className="profile__new-book-link"
 									>
 										<img

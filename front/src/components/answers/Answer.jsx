@@ -99,14 +99,14 @@ const Answer = ({ bookId, commentId, answerId, onAnswerDeleted }) => {
 							<ul>
 								<li>
 									<img
-										src={`http://localhost:5000/assets/img/${auth.user.image.src}`}
-										alt={auth.user.image.alt}
+										src={`http://localhost:5000/assets/img/${answer.userId.image.src}`}
+										alt={answer.userId.image.alt}
 										aria-label="user-image"
-										title={auth.user.image.alt}
+										title={answer.userId.image.alt}
 									/>
 								</li>
 								<li>
-									<h5 className="answer__login--name">{auth.user.login}</h5>
+									<h5 className="answer__login--name">{answer.userId.login}</h5>
 								</li>
 							</ul>
 

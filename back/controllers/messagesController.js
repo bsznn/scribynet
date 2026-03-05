@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Message from "../models/messageModel.js";
+import User from "../models/userModel.js";
 
 export const createMessage = async (req, res) => {
 	try {
@@ -28,7 +29,12 @@ export const createMessage = async (req, res) => {
 		});
 
 		await message.save();
-		res.status(201).json(message);
+
+		const populatedMessage = await Message.findById(message._id)
+			.populate("senderId", "login image")
+			.populate("receiverId", "login image");
+
+		res.status(201).json(populatedMessage);
 	} catch (error) {
 		res.status(400).json({ error: error.message });
 	}
@@ -36,9 +42,17 @@ export const createMessage = async (req, res) => {
 
 export const getAllMessages = async (req, res) => {
 	try {
-		const messages = await Message.find()
-			.populate("senderId receiverId responses.userId")
+		const messages = await Message.find({
+			$or: [
+				{ senderId: req.userId, deletedBySender: false },
+				{ receiverId: req.userId, deletedByReceiver: false },
+			],
+		})
+			.populate("senderId", "_id login image")
+			.populate("receiverId", "_id login image")
+			.populate("responses.userId", "_id login image")
 			.sort({ createdAt: -1 });
+
 		res.status(200).json(messages);
 	} catch (error) {
 		res.status(500).json({ error: error.message });
@@ -50,7 +64,23 @@ export const getMessageById = async (req, res) => {
 		const message = await Message.findById(req.params.id).populate(
 			"senderId receiverId responses.userId",
 		);
+
 		if (!message) return res.status(404).json({ error: "Message non trouvé" });
+
+		const userIsSender = message.senderId._id.toString() === req.userId;
+		const userIsReceiver = message.receiverId._id.toString() === req.userId;
+
+		if (!userIsSender && !userIsReceiver) {
+			return res.status(403).json({ error: "Accès refusé" });
+		}
+
+		if (
+			(userIsSender && message.deletedBySender) ||
+			(userIsReceiver && message.deletedByReceiver)
+		) {
+			return res.status(404).json({ error: "Message supprimé" });
+		}
+
 		res.status(200).json(message);
 	} catch (error) {
 		res.status(500).json({ error: error.message });
@@ -61,11 +91,8 @@ export const updateMessage = async (req, res) => {
 	try {
 		const message = await Message.findById(req.params.id);
 
-		if (!message) {
-			return res.status(404).json({ error: "Message non trouvé" });
-		}
-
-		if (!message.senderId.equals(req.userId)) {
+		if (!message) return res.status(404).json({ error: "Message non trouvé" });
+		if (message.senderId.toString() !== req.userId) {
 			return res
 				.status(403)
 				.json({ error: "Pas autorisé à modifier ce message" });
@@ -95,20 +122,52 @@ export const updateMessage = async (req, res) => {
 export const deleteMessage = async (req, res) => {
 	try {
 		const message = await Message.findById(req.params.id);
-		if (!message) {
-			return res.status(404).json({ error: "Message non trouvé" });
-		}
+		if (!message) return res.status(404).json({ error: "Message non trouvé" });
 
-		if (!message.senderId.equals(req.userId)) {
+		const userIsSender = message.senderId.toString() === req.userId;
+		const userIsReceiver = message.receiverId.toString() === req.userId;
+
+		if (!userIsSender && !userIsReceiver) {
 			return res
 				.status(403)
 				.json({ error: "Pas autorisé à supprimer ce message" });
 		}
 
-		await message.deleteOne();
-		res.status(200).json({ message: "Message supprimé avec succès" });
+		// Marquer comme supprimé pour l'utilisateur courant
+		if (userIsSender) message.deletedBySender = true;
+		if (userIsReceiver) message.deletedByReceiver = true;
+
+		// Supprimer définitivement si les deux ont supprimé
+		if (message.deletedBySender && message.deletedByReceiver) {
+			await message.deleteOne();
+			return res
+				.status(200)
+				.json({ message: "Message supprimé définitivement" });
+		} else {
+			await message.save();
+			return res.status(200).json({ message: "Message supprimé pour vous" });
+		}
 	} catch (error) {
 		res.status(500).json({ error: error.message });
+	}
+};
+
+// DELETE POUR TOUS
+export const deleteMessageForAll = async (req, res) => {
+	try {
+		const message = await Message.findById(req.params.id);
+		if (!message) return res.status(404).json({ error: "Message non trouvé" });
+
+		if (message.senderId.toString() !== req.userId) {
+			return res
+				.status(403)
+				.json({ error: "Pas autorisé à supprimer pour tous" });
+		}
+
+		await message.deleteOne();
+		res.status(200).json({ message: "Message supprimé pour tous" });
+	} catch (err) {
+		res.status(500).json({ error: err.message });
 	}
 };
 
@@ -139,14 +198,31 @@ const deleteResponseById = (responses, id) => {
 	return false;
 };
 
+const populateResponseUsers = async (responses) => {
+	return Promise.all(
+		responses.map(async (resp) => {
+			const user = await User.findById(resp.userId).select("login image");
+			return {
+				...resp.toObject(),
+				userId: user || {
+					login: "Utilisateur inconnu",
+					image: { src: "default-profile.jpg" },
+				},
+				responses: resp.responses
+					? await populateResponseUsers(resp.responses)
+					: [],
+			};
+		}),
+	);
+};
+
 export const addResponse = async (req, res) => {
 	try {
 		const { content, parentResponseId } = req.body;
-		if (!content) {
+		if (!content)
 			return res
 				.status(400)
 				.json({ error: "Le contenu de la réponse est requis" });
-		}
 
 		const message = await Message.findById(req.params.id);
 		if (!message) return res.status(404).json({ error: "Message non trouvé" });
@@ -165,14 +241,21 @@ export const addResponse = async (req, res) => {
 				message.responses,
 				parentResponseId,
 			);
-			if (!parentResponse) {
+			if (!parentResponse)
 				return res.status(404).json({ error: "Réponse parente introuvable" });
-			}
 			parentResponse.responses.push(newResponse);
 		}
 
 		await message.save();
-		res.status(201).json(message);
+
+		// Populate récursivement les users
+		const populatedResponses = await populateResponseUsers(message.responses);
+		const populatedMessage = message.toObject();
+		populatedMessage.responses = populatedResponses;
+
+		console.log(JSON.stringify(populatedMessage.responses, null, 2));
+
+		res.status(201).json(populatedMessage);
 	} catch (error) {
 		res.status(400).json({ error: error.message });
 	}
@@ -201,7 +284,11 @@ export const updateResponse = async (req, res) => {
 		response.content = content;
 		await message.save();
 
-		res.status(200).json(message);
+		const populatedResponses = await populateResponseUsers(message.responses);
+		const populatedMessage = message.toObject();
+		populatedMessage.responses = populatedResponses;
+
+		res.status(200).json(populatedMessage);
 	} catch (error) {
 		res.status(400).json({ error: error.message });
 	}
@@ -213,7 +300,6 @@ export const deleteResponse = async (req, res) => {
 		if (!message) return res.status(404).json({ error: "Message non trouvé" });
 
 		const responseId = req.params.responseId;
-
 		const response = findResponseById(message.responses, responseId);
 		if (!response)
 			return res.status(404).json({ error: "Réponse non trouvée" });
@@ -229,9 +315,15 @@ export const deleteResponse = async (req, res) => {
 			return res.status(404).json({ error: "Erreur lors de la suppression" });
 
 		await message.save();
-		res
-			.status(200)
-			.json({ message: "Réponse supprimée avec succès", messageData: message });
+
+		const populatedResponses = await populateResponseUsers(message.responses);
+		const populatedMessage = message.toObject();
+		populatedMessage.responses = populatedResponses;
+
+		res.status(200).json({
+			message: "Réponse supprimée avec succès",
+			messageData: populatedMessage,
+		});
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
@@ -253,17 +345,29 @@ export const markAsRead = async (req, res) => {
 
 export const getConversation = async (req, res) => {
 	try {
-		const message = await Message.findOne({
-			_id: new mongoose.Types.ObjectId(req.params.conversationId),
-		});
+		const { conversationId } = req.params;
+
+		// Vérifie que l'ID est un ObjectId valide
+		if (!mongoose.Types.ObjectId.isValid(conversationId)) {
+			return res.status(400).json({ error: "ID de conversation invalide" });
+		}
+
+		const message = await Message.findById(conversationId)
+			.populate("senderId", "login image")
+			.populate("receiverId", "login image")
+			.populate({
+				path: "responses.userId",
+				select: "login image",
+			});
 
 		if (!message) {
 			return res.status(404).json({ error: "Conversation introuvable" });
 		}
 
+		// Vérifie si l'utilisateur connecté est autorisé
 		if (
-			message.senderId.toString() !== req.userId &&
-			message.receiverId.toString() !== req.userId
+			message.senderId._id.toString() !== req.userId &&
+			message.receiverId._id.toString() !== req.userId
 		) {
 			return res
 				.status(403)
@@ -272,6 +376,7 @@ export const getConversation = async (req, res) => {
 
 		res.status(200).json(message);
 	} catch (error) {
-		res.status(500).json({ error: error.message });
+		console.error(error);
+		res.status(500).json({ error: "Erreur serveur" });
 	}
 };

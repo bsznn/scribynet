@@ -32,6 +32,10 @@ const messageSchema = new mongoose.Schema(
 		files: [{ type: String }],
 		isRead: { type: Boolean, default: false },
 		responses: [responseSchema],
+
+		// 🔹 Flags pour suppression individuelle
+		deletedBySender: { type: Boolean, default: false },
+		deletedByReceiver: { type: Boolean, default: false },
 	},
 	{ timestamps: true },
 );

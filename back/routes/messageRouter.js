@@ -3,6 +3,7 @@ import {
 	addResponse,
 	createMessage,
 	deleteMessage,
+	deleteMessageForAll,
 	deleteResponse,
 	getAllMessages,
 	getConversation,
@@ -46,9 +47,16 @@ messageRouter.delete(
 messageRouter.get(
 	"/messages/conversation/:conversationId",
 	isLogged,
+	isAuthorized(["admin", "user"]),
 	getConversation,
 );
 
+messageRouter.delete(
+	"/messages/:id/deleteForAll",
+	isLogged,
+	isAuthorized(["admin", "user"]),
+	deleteMessageForAll,
+);
 messageRouter.post(
 	"/messages/:id/responses",
 	isLogged,
