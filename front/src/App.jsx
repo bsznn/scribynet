@@ -23,8 +23,8 @@ import PrivacyPolicy from "./pages/footer/PrivacyPolicy";
 import Profile from "./pages/profile/Profile";
 import Conversation from "./pages/messages/Conversation";
 import Messages from "./pages/messages/Messages";
-import AddMessage from "./components/messages/AddMessage";
 import Dashboard from "./pages/dashboard/Dashboard";
+import UserProfile from "./pages/profile/UserProfile";
 
 const Home = lazy(() => import("./pages/home/Home"));
 
@@ -70,7 +70,7 @@ function App() {
 					element={<Conversation />}
 				/>
 
-				<Route path="/messages/new" element={<AddMessage />} />
+				<Route path="/profil/:id" element={<UserProfile />} />
 			</Routes>
 		</div>
 	);

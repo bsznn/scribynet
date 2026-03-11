@@ -24,12 +24,7 @@ userRouter.post("/login", login);
 userRouter.get("/users", getAllUsers);
 
 // Route pour récupérer un utilisateur spécifique
-userRouter.get(
-	"/users/:id",
-	isLogged,
-	isAuthorized(["admin", "user"]),
-	getOneUser,
-);
+userRouter.get("/users/:id", getOneUser);
 
 // Route pour mettre à jour les informations d'un utilisateur
 userRouter.put(

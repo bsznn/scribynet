@@ -15,6 +15,7 @@ import badgeAdmin from "../../assets/images/profile/badge-admin.png";
 import userImage from "../../assets/images/default-profile.jpg";
 import defaultImage from "../../assets/images/default-book.jpg";
 import fly from "../../assets/images/profile/fly.jpg";
+import fondImage from "../../assets/images/profile/fond-profile.jpeg";
 
 const Profile = () => {
 	const auth = useAuth();
@@ -95,8 +96,7 @@ const Profile = () => {
 	};
 
 	const sectionStyle = {
-		backgroundImage:
-			"url(https://images.pexels.com/photos/6059973/pexels-photo-6059973.jpeg)",
+		backgroundImage: `url(${fondImage})`,
 		backgroundSize: "cover",
 		backgroundPosition: "center",
 	};
@@ -331,25 +331,28 @@ const Profile = () => {
 					<section className="profile__aside-section">
 						<h2 className="profile__title">Auteurs Incontournables</h2>
 						<div className="profile__authors">
-							{authors.slice(0, 12).map((author) => (
-								<div key={author._id} className="profile__author">
-									<Link
-										to={`/profil/${author._id}`}
-										className="profile__author-link"
-									>
-										<img
-											src={
-												author.image
-													? `http://localhost:5000/assets/img/${author.image.src}`
-													: userImage
-											}
-											alt={author.image?.alt || "default-image"}
-											className="profile__author-img"
-										/>
-										<p className="profile__author-name">{author.login}</p>
-									</Link>
-								</div>
-							))}
+							{authors
+								.filter((a) => a._id !== auth.user?.id)
+								.slice(0, 12)
+								.map((author) => (
+									<div key={author._id} className="profile__author">
+										<Link
+											to={`/profil/${author._id}`}
+											className="profile__author-link"
+										>
+											<img
+												src={
+													author.image
+														? `http://localhost:5000/assets/img/${author.image.src}`
+														: userImage
+												}
+												alt={author.image?.alt || "default-image"}
+												className="profile__author-img"
+											/>
+											<p className="profile__author-name">{author.login}</p>
+										</Link>
+									</div>
+								))}
 						</div>
 					</section>
 

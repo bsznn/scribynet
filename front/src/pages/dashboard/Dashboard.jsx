@@ -79,20 +79,20 @@ export default function Dashboard() {
 
 	const renderSection = () => {
 		switch (activeTab) {
-			case "comments":
-				return <DashComments />;
+			case "settings":
+				return <DashSettings />;
 			case "stories":
 				return <DashStories />;
 			case "stats":
 				return <DashStats />;
+			case "comments":
+				return <DashComments />;
 			case "likes":
 				return <DashLikes />;
 			case "dons":
 				return <DashDons />;
 			case "history":
 				return <DashHistory />;
-			case "settings":
-				return <DashSettings />;
 			case "categories":
 				return isAdmin ? <DashCategories /> : null;
 			case "users":
