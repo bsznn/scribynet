@@ -319,7 +319,11 @@ const Book = () => {
 											<AddComment bookId={id} commentAdd={fetchBook} />
 											<p>
 												{showComments && (
-													<Comments bookId={id} updateComment={fetchBook} />
+													<Comments
+														bookId={id}
+														bookAuthorId={book.userId._id}
+														updateComment={fetchBook}
+													/>
 												)}
 											</p>
 										</li>

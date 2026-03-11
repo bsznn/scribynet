@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import defaultProfile from "../../assets/images/default-profile.jpg";
-import { useAuth } from "../../context/AuthContext";
+import { token } from "../../context/token";
 
-const Message = ({ message, onDeleted }) => {
-	const auth = useAuth();
+import "../../assets/styles/pages/messages/messages.css";
 
+const Message = ({ message, onDeleted, onUpdated, currentUserId, onRead }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [title, setTitle] = useState(message.title);
 	const [content, setContent] = useState(message.content);
@@ -16,8 +16,6 @@ const Message = ({ message, onDeleted }) => {
 		typeof message.senderId === "object"
 			? message.senderId._id
 			: message.senderId;
-
-	const currentUserId = auth?.user?._id || auth?.user?.id;
 
 	const isSender = String(currentUserId) === String(senderId);
 
@@ -32,12 +30,10 @@ const Message = ({ message, onDeleted }) => {
 
 		try {
 			const res = await fetch(
-				`http://localhost:5000/messages/delete/${message._id}`,
+				`http://localhost:5000/messages/${message._id}/deleteForMe`,
 				{
 					method: "DELETE",
-					headers: {
-						Authorization: `Bearer ${auth?.user?.token}`,
-					},
+					headers: token(),
 				},
 			);
 
@@ -63,9 +59,7 @@ const Message = ({ message, onDeleted }) => {
 				`http://localhost:5000/messages/${message._id}/deleteForAll`,
 				{
 					method: "DELETE",
-					headers: {
-						Authorization: `Bearer ${auth?.user?.token}`,
-					},
+					headers: token(),
 				},
 			);
 
@@ -92,8 +86,8 @@ const Message = ({ message, onDeleted }) => {
 				{
 					method: "PUT",
 					headers: {
+						...token(),
 						"Content-Type": "application/json",
-						Authorization: `Bearer ${auth?.user?.token}`,
 					},
 					body: JSON.stringify({ title, content }),
 				},
@@ -104,6 +98,9 @@ const Message = ({ message, onDeleted }) => {
 			if (res.ok) {
 				alert("Message mis à jour !");
 				setIsEditing(false);
+				// On réinjecte le senderId original (populé) dans la réponse
+				// pour éviter de perdre l'image et le login au retour du serveur
+				onUpdated?.({ ...data, senderId: message.senderId });
 			} else {
 				alert(data.error);
 			}
@@ -112,7 +109,6 @@ const Message = ({ message, onDeleted }) => {
 			alert("Erreur lors de la mise à jour");
 		}
 	};
-
 	return (
 		<div className="message">
 			<div className="message__header">
@@ -140,11 +136,16 @@ const Message = ({ message, onDeleted }) => {
 						className="message__input-content"
 					/>
 
-					<button onClick={handleUpdate} className="btn btn-update">
+					<button
+						type="button"
+						onClick={handleUpdate}
+						className="btn btn-update"
+					>
 						Enregistrer
 					</button>
 
 					<button
+						type="button"
 						onClick={() => setIsEditing(false)}
 						className="btn btn-cancel"
 					>
@@ -164,35 +165,46 @@ const Message = ({ message, onDeleted }) => {
 					<Link
 						to={`/messages/conversation/${message._id}`}
 						className="message__link"
+						onClick={() => {
+							if (!isSender && !message.isRead) {
+								onRead?.(message._id);
+							}
+						}}
 					>
 						Ouvrir la conversation
 					</Link>
 
-					<span
-						className={`text-xs font-bold px-2 py-1 rounded ${
-							message.isRead
-								? "bg-green-200 text-green-800"
-								: "bg-red-200 text-red-800"
-						}`}
-					>
-						{message.isRead ? "Lu" : "Non lu"}
-					</span>
+					{isSender ? (
+						<span className="badge badge--sent">Envoyé</span>
+					) : (
+						<span
+							className={`badge ${message.isRead ? "badge--read" : "badge--unread"}`}
+						>
+							{message.isRead ? "Lu" : "Non lu"}
+						</span>
+					)}
 
 					<div className="message__actions mt-2">
 						{isSender ? (
 							<>
 								<button
+									type="button"
 									onClick={() => setIsEditing(true)}
 									className="btn btn-edit"
 								>
 									Modifier
 								</button>
 
-								<button onClick={handleDeleteForMe} className="btn btn-delete">
+								<button
+									type="button"
+									onClick={handleDeleteForMe}
+									className="btn btn-delete"
+								>
 									Supprimer
 								</button>
 
 								<button
+									type="button"
 									onClick={handleDeleteForAll}
 									className="btn btn-delete-all"
 								>
@@ -200,7 +212,11 @@ const Message = ({ message, onDeleted }) => {
 								</button>
 							</>
 						) : (
-							<button onClick={handleDeleteForMe} className="btn btn-delete">
+							<button
+								type="button"
+								onClick={handleDeleteForMe}
+								className="btn btn-delete"
+							>
 								Supprimer
 							</button>
 						)}

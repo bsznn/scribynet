@@ -200,6 +200,7 @@
 
 .profile__books .books__list {
 	padding: 1rem 1rem 0;
+	gap: 0;
 }
 
 .profile__new-book-title {

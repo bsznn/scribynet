@@ -1,21 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Response from "./Response";
 
-const ResponseList = ({ responses }) => {
-	if (!responses || responses.length === 0) return null;
+const ResponseList = ({ responses, messageId, onMessageUpdate }) => {
+	// State local pour gérer les suppressions instantanément
+	const [localResponses, setLocalResponses] = useState(responses);
+
+	useEffect(() => {
+		setLocalResponses(responses);
+	}, [responses]);
+
+	const handleDeleteLocal = (id) => {
+		setLocalResponses((prev) => prev.filter((r) => r._id !== id));
+	};
+
+	if (!localResponses || localResponses.length === 0) return null;
 
 	return (
-		<div className="ml-4 mt-2 space-y-2">
-			{responses.map((res) => (
-				<div key={res._id} className="border-l-2 pl-2">
-					<p>{res.content}</p>
-					<div className="text-xs text-gray-500">
-						Par {res.userId?.login || "Utilisateur"} le{" "}
-						{new Date(res.createdAt).toLocaleString()}
-					</div>
-					{res.responses && res.responses.length > 0 && (
-						<ResponseList responses={res.responses} />
-					)}
-				</div>
+		<div className="response-list">
+			{localResponses.map((res) => (
+				<Response
+					key={res._id}
+					response={res}
+					messageId={messageId}
+					onMessageUpdate={onMessageUpdate}
+					onDeleteLocal={handleDeleteLocal}
+				/>
 			))}
 		</div>
 	);

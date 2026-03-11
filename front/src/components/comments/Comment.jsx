@@ -12,7 +12,7 @@ import { MdDelete } from "react-icons/md";
 import { RiQuestionAnswerFill } from "react-icons/ri";
 import { IoIosSend } from "react-icons/io";
 
-const Comment = ({ bookId, commentId, onCommentDelete }) => {
+const Comment = ({ bookId, commentId, onCommentDelete, bookAuthorId }) => {
 	const [comment, setComment] = useState("");
 	const [showAnswerInput, setShowAnswerInput] = useState(false);
 	const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -149,16 +149,23 @@ const Comment = ({ bookId, commentId, onCommentDelete }) => {
 					<div>
 						<ul className="comment__actions">
 							<div className="comment__actions-list">
+								{/* Modifier — uniquement l'auteur */}
 								{auth.user.id === comment.userId._id && (
 									<li className="comment__action" onClick={toggleUpdateForm}>
 										<IoIosSettings className="comment__action-icon" />
 									</li>
 								)}
 
-								<li className="comment__action" onClick={handleDelete}>
-									<MdDelete className="comment__action-icon" />
-								</li>
+								{/* Supprimer — auteur OU admin */}
+								{(auth.user.id === comment.userId._id ||
+									auth.user.role === "admin" ||
+									auth.user.id === bookAuthorId) && (
+									<li className="comment__action" onClick={handleDelete}>
+										<MdDelete className="comment__action-icon" />
+									</li>
+								)}
 
+								{/* Répondre — toujours visible */}
 								<li
 									className="comment__action comment__action--answer"
 									onClick={toggleAnswerInput}

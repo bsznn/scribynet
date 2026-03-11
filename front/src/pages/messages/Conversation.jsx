@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { token } from "../../context/token";
 import { useParams } from "react-router-dom";
 import ResponseList from "../../components/messages/ResponseList";
+
+import "../../assets/styles/pages/messages/responses.css";
+import fondImage from "../../assets/images/fond/fond-book.jpeg";
 
 const Conversation = () => {
 	const { conversationId } = useParams();
@@ -11,6 +14,9 @@ const Conversation = () => {
 	const [content, setContent] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+
+	const textareaRef = useRef(null);
+	const bodyRef = useRef(null);
 
 	const getConversation = async () => {
 		setLoading(true);
@@ -42,7 +48,9 @@ const Conversation = () => {
 				{ headers: token() },
 			);
 		} catch (err) {
-			console.log("Impossible de marquer comme lu :", err);
+			if (err.response?.status !== 403) {
+				console.log("markAsRead error:", err.response?.data);
+			}
 		}
 	};
 
@@ -50,6 +58,21 @@ const Conversation = () => {
 		getConversation();
 		markAsRead();
 	}, [conversationId]);
+
+	// Scroll vers le bas quand les réponses changent
+	useEffect(() => {
+		if (bodyRef.current) {
+			bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
+		}
+	}, [conversation]);
+
+	// Auto-resize du textarea
+	useEffect(() => {
+		const el = textareaRef.current;
+		if (!el) return;
+		el.style.height = "auto";
+		el.style.height = `${el.scrollHeight}px`;
+	}, [content]);
 
 	const sendResponse = async (e) => {
 		e.preventDefault();
@@ -62,6 +85,10 @@ const Conversation = () => {
 				{ headers: token() },
 			);
 			setContent("");
+			// Reset textarea height
+			if (textareaRef.current) {
+				textareaRef.current.style.height = "auto";
+			}
 			getConversation();
 		} catch (err) {
 			console.error(err);
@@ -71,41 +98,78 @@ const Conversation = () => {
 		}
 	};
 
-	if (loading) return <p>Chargement...</p>;
-	if (error) return <p className="text-red-500">{error}</p>;
+	const handleKeyDown = (e) => {
+		// Entrée → envoie, Shift+Entrée → saut de ligne
+		if (e.key === "Enter" && !e.shiftKey) {
+			e.preventDefault();
+			sendResponse(e);
+		}
+	};
+
+	const sectionStyle = {
+		backgroundImage: `url(${fondImage})`,
+		backgroundSize: "cover",
+		backgroundPosition: "center",
+		backgroundRepeat: "no-repeat",
+	};
+
+	if (loading) return <p className="conversation__loading">Chargement...</p>;
+	if (error) return <p className="conversation__error">{error}</p>;
 
 	return (
-		<section className="conversation p-4 max-w-2xl mx-auto">
-			<h2 className="text-xl font-bold mb-2">
-				{conversation.title || "Sans titre"}
-			</h2>
+		<main className="fond__conversation" style={sectionStyle}>
+			<section className="conversation">
+				<div className="conversation__container">
+					<div className="conversation__topbar">
+						<a href="/messages" className="conversation__back">
+							←
+						</a>
+						<div className="conversation__topbar-info">
+							<p className="conversation__topbar-title">
+								{conversation.title || "Sans titre"}
+							</p>
+							<p className="conversation__topbar-sub">
+								avec {conversation.senderId?.login || "Utilisateur"}
+							</p>
+						</div>
+					</div>
 
-			<div className="border p-3 rounded mb-4">
-				<p>{conversation.content}</p>
-				<div className="text-xs text-gray-500 mt-1">
-					Envoyé par {conversation.senderId?.login || "Utilisateur"} le{" "}
-					{new Date(conversation.createdAt).toLocaleString()}
+					<div className="conversation__body" ref={bodyRef}>
+						<div className="conversation__original">
+							<p className="conversation__original-label">Message d'origine</p>
+							<p className="conversation__original-content">
+								{conversation.content}
+							</p>
+							<p className="conversation__original-meta">
+								<strong>{conversation.senderId?.login}</strong> ·{" "}
+								{new Date(conversation.createdAt).toLocaleString()}
+							</p>
+						</div>
+
+						<ResponseList
+							responses={conversation.responses}
+							messageId={conversation._id}
+							onMessageUpdate={getConversation}
+						/>
+					</div>
+
+					<form onSubmit={sendResponse} className="conversation__reply-bar">
+						<textarea
+							ref={textareaRef}
+							value={content}
+							onChange={(e) => setContent(e.target.value)}
+							onKeyDown={handleKeyDown}
+							placeholder="Votre réponse..."
+							className="conversation__reply-input"
+							rows={1}
+						/>
+						<button type="submit" className="conversation__reply-btn">
+							↑
+						</button>
+					</form>
 				</div>
-			</div>
-
-			<ResponseList responses={conversation.responses} />
-
-			<form onSubmit={sendResponse} className="flex gap-2 mt-4">
-				<input
-					type="text"
-					value={content}
-					onChange={(e) => setContent(e.target.value)}
-					placeholder="Votre réponse..."
-					className="flex-1 border p-2 rounded"
-				/>
-				<button
-					type="submit"
-					className="bg-blue-500 text-white px-4 py-2 rounded"
-				>
-					Envoyer
-				</button>
-			</form>
-		</section>
+			</section>
+		</main>
 	);
 };
 

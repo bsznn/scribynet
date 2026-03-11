@@ -10,6 +10,11 @@ body {
 	font-family: var(--fontRegular);
 }
 
+body.no-scroll {
+	overflow: hidden;
+	height: 100vh;
+}
+
 .header {
 	background-color: var(--bodyBeige);
 }

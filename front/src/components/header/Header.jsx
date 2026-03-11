@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineLogin } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
 import { RiMenu3Fill } from "react-icons/ri";
@@ -15,15 +15,32 @@ export default function Header() {
 	const navigate = useNavigate();
 
 	const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+	const dropdownRef = useRef(null);
 
 	const toggleUserDropdown = () => {
-		setUserDropdownOpen(!userDropdownOpen);
+		setUserDropdownOpen((prev) => !prev);
 	};
 
 	const profileImage =
 		auth.user?.image?.src && auth.user.image.src !== "default-profil.png"
 			? `http://localhost:5000/assets/img/${auth.user.image.src}`
 			: defaultImage;
+
+	// Ferme le dropdown au clic extérieur
+	useEffect(() => {
+		const handleClickOutside = (e) => {
+			if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+				setUserDropdownOpen(false);
+			}
+		};
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => document.removeEventListener("mousedown", handleClickOutside);
+	}, []);
+
+	// Reset dropdown à la connexion / déconnexion
+	useEffect(() => {
+		setUserDropdownOpen(false);
+	}, [auth.user]);
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -37,13 +54,13 @@ export default function Header() {
 
 	useEffect(() => {
 		if (toggle && isMobile) {
-			document.body.style.overflow = "hidden";
+			document.body.classList.add("no-scroll");
 		} else {
-			document.body.style.overflow = "";
+			document.body.classList.remove("no-scroll");
 		}
 
 		return () => {
-			document.body.style.overflow = "";
+			document.body.classList.remove("no-scroll");
 		};
 	}, [toggle, isMobile]);
 
@@ -174,9 +191,9 @@ export default function Header() {
 					>
 						<span>Don</span>
 					</NavLink>
+
 					{auth.user ? (
-						/* DESKTOP UNIQUEMENT */
-						<div className="header__user-wrapper">
+						<div className="header__user-wrapper" ref={dropdownRef}>
 							<div
 								className="header__user-info"
 								onClick={!isMobile ? toggleUserDropdown : undefined}

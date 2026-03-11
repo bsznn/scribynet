@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { IoIosAddCircle, IoIosSettings } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { token } from "../../context/token";
 
@@ -14,6 +14,7 @@ export default function Categories() {
 	const [search, setSearch] = useState("");
 	const [showAll, setShowAll] = useState(false);
 	const [error, setError] = useState(null);
+	const navigate = useNavigate();
 
 	const auth = useAuth();
 
@@ -77,7 +78,14 @@ export default function Categories() {
 						<h1 className="categories__title">Catégories</h1>
 
 						{auth.user && auth.user.role === "admin" && (
-							<Link to={`/categories/new`} className="categories__add">
+							<Link
+								type="button"
+								className="categories__add"
+								onClick={(e) => {
+									e.preventDefault();
+									navigate("/dashboard", { state: { tab: "categories" } });
+								}}
+							>
 								<IoIosAddCircle size={28} />
 							</Link>
 						)}
@@ -126,12 +134,14 @@ export default function Categories() {
 									onClick={(e) => e.preventDefault()}
 								>
 									<Link
-										to={`/modifier-categorie/${category._id}`}
 										className="categories__edit"
+										onClick={(e) => {
+											e.preventDefault();
+											navigate("/dashboard", { state: { tab: "categories" } });
+										}}
 									>
 										<IoIosSettings size={22} />
 									</Link>
-
 									<button
 										type="button"
 										onClick={(e) => {

@@ -5,7 +5,7 @@ import { token } from "../../context/token";
 import Comment from "./Comment";
 import "../../assets/styles/components/comments/comments.css";
 
-const Comments = ({ bookId, updateComment }) => {
+const Comments = ({ bookId, updateComment, bookAuthorId }) => {
 	const [comments, setComments] = useState([]);
 	const [err, setErr] = useState();
 
@@ -43,6 +43,7 @@ const Comments = ({ bookId, updateComment }) => {
 						bookId={bookId}
 						commentId={oneComment._id}
 						onCommentDelete={updateComment}
+						bookAuthorId={bookAuthorId}
 					/>
 				</section>
 			))}

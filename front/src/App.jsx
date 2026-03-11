@@ -20,13 +20,11 @@ import DonationCancel from "./pages/donation/DonationCancel";
 import { EditBook } from "./pages/books/EditBook";
 import LegalNotices from "./pages/footer/LegalNotices";
 import PrivacyPolicy from "./pages/footer/PrivacyPolicy";
-import { AddCategory } from "./pages/categories/AddCategory";
-import { EditCategory } from "./pages/categories/EditCategory";
 import Profile from "./pages/profile/Profile";
-import EditUser from "./pages/profile/EditUser";
 import Conversation from "./pages/messages/Conversation";
 import Messages from "./pages/messages/Messages";
 import AddMessage from "./components/messages/AddMessage";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 const Home = lazy(() => import("./pages/home/Home"));
 
@@ -62,12 +60,10 @@ function App() {
 				<Route path="/don-annule" element={<DonationCancel />} />
 				<Route path="/mentions-legales" element={<LegalNotices />} />
 				<Route path="/politique-confidentialite" element={<PrivacyPolicy />} />
-				<Route path="/categories/new" element={<AddCategory />} />
-				<Route path="/modifier-categorie/:id" element={<EditCategory />} />
 				<Route path="/profil" element={<Profile />} />
-				<Route path="/modifier-utilisateur/:id" element={<EditUser />} />
 
 				<Route path="/messagerie" element={<Messages />} />
+				<Route path="/dashboard" element={<Dashboard />} />
 
 				<Route
 					path="/messages/conversation/:conversationId"

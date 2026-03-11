@@ -16,8 +16,6 @@ import userImage from "../../assets/images/default-profile.jpg";
 import defaultImage from "../../assets/images/default-book.jpg";
 import fly from "../../assets/images/profile/fly.jpg";
 
-// https://images.pexels.com/photos/6059973/pexels-photo-6059973.jpeg
-
 const Profile = () => {
 	const auth = useAuth();
 	const navigate = useNavigate();
@@ -172,7 +170,8 @@ const Profile = () => {
 								<ul>
 									<li>
 										<Link
-											to={`/modifier-utilisateur/${auth.user.id}`}
+											to="/dashboard"
+											state={{ tab: "settings" }}
 											className="profile__link"
 										>
 											<IoIosSettings className="profile__icon" /> Modifier
