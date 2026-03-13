@@ -527,6 +527,10 @@
 	margin-top: 2rem;
 }
 
+.addbook__container {
+	min-height: 75vh;
+}
+
 /* ── RESPONSIVE MOBILE ── */
 @media (max-width: 989px) {
 	.addbook__sidebar {
@@ -588,7 +592,6 @@
 		margin: 0 auto;
 		display: flex;
 		justify-content: center;
-		min-height: 70vh;
 	}
 }
 

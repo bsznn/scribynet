@@ -1,0 +1,122 @@
+/* =========================
+   NOT FOUND — 404
+   ========================= */
+
+@keyframes fadeUp {
+	from {
+		opacity: 0;
+		transform: translateY(24px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes linegrow {
+	from { width: 0; }
+	to { width: 100%; }
+}
+
+.notfound {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: var(--fontRegular);
+
+	background-image: url("https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&w=1600");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+/* overlay sombre */
+.notfound__overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba(40, 28, 20, 0.72);
+	z-index: 0;
+}
+
+/* ── BLOC CENTRAL ── */
+.notfound__box {
+	position: relative;
+	z-index: 1;
+	background: var(--lightBeige);
+	padding: 4rem 1.5rem;
+    margin: 2rem;
+	max-width: 400px;
+	width: 90%;
+	text-align: center;
+	animation: fadeUp 0.6s ease both;
+	box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+}
+
+/* eyebrow */
+.notfound__eyebrow {
+	font-size: 0.68rem;
+	letter-spacing: 4px;
+	text-transform: uppercase;
+	color: var(--mediumMarron);
+	display: block;
+	margin-bottom: 1rem;
+}
+
+/* 404 */
+.notfound__code {
+	font-family: var(--fontTitle);
+	font-size: clamp(5rem, 15vw, 4rem);
+	line-height: 1;
+	color: var(--darkMarron);
+	letter-spacing: -2px;
+	margin: 0;
+}
+
+/* filet */
+.notfound__divider {
+	width: 40px;
+	height: 1.5px;
+	background: var(--darkBeige);
+	margin: 1.5rem auto;
+	animation: linegrow 0.8s ease 0.4s both;
+}
+
+/* titre */
+.notfound__title {
+	font-family: var(--fontTitle);
+	font-size: 1.25rem;
+	color: var(--darkMarron);
+	letter-spacing: 1px;
+	margin-bottom: 0.75rem;
+}
+
+/* texte */
+.notfound__text {
+	font-size: 0.88rem;
+	line-height: 1.7;
+	color: var(--mediumMarron);
+	margin-bottom: 2.5rem;
+}
+
+/* bouton */
+.notfound__btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.75rem 1.8rem;
+	border-radius: 50px;
+	font-family: var(--fontTitle);
+	font-size: 0.88rem;
+	letter-spacing: 0.5px;
+	background: var(--darkMarron);
+	color: var(--lightBeige);
+	text-decoration: none;
+	transition: all 0.25s ease;
+}
+
+.notfound__btn:hover {
+	background: var(--hoverDarkMarron);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(66, 60, 57, 0.25);
+}

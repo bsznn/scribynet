@@ -26,7 +26,6 @@
 	flex-direction: column;
 	position: relative;
 	margin: 4rem auto;
-	min-height: 80vh;
 	justify-content: center;
 	width: 100%;
 }
