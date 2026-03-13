@@ -60,7 +60,7 @@ export default function Donation() {
 	};
 
 	return (
-		<div className="donation" style={sectionStyle}>
+		<main className="donation" style={sectionStyle}>
 			<div className="donation__area">
 				<section className="donation__content">
 					<div className="donation__header">
@@ -145,6 +145,6 @@ export default function Donation() {
 					</form>
 				</section>
 			</div>
-		</div>
+		</main>
 	);
 }

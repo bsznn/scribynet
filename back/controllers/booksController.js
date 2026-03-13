@@ -408,6 +408,7 @@ export const getLatestChapters = async (_req, res) => {
 				$project: {
 					// Projet des champs nécessaires
 					bookId: "$_id",
+					chapterId: "$chapters._id",
 					title: "$chapters.title",
 					content: "$chapters.content",
 					date: "$chapters.date",
@@ -435,16 +436,15 @@ export const getBooksByCategoryName = async (req, res) => {
 		const category = await Category.findOne({ _id: categoryName });
 
 		if (!category) {
-			// Gérer le cas où aucune catégorie n'est trouvée avec l'ID donné
 			return res.status(404).json({ message: "Catégorie non trouvée" });
 		}
 
-		// Rechercher les livres ayant le même nom de catégorie
-		const books = await Book.find({ categoryId: { $in: [category._id] } });
+		const books = await Book.find({ categoryId: { $in: [category._id] } })
+			.populate("userId", "-password") // ← ajoute
+			.populate("categoryId"); // ← ajoute
 
 		res.status(200).json({ category, books });
 	} catch (error) {
-		// Gérer les erreurs lors de la récupération des livres par catégorie
 		console.log(error);
 		res.status(500).json({
 			message:

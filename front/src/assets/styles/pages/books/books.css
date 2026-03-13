@@ -6,8 +6,6 @@
 	background-color: var(--bodyBeige);
 	font-family: var(--fontRegular);
 	color: var(--blackMarron);
-	margin-bottom: 2.5rem;
-	min-height: 100vh;
 }
 
 /* =========================
@@ -100,6 +98,7 @@
 	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 	gap: 2rem;
 	padding: 1rem;
+	min-height: 65vh;
 }
 
 .books__link {
@@ -294,6 +293,7 @@
 	justify-content: center;
 	gap: 0.5rem;
 	margin-top: 2rem;
+	margin-bottom: 2rem;
 }
 
 .books__button {

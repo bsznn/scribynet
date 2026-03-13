@@ -11,7 +11,7 @@ const LegalNotices = () => {
 	};
 
 	return (
-		<div className="legal-notices" style={sectionStyle}>
+		<main className="legal-notices" style={sectionStyle}>
 			<div className="legal-notices__container">
 				<div className="legal-notices__content">
 					<h1 className="legal-notices__title">
@@ -119,7 +119,7 @@ const LegalNotices = () => {
 					</section>
 				</div>
 			</div>
-		</div>
+		</main>
 	);
 };
 

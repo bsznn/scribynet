@@ -241,25 +241,27 @@ export default function Books() {
 				))}
 			</section>
 
-			<section className="books__pagination">
-				<button
-					type="button"
-					className="books__button"
-					onClick={prevBook}
-					disabled={currentPage === 0}
-				>
-					Précédent
-				</button>
+			{filteredBooks.length > BOOKS_PER_PAGE && (
+				<section className="books__pagination">
+					<button
+						type="button"
+						className="books__button"
+						onClick={prevBook}
+						disabled={currentPage === 0}
+					>
+						Précédent
+					</button>
 
-				<button
-					type="button"
-					className="books__button"
-					onClick={nextBook}
-					disabled={(currentPage + 1) * BOOKS_PER_PAGE >= filteredBooks.length}
-				>
-					Suivant
-				</button>
-			</section>
+					<button
+						type="button"
+						className="books__button"
+						onClick={nextBook}
+						disabled={(currentPage + 1) * BOOKS_PER_PAGE >= filteredBooks.length}
+					>
+						Suivant
+					</button>
+				</section>
+			)}
 		</main>
 	);
 }

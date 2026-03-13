@@ -1,0 +1,101 @@
+/* =========================
+   CATEGORY DETAIL
+========================= */
+
+.cat-detail {
+	background-color: var(--bodyBeige);
+	font-family: var(--fontRegular);
+	margin-bottom: 2.5rem;
+}
+
+.cat-detail__loader,
+.cat-detail__error {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-style: italic;
+	color: var(--mediumMarron);
+	font-size: 1rem;
+}
+
+/* ── HEADER ── */
+
+.cat-detail__header {
+	position: relative;
+	height: 330px;
+	margin-bottom: 2rem;
+}
+
+.cat-detail__header::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: rgba(66, 60, 57, 0.65);
+	z-index: 0;
+}
+
+.cat-detail__header-content {
+	position: relative;
+	z-index: 1;
+	padding: 3.5rem 5%;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.cat-detail__back {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3rem;
+	color: var(--mediumBeige);
+	font-size: 0.85rem;
+	text-decoration: none;
+	transition: color 0.2s ease;
+	width: fit-content;
+}
+
+.cat-detail__back:hover {
+	color: var(--lightBeige);
+}
+
+.cat-detail__title {
+	font-family: var(--fontTitle);
+	font-size: 2rem;
+	letter-spacing: 1px;
+	color: var(--lightBeige);
+	margin: 0;
+}
+
+.cat-detail__count {
+	font-size: 0.88rem;
+	color: var(--mediumBeige);
+	margin: 0;
+}
+
+/* ── RESPONSIVE ── */
+
+@media (min-width: 1200px) {
+	.cat-detail__header-content {
+		width: 1000px;
+		margin-left: auto;
+		margin-right: auto;
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+@media (min-width: 1400px) {
+	.cat-detail__header-content {
+		width: 1200px;
+	}
+}
+
+@media (max-width: 600px) {
+	.cat-detail__header {
+		height: 280px;
+	}
+
+	.cat-detail__title {
+		font-size: 1.6rem;
+	}
+}

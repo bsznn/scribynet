@@ -3,133 +3,151 @@ import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import axios from "axios";
 import { token } from "../../context/token";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import "../../assets/styles/components/chapters/updatechapter.css";
-import headImage from "../../assets/images/form/fond-addbook.jpeg";
+import fondImage from "../../assets/images/form/fond-addbook.jpeg";
 
 const ChapterUpdate = () => {
 	const [inputs, setInputs] = useState({
 		chapterContent: "",
 		chapterTitle: "",
 	});
+	const [err, setErr] = useState("");
 
 	const { bookId, chapterId } = useParams();
-
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		axios
 			.get(`http://localhost:5000/books/${bookId}`)
-			.then((res) => res.data)
-			.then((bookData) => {
-				const chapter = bookData.chapters.find((ch) => ch._id === chapterId);
-
-				console.log("CHAPTER RECU:", chapter);
-
+			.then((res) => {
+				const chapter = res.data.chapters.find((ch) => ch._id === chapterId);
 				if (chapter) {
-					setInputs({
-						chapterTitle: chapter.title,
-						chapterContent: chapter.content,
-					});
+					setInputs({ chapterTitle: chapter.title, chapterContent: chapter.content });
 				} else {
-					alert("Chapitre non trouvé !");
+					setErr("Chapitre non trouvé.");
 				}
 			})
-			.catch(() => {
-				alert("Une erreur est survenue lors de la récupération du livre.");
-			});
+			.catch(() => setErr("Une erreur est survenue lors de la récupération du livre."));
 	}, [bookId, chapterId]);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
-		setInputs((prev) => ({
-			...prev,
-			[name]: value,
-		}));
+		setInputs((p) => ({ ...p, [name]: value }));
+		setErr("");
 	};
 
-	const handleQuill = (value) => {
-		setInputs((prev) => ({
-			...prev,
-			chapterContent: value,
-		}));
-	};
+	const handleQuill = (value) =>
+		setInputs((p) => ({ ...p, chapterContent: value }));
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-
-		if (
-			inputs.chapterContent.trim() === "" ||
-			inputs.chapterTitle.trim() === ""
-		) {
-			return alert("Veuillez remplir tous les champs");
+	const handleSubmit = () => {
+		if (!inputs.chapterTitle.trim() || !inputs.chapterContent.trim()) {
+			setErr("Veuillez remplir tous les champs.");
+			return;
 		}
-
-		const chapter = {
-			title: inputs.chapterTitle,
-			content: inputs.chapterContent,
-		};
 
 		axios
 			.put(
 				`http://localhost:5000/books/chapter/edit/${bookId}/${chapterId}`,
-				{ chapters: [chapter] },
-				{
-					headers: {
-						...token(),
-						"Content-Type": "application/json",
-					},
-				},
+				{ chapters: [{ title: inputs.chapterTitle, content: inputs.chapterContent }] },
+				{ headers: { ...token(), "Content-Type": "application/json" } },
 			)
-			.then((res) => {
-				alert(res.data.message);
-				navigate(`/histoire/${bookId}`);
-			})
-			.catch((error) => {
-				alert(error.response?.data?.message || "Une erreur est survenue");
-			});
+			.then(() => navigate(`/histoire/${bookId}`))
+			.catch((error) =>
+				setErr(error.response?.data?.message || "Une erreur est survenue."),
+			);
 	};
 
-	const sectionStyle = {
-		backgroundImage: `url(${headImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-	};
+	const isBigScreen = window.innerWidth >= 990;
+
+	const sectionStyle = isBigScreen
+		? {
+				backgroundImage: `url(${fondImage})`,
+				backgroundSize: "cover",
+				backgroundPosition: "center",
+				backgroundRepeat: "no-repeat",
+		  }
+		: {};
 
 	return (
-		<section className="updatechapter" style={sectionStyle}>
-			<form onSubmit={handleSubmit} className="updatechapter__form">
-				<h2 className="updatechapter__title">Modifier un chapitre</h2>
+		<main className="fond__updatechapter" style={sectionStyle}>
+			<div className="updatechapter__container">
+				<div className="updatechapter">
 
-				<label htmlFor="chapterTitle" className="updatechapter__label">
-					Titre du chapitre :
-				</label>
-				<input
-					className="updatechapter__input"
-					onChange={handleChange}
-					value={inputs.chapterTitle}
-					type="text"
-					id="chapterTitle"
-					name="chapterTitle"
-				/>
+					{/* ── SIDEBAR ── */}
+					<aside className="updatechapter__sidebar">
+						<div className="updatechapter__brand">
+							<span className="updatechapter__brand-eyebrow">Édition</span>
+							<h1 className="updatechapter__brand-title">
+								Retouchez.
+								<br />
+								<span>Perfectionnez.</span>
+							</h1>
+							<p className="updatechapter__brand-desc">
+								Chaque mot compte. Affinez votre chapitre et offrez à vos lecteurs la meilleure version de votre histoire.
+							</p>
+						</div>
 
-				<label htmlFor="chapterContent" className="updatechapter__label">
-					Contenu du chapitre :
-				</label>
-				<ReactQuill
-					className="updatechapter__editor"
-					theme="snow"
-					value={inputs.chapterContent}
-					onChange={handleQuill}
-				/>
+						<Link to={`/histoire/${bookId}`} className="updatechapter__back">
+							← Retour à l'histoire
+						</Link>
+					</aside>
 
-				<button type="submit" className="updatechapter__button">
-					Valider
-				</button>
-			</form>
-		</section>
+					{/* ── MAIN ── */}
+					<div className="updatechapter__main">
+						<div className="updatechapter__panel">
+							<h2 className="updatechapter__panel-title">Modifier le chapitre</h2>
+							<p className="updatechapter__panel-sub">
+								Apportez vos modifications, puis sauvegardez.
+							</p>
+
+							<div className="updatechapter__fields">
+								<div className="updatechapter__field">
+									<label className="updatechapter__field-label">Titre du chapitre</label>
+									<input
+										className="updatechapter__field-input"
+										name="chapterTitle"
+										value={inputs.chapterTitle}
+										onChange={handleChange}
+										placeholder="Titre du chapitre…"
+									/>
+								</div>
+
+								<div className="updatechapter__field">
+									<label className="updatechapter__field-label">Contenu</label>
+									<ReactQuill
+										className="updatechapter__quill"
+										theme="snow"
+										value={inputs.chapterContent}
+										onChange={handleQuill}
+									/>
+								</div>
+							</div>
+
+							{err && <p className="updatechapter__error">{err}</p>}
+
+							<div className="updatechapter__nav">
+								<Link
+									to={`/histoire/${bookId}`}
+									className="updatechapter__btn updatechapter__btn--ghost"
+								>
+									← Annuler
+								</Link>
+								<button
+									className="updatechapter__btn updatechapter__btn--primary"
+									type="button"
+									onClick={handleSubmit}
+								>
+									Sauvegarder ✦
+								</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</main>
 	);
 };
 

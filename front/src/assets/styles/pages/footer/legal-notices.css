@@ -4,7 +4,6 @@
 
 .legal-notices {
 	position: relative;
-	min-height: 90vh;
 	background-color: var(--bodyBeige);
 	display: flex;
 	justify-content: center;

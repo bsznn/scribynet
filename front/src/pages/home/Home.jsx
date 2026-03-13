@@ -14,7 +14,7 @@ import Ads from "../../components/home/ads/ads";
 
 export default function Home() {
 	return (
-		<div className="home">
+		<main className="home">
 			<Head />
 			<Carousel />
 			{/* <DonationButton /> */}
@@ -39,6 +39,6 @@ export default function Home() {
 					<News />
 				</div>
 			</div>
-		</div>
+		</main>
 	);
 }

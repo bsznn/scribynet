@@ -26,6 +26,8 @@ const Profile = () => {
 	const [totalLikes, setTotalLikes] = useState(0);
 	const [authors, setAuthors] = useState([]);
 	const [newBooks, setNewBooks] = useState([]);
+	const [currentPage, setCurrentPage] = useState(0);
+	const BOOKS_PER_PAGE = 3;
 	const [err, setErr] = useState();
 
 	useEffect(() => {
@@ -94,6 +96,12 @@ const Profile = () => {
 				.catch(() => alert("Impossible de supprimer l'histoire !"));
 		}
 	};
+
+	const totalPages = Math.ceil(books.length / BOOKS_PER_PAGE);
+	const paginatedBooks = books.slice(
+		currentPage * BOOKS_PER_PAGE,
+		(currentPage + 1) * BOOKS_PER_PAGE,
+	);
 
 	const sectionStyle = {
 		backgroundImage: `url(${fondImage})`,

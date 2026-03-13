@@ -33,7 +33,7 @@ const Book = () => {
 	const [showComments, setShowComments] = useState(false);
 	const hasViewed = useRef(false);
 
-	const { id } = useParams();
+	const { id, chapterId } = useParams();
 	const auth = useAuth();
 
 	/* ================= FETCH BOOK ================= */
@@ -52,8 +52,15 @@ const Book = () => {
 
 				setCategories(data.categoryId || []);
 				setChapters(data.chapters || []);
-				setHandleCurrentChapter([data.chapters?.[0]]);
-				setCurrentChapter(0);
+				let validIndex = 0;
+				if (chapterId) {
+					const found = data.chapters?.findIndex(
+						(c) => c._id.toString() === chapterId,
+					);
+					if (found !== -1) validIndex = found;
+				}
+				setCurrentChapter(validIndex);
+				setHandleCurrentChapter([data.chapters?.[validIndex]]);
 			})
 			.catch(() => {
 				setErr("Impossible de récupérer l'histoire");
@@ -136,7 +143,7 @@ const Book = () => {
 	};
 
 	return (
-		<div className="book" style={sectionStyle}>
+		<main className="book" style={sectionStyle}>
 			<div className="book__content">
 				<div className="book__content--section">
 					{err && <span>{err}</span>}
@@ -334,7 +341,7 @@ const Book = () => {
 					)}
 				</div>
 			</div>
-		</div>
+		</main>
 	);
 };
 

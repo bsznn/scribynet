@@ -30,7 +30,7 @@ export default function ComponentCategories() {
 				{categories.map((category) => (
 					<article key={category._id} className="component-categories__item">
 						<NavLink
-							to={`/categorie/${category._id}`}
+							to={`/categories/${category._id}`}
 							className="component-categories__link"
 						>
 							<p className="component-categories__name">{category.name}</p>

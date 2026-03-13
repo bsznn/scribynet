@@ -31,7 +31,6 @@
 	width: calc(100% - 2rem);
 	position: relative;
 	z-index: 1;
-	min-height: 75vh;
 }
 
 .messages::before {

@@ -59,56 +59,52 @@ export default function Login() {
 	};
 
 	return (
-		<main className="login">
-			<section className="login__section" style={sectionStyle}>
-				<div className="login__container">
-
-					<form className="login__form" onSubmit={handleSubmit}>
-						<h2 className="login__title">Connexion</h2>
-						<div className="login__field material">
-							<input
-								type="email"
-								name="email"
-								value={inputs.email}
-								onChange={handleChange}
-								required
-							/>
-							<label>Email</label>
-							<span className="bar" />
-						</div>
-
-						<div className="login__field material">
-							<input
-								type="password"
-								name="password"
-								value={inputs.password}
-								onChange={handleChange}
-								required
-							/>
-							<label>Mot de passe</label>
-							<span className="bar" />
-						</div>
-
-						<button className="login__button">Se connecter</button>
-
-						{err && <span className="login__error">{err}</span>}
-					</form>
-
-					{/* ===== SIGN IN SIDE ===== */}
-					<div className="login__side">
-						<h2>Pas de compte ?</h2>
-						<p>
-							Inscrivez-vous pour accéder à votre espace personnel
-							et retrouver vos contenus.
-						</p>
-
-						<Link to="/s-inscrire" className="login__side-button">
-							S'inscrire
-						</Link>
+		<main className="login__section" style={sectionStyle}>
+			<div className="login__container">
+				<form className="login__form" onSubmit={handleSubmit}>
+					<h2 className="login__title">Connexion</h2>
+					<div className="login__field material">
+						<input
+							type="email"
+							name="email"
+							value={inputs.email}
+							onChange={handleChange}
+							required
+						/>
+						<label>Email</label>
+						<span className="bar" />
 					</div>
 
+					<div className="login__field material">
+						<input
+							type="password"
+							name="password"
+							value={inputs.password}
+							onChange={handleChange}
+							required
+						/>
+						<label>Mot de passe</label>
+						<span className="bar" />
+					</div>
+
+					<button className="login__button">Se connecter</button>
+
+					{err && <span className="login__error">{err}</span>}
+				</form>
+
+				{/* ===== SIGN IN SIDE ===== */}
+				<div className="login__side">
+					<h2>Pas de compte ?</h2>
+					<p>
+						Inscrivez-vous pour accéder à votre espace personnel et retrouver
+						vos contenus.
+					</p>
+
+					<Link to="/s-inscrire" className="login__side-button">
+						S'inscrire
+					</Link>
 				</div>
-			</section>
+			</div>
 		</main>
 	);
 }

@@ -22,12 +22,13 @@
 	font-family: var(--fontRegular);
 	color: var(--darkMarron);
 	margin: 4rem 0;
+	display: flex;
+	min-height: 80vh;
 }
 
 .donation__content {
 	position: relative;
 	background-color: var(--bodyBeige);
-	min-height: 77vh;
 	padding: 1rem 1.5rem 3rem;
 	display: flex;
 	flex-direction: column;

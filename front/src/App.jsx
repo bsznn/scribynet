@@ -2,12 +2,10 @@ import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
-import Authors from "./pages/authors/Authors";
 import { AddBook } from "./pages/books/AddBook";
 import Books from "./pages/books/Books";
 import Categories from "./pages/categories/Categories";
 //import Home from "./pages/home/Home";
-import { Readers } from "./pages/readers/Readers";
 
 import "./app.css";
 import AboutContact from "./pages/about-contact/AboutContact";
@@ -25,6 +23,7 @@ import Conversation from "./pages/messages/Conversation";
 import Messages from "./pages/messages/Messages";
 import Dashboard from "./pages/dashboard/Dashboard";
 import UserProfile from "./pages/profile/UserProfile";
+import CategoryDetail from "./pages/categories/CategoryDetail";
 
 const Home = lazy(() => import("./pages/home/Home"));
 
@@ -45,8 +44,8 @@ function App() {
 				<Route path="/histoires" element={<Books />} />
 				<Route path="/modifier-histoire/:id" element={<EditBook />} />
 				<Route path="/histoire/:id" element={<Book />} />
-				<Route path="/auteurs" element={<Authors />} />
-				<Route path="/lecteurs" element={<Readers />} />
+				<Route path="/histoire/:id/:chapterId" element={<Book />} />
+
 				<Route path="/categories" element={<Categories />} />
 				<Route path="/publier-histoire" element={<AddBook />} />
 				<Route path="/a-propos" element={<AboutContact />} />
@@ -71,6 +70,7 @@ function App() {
 				/>
 
 				<Route path="/profil/:id" element={<UserProfile />} />
+				<Route path="/categories/:id" element={<CategoryDetail />} />
 			</Routes>
 		</div>
 	);

@@ -1,6 +1,5 @@
 /* ====== CONTAINER GLOBAL ====== */
 .aboutContact {
-	min-height: 90vh;
 	position: relative;
 	font-family: var(--fontRegular);
 	color: var(--lightBeige);
@@ -21,7 +20,7 @@
 	margin: 0 auto;
 	grid-template-columns: 1fr;
 	gap: 40px;
-	padding: 80px 24px 90px;
+	padding: 4rem 1rem;
 }
 
 /* ====== INFOS CONTACT ====== */
@@ -192,10 +191,8 @@
 /* ====== RESPONSIVE ====== */
 @media (min-width: 990px) {
 	.aboutContact__content {
-		padding: 100px 24px 80px;
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		gap: 64px;
 	}
 
 	.aboutContact__contact {

@@ -25,20 +25,16 @@ export default function LastChapters() {
 		<div className="last-chapters__container">
 			<h2 className="last-chapters__title">Récents Chapitres</h2>
 			<section className="last-chapters__list">
-				{/* Affichage des récents chapitres */}
 				{lastUpdates.map((oneLastUpdate) => (
 					<article key={oneLastUpdate._id} className="last-chapters__item">
 						<NavLink
-							to={`/histoire/${oneLastUpdate._id}`}
+							to={`/histoire/${oneLastUpdate.bookId}/${oneLastUpdate.chapterId}`}
 							className="last-chapters__link"
 						>
-							<p className="last-chapters__chapter-title">
-								{oneLastUpdate.title}
-							</p>
+							{oneLastUpdate.title}
 						</NavLink>
 					</article>
 				))}
-				{/* Affichage d'une erreur si elle existe */}
 				{err && <p className="last-chapters__error">{err}</p>}
 			</section>
 		</div>

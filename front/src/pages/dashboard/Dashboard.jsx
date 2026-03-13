@@ -100,7 +100,7 @@ export default function Dashboard() {
 			case "roles":
 				return isAdmin ? <DashRoles /> : null;
 			default:
-				return <DashComments />;
+				return <DashStories />;
 		}
 	};
 

@@ -68,7 +68,7 @@ export default function Categories() {
 	};
 
 	return (
-		<div className="categories">
+		<main className="categories">
 			{error && <p className="categories__error">{error}</p>}
 
 			{/* Header */}
@@ -172,6 +172,6 @@ export default function Categories() {
 					</button>
 				</div>
 			)}
-		</div>
+		</main>
 	);
 }

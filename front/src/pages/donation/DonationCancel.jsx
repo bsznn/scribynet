@@ -12,7 +12,7 @@ export default function DonationCancel() {
 		backgroundRepeat: "no-repeat",
 	};
 	return (
-		<div className="donation-cancel" style={sectionStyle}>
+		<main className="donation-cancel" style={sectionStyle}>
 			<div className="donation-cancel__container">
 				<div className="donation-cancel__icon">
 					<img src={cancel} alt="Don annulé" aria-label="Don annulé" />
@@ -25,6 +25,6 @@ export default function DonationCancel() {
 					</p>
 				</div>
 			</div>
-		</div>
+		</main>
 	);
 }

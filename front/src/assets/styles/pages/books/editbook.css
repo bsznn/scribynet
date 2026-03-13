@@ -1,8 +1,8 @@
 /* =========================
-   ADDBOOK — REDESIGN TOTAL
+   EDITBOOK
    ========================= */
 
-@keyframes fadeUp {
+@keyframes eb-fadeUp {
 	from {
 		opacity: 0;
 		transform: translateY(20px);
@@ -13,16 +13,7 @@
 	}
 }
 
-@keyframes linegrow {
-	from {
-		width: 0;
-	}
-	to {
-		width: 100%;
-	}
-}
-
-@keyframes pulse-dot {
+@keyframes eb-pulse {
 	0%,
 	100% {
 		transform: scale(1);
@@ -34,8 +25,15 @@
 	}
 }
 
-/* ── LAYOUT ROOT ── */
-.addbook {
+.editbook__container {
+	width: 100%;
+	display: flex;
+	align-items: stretch;
+}
+
+/* ── GRILLE ── */
+.editbook {
+	width: 100%;
 	background-color: var(--bodyBeige);
 	font-family: var(--fontRegular);
 	color: var(--darkMarron);
@@ -43,19 +41,30 @@
 	grid-template-columns: 1fr;
 }
 
-/* ── COLONNE GAUCHE – SIDEBAR ── */
-.addbook__sidebar {
+/* ── SIDEBAR ── */
+.editbook__sidebar {
 	background-color: var(--darkMarron);
 	padding: 3.5rem 2.8rem;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	position: sticky;
-	top: 0;
+	position: relative;
 	overflow: hidden;
 }
 
-.addbook__sidebar::before {
+.editbook__sidebar::before {
+	content: "";
+	position: absolute;
+	top: -60px;
+	right: -60px;
+	width: 280px;
+	height: 280px;
+	border-radius: 50%;
+	border: 1px solid rgba(182, 165, 138, 0.1);
+	pointer-events: none;
+}
+
+.editbook__sidebar::after {
 	content: "";
 	position: absolute;
 	bottom: -80px;
@@ -64,117 +73,89 @@
 	height: 320px;
 	background: radial-gradient(
 		circle,
-		rgba(182, 165, 138, 0.12) 0%,
+		rgba(182, 165, 138, 0.1) 0%,
 		transparent 70%
 	);
 	pointer-events: none;
 }
 
-.addbook__sidebar::after {
-	content: "";
-	position: absolute;
-	top: 40px;
-	right: -60px;
-	width: 200px;
-	height: 200px;
-	border-radius: 50%;
-	border: 1px solid rgba(182, 165, 138, 0.1);
-	pointer-events: none;
-}
-
-.addbook__brand {
+.editbook__brand {
 	display: flex;
 	flex-direction: column;
 	gap: 0.4rem;
 }
 
-.addbook__brand-eyebrow {
+.editbook__brand-eyebrow {
 	font-size: 0.7rem;
 	letter-spacing: 3px;
 	text-transform: uppercase;
 	color: var(--darkBeige);
 }
 
-.addbook__brand-title {
+.editbook__brand-title {
 	font-family: var(--fontTitle);
+	font-size: 2.6rem;
 	line-height: 1.1;
 	color: var(--lightBeige);
 	letter-spacing: 1px;
 }
 
-.addbook__brand-title span {
+.editbook__brand-title span {
 	color: var(--darkBeige);
 }
 
-.addbook__brand-desc {
+.editbook__brand-desc {
 	margin-top: 1rem;
-	font-size: 0.88rem;
+	font-size: 0.85rem;
 	line-height: 1.7;
-	color: rgba(217, 203, 179, 0.55);
-	max-width: 500px;
+	color: rgba(217, 203, 179, 0.5);
+	max-width: 280px;
 }
 
-/* steps */
-.addbook__steps {
+/* live preview sidebar */
+.editbook__sidebar-info {
 	display: flex;
 	flex-direction: column;
-	gap: 1.4rem;
-	list-style: none;
-	padding: 0;
-	margin: 0;
+	gap: 1.3rem;
 }
 
-.addbook__step {
+.editbook__info-item {
 	display: flex;
 	align-items: flex-start;
 	gap: 1rem;
-	opacity: 0.35;
-	transition: opacity 0.35s ease;
 }
 
-.addbook__step.is-active {
-	opacity: 1;
-}
-
-.addbook__step.is-done {
-	opacity: 0.6;
-}
-
-.addbook__step-dot {
-	width: 10px;
-	height: 10px;
+.editbook__info-dot {
+	width: 8px;
+	height: 8px;
 	border-radius: 50%;
 	background: var(--darkBeige);
 	flex-shrink: 0;
-	margin-top: 4px;
+	margin-top: 5px;
+	animation: eb-pulse 3s ease-in-out infinite;
 }
 
-.addbook__step.is-active .addbook__step-dot {
-	background: var(--lightBeige);
-	animation: pulse-dot 2s ease-in-out infinite;
-}
-
-.addbook__step.is-done .addbook__step-dot {
-	background: var(--darkBeige);
-}
-
-.addbook__step-label {
+.editbook__info-label {
 	font-family: var(--fontTitle);
-	font-size: 0.82rem;
+	font-size: 0.75rem;
 	letter-spacing: 1px;
 	text-transform: uppercase;
-	color: var(--lightBeige);
-	line-height: 1;
+	color: var(--darkBeige);
+	margin-bottom: 0.2rem;
 }
 
-.addbook__step-sub {
-	font-size: 0.75rem;
-	color: rgba(217, 203, 179, 0.45);
-	margin-top: 0.25rem;
+.editbook__info-sub {
+	font-size: 0.82rem;
+	color: rgba(217, 203, 179, 0.7);
+	line-height: 1.4;
+	max-width: 220px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
-/* back link */
-.addbook__back {
+/* back */
+.editbook__back {
 	font-size: 0.78rem;
 	color: rgba(217, 203, 179, 0.4);
 	text-decoration: none;
@@ -185,40 +166,22 @@
 	gap: 0.4rem;
 }
 
-.addbook__back:hover {
+.editbook__back:hover {
 	color: var(--lightBeige);
 }
 
-/* ── COLONNE DROITE – FORMULAIRE ── */
-.addbook__main {
+/* ── MAIN ── */
+.editbook__main {
 	padding: 4rem 3rem;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
 }
 
-.addbook__panel {
-	animation: fadeUp 0.4s ease both;
+.editbook__panel {
+	animation: eb-fadeUp 0.4s ease both;
 }
 
-/* progress bar */
-.addbook__progress {
-	height: 2px;
-	background: var(--mediumBeige);
-	border-radius: 2px;
-	margin-bottom: 3rem;
-	overflow: hidden;
-}
-
-.addbook__progress-fill {
-	height: 100%;
-	background: var(--darkMarron);
-	border-radius: 2px;
-	transition: width 0.5s cubic-bezier(0.22, 0.68, 0, 1.2);
-}
-
-/* heading */
-.addbook__panel-title {
+.editbook__panel-title {
 	font-family: var(--fontTitle);
 	font-size: 1.8rem;
 	letter-spacing: 0.5px;
@@ -226,26 +189,26 @@
 	margin-bottom: 0.3rem;
 }
 
-.addbook__panel-sub {
+.editbook__panel-sub {
 	font-size: 0.85rem;
 	color: var(--mediumMarron);
 	margin-bottom: 2.5rem;
 }
 
 /* ── CHAMPS ── */
-.addbook__fields {
+.editbook__fields {
 	display: flex;
 	flex-direction: column;
 	gap: 1.6rem;
 }
 
-.addbook__field {
+.editbook__field {
 	display: flex;
 	flex-direction: column;
 	gap: 0.45rem;
 }
 
-.addbook__field-label {
+.editbook__field-label {
 	font-size: 0.72rem;
 	font-weight: 700;
 	letter-spacing: 1.5px;
@@ -253,8 +216,8 @@
 	color: var(--mediumMarron);
 }
 
-.addbook__field-input,
-.addbook__field-textarea {
+.editbook__field-input,
+.editbook__field-textarea {
 	padding: 0.85rem 1rem;
 	font-size: 0.95rem;
 	font-family: var(--fontRegular);
@@ -268,31 +231,31 @@
 		box-shadow 0.25s ease;
 }
 
-.addbook__field-input::placeholder,
-.addbook__field-textarea::placeholder {
+.editbook__field-input::placeholder,
+.editbook__field-textarea::placeholder {
 	color: var(--darkBeige);
 	opacity: 0.6;
 }
 
-.addbook__field-input:focus,
-.addbook__field-textarea:focus {
+.editbook__field-input:focus,
+.editbook__field-textarea:focus {
 	border-color: var(--darkMarron);
 	box-shadow: 0 0 0 3px rgba(66, 60, 57, 0.08);
 }
 
-.addbook__field-textarea {
-	min-height: 110px;
+.editbook__field-textarea {
+	min-height: 120px;
 	resize: vertical;
 }
 
-.addbook__field-hint {
+.editbook__field-hint {
 	font-size: 0.72rem;
 	color: var(--darkBeige);
 	text-align: right;
 }
 
-/* file upload */
-.addbook__upload {
+/* upload */
+.editbook__upload {
 	border: 1.5px dashed var(--mediumBeige);
 	border-radius: 10px;
 	padding: 1.5rem;
@@ -308,12 +271,12 @@
 	text-align: center;
 }
 
-.addbook__upload:hover {
+.editbook__upload:hover {
 	border-color: var(--darkMarron);
 	background: rgba(66, 60, 57, 0.03);
 }
 
-.addbook__upload input[type="file"] {
+.editbook__upload input[type="file"] {
 	position: absolute;
 	inset: 0;
 	opacity: 0;
@@ -322,106 +285,72 @@
 	height: 100%;
 }
 
-.addbook__upload-icon {
+.editbook__upload-icon {
 	font-size: 1.6rem;
 	line-height: 1;
 }
-
-.addbook__upload-label {
+.editbook__upload-label {
 	font-size: 0.82rem;
 	font-weight: 600;
 	color: var(--darkMarron);
 }
-
-.addbook__upload-sub {
+.editbook__upload-sub {
 	font-size: 0.72rem;
 	color: var(--darkBeige);
 }
 
-.addbook__upload-name {
-	font-size: 0.78rem;
-	color: var(--mediumMarron);
-	font-style: italic;
-	margin-top: 0.25rem;
-}
-
-/* react-select override */
-.addbook__select .addbook-rs__control {
+/* select */
+.editbook__select .editbook-rs__control {
 	border: 1.5px solid var(--mediumBeige) !important;
 	border-radius: 10px !important;
 	background: var(--lightBeige) !important;
 	box-shadow: none !important;
 	min-height: 46px;
 }
-
-.addbook__select .addbook-rs__control--is-focused {
+.editbook__select .editbook-rs__control--is-focused {
 	border-color: var(--darkMarron) !important;
 	box-shadow: 0 0 0 3px rgba(66, 60, 57, 0.08) !important;
 }
-
-.addbook__select .addbook-rs__placeholder {
+.editbook__select .editbook-rs__placeholder {
 	color: var(--darkBeige) !important;
 	opacity: 0.6;
 }
-.addbook__select .addbook-rs__single-value,
-.addbook__select .addbook-rs__input-container {
-	color: var(--darkMarron) !important;
-}
-
-.addbook__select .addbook-rs__multi-value {
+.editbook__select .editbook-rs__multi-value {
 	background: var(--darkMarron) !important;
 	border-radius: 6px !important;
 }
-
-.addbook__select .addbook-rs__multi-value__label {
+.editbook__select .editbook-rs__multi-value__label {
 	color: var(--lightBeige) !important;
 	font-size: 0.78rem;
 }
-.addbook__select .addbook-rs__multi-value__remove {
+.editbook__select .editbook-rs__multi-value__remove {
 	color: var(--lightBeige) !important;
 }
-.addbook__select .addbook-rs__multi-value__remove:hover {
+.editbook__select .editbook-rs__multi-value__remove:hover {
 	background: var(--mediumMarron) !important;
-	color: var(--lightBeige) !important;
 }
-
-.addbook__select .addbook-rs__menu {
+.editbook__select .editbook-rs__menu {
 	border-radius: 10px !important;
 	border: 1px solid var(--mediumBeige) !important;
-	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
 }
-
-.addbook__select .addbook-rs__option--is-focused {
+.editbook__select .editbook-rs__option--is-focused {
 	background: var(--hoverLightBeige) !important;
 }
-.addbook__select .addbook-rs__option--is-selected {
+.editbook__select .editbook-rs__option--is-selected {
 	background: var(--darkMarron) !important;
 	color: var(--lightBeige) !important;
 }
 
-/* React Quill */
-.addbook__quill .ql-toolbar.ql-snow {
-	background: var(--lightBeige);
-	border: 1.5px solid var(--mediumBeige) !important;
-	border-bottom: none !important;
-	border-radius: 10px 10px 0 0;
+/* erreur */
+.editbook__error-msg {
+	font-size: 0.78rem;
+	color: #c45b5b;
+	font-weight: 600;
 }
 
-.addbook__quill .ql-container.ql-snow {
-	border: 1.5px solid var(--mediumBeige) !important;
-	border-radius: 0 0 10px 10px;
-	background: white;
-	height: 500px;
-}
-
-.addbook__quill .ql-editor {
-	font-family: var(--fontRegular);
-	font-size: 0.95rem;
-	color: var(--darkMarron);
-}
-
-/* ── NAVIGATION ── */
-.addbook__nav {
+/* ── NAV ── */
+.editbook__nav {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -430,7 +359,7 @@
 	border-top: 1px solid var(--mediumBeige);
 }
 
-.addbook__btn {
+.editbook__btn {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.5rem;
@@ -445,37 +374,39 @@
 	text-decoration: none;
 }
 
-.addbook__btn--ghost {
+.editbook__btn--ghost {
 	background: transparent;
 	color: var(--mediumMarron);
 	border: 1.5px solid var(--mediumBeige);
 }
 
-.addbook__btn--ghost:hover {
+.editbook__btn--ghost:hover {
 	border-color: var(--darkMarron);
 	color: var(--darkMarron);
 }
 
-.addbook__btn--primary {
+.editbook__btn--primary {
 	background: var(--darkMarron);
 	color: var(--lightBeige);
 }
 
-.addbook__btn--primary:hover {
+.editbook__btn--primary:hover {
 	background: var(--hoverDarkMarron);
 	transform: translateY(-1px);
 	box-shadow: 0 4px 12px rgba(66, 60, 57, 0.2);
 }
 
-/* erreur */
-.addbook__error-msg {
-	font-size: 0.78rem;
-	color: #c45b5b;
-	font-weight: 600;
+/* ── LOADING / GATE ── */
+.editbook__loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-style: italic;
+	color: var(--mediumMarron);
+	background: var(--bodyBeige);
 }
 
-/* ── NON CONNECTÉ ── */
-.addbook__gate {
+.editbook__gate {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -483,84 +414,71 @@
 	padding: 2rem;
 }
 
-.addbook__gate-box {
+.editbook__gate-box {
 	max-width: 440px;
 	text-align: center;
-	animation: fadeUp 0.5s ease both;
+	animation: eb-fadeUp 0.5s ease both;
 }
 
-.addbook__gate-icon {
+.editbook__gate-icon {
 	font-size: 3rem;
 	margin-bottom: 1rem;
 }
 
-.addbook__gate-title {
+.editbook__gate-title {
 	font-family: var(--fontTitle);
 	font-size: 1.8rem;
 	color: var(--darkMarron);
 	margin-bottom: 1rem;
 }
 
-.addbook__gate-text {
+.editbook__gate-text {
 	font-size: 0.9rem;
 	line-height: 1.7;
 	color: var(--mediumMarron);
 	margin-bottom: 0.4rem;
 }
 
-.addbook__gate-link {
-	color: var(--darkMarron);
-	font-weight: 700;
-	text-decoration: underline;
-	text-underline-offset: 3px;
-	transition: color 0.2s ease;
-}
-
-.addbook__gate-link:hover {
-	color: var(--mediumMarron);
-}
-
-.addbook__gate-actions {
+.editbook__gate-actions {
 	display: flex;
 	gap: 1rem;
 	justify-content: center;
 	margin-top: 2rem;
 }
 
-/* ── RESPONSIVE MOBILE ── */
+/* ── RESPONSIVE ── */
 @media (max-width: 989px) {
-	.addbook__sidebar {
+	.editbook__sidebar {
 		position: relative;
 		padding: 2.5rem 1.8rem 2rem;
 		height: 250px;
 	}
 
-	.addbook__steps {
-		display: none;
-	}
-	.addbook__back {
-		display: none;
-	}
-
-	.addbook__brand-title {
+	.editbook__brand-title {
 		font-size: 2rem;
 	}
-	.addbook__brand-desc {
-		display: flex;
+	.editbook__brand-desc {
+		max-width: 100%;
+	}
+	.editbook__sidebar-info {
+		display: none;
+	}
+	.editbook__back {
+		display: none;
 	}
 
-	.addbook__main {
+	.editbook__main {
 		padding: 2.5rem 1.5rem 4rem;
 	}
 }
 
 @media (min-width: 990px) {
-	.fond__addbook {
+	.fond__editbook {
 		position: relative;
 		padding: 4rem 0;
 	}
 
-	.fond__addbook::before {
+	.fond__editbook::before {
 		content: "";
 		position: absolute;
 		inset: 0;
@@ -568,39 +486,32 @@
 		z-index: 0;
 	}
 
-	.addbook {
-		grid-template-columns: 380px 1fr;
-		border: 2px solid var(--darkMarron);
-		border-radius: 18px;
-		justify-content: center;
-		margin: 0 2rem;
-	}
-
-	.addbook__sidebar {
-		border-top-left-radius: 16px;
-		border-bottom-left-radius: 16px;
-	}
-	.addbook__container {
+	.editbook__container {
 		width: 100%;
 		background: var(--bodyBeige);
 		position: relative;
 		padding: 3rem 0;
 		margin: 0 auto;
-		display: flex;
-		justify-content: center;
-		min-height: 70vh;
+	}
+
+	.editbook {
+		grid-template-columns: 360px 1fr;
+		border: 2px solid var(--darkMarron);
+		border-radius: 18px;
+		overflow: hidden;
+		margin: 0 2rem;
 	}
 }
 
 @media (min-width: 1200px) {
-	.addbook {
+	.editbook {
 		width: 1100px;
 		margin: 0 auto;
 	}
 }
 
 @media (min-width: 1400px) {
-	.addbook {
+	.editbook {
 		width: 1300px;
 		margin: 0 auto;
 	}

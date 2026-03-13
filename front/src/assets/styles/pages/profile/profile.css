@@ -9,7 +9,6 @@
 	background-color: var(--bodyBeige);
 	font-family: var(--fontRegular);
 	color: var(--mediumMarron);
-	min-height: 100vh;
 }
 
 .profile__error {
@@ -347,7 +346,7 @@
 
 	.profile__stats ul,
 	.profile__stats li,
-	.profile__actions {
+	.profile__actions li {
 		margin: 0;
 		font-size: 1.1rem;
 	}
@@ -374,20 +373,25 @@
 
 	.profile__description,
 	.profile__stats li,
-	.profile__actions,
+	.profile__actions li,
 	.profile__link {
 		font-size: 1.2rem;
 	}
 }
 
 @media (min-width: 1200px) {
+	.profile__header {
+		margin: 0;
+		padding: 0;
+	}
 	.profile__container {
 		display: grid;
 		grid-template-columns: 1fr 420px;
 		gap: 3rem;
 		max-width: 1200px;
 		margin: 0 auto 2rem;
-		align-items: start;
+		align-items: flex-start;
+		padding: 1rem 0 0;
 	}
 
 	.profile__books {
@@ -415,7 +419,7 @@
 
 	.profile__description,
 	.profile__stats li,
-	.profile__actions,
+	.profile__actions li,
 	.profile__link {
 		font-size: 1.3rem;
 	}

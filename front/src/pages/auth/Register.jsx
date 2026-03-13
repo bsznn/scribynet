@@ -63,70 +63,68 @@ export default function Register() {
 	};
 
 	return (
-		<main className="register">
-			<section className="register__section" style={sectionStyle}>
-				<div className="register__container">
-					{/* ===== SIGN UP ===== */}
-					<form className="register__form" onSubmit={handleSubmit}>
-						<h2 className="register__title">Inscription</h2>
+		<main className="register__section" style={sectionStyle}>
+			<div className="register__container">
+				{/* ===== SIGN UP ===== */}
+				<form className="register__form" onSubmit={handleSubmit}>
+					<h2 className="register__title">Inscription</h2>
 
-						<div className="register__field material">
-							<input
-								type="text"
-								name="login"
-								value={inputs.login}
-								onChange={handleChange}
-								required
-							/>
-							<label>Nom d'utilisateur</label>
-							<span className="bar" />
-						</div>
-
-						<div className="register__field material">
-							<input
-								type="email"
-								name="email"
-								value={inputs.email}
-								onChange={handleChange}
-								required
-							/>
-							<label>Email</label>
-							<span className="bar" />
-						</div>
-
-						<div className="register__field material">
-							<input
-								type="password"
-								name="password"
-								value={inputs.password}
-								onChange={handleChange}
-								required
-								minLength={8}
-								maxLength={30}
-							/>
-							<label>Mot de passe</label>
-							<span className="bar" />
-						</div>
-
-						<button className="register__button">S'inscrire</button>
-
-						{err && <span className="register__error">{err}</span>}
-					</form>
-
-					{/* ===== SIGN IN SIDE ===== */}
-					<div className="register__side">
-						<h2>Déjà inscrit ?</h2>
-						<p>
-							Connectez-vous pour accéder à votre espace personnel et retrouver
-							vos contenus.
-						</p>
-
-						<Link to="/se-connecter" className="register__side-button">
-							Se connecter
-						</Link>
+					<div className="register__field material">
+						<input
+							type="text"
+							name="login"
+							value={inputs.login}
+							onChange={handleChange}
+							required
+						/>
+						<label>Nom d'utilisateur</label>
+						<span className="bar" />
 					</div>
+
+					<div className="register__field material">
+						<input
+							type="email"
+							name="email"
+							value={inputs.email}
+							onChange={handleChange}
+							required
+						/>
+						<label>Email</label>
+						<span className="bar" />
+					</div>
+
+					<div className="register__field material">
+						<input
+							type="password"
+							name="password"
+							value={inputs.password}
+							onChange={handleChange}
+							required
+							minLength={8}
+							maxLength={30}
+						/>
+						<label>Mot de passe</label>
+						<span className="bar" />
+					</div>
+
+					<button className="register__button">S'inscrire</button>
+
+					{err && <span className="register__error">{err}</span>}
+				</form>
+
+				{/* ===== SIGN IN SIDE ===== */}
+				<div className="register__side">
+					<h2>Déjà inscrit ?</h2>
+					<p>
+						Connectez-vous pour accéder à votre espace personnel et retrouver
+						vos contenus.
+					</p>
+
+					<Link to="/se-connecter" className="register__side-button">
+						Se connecter
+					</Link>
 				</div>
-			</section>
+			</div>
 		</main>
 	);
 }

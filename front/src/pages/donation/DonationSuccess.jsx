@@ -41,7 +41,7 @@ export default function DonationSuccess() {
 	};
 
 	return (
-		<div className="donation-success" style={sectionStyle}>
+		<main className="donation-success" style={sectionStyle}>
 			<div className="donation-success__container">
 				<div className="donation-success__icon">
 					<img src={gift} alt="Gift" aria-label="Don confirmé" />
@@ -54,6 +54,6 @@ export default function DonationSuccess() {
 					</p>
 				</div>
 			</div>
-		</div>
+		</main>
 	);
 }

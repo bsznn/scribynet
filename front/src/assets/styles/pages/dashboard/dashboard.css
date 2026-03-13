@@ -26,7 +26,6 @@
 	background-color: var(--bodyBeige);
 	flex-direction: column;
 	gap: 0;
-	min-height: 80vh;
 	display: flex;
 	justify-content: center;
 }
@@ -824,69 +823,17 @@
 
 .dash__more-overlay {
 	display: none;
-	position: fixed;
 	inset: 0;
 	z-index: 298;
 }
 
 .dash__more-menu {
+	position: absolute;
 	display: none;
-	position: fixed;
 	bottom: 68px;
-	right: 0.75rem;
+	right: 0.5rem;
 	z-index: 299;
-	background: var(--darkMarron);
-	border: 1px solid rgba(245, 241, 230, 0.15);
-	border-radius: 12px;
-	padding: 0.5rem;
-	box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.35);
-	min-width: 180px;
-}
-
-.dash__more-item {
-	display: flex;
-	align-items: center;
-	gap: 0.7rem;
-	width: 100%;
-	padding: 0.65rem 0.9rem;
-	border: none;
-	background: transparent;
-	color: rgba(245, 241, 230, 0.65);
-	font-family: var(--fontRegular);
-	font-size: 0.88rem;
-	cursor: pointer;
-	border-radius: 8px;
-	text-align: left;
-	transition: all 0.18s ease;
-}
-
-.dash__more-item:hover,
-.dash__more-item--active {
-	background: rgba(245, 241, 230, 0.12);
-	color: var(--lightBeige);
-}
-
-.dash__more-icon {
-	width: 15px;
-	height: 15px;
-	flex-shrink: 0;
-}
-
-/* ── MENU "PLUS" popup mobile ────────────────────────────── */
-
-.dash__more-overlay {
-	display: none;
-	position: fixed;
-	inset: 0;
-	z-index: 298;
-}
-
-.dash__more-menu {
-	display: none;
-	position: fixed;
-	bottom: 68px;
-	right: 0.75rem;
-	z-index: 299;
+	gap: 0rem;
 	background: var(--darkMarron);
 	border: 1px solid rgba(245, 241, 230, 0.15);
 	border-radius: 12px;
