@@ -108,7 +108,3 @@ export default function Login() {
 		</main>
 	);
 }
-
-// pour le style :
-// fond marron, header et footer supprimé, avec en haut juste le logo et un bouton go back
-// pour le footer mettre juste le coopyright toujours sur fond marron

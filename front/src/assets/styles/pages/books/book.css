@@ -6,7 +6,6 @@
 .book ul {
 	list-style: none;
 	padding: 0;
-	margin: 0;
 }
 
 .book::before {
@@ -143,9 +142,61 @@
 .book__chapter-text {
 	font-size: 1.2rem;
 	line-height: 1.9;
-	white-space: pre-wrap;
 	color: var(--mediumMarron);
 	text-align: justify;
+}
+
+/* Normalise le rendu Quill */
+.book__chapter-text p,
+.book__chapter-text span,
+.book__chapter-text pre,
+.book__chapter-text code,
+.book__chapter-text blockquote,
+.book__chapter-text li,
+.book__chapter-text h1,
+.book__chapter-text h2,
+.book__chapter-text h3 {
+	color: var(--mediumMarron) !important;
+	background: none !important;
+	border: none !important;
+	padding: 0 !important;
+	font-family: var(--fontRegular) !important;
+	font-size: inherit !important;
+	white-space: normal !important;
+}
+
+.book__chapter-text p {
+	margin: 0;
+}
+
+.book__chapter-text p + p {
+	margin-top: 1em;
+}
+
+/* Supprime les <br> vides générés par Quill */
+.book__chapter-text p:empty,
+.book__chapter-text br {
+	display: none;
+}
+
+/* Neutralise les blocs pre/code/blockquote de Quill */
+.book__chapter-text pre,
+.book__chapter-text code,
+.book__chapter-text blockquote {
+	background: none !important;
+	border: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	font-family: var(--fontRegular) !important;
+	font-size: inherit !important;
+	color: inherit !important;
+	white-space: normal !important;
+	border-left: none !important;
+}
+
+.book__chapter-text pre + pre,
+.book__chapter-text blockquote + blockquote {
+	margin-top: 1em !important;
 }
 
 /* PAGINATION */
@@ -227,10 +278,6 @@
 	background-color: var(--darkMarron);
 }
 
-/* LIKE COUNTER */
-
-/* ACTIONS LIST 2 (Haut, Like, Commentaires) */
-
 /* ACTIONS LIST 2 */
 
 .book__actions--list2 {
@@ -243,7 +290,6 @@
 	list-style: none;
 }
 
-/* Boutons normaux (Haut / Commentaires) */
 .book__actions--li {
 	display: flex;
 	align-items: center;
@@ -298,18 +344,12 @@
 		color 0.3s ease;
 }
 
-/* Hover pour tous les boutons */
 .book__actions--li:hover,
 .btn-likecounter:hover {
 	transform: translateY(-3px);
-}
-
-.btn-likecounter:hover,
-.book__actions--li:hover {
 	background-color: var(--hoverLightBeige);
 }
 
-/* LikeCounter actif */
 .btn-likecounter.active {
 	background-color: var(--orange);
 	color: var(--lightBeige);
@@ -320,7 +360,6 @@
 	color: var(--lightBeige);
 }
 
-/* Petit effet de clic */
 .book__actions-list2 li:active,
 .btn-likecounter:active {
 	transform: scale(0.95);

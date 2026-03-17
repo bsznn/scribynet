@@ -32,6 +32,7 @@ const Book = () => {
 	const [likeUpdate, setLikeUpdate] = useState(0);
 	const [showComments, setShowComments] = useState(false);
 	const hasViewed = useRef(false);
+	const chapterRef = useRef(null);
 
 	const { id, chapterId } = useParams();
 	const auth = useAuth();
@@ -78,6 +79,12 @@ const Book = () => {
 
 	/* ================= ACTIONS ================= */
 
+	const scrollToChapter = () => {
+		setTimeout(() => {
+			window.scrollTo({ top: 0, behavior: "smooth" });
+		}, 0);
+	};
+
 	const handleDelete = (bookId, chapterId) => {
 		if (chapters.length === 1) {
 			const confirmDelete = window.confirm(
@@ -118,6 +125,7 @@ const Book = () => {
 			const nextIndex = currentChapter + 1;
 			setCurrentChapter(nextIndex);
 			setHandleCurrentChapter([chapters[nextIndex]]);
+			scrollToChapter();
 		}
 	};
 
@@ -126,6 +134,7 @@ const Book = () => {
 			const prevIndex = currentChapter - 1;
 			setCurrentChapter(prevIndex);
 			setHandleCurrentChapter([chapters[prevIndex]]);
+			scrollToChapter();
 		}
 	};
 
@@ -205,7 +214,7 @@ const Book = () => {
 							</section>
 
 							{/* ===== CHAPITRES ===== */}
-							<section className="book__chapters">
+							<section className="book__chapters" ref={chapterRef}>
 								<article className="book__actions">
 									<ul className="book__actions-list">
 										{/* Actions auteur */}
@@ -246,10 +255,9 @@ const Book = () => {
 												)}
 											</>
 										)}
-
-										{/* Like + Comment Button */}
 									</ul>
 								</article>
+
 								{handleCurrentChapter.length > 0 &&
 									handleCurrentChapter.map((chapter, index) => (
 										<article key={index} className="book__chapter">
@@ -259,36 +267,36 @@ const Book = () => {
 														{chapter.title}
 													</h4>
 												</li>
-												<li>
-													<p
-														className="book__chapter-text"
-														dangerouslySetInnerHTML={{
-															__html: DOMPurify.sanitize(chapter.content),
-														}}
-													/>
-												</li>
+												<li
+													className="book__chapter-text"
+													dangerouslySetInnerHTML={{
+														__html: DOMPurify.sanitize(chapter.content),
+													}}
+												/>
 											</ul>
 
 											{/* Pagination */}
-											<div className="book__pagination">
-												<button
-													type="button"
-													onClick={prevChapter}
-													className="book__button"
-													disabled={currentChapter === 0}
-												>
-													⟪
-												</button>
+											{chapters.length > 1 && (
+												<div className="book__pagination">
+													<button
+														type="button"
+														onClick={prevChapter}
+														className="book__button"
+														disabled={currentChapter === 0}
+													>
+														⟪
+													</button>
 
-												<button
-													type="button"
-													onClick={nextChapter}
-													className="book__button"
-													disabled={currentChapter === chapters.length - 1}
-												>
-													⟫
-												</button>
-											</div>
+													<button
+														type="button"
+														onClick={nextChapter}
+														className="book__button"
+														disabled={currentChapter === chapters.length - 1}
+													>
+														⟫
+													</button>
+												</div>
+											)}
 										</article>
 									))}
 

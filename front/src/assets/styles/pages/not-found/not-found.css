@@ -20,12 +20,11 @@
 
 .notfound {
 	position: relative;
+	min-height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	font-family: var(--fontRegular);
-
-	background-image: url("https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&w=1600");
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -45,7 +44,7 @@
 	z-index: 1;
 	background: var(--lightBeige);
 	padding: 4rem 1.5rem;
-    margin: 2rem;
+	margin: 2rem;
 	max-width: 400px;
 	width: 90%;
 	text-align: center;
@@ -66,7 +65,7 @@
 /* 404 */
 .notfound__code {
 	font-family: var(--fontTitle);
-	font-size: clamp(5rem, 15vw, 4rem);
+	font-size: clamp(4rem, 15vw, 6rem);
 	line-height: 1;
 	color: var(--darkMarron);
 	letter-spacing: -2px;
