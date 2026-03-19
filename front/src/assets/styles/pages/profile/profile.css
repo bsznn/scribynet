@@ -445,6 +445,11 @@
 		height: 250px;
 		margin-bottom: 3rem;
 	}
+
+	.profile__authors,
+	.profile__new-books {
+		padding: 1rem 0;
+	}
 }
 
 @media (min-width: 1400px) {

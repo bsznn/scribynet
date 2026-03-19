@@ -4,9 +4,8 @@ import Book from "../models/bookModel.js";
 // Ajouter une réponse à un commentaire
 export const addAnswer = async (req, res) => {
 	try {
-		const { bookId, commentId } = req.params; // Récupération des identifiants du livre et du commentaire
+		const { bookId, commentId } = req.params;
 
-		// Vérification de la validité des identifiants du livre et du commentaire
 		if (
 			!mongoose.Types.ObjectId.isValid(bookId) ||
 			!mongoose.Types.ObjectId.isValid(commentId)
@@ -14,9 +13,8 @@ export const addAnswer = async (req, res) => {
 			return res.status(400).json({ message: "Invalid bookId or commentId" });
 		}
 
-		const { content } = req.body; // Récupération du contenu de la réponse
+		const { content } = req.body;
 
-		// Vérification si le champ de contenu de la réponse est vide
 		if (!content.trim()) {
 			return res
 				.status(400)
@@ -29,19 +27,16 @@ export const addAnswer = async (req, res) => {
 			"comments._id": new mongoose.Types.ObjectId(commentId),
 		});
 
-		// Vérification de l'existence du livre ou du commentaire
 		if (!book) {
 			return res.status(404).json({ message: "Book or Comment not found" });
 		}
 
-		// Création de la réponse
 		const answer = {
 			userId: new mongoose.Types.ObjectId(req.userId),
 			content,
 			date: new Date(),
 		};
 
-		// Ajout de la réponse au commentaire dans le livre
 		await Book.updateOne(
 			{
 				_id: new mongoose.Types.ObjectId(bookId),

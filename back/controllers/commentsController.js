@@ -7,7 +7,6 @@ export const addComment = async (req, res) => {
 		const { userId, bookId } = req.params;
 		const { content } = req.body;
 
-		// Vérifier si le contenu du commentaire est vide
 		if (content.trim() === "") {
 			return res
 				.status(401)
@@ -43,7 +42,6 @@ export const updateComment = async (req, res) => {
 		const book = await Book.findById(bookId);
 		const comment = book.comments.id(commentId);
 
-		// Vérifier si le commentaire existe
 		if (!comment) {
 			return res
 				.status(404)
@@ -103,10 +101,8 @@ export const getAllCommentsByBook = async (req, res) => {
 			return res.status(404).json({ message: "Livre non trouvé" });
 		}
 
-		// Récupérer les commentaires du livre
 		const comments = book.comments;
 
-		// Peupler les données de l'utilisateur auteur du commentaire
 		const populatedComments = await Book.populate(comments, {
 			path: "userId",
 			select: "-password",

@@ -1,18 +1,16 @@
 import Category from "../models/categoryModel.js";
 
-// Fonction pour ajouter une catégorie générale par l'administrateur
+// Fonction pour ajouter une catégorie (admin only)
 export const addGeneralCategory = async (req, res) => {
 	try {
 		const { name } = req.body;
 
-		// Vérifier que les champs requis ne sont pas vides
 		if (name.trim() === "") {
 			return res.status(401).json({
 				message: "Veuillez remplir tous les champs !",
 			});
 		}
 
-		// Créer une nouvelle catégorie avec les détails fournis
 		const category = new Category({
 			name,
 			image: {
@@ -21,13 +19,10 @@ export const addGeneralCategory = async (req, res) => {
 			},
 		});
 
-		// Sauvegarder la nouvelle catégorie dans la base de données
 		await category.save();
 
-		// Envoyer une réponse de succès
 		res.status(200).json({ message: "Catégorie bien créée" });
 	} catch (error) {
-		// Gérer les erreurs lors de la création de la catégorie
 		console.error("Error creating a category:", error);
 		res.status(500).json({ message: "Impossible de créer une catégorie" });
 	}
@@ -53,7 +48,7 @@ export const updateCategoryByAdmin = async (req, res) => {
 		// ⭐ Construire un objet update propre
 		const updateObject = {
 			name: name,
-			image: category.image, // par défaut on garde l'image existante
+			image: category.image,
 		};
 
 		// ⭐ Si nouvelle image uploadée
@@ -83,18 +78,14 @@ export const updateCategoryByAdmin = async (req, res) => {
 // Supprimer une catégorie en général (pour l'administrateur)
 export const deleteCategoryByAdmin = async (req, res) => {
 	try {
-		// Rechercher et supprimer la catégorie par ID dans la base de données
 		const category = await Category.findByIdAndDelete(req.params.id);
 
-		// Vérifier si la catégorie a été trouvée et supprimée avec succès
 		if (!category) {
 			return res.status(404).json({ message: "Catégorie non trouvée" });
 		}
 
-		// Envoyer une réponse de succès
 		return res.status(200).json({ message: "Catégorie supprimée avec succès" });
 	} catch (error) {
-		// Gérer les erreurs lors de la suppression de la catégorie
 		return res.status(500).json({
 			message: "Impossible de supprimer la catégorie",
 			error: error.message,
@@ -105,11 +96,9 @@ export const deleteCategoryByAdmin = async (req, res) => {
 // Récupérer toutes les catégories
 export const getAllCategories = async (_req, res) => {
 	try {
-		// Récupérer toutes les catégories depuis la base de données
 		const categories = await Category.find({});
 		res.status(200).json(categories);
 	} catch (error) {
-		// Gérer les erreurs lors de la récupération des catégories
 		res.status(500).json({
 			message: "Impossible de récupérer les catégories",
 			error: error.message,
@@ -122,18 +111,14 @@ export const getOneCategory = async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		// Rechercher une catégorie par ID dans la base de données
 		const category = await Category.findOne({ _id: id });
 
-		// Vérifier si la catégorie a été trouvée
 		if (!category) {
 			return res.status(404).json({ message: "Aucune catégorie trouvée" });
 		}
 
-		// Envoyer la catégorie trouvée dans la réponse
 		res.status(200).json(category);
 	} catch (error) {
-		// Gérer les erreurs lors de la récupération de la catégorie
 		console.log(error);
 		res.status(500).json({
 			message:
@@ -146,7 +131,6 @@ export const getOneCategory = async (req, res) => {
 // Récupérer toutes les catégories avec les livres associés
 export const getAllCategoriesWithBooks = async (_req, res) => {
 	try {
-		// Récupérer toutes les catégories avec les livres associés à l'aide d'une agrégation
 		const categoriesWithBooks = await Category.aggregate([
 			{
 				$lookup: {
@@ -158,10 +142,8 @@ export const getAllCategoriesWithBooks = async (_req, res) => {
 			},
 		]);
 
-		// Envoyer les catégories avec les livres associés dans la réponse
 		res.status(200).json(categoriesWithBooks);
 	} catch (error) {
-		// Gérer les erreurs lors de la récupération des catégories avec les livres associés
 		res.status(500).json({
 			message:
 				"Impossible de récupérer les catégories avec les livres associés",
