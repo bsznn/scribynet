@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ReactQuill from "react-quill-new";
 import Select from "react-select";
 import "react-quill-new/dist/quill.snow.css";
@@ -169,7 +169,7 @@ export const AddBook = () => {
 	/* ── NON CONNECTÉ ── */
 	if (!auth.user)
 		return (
-			<main className="fond__addbook" style={sectionStyle}>
+			<main className="fond__errorbook" style={sectionStyle}>
 				<div className="addbook__container">
 					<div className="addbook__gate">
 						<div className="addbook__gate-box">
@@ -260,7 +260,9 @@ export const AddBook = () => {
 								<div className="addbook__fields">
 									{/* couverture */}
 									<div className="addbook__field">
-										<label className="addbook__field-label">Couverture</label>
+										<label for="image" className="addbook__field-label">
+											Couverture
+										</label>
 										<div className="addbook__upload">
 											<input
 												type="file"
@@ -280,7 +282,9 @@ export const AddBook = () => {
 
 									{/* titre */}
 									<div className="addbook__field">
-										<label className="addbook__field-label">Titre</label>
+										<label for="title" className="addbook__field-label">
+											Titre
+										</label>
 										<input
 											className="addbook__field-input"
 											name="title"
@@ -292,7 +296,9 @@ export const AddBook = () => {
 
 									{/* description */}
 									<div className="addbook__field">
-										<label className="addbook__field-label">Description</label>
+										<label for="description" className="addbook__field-label">
+											Description
+										</label>
 										<textarea
 											className="addbook__field-textarea"
 											name="description"
@@ -312,7 +318,9 @@ export const AddBook = () => {
 
 									{/* catégories */}
 									<div className="addbook__field">
-										<label className="addbook__field-label">Catégories</label>
+										<label for="categories" className="addbook__field-label">
+											Catégories
+										</label>
 										<div className="addbook__select">
 											<Select
 												isMulti
@@ -357,7 +365,7 @@ export const AddBook = () => {
 
 								<div className="addbook__fields">
 									<div className="addbook__field">
-										<label className="addbook__field-label">
+										<label for="chapterTitle" className="addbook__field-label">
 											Titre du chapitre
 										</label>
 										<input
@@ -370,7 +378,12 @@ export const AddBook = () => {
 									</div>
 
 									<div className="addbook__field">
-										<label className="addbook__field-label">Contenu</label>
+										<label
+											for="chapterContent"
+											className="addbook__field-label"
+										>
+											Contenu
+										</label>
 										<ReactQuill
 											className="addbook__quill"
 											theme="snow"
@@ -410,13 +423,17 @@ export const AddBook = () => {
 
 								<div className="addbook__fields">
 									<div className="addbook__field">
-										<label className="addbook__field-label">Titre</label>
+										<label for="title" className="addbook__field-label">
+											Titre
+										</label>
 										<p style={{ fontWeight: 600, color: "var(--darkMarron)" }}>
 											{inputs.title}
 										</p>
 									</div>
 									<div className="addbook__field">
-										<label className="addbook__field-label">Description</label>
+										<label for="description" className="addbook__field-label">
+											Description
+										</label>
 										<p
 											style={{
 												fontSize: "0.88rem",
@@ -428,7 +445,9 @@ export const AddBook = () => {
 										</p>
 									</div>
 									<div className="addbook__field">
-										<label className="addbook__field-label">Catégories</label>
+										<label for="categories" className="addbook__field-label">
+											Catégories
+										</label>
 										<div
 											style={{
 												display: "flex",
@@ -457,7 +476,7 @@ export const AddBook = () => {
 										</div>
 									</div>
 									<div className="addbook__field">
-										<label className="addbook__field-label">
+										<label for="chapterTitle" className="addbook__field-label">
 											Premier chapitre
 										</label>
 										<p style={{ fontWeight: 600, color: "var(--darkMarron)" }}>
@@ -466,7 +485,9 @@ export const AddBook = () => {
 									</div>
 									{inputs.imageName && (
 										<div className="addbook__field">
-											<label className="addbook__field-label">Couverture</label>
+											<label for="image" className="addbook__field-label">
+												Couverture
+											</label>
 											<p
 												style={{
 													fontSize: "0.82rem",

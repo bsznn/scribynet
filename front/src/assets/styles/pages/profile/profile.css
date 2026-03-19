@@ -234,6 +234,10 @@
 	text-transform: capitalize;
 }
 
+.profile__new-book-title {
+	margin: 0.8rem 12.8px auto 0.5rem;
+}
+
 .profile__new-book-link,
 .profile__author-link {
 	text-decoration: none;

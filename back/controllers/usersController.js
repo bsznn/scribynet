@@ -219,7 +219,6 @@ export const updateUser = async (req, res) => {
 // Supprimer un utilisateur et ses livres associés
 export const deleteUser = async (req, res) => {
 	try {
-		// Supprimer tous les livres associés à cet utilisateur
 		const books = await Book.deleteMany({
 			userId: req.params.id,
 		});
@@ -228,7 +227,6 @@ export const deleteUser = async (req, res) => {
 			res.status(404).json({ message: "Livre non trouvé" });
 		}
 
-		// Supprimer l'utilisateur lui-même
 		const user = await User.findOneAndDelete({
 			_id: req.params.id,
 		});

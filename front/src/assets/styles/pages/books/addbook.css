@@ -475,12 +475,28 @@
 }
 
 /* ── NON CONNECTÉ ── */
+
+.fond__errorbook {
+	position: relative;
+	padding: 4rem 0;
+}
+
+.fond__errorbook::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: rgba(66, 60, 57, 0.65);
+	z-index: 0;
+}
+
 .addbook__gate {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	background: var(--bodyBeige);
 	padding: 2rem;
+	min-height: 75vh;
+	position: relative;
 }
 
 .addbook__gate-box {
@@ -590,8 +606,6 @@
 		position: relative;
 		padding: 3rem 0;
 		margin: 0 auto;
-		display: flex;
-		justify-content: center;
 	}
 }
 

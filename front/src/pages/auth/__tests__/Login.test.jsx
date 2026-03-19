@@ -1,19 +1,18 @@
-import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import Login from "../Login.jsx";
 import axios from "axios";
-import Login from "../Login";
 
 jest.mock("axios");
-// jest.mock("../../assets/images/fond/fond-cafe.jpeg", () => "");
-jest.mock("../../../../assets/images/fond/fond-cafe.jpeg", () => "");
+
+const mockNavigate = jest.fn();
+const mockLogin = jest.fn();
 
 jest.mock("react-router-dom", () => ({
 	...jest.requireActual("react-router-dom"),
-	useNavigate: () => jest.fn(),
+	useNavigate: () => mockNavigate,
 }));
 
-const mockLogin = jest.fn();
 jest.mock("../../../context/AuthContext.jsx", () => ({
 	useAuth: () => ({ login: mockLogin }),
 }));
@@ -29,6 +28,8 @@ describe("Login", () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
 	});
+
+	// ─── Rendu ────────────────────────────────────────────────────────────────
 
 	it("affiche le formulaire de connexion", () => {
 		renderLogin();
@@ -47,17 +48,58 @@ describe("Login", () => {
 		).toBeInTheDocument();
 	});
 
+	// ─── Validation ───────────────────────────────────────────────────────────
+
 	it("affiche une erreur si les champs sont vides", async () => {
 		renderLogin();
-		fireEvent.click(screen.getByRole("button", { name: /se connecter/i }));
-		expect(
-			await screen.findByText("Veuillez remplir tous les champs."),
-		).toBeInTheDocument();
+		fireEvent.submit(
+			screen.getByRole("button", { name: /se connecter/i }).closest("form"),
+		);
+
+		await waitFor(() => {
+			expect(
+				screen.getByText("Veuillez remplir tous les champs."),
+			).toBeInTheDocument();
+		});
 	});
 
-	it("efface l'erreur quand l'utilisateur tape", async () => {
+	it("affiche une erreur si seulement l'email est vide", async () => {
 		renderLogin();
-		fireEvent.click(screen.getByRole("button", { name: /se connecter/i }));
+		fireEvent.change(screen.getByLabelText(/mot de passe/i), {
+			target: { value: "password123" },
+		});
+		fireEvent.submit(
+			screen.getByRole("button", { name: /se connecter/i }).closest("form"),
+		);
+
+		await waitFor(() => {
+			expect(
+				screen.getByText("Veuillez remplir tous les champs."),
+			).toBeInTheDocument();
+		});
+	});
+
+	it("affiche une erreur si seulement le mot de passe est vide", async () => {
+		renderLogin();
+		fireEvent.change(screen.getByLabelText(/email/i), {
+			target: { value: "test@test.com" },
+		});
+		fireEvent.submit(
+			screen.getByRole("button", { name: /se connecter/i }).closest("form"),
+		);
+
+		await waitFor(() => {
+			expect(
+				screen.getByText("Veuillez remplir tous les champs."),
+			).toBeInTheDocument();
+		});
+	});
+
+	it("efface l'erreur quand l'utilisateur tape dans l'email", async () => {
+		renderLogin();
+		fireEvent.submit(
+			screen.getByRole("button", { name: /se connecter/i }).closest("form"),
+		);
 		await screen.findByText("Veuillez remplir tous les champs.");
 
 		fireEvent.change(screen.getByLabelText(/email/i), {
@@ -67,6 +109,23 @@ describe("Login", () => {
 			screen.queryByText("Veuillez remplir tous les champs."),
 		).not.toBeInTheDocument();
 	});
+
+	it("efface l'erreur quand l'utilisateur tape dans le mot de passe", async () => {
+		renderLogin();
+		fireEvent.submit(
+			screen.getByRole("button", { name: /se connecter/i }).closest("form"),
+		);
+		await screen.findByText("Veuillez remplir tous les champs.");
+
+		fireEvent.change(screen.getByLabelText(/mot de passe/i), {
+			target: { value: "password123" },
+		});
+		expect(
+			screen.queryByText("Veuillez remplir tous les champs."),
+		).not.toBeInTheDocument();
+	});
+
+	// ─── Appel API ────────────────────────────────────────────────────────────
 
 	it("appelle axios.post avec les bonnes données", async () => {
 		axios.post.mockResolvedValueOnce({ data: { token: "abc", id: "123" } });
@@ -88,13 +147,19 @@ describe("Login", () => {
 		});
 	});
 
-	it("appelle auth.login et navigue après connexion réussie", async () => {
-		const navigate = jest.fn();
-		jest
-			.spyOn(require("react-router-dom"), "useNavigate")
-			.mockReturnValue(navigate);
-		axios.post.mockResolvedValueOnce({ data: { token: "abc", id: "123" } });
+	it("n'appelle pas axios.post si les champs sont vides", async () => {
+		renderLogin();
+		fireEvent.click(screen.getByRole("button", { name: /se connecter/i }));
 
+		await waitFor(() => {
+			expect(axios.post).not.toHaveBeenCalled();
+		});
+	});
+
+	// ─── Succès ───────────────────────────────────────────────────────────────
+
+	it("appelle auth.login et navigue après connexion réussie", async () => {
+		axios.post.mockResolvedValueOnce({ data: { token: "abc", id: "123" } });
 		renderLogin();
 
 		fireEvent.change(screen.getByLabelText(/email/i), {
@@ -107,14 +172,33 @@ describe("Login", () => {
 
 		await waitFor(() => {
 			expect(mockLogin).toHaveBeenCalledWith({ token: "abc", id: "123" });
-			expect(navigate).toHaveBeenCalledWith("/");
+			expect(mockNavigate).toHaveBeenCalledWith("/");
 		});
 	});
+
+	it("stocke le token et l'userId dans le localStorage après connexion", async () => {
+		axios.post.mockResolvedValueOnce({ data: { token: "abc", id: "123" } });
+		renderLogin();
+
+		fireEvent.change(screen.getByLabelText(/email/i), {
+			target: { value: "test@test.com" },
+		});
+		fireEvent.change(screen.getByLabelText(/mot de passe/i), {
+			target: { value: "password123" },
+		});
+		fireEvent.click(screen.getByRole("button", { name: /se connecter/i }));
+
+		await waitFor(() => {
+			expect(localStorage.getItem("token")).toBe("abc");
+			expect(localStorage.getItem("userId")).toBe("123");
+		});
+	});
+
+	// ─── Erreurs serveur ──────────────────────────────────────────────────────
 
 	it("affiche une alerte en cas d'identifiants incorrects (401)", async () => {
 		const alertMock = jest.spyOn(window, "alert").mockImplementation(() => {});
 		axios.post.mockRejectedValueOnce({ response: { status: 401 } });
-
 		renderLogin();
 
 		fireEvent.change(screen.getByLabelText(/email/i), {
@@ -133,10 +217,9 @@ describe("Login", () => {
 		alertMock.mockRestore();
 	});
 
-	it("affiche une alerte générique en cas d'erreur serveur", async () => {
+	it("affiche une alerte générique en cas d'erreur serveur (500)", async () => {
 		const alertMock = jest.spyOn(window, "alert").mockImplementation(() => {});
 		axios.post.mockRejectedValueOnce({ response: { status: 500 } });
-
 		renderLogin();
 
 		fireEvent.change(screen.getByLabelText(/email/i), {
@@ -153,5 +236,24 @@ describe("Login", () => {
 			);
 		});
 		alertMock.mockRestore();
+	});
+
+	it("n'appelle pas auth.login ni navigate en cas d'erreur", async () => {
+		jest.spyOn(window, "alert").mockImplementation(() => {});
+		axios.post.mockRejectedValueOnce({ response: { status: 401 } });
+		renderLogin();
+
+		fireEvent.change(screen.getByLabelText(/email/i), {
+			target: { value: "test@test.com" },
+		});
+		fireEvent.change(screen.getByLabelText(/mot de passe/i), {
+			target: { value: "wrongpassword" },
+		});
+		fireEvent.click(screen.getByRole("button", { name: /se connecter/i }));
+
+		await waitFor(() => {
+			expect(mockLogin).not.toHaveBeenCalled();
+			expect(mockNavigate).not.toHaveBeenCalled();
+		});
 	});
 });

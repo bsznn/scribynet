@@ -73,11 +73,12 @@ export default function Register() {
 						<input
 							type="text"
 							name="login"
+							id="login"
 							value={inputs.login}
 							onChange={handleChange}
 							required
 						/>
-						<label>Nom d'utilisateur</label>
+						<label htmlFor="login">Nom d'utilisateur</label>
 						<span className="bar" />
 					</div>
 
@@ -85,11 +86,12 @@ export default function Register() {
 						<input
 							type="email"
 							name="email"
+							id="email"
 							value={inputs.email}
 							onChange={handleChange}
 							required
 						/>
-						<label>Email</label>
+						<label htmlFor="email">Email</label>
 						<span className="bar" />
 					</div>
 
@@ -97,17 +99,20 @@ export default function Register() {
 						<input
 							type="password"
 							name="password"
+							id="password"
 							value={inputs.password}
 							onChange={handleChange}
 							required
 							minLength={8}
 							maxLength={30}
 						/>
-						<label>Mot de passe</label>
+						<label htmlFor="password">Mot de passe</label>
 						<span className="bar" />
 					</div>
 
-					<button className="register__button">S'inscrire</button>
+					<button className="register__button" type="submit">
+						S'inscrire
+					</button>
 
 					{err && <span className="register__error">{err}</span>}
 				</form>

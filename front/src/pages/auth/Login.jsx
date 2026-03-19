@@ -67,11 +67,14 @@ export default function Login() {
 						<input
 							type="email"
 							name="email"
+							id="email"
 							value={inputs.email}
 							onChange={handleChange}
 							required
 						/>
-						<label>Email</label>
+						<label htmlFor="email" aria-labelledby="email">
+							Email
+						</label>
 						<span className="bar" />
 					</div>
 
@@ -79,15 +82,18 @@ export default function Login() {
 						<input
 							type="password"
 							name="password"
+							id="password"
 							value={inputs.password}
 							onChange={handleChange}
 							required
 						/>
-						<label>Mot de passe</label>
+						<label htmlFor="password">Mot de passe</label>
 						<span className="bar" />
 					</div>
 
-					<button className="login__button">Se connecter</button>
+					<button type="submit" className="login__button">
+						Se connecter
+					</button>
 
 					{err && <span className="login__error">{err}</span>}
 				</form>
