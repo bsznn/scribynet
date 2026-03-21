@@ -26,8 +26,8 @@
 	border-radius: 12px;
 	overflow: hidden;
 	border-bottom: 2px solid var(--darkBeige);
-	background-color: var(--mediumBeige);	
-	transition: var(--transition),
+	background-color: var(--mediumBeige);
+	transition: var(--transition),;
 }
 
 .news-block__container:hover {
@@ -69,17 +69,10 @@
 }
 @media (min-width: 1200px) {
 	.news-section__container {
-		padding: 26.3rem 1rem 2rem;
+		padding: 1rem 1rem 3.5rem 0;
 	}
-
 	.news-section__title {
 		font-size: 1.3rem;
 		text-align: left;
-	}
-}
-
-@media (min-width: 1400px) {
-	.news-section__container {
-		padding: 26.8rem 1rem 3.8rem;
 	}
 }

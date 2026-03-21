@@ -1,68 +1,122 @@
+/* ── Mobile (défaut) : flex vertical ── */
+.home__section {
+	padding: 0;
+}
+
+.home__books {
+	display: flex;
+	flex-direction: column;
+}
+
+.home__popular {
+	order: 1;
+}
+.home__newestBooks {
+	order: 2;
+}
+.home__ads {
+	order: 3;
+}
+.home__categories {
+	order: 4;
+}
+
+.home__aside {
+	order: 5;
+}
+
+.home__news {
+	order: 6;
+}
+
+/* ── Tablette (768px – 1199px) ── */
 @media (min-width: 768px) {
-	.home__aside {
-		display: flex;
+	.home__books {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-areas:
+			"popular    popular"
+			"newest     newest"
+			"ads        ads"
+			"categories categories"
+			"aside      news";
+		align-items: start;
 	}
 
-	.home__aside > * {
-		flex: 1;
+	.home__popular {
+		grid-area: popular;
+	}
+	.home__newestBooks {
+		grid-area: newest;
+	}
+	.home__ads {
+		grid-area: ads;
+	}
+	.home__categories {
+		grid-area: categories;
+	}
+	.home__aside {
+		grid-area: aside;
+	}
+	.home__news {
+		grid-area: news;
 	}
 }
 
+/* ── Desktop (1200px+) ── */
 @media (min-width: 1200px) {
-
-	.home__books {
-		position: relative;
-	}
-
-	.home__newestBooks{
-        margin-top: 400px;
-    }
-
-	.home__ads {
-		position: absolute;
-		top: 710px;
-		margin-left: 15px;
-	}
-
-	.home__newestBooks {
-		margin-top: 320px;
-	}
-	.carousel__container {
-		max-width: 1180px;
-	}
-
 	.home__section {
-		position: relative;
 		max-width: 1175px;
 		margin: 0 auto;
 	}
 
+	.home__books {
+		display: grid;
+		grid-template-columns: 1fr 420px;
+		grid-template-areas:
+			"popular    aside"
+			"ads        ads"
+			"newest     news"
+			"categories categories";
+		column-gap: 15px;
+		align-items: start;
+	}
+
+	.home__popular {
+		grid-area: popular;
+	}
+	.home__ads {
+		grid-area: ads;
+	}
+	.home__newestBooks {
+		grid-area: newest;
+	}
 	.home__aside {
+		grid-area: aside;
 		display: block;
-		position: absolute;
-		width: 420px;
-        bottom: 270px;
-		right: 0px;
+		align-self: start;
+	}
+	.home__news {
+		grid-area: news;
+		align-self: start;
+	}
+	.home__categories {
+		grid-column: 1 / -1;
+	}
+
+	.carousel__container {
+		max-width: 1180px;
 	}
 }
 
+/* ── Large desktop (1400px+) ── */
 @media (min-width: 1400px) {
 	.home__section {
 		max-width: 1340px;
 	}
 
-	.home__aside {
-		width: 500px;
-		bottom: 240px;
-
-	}
-
-	.home__newestBooks{
-        margin-top: 360px;
-    }
-
-	.home__ads{
-		top: 730px;
+	.home__books {
+		grid-template-columns: 1fr 500px;
 	}
 
 	.carousel__container {

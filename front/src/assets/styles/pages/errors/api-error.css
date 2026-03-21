@@ -1,0 +1,125 @@
+.api-error-wrapper {
+	font-family: var(--fontRegular);
+	display: flex;
+	align-items: flex-start;
+	gap: 14px;
+	padding: 18px 20px;
+	background-color: #fdf6ee;
+	border: 1.5px solid var(--orange);
+	border-left: 4px solid var(--orange);
+	border-radius: 8px;
+	box-shadow: 0 4px 16px rgba(210, 139, 77, 0.12);
+	max-width: 520px;
+	width: 100%;
+	opacity: 0;
+	transform: translateY(-6px);
+	transition:
+		opacity 0.4s ease,
+		transform 0.4s ease;
+	position: relative;
+}
+
+.api-error-wrapper.visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.api-error-wrapper.leaving {
+	opacity: 0;
+	transform: translateY(-6px);
+}
+
+.api-error-icon {
+	flex-shrink: 0;
+	width: 22px;
+	height: 22px;
+	margin-top: 1px;
+	color: var(--orange);
+}
+
+.api-error-body {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.api-error-title {
+	font-family: var(--fontTitle);
+	font-size: 0.85rem;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--orange);
+	margin: 0;
+	line-height: 1;
+}
+
+.api-error-message {
+	font-size: 0.875rem;
+	font-weight: 400;
+	color: var(--mediumMarron);
+	margin: 0;
+	line-height: 1.55;
+}
+
+.api-error-retry {
+	align-self: flex-start;
+	margin-top: 4px;
+	font-family: var(--fontRegular);
+	font-size: 0.78rem;
+	font-weight: 600;
+	color: var(--orange);
+	background: transparent;
+	border: 1.5px solid var(--orange);
+	border-radius: 5px;
+	padding: 5px 14px;
+	cursor: pointer;
+	letter-spacing: 0.04em;
+	transition: var(--transitionBG), var(--transitionColor), var(--transitionBS);
+}
+
+.api-error-retry:hover {
+	background-color: var(--orange);
+	color: var(--lightBeige);
+	box-shadow: 0 2px 8px rgba(210, 139, 77, 0.25);
+}
+
+.api-error-close {
+	flex-shrink: 0;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	color: var(--darkBeige);
+	padding: 2px;
+	line-height: 1;
+	border-radius: 4px;
+	transition: var(--transitionColor);
+	margin-top: -2px;
+}
+
+.api-error-close:hover {
+	color: var(--orange);
+}
+
+.api-error-pulse {
+	position: absolute;
+	top: 16px;
+	right: 42px;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--orange);
+	animation: api-pulse 2s ease-in-out infinite;
+}
+
+@keyframes api-pulse {
+	0%,
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 0.4;
+		transform: scale(0.7);
+	}
+}

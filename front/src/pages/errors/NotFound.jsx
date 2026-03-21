@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../assets/styles/pages/not-found/not-found.css";
+import "../../assets/styles/pages/errors/not-found.css";
 import fondImage from "../../assets/images/fond/fond-tree.jpeg";
 
 const NotFound = () => {

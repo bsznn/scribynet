@@ -112,7 +112,7 @@
 	font-weight: 500;
 	padding: 0.65rem 0.9rem;
 	border-radius: 0 8px 8px 0;
-	margin-bottom: 1rem;
+	margin: 5rem 0 3rem;
 }
 
 /* ─── MESSAGE LIST ────────────────────────────────────────────── */
@@ -694,6 +694,10 @@
 .pagination__btn--active:hover {
 	background: var(--hoverDarkMarron);
 	border-color: var(--hoverDarkMarron);
+}
+
+.messages__container {
+	min-height: 75vh;
 }
 
 /* ─── SCROLLBAR ───────────────────────────────────────────────── */

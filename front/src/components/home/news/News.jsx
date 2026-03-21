@@ -4,7 +4,7 @@ export default function News() {
 	const newsItems = [
 		{
 			title: "Nouvelle mise à jour sur Scriby'Net",
-			text: "Découvrez les dernières fonctionnalités ajoutées à notre plateforme d’écriture collaborative.",
+			text: "Découvrez les dernières fonctionnalités ajoutées à notre plateforme d’écriture.",
 			imageUrl:
 				"https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg",
 		},

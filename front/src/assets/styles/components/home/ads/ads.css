@@ -1,83 +1,77 @@
 .ads {
-    background-color: var(--mediumMarron);
+	background-color: var(--mediumMarron);
 }
 
 .ads__images {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  padding: 20px 30px;
-  gap: 16px;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	padding: 20px 30px;
+	gap: 16px;
 }
 
-
 .ads__image--desktop {
-  width: 33.33%;
-  border-radius: 14px;
-  object-fit: cover;
+	width: 33.33%;
+	border-radius: 14px;
+	object-fit: cover;
 }
 
 .ads__image--active,
 .ads__arrow {
-  display: none;
+	display: none;
 }
 
 @media (max-width: 768px) {
-  .ads__images {
-    justify-content: center;
-  }
+	.ads__images {
+		justify-content: center;
+	}
 
-  .ads__image--desktop {
-    display: none;
-  }
+	.ads__image--desktop {
+		display: none;
+	}
 
-  .ads__image--active {
-    display: block;
-    width: 85%;
-    border-radius: 16px;
-  }
+	.ads__image--active {
+		display: block;
+		width: 85%;
+		border-radius: 16px;
+	}
 
-  .ads__arrow {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--darkMarron);
-    color: var(--lightBeige);
-    border: none;
-    font-size: 2rem;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
+	.ads__arrow {
+		display: flex;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		background: var(--darkMarron);
+		color: var(--lightBeige);
+		border: none;
+		font-size: 2rem;
+		width: 42px;
+		height: 42px;
+		border-radius: 50%;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+	}
 
-  .ads__arrow--left {
-    left: 10px;
-  }
+	.ads__arrow--left {
+		left: 10px;
+	}
 
-  .ads__arrow--right {
-    right: 10px;
-  }
+	.ads__arrow--right {
+		right: 10px;
+	}
 }
 
 @media (min-width: 1200px) {
-    .ads__images {
-      width: 1080px;
-      height: 280px;
-      margin: auto;
-
-    }
+	.ads__images {
+		width: 1080px;
+		height: 280px;
+		margin: 0 auto 2.5rem;
+	}
 }
 
 @media (min-width: 1400px) {
-    .ads__images {
-      width: 1250px;
-
-    }
+	.ads__images {
+		width: 1250px;
+	}
 }
-
-
-

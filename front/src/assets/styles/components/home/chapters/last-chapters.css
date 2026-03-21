@@ -23,9 +23,9 @@
 	border-radius: 10px;
 	padding: 10px 0;
 
-	overflow-y: scroll; 
-	scrollbar-width: none; 
-	-ms-overflow-style: none; 
+	overflow-y: scroll;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
 }
 
 .last-chapters__list::-webkit-scrollbar {
@@ -70,5 +70,8 @@
 	.last-chapters__title {
 		font-size: 1.3rem;
 		text-align: left;
+	}
+	.last-chapters__container {
+		padding: 2.8rem 1rem 1.5rem 0;
 	}
 }

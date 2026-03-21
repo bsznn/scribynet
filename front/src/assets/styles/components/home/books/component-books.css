@@ -26,9 +26,8 @@
 .component-books__list {
 	display: flex;
 	overflow-x: scroll;
-	gap: 1rem;
 	scroll-behavior: smooth;
-	padding: 0.5rem;
+	padding: 0.5rem 0;
 	scrollbar-width: none;
 }
 
@@ -58,20 +57,27 @@
 }
 
 .component-books__image {
-	width: 100%;
-	height: 230px;
+	width: 135px;
+	height: 220px;
 	border-bottom: 1px solid var(--darkBeige);
+	object-fit: cover;
 }
 
 .component-books__text {
 	font-size: 0.9rem;
 	font-weight: bold;
+	width: 150px;
+	text-align: center;
 }
 
 .component-books__error {
-	color: red;
-	font-weight: bold;
-	text-align: center;
+	background: rgba(210, 139, 77, 0.12);
+	border-left: 3px solid var(--orange);
+	color: var(--orange);
+	font-size: 0.82rem;
+	font-weight: 500;
+	padding: 0.65rem 0.9rem;
+	border-radius: 0 8px 8px 0;
 }
 
 /* Tablet styles */
@@ -84,29 +90,30 @@
 		text-align: left;
 	}
 
-	.component-books__list {
-		gap: 1rem;
-	}
-
 	.component-books__item {
 		width: 140px;
 	}
 
-	component-books__image {
-    	height: auto;
+	.component-books__list {
+		gap: 0.5rem;
 	}
 }
 
 @media (min-width: 1200px) {
+	.component-books {
+		padding: 1rem 0;
+	}
+
 	.component-books__title {
 		font-size: 1.3rem;
 		text-align: left;
 	}
 
 	.component-books__list {
-		width: 720px;
+		width: 100%;
 		flex-wrap: wrap;
 		justify-content: flex-start;
+		gap: 1rem;
 	}
 
 	.component-books__item {
@@ -114,7 +121,10 @@
 	}
 
 	#popular-books__section {
-		margin-bottom: 30px;
+		margin-bottom: 15px;
+	}
+	.component-books__error {
+		max-width: 60%;
 	}
 }
 

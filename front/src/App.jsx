@@ -25,7 +25,7 @@ import UserProfile from "./pages/profile/UserProfile";
 import CategoryDetail from "./pages/categories/CategoryDetail";
 import PrivateRoute from "./private-route/PrivateRoute";
 import GuestRoute from "./private-route/GuestRoute";
-import NotFound from "./pages/not-found/NotFound";
+import NotFound from "./pages/errors/NotFound";
 
 const Home = lazy(() => import("./pages/home/Home"));
 
@@ -43,7 +43,7 @@ function App() {
 					}
 				/>
 
-				<Route path="*" element={<NotFound/>} />
+				<Route path="*" element={<NotFound />} />
 				<Route path="/histoires" element={<Books />} />
 				<Route path="/histoire/:id" element={<Book />} />
 				<Route path="/histoire/:id/:chapterId" element={<Book />} />
@@ -55,7 +55,6 @@ function App() {
 				<Route path="/politique-confidentialite" element={<PrivacyPolicy />} />
 				<Route path="/profil/:id" element={<UserProfile />} />
 				<Route path="/publier-histoire" element={<AddBook />} />
-
 
 				{/* ── GUEST ONLY (non connecté) ── */}
 				<Route element={<GuestRoute />}>
