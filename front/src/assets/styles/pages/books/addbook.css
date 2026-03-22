@@ -494,9 +494,9 @@
 	align-items: center;
 	justify-content: center;
 	background: var(--bodyBeige);
-	padding: 2rem;
-	min-height: 75vh;
+	padding: 0 1rem;
 	position: relative;
+	min-height: calc(100vh - 71px - 79px - 8rem);
 }
 
 .addbook__gate-box {

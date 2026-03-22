@@ -169,35 +169,33 @@ export const AddBook = () => {
 	/* ── NON CONNECTÉ ── */
 	if (!auth.user)
 		return (
-			<main className="fond__errorbook" style={sectionStyle}>
-				<div className="addbook__container">
-					<div className="addbook__gate">
-						<div className="addbook__gate-box">
-							<div className="addbook__gate-icon">✦</div>
-							<h2 className="addbook__gate-title">Publier une histoire</h2>
-							<p className="addbook__gate-text">
-								Pour partager vos histoires avec la communauté, vous devez être
-								connecté(e).
-							</p>
-							<p className="addbook__gate-text">Pas encore de compte ?</p>
-							<div className="addbook__gate-actions">
-								<Link
-									to="/se-connecter"
-									className="addbook__btn addbook__btn--primary"
-								>
-									Se connecter
-								</Link>
-								<Link
-									to="/s-inscrire"
-									className="addbook__btn addbook__btn--ghost"
-								>
-									S'inscrire
-								</Link>
-							</div>
+			<div className="fond__errorbook" style={sectionStyle}>
+				<main className="addbook__gate">
+					<div className="addbook__gate-box">
+						<div className="addbook__gate-icon">✦</div>
+						<h2 className="addbook__gate-title">Publier une histoire</h2>
+						<p className="addbook__gate-text">
+							Pour partager vos histoires avec la communauté, vous devez être
+							connecté(e).
+						</p>
+						<p className="addbook__gate-text">Pas encore de compte ?</p>
+						<div className="addbook__gate-actions">
+							<Link
+								to="/se-connecter"
+								className="addbook__btn addbook__btn--primary"
+							>
+								Se connecter
+							</Link>
+							<Link
+								to="/s-inscrire"
+								className="addbook__btn addbook__btn--ghost"
+							>
+								S'inscrire
+							</Link>
 						</div>
 					</div>
-				</div>
-			</main>
+				</main>
+			</div>
 		);
 
 	return (
