@@ -69,9 +69,6 @@ export default function Categories() {
 
 	return (
 		<main className="categories">
-			{error && <p className="categories__error">{error}</p>}
-
-			{/* Header */}
 			<section className="categories__header" style={sectionStyle}>
 				<article className="categories__headerContent">
 					<span>
@@ -101,6 +98,8 @@ export default function Categories() {
 					</div>
 				</article>
 			</section>
+
+			{error && <p className="categories__error">{error}</p>}
 
 			{/* Liste */}
 			<section className="categories__list">

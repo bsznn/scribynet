@@ -93,7 +93,16 @@
    ERROR / EMPTY
 ========================= */
 
-.categories__error,
+.categories__error {
+	background: rgba(210, 139, 77, 0.12);
+	border-left: 3px solid var(--orange);
+	color: var(--orange);
+	font-size: 0.82rem;
+	font-weight: 500;
+	padding: 0.65rem 0.9rem;
+	border-radius: 0 8px 8px 0;
+	margin: 10px;
+}
 .categories__no-result {
 	font-style: italic;
 	color: var(--mediumMarron);
@@ -262,6 +271,11 @@
 		margin-left: auto;
 		margin-right: auto;
 	}
+
+	.categories__error {
+		max-width: 1000px;
+		margin: 20px auto;
+	}
 }
 
 @media (min-width: 1400px) {
@@ -269,5 +283,9 @@
 	.categories__list,
 	.categories__search {
 		width: 1200px;
+	}
+
+	.categories__error {
+		max-width: 1200px;
 	}
 }

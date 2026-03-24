@@ -281,7 +281,7 @@
 }
 
 .addbook__field-textarea {
-	min-height: 110px;
+	min-height: 160px;
 	resize: vertical;
 }
 
@@ -544,7 +544,7 @@
 }
 
 .addbook__container {
-	min-height: 75vh;
+	min-height: 85vh;
 }
 
 /* ── RESPONSIVE MOBILE ── */
@@ -606,6 +606,7 @@
 		position: relative;
 		padding: 3rem 0;
 		margin: 0 auto;
+		display: flex;
 	}
 }
 

@@ -21,13 +21,15 @@ const Authors = () => {
 			})
 			.catch((err) => {
 				console.log(err);
-				setErr("Impossible de charger les données de l'utilisateur !");
+				setErr("Impossible de charger les auteurs !");
 			});
 	}, []);
 
 	return (
 		<section className="authors">
 			<h1 className="authors__title">Auteurs</h1>
+			{err && <p className="authors__error">{err}</p>}
+
 			<section className="authors__list">
 				{authors
 					.filter((a) => !auth.user || a._id !== auth.user.id)

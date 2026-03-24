@@ -5,6 +5,16 @@
 	font-family: var(--fontRegular);
 }
 
+.authors__error {
+	background: rgba(210, 139, 77, 0.12);
+	border-left: 3px solid var(--orange);
+	color: var(--orange);
+	font-size: 0.82rem;
+	font-weight: 500;
+	padding: 0.65rem 0.9rem;
+	border-radius: 0 8px 8px 0;
+}
+
 .authors__title {
 	font-family: var(--fontTitle);
 	font-size: 1rem;
@@ -108,6 +118,10 @@
 	.authors__title {
 		font-size: 1.3rem;
 		text-align: left;
+	}
+
+	.authors__error {
+		margin-bottom: 30px;
 	}
 }
 

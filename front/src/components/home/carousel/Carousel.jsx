@@ -41,7 +41,7 @@ export default function Carousel() {
 	}, []);
 
 	const handleMouseMove = (e) => {
-		if (window.innerWidth <= 768) return; 
+		if (window.innerWidth <= 768) return;
 
 		const container = carouselRef.current;
 		if (!container) return;
@@ -69,8 +69,9 @@ export default function Carousel() {
 		clearInterval(scrollInterval.current);
 	};
 
-	if (loading) return <p>Chargement des livres...</p>;
-	if (error) return <p>{error}</p>;
+	if (loading)
+		return <p className="carousel__loading">Chargement des livres...</p>;
+	if (error) return <p className="carousel__error">{error}</p>;
 
 	return (
 		<div className="carousel">
@@ -114,7 +115,6 @@ export default function Carousel() {
 					) : (
 						<p>Aucun livre trouvé.</p>
 					)}
-
 				</div>
 			</div>
 		</div>

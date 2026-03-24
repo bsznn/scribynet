@@ -68,7 +68,7 @@ const Profile = () => {
 		axios
 			.get("http://localhost:5000/books/newest-books")
 			.then((res) => setNewBooks(res.data))
-			.catch(() => setErr("Impossible de charger les nouveautés !"));
+			.catch(() => setErr("Impossible de charger le profil !"));
 	}, []);
 
 	const handleDeleteUser = (id) => {

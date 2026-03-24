@@ -56,9 +56,14 @@
 }
 
 .last-chapters__error {
-	color: red;
-	font-size: 0.9rem;
-	margin-top: 1rem;
+	background: var(--bodyBeige);
+	border-left: 3px solid var(--darkMarron);
+	color: var(--darkMarron);
+	font-size: 0.82rem;
+	font-weight: 500;
+	padding: 0.65rem 0.9rem;
+	border-radius: 0 8px 8px 0;
+	margin: 10px;
 }
 
 @media (min-width: 768px) {

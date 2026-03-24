@@ -75,4 +75,7 @@
 		font-size: 1.3rem;
 		text-align: left;
 	}
+	.news-block__image {
+		height: 125px;
+	}
 }

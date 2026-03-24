@@ -16,7 +16,7 @@ body.no-scroll {
 }
 
 main {
-	min-height: calc(100vh - 71px - 79px);
+	min-height: calc(100vh - 72px - 79px);
 }
 
 .header {
