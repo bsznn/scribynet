@@ -39,8 +39,6 @@ export default function Login() {
 				}
 			})
 			.catch((error) => {
-				console.log(error);
-
 				if (error.response && error.response.status === 401) {
 					window.alert("Identifiant ou mot de passe incorrect");
 				} else {

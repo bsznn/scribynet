@@ -24,12 +24,17 @@ const ChapterUpdate = () => {
 			.then((res) => {
 				const chapter = res.data.chapters.find((ch) => ch._id === chapterId);
 				if (chapter) {
-					setInputs({ chapterTitle: chapter.title, chapterContent: chapter.content });
+					setInputs({
+						chapterTitle: chapter.title,
+						chapterContent: chapter.content,
+					});
 				} else {
 					setErr("Chapitre non trouvé.");
 				}
 			})
-			.catch(() => setErr("Une erreur est survenue lors de la récupération du livre."));
+			.catch(() =>
+				setErr("Une erreur est survenue lors de la récupération du chapitre."),
+			);
 	}, [bookId, chapterId]);
 
 	const handleChange = (e) => {
@@ -50,7 +55,11 @@ const ChapterUpdate = () => {
 		axios
 			.put(
 				`http://localhost:5000/books/chapter/edit/${bookId}/${chapterId}`,
-				{ chapters: [{ title: inputs.chapterTitle, content: inputs.chapterContent }] },
+				{
+					chapters: [
+						{ title: inputs.chapterTitle, content: inputs.chapterContent },
+					],
+				},
 				{ headers: { ...token(), "Content-Type": "application/json" } },
 			)
 			.then(() => navigate(`/histoire/${bookId}`))
@@ -67,14 +76,13 @@ const ChapterUpdate = () => {
 				backgroundSize: "cover",
 				backgroundPosition: "center",
 				backgroundRepeat: "no-repeat",
-		  }
+			}
 		: {};
 
 	return (
 		<main className="fond__updatechapter" style={sectionStyle}>
 			<div className="updatechapter__container">
 				<div className="updatechapter">
-
 					{/* ── SIDEBAR ── */}
 					<aside className="updatechapter__sidebar">
 						<div className="updatechapter__brand">
@@ -85,7 +93,8 @@ const ChapterUpdate = () => {
 								<span>Perfectionnez.</span>
 							</h1>
 							<p className="updatechapter__brand-desc">
-								Chaque mot compte. Affinez votre chapitre et offrez à vos lecteurs la meilleure version de votre histoire.
+								Chaque mot compte. Affinez votre chapitre et offrez à vos
+								lecteurs la meilleure version de votre histoire.
 							</p>
 						</div>
 
@@ -97,14 +106,18 @@ const ChapterUpdate = () => {
 					{/* ── MAIN ── */}
 					<div className="updatechapter__main">
 						<div className="updatechapter__panel">
-							<h2 className="updatechapter__panel-title">Modifier le chapitre</h2>
+							<h2 className="updatechapter__panel-title">
+								Modifier le chapitre
+							</h2>
 							<p className="updatechapter__panel-sub">
 								Apportez vos modifications, puis sauvegardez.
 							</p>
 
 							<div className="updatechapter__fields">
 								<div className="updatechapter__field">
-									<label className="updatechapter__field-label">Titre du chapitre</label>
+									<label className="updatechapter__field-label">
+										Titre du chapitre
+									</label>
 									<input
 										className="updatechapter__field-input"
 										name="chapterTitle"
@@ -144,7 +157,6 @@ const ChapterUpdate = () => {
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</main>

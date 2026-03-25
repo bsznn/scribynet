@@ -44,6 +44,7 @@ function App() {
 				/>
 
 				<Route path="*" element={<NotFound />} />
+
 				<Route path="/histoires" element={<Books />} />
 				<Route path="/histoire/:id" element={<Book />} />
 				<Route path="/histoire/:id/:chapterId" element={<Book />} />

@@ -168,6 +168,7 @@
 	flex-direction: column;
 	min-width: 0;
 	background: var(--bodyBeige);
+	height: 75vh;
 }
 
 /* ── TOPBAR ── */
@@ -220,8 +221,6 @@
 	padding: 1.8rem;
 	flex: 1;
 	overflow-y: scroll;
-	max-height: 650px;
-	min-height: 650px;
 }
 
 /* ── OVERLAY mobile ── */

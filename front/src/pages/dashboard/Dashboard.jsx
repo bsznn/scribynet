@@ -147,13 +147,13 @@ export default function Dashboard() {
 					</aside>
 
 					{/* ── MAIN ── */}
-					<main className="dash__main">
+					<div className="dash__main">
 						{/* <header className="dash__topbar">
 							<h2 className="dash__topbar-title">{currentLabel}</h2>
 						</header> */}
 
 						<div className="dash__content">{renderSection()}</div>
-					</main>
+					</div>
 
 					{/* ── BOTTOM NAV (mobile uniquement) ── */}
 					<nav className="dash__bottomnav">

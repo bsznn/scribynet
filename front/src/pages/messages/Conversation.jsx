@@ -121,7 +121,7 @@ const Conversation = () => {
 			<section className="conversation">
 				<div className="conversation__container">
 					<div className="conversation__topbar">
-						<a href="/messages" className="conversation__back">
+						<a href="/messagerie" className="conversation__back">
 							←
 						</a>
 						<div className="conversation__topbar-info">

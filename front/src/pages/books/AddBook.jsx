@@ -259,7 +259,7 @@ export const AddBook = () => {
 									{/* couverture */}
 									<div className="addbook__field">
 										<label for="image" className="addbook__field-label">
-											Couverture
+											Couverture (optionnel)
 										</label>
 										<div className="addbook__upload">
 											<input
@@ -281,7 +281,7 @@ export const AddBook = () => {
 									{/* titre */}
 									<div className="addbook__field">
 										<label for="title" className="addbook__field-label">
-											Titre
+											Titre*
 										</label>
 										<input
 											className="addbook__field-input"
@@ -295,7 +295,7 @@ export const AddBook = () => {
 									{/* description */}
 									<div className="addbook__field">
 										<label for="description" className="addbook__field-label">
-											Description
+											Description*
 										</label>
 										<textarea
 											className="addbook__field-textarea"
@@ -317,7 +317,7 @@ export const AddBook = () => {
 									{/* catégories */}
 									<div className="addbook__field">
 										<label for="categories" className="addbook__field-label">
-											Catégories
+											Catégories*
 										</label>
 										<div className="addbook__select">
 											<Select
@@ -364,7 +364,7 @@ export const AddBook = () => {
 								<div className="addbook__fields">
 									<div className="addbook__field">
 										<label for="chapterTitle" className="addbook__field-label">
-											Titre du chapitre
+											Titre du chapitre*
 										</label>
 										<input
 											className="addbook__field-input"
@@ -380,7 +380,7 @@ export const AddBook = () => {
 											for="chapterContent"
 											className="addbook__field-label"
 										>
-											Contenu
+											Contenu*
 										</label>
 										<ReactQuill
 											className="addbook__quill"

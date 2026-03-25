@@ -90,11 +90,11 @@ export const EditBook = () => {
 			await axios.put(`http://localhost:5000/books/edit/${id}`, fd, {
 				headers: token(),
 			});
-			alert("Livre modifié avec succès !");
+			alert("Histoire modifiée avec succès !");
 			navigate("/histoires");
 		} catch (err) {
 			console.log(err);
-			alert("Erreur lors de la modification du livre");
+			alert("Erreur lors de la modification de l'histoire");
 		}
 	};
 
