@@ -135,13 +135,20 @@ export default function Donation() {
 							Tous les paiements sont sécurisés et votre soutien est précieux 💫
 						</p>
 
-						<button
-							type="button"
-							onClick={handleDonate}
-							className="donation__submit"
-						>
-							Faire un don <BsGift />
-						</button>
+						{!auth.user ? (
+							<p className="donation__alert">
+								Vous devez être <a href="/se-connecter">connecté·e</a> pour
+								faire un don.
+							</p>
+						) : (
+							<button
+								type="button"
+								onClick={handleDonate}
+								className="donation__submit"
+							>
+								Faire un don <BsGift />
+							</button>
+						)}
 					</form>
 				</section>
 			</div>

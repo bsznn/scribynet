@@ -146,6 +146,29 @@ form {
 	transform: translateY(-2px);
 }
 
+.donation__alert {
+	font-size: 0.95rem;
+	font-family: var(--fontRegular);
+	color: var(--darkMarron);
+	background-color: var(--lightBeige);
+	border: 1.8px solid var(--mediumBeige);
+	border-radius: 8px;
+	padding: 0.75rem 1.2rem;
+	text-align: center;
+}
+
+.donation__alert a {
+	color: var(--darkMarron);
+	font-weight: 600;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	transition: var(--transition);
+}
+
+.donation__alert a:hover {
+	color: var(--hoverMediumMarron);
+}
+
 @media (min-width: 768px) {
 	.donation__area {
 		width: 100%;
