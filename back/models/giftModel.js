@@ -22,6 +22,9 @@ const giftSchema = new mongoose.Schema(
 		stripeSessionId: {
 			type: String,
 		},
+		senderEmail: {
+			type: String,
+		},
 	},
 	{
 		timestamps: true,

@@ -26,6 +26,7 @@ import CategoryDetail from "./pages/categories/CategoryDetail";
 import PrivateRoute from "./private-route/PrivateRoute";
 import GuestRoute from "./private-route/GuestRoute";
 import NotFound from "./pages/errors/NotFound";
+import VerifyEmail from "./pages/auth/VerifyEmail";
 
 const Home = lazy(() => import("./pages/home/Home"));
 
@@ -61,6 +62,7 @@ function App() {
 				<Route element={<GuestRoute />}>
 					<Route path="/se-connecter" element={<Login />} />
 					<Route path="/s-inscrire" element={<Register />} />
+					<Route path="/verify-email" element={<VerifyEmail />} />
 				</Route>
 
 				{/* ── UTILISATEURS CONNECTÉS ── */}

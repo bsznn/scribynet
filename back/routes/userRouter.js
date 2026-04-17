@@ -5,14 +5,19 @@ import {
 	getOneUser,
 	login,
 	register,
+	resendVerification,
 	updateRole,
 	updateUser,
+	verifyEmail,
 } from "../controllers/usersController.js";
 import { isAuthorized, isLogged } from "../middlewares/auth.js";
 import upload from "../middlewares/multer.js";
 
 // Router pour gérer les routes relatives aux utilisateurs
 const userRouter = express.Router();
+
+userRouter.get("/verify-email", verifyEmail); // lien cliqué dans le mail
+userRouter.post("/resend-verification", resendVerification); // renvoi du mail
 
 // Route pour l'enregistrement d'un nouvel utilisateur
 userRouter.post("/register", register);

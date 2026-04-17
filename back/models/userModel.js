@@ -1,10 +1,8 @@
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 
-// Schéma MongoDB pour représenter les utilisateurs dans la base de données
 const userSchema = new mongoose.Schema(
 	{
-		// Login de l'utilisateur (unique, en minuscules, obligatoire, sans espaces)
 		login: {
 			type: String,
 			unique: true,
@@ -13,21 +11,18 @@ const userSchema = new mongoose.Schema(
 			trim: true,
 			maxlength: 20,
 		},
-		// Adresse email de l'utilisateur (unique, en minuscules, obligatoire, sans espaces)
 		email: {
 			type: String,
 			unique: true,
 			lowercase: true,
-			required: true, //mettre messages d'erreur
+			required: true,
 			trim: true,
 		},
-		// Mot de passe de l'utilisateur (obligatoire, sans espaces)
 		password: {
 			type: String,
 			required: true,
 			trim: true,
 		},
-		// Description de l'utilisateur (maximum 250 caractères)
 		description: {
 			type: String,
 			trim: true,
@@ -35,43 +30,54 @@ const userSchema = new mongoose.Schema(
 			required: true,
 			default: "Votre bio attend ses premiers mots… à vous de jouer !",
 		},
-		// Image associée à l'utilisateur (chemin source et texte alternatif)
 		image: {
-			src: {
-				type: String,
-				required: true,
-				default: "default-profile.jpg",
-			},
+			src: { type: String, required: true, default: "default-profile.jpg" },
 			alt: String,
 		},
-		// Rôle de l'utilisateur (parmi "admin" ou "user", par défaut "user")
 		role: {
 			type: String,
 			enum: ["admin", "user"],
 			default: "user",
 		},
+
+		// --- Double auth email ---
+		isVerified: {
+			type: Boolean,
+			default: false,
+		},
+		emailVerificationToken: {
+			type: String,
+			default: null,
+		},
+		emailVerificationExpires: {
+			type: Date,
+			default: null,
+		},
+
+		// --- Consentement RGPD/CGU ---
+		consentGiven: {
+			type: Boolean,
+			required: true,
+			default: false,
+		},
+		consentGivenAt: {
+			type: Date,
+			default: null,
+		},
 	},
-	{
-		timestamps: true, // Ajout du timestamps
-	},
+	{ timestamps: true },
 );
 
-// Fonction de hachage du mot de passe avant la sauvegarde dans la base de données
 userSchema.pre("save", async function (next) {
-	if (!this.isModified("password")) {
-		return next();
-	}
-
+	if (!this.isModified("password")) return next();
 	try {
-		const salt = await bcrypt.genSalt(10); // Génération du sel de hachage
-		this.password = await bcrypt.hash(this.password, salt); // Hachage du mot de passe avec le sel
+		const salt = await bcrypt.genSalt(10);
+		this.password = await bcrypt.hash(this.password, salt);
 		next();
 	} catch (error) {
-		next(error); // Transmission de l'erreur au middleware suivant
+		next(error);
 	}
 });
 
-// Création du modèle User à partir du schéma
 const User = mongoose.model("User", userSchema);
-
 export default User;

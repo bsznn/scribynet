@@ -1,186 +1,307 @@
 import bcrypt from "bcrypt";
+import crypto from "crypto";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 import Book from "../models/bookModel.js";
 import User from "../models/userModel.js";
+import { sendVerificationEmail } from "../services/emailService.js";
 
 dotenv.config();
 
-// Inscription d'un nouvel utilisateur
+/* === UTILS === */
+const isValidString = (v) => typeof v === "string" && v.trim().length > 0;
+const sanitize = (v) =>
+	typeof v !== "string" ? "" : v.replace(/\$/g, "").trim();
+const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
+
+/* =========================
+   REGISTER
+========================= */
 export const register = async (req, res) => {
 	try {
-		// Expression régulière pour vérifier la complexité du mot de passe
-		const checkPwd =
+		const { login, email, password, consentGiven } = req.body;
+
+		// --- Validation basique ---
+		if (
+			!isValidString(login) ||
+			!isValidString(email) ||
+			!isValidString(password)
+		) {
+			return res.status(400).json({ message: "Champs invalides" });
+		}
+
+		// --- Consentement obligatoire ---
+		if (consentGiven !== true) {
+			return res.status(400).json({
+				message:
+					"Vous devez accepter les conditions d'utilisation pour créer un compte.",
+			});
+		}
+
+		const cleanLogin = sanitize(login);
+		const cleanEmail = sanitize(email);
+		const cleanPassword = password.trim();
+
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		const pwdRegex =
 			/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$/;
 
-		const { login, email, password } = req.body;
-
-		// Vérifier si les champs requis sont remplis
-		if (login.trim() === "" || email.trim() === "" || password.trim() === "") {
-			return res
-				.status(400)
-				.json({ message: "Veuillez remplir tous les champs" });
+		if (!emailRegex.test(cleanEmail)) {
+			return res.status(400).json({ message: "Email invalide" });
+		}
+		if (!pwdRegex.test(cleanPassword)) {
+			return res.status(400).json({ message: "Mot de passe invalide" });
 		}
 
-		// Vérifier si l'email est déjà enregistré
-		const verifEmail = await User.findOne({ email: email });
-		if (verifEmail) {
-			return res.status(401).json({ message: "Cet email est déjà enregistré" });
+		const existingUser = await User.findOne({ email: cleanEmail });
+		if (existingUser) {
+			return res.status(409).json({ message: "Email déjà utilisé" });
 		}
 
-		// Vérifier la complexité du mot de passe
-		if (!checkPwd.test(password)) {
-			return res.status(401).json({ message: "Mot de passe incorrecte" });
-		}
+		// --- Génération du token de vérification ---
+		const verificationToken = crypto.randomBytes(32).toString("hex");
+		const verificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // +24h
 
-		// Créer un nouvel utilisateur
 		const newUser = new User({
-			login,
-			email,
-			password,
+			login: cleanLogin,
+			email: cleanEmail,
+			password: cleanPassword,
+			consentGiven: true,
+			consentGivenAt: new Date(),
+			isVerified: false,
+			emailVerificationToken: verificationToken,
+			emailVerificationExpires: verificationExpires,
 		});
 
 		await newUser.save();
 
-		res.status(200).json({ message: "Votre compte a bien été créé !" });
+		// --- Envoi de l'email de confirmation ---
+		await sendVerificationEmail(cleanEmail, verificationToken);
+
+		res.status(201).json({
+			message:
+				"Compte créé avec succès. Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte mail.",
+		});
 	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: "La création de compte a échoué" });
+		console.error(error);
+		res.status(500).json({ message: "Erreur serveur" });
 	}
 };
 
-// Connexion d'un utilisateur existant
+/* =========================
+   VERIFY EMAIL  (nouvelle route)
+========================= */
+export const verifyEmail = async (req, res) => {
+	try {
+		const { token } = req.query;
+
+		console.log("TOKEN RECU :", token);
+
+		if (!isValidString(token)) {
+			return res.status(400).json({ message: "Token manquant ou invalide" });
+		}
+
+		const user = await User.findOne({ emailVerificationToken: token });
+		console.log("USER TROUVÉ :", user);
+
+		if (!user) {
+			return res.status(404).json({ message: "Token introuvable" });
+		}
+
+		if (user.emailVerificationExpires < new Date()) {
+			return res.status(410).json({
+				message:
+					"Ce lien a expiré. Veuillez vous réinscrire ou demander un nouveau lien.",
+			});
+		}
+
+		user.isVerified = true;
+		user.emailVerificationToken = null;
+		user.emailVerificationExpires = null;
+		await user.save();
+
+		res.status(200).json({ message: "Email vérifié avec succès" });
+	} catch {
+		res.status(500).json({ message: "Erreur serveur" });
+	}
+};
+
+/* =========================
+   RESEND VERIFICATION EMAIL  (optionnel mais utile)
+========================= */
+export const resendVerification = async (req, res) => {
+	try {
+		const { email } = req.body;
+
+		if (!isValidString(email)) {
+			return res.status(400).json({ message: "Email invalide" });
+		}
+
+		const user = await User.findOne({ email: sanitize(email) });
+
+		if (!user) {
+			// Réponse neutre pour éviter l'énumération d'emails
+			return res
+				.status(200)
+				.json({ message: "Si cet email existe, un lien a été renvoyé." });
+		}
+
+		if (user.isVerified) {
+			return res.status(400).json({ message: "Ce compte est déjà vérifié." });
+		}
+
+		const verificationToken = crypto.randomBytes(32).toString("hex");
+		const verificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+		user.emailVerificationToken = verificationToken;
+		user.emailVerificationExpires = verificationExpires;
+		await user.save();
+
+		await sendVerificationEmail(user.email, verificationToken);
+
+		res
+			.status(200)
+			.json({ message: "Si cet email existe, un lien a été renvoyé." });
+	} catch (error) {
+		console.error("ERREUR resendVerification :", error);
+		res.status(500).json({ message: "Erreur serveur" });
+	}
+};
+
+/* =========================
+   LOGIN  (bloque si non vérifié)
+========================= */
 export const login = async (req, res) => {
 	try {
 		const { email, password } = req.body;
-		const user = await User.findOne({ email: email });
 
-		if (!user) {
-			return res
-				.status(404)
-				.json({ message: "Aucun utilisateur trouvé avec cette adresse mail" });
+		if (!isValidString(email) || !isValidString(password)) {
+			return res.status(400).json({ message: "Champs invalides" });
 		}
 
-		// Vérifier la validité du mot de passe
-		const isValidPwd = bcrypt.compareSync(password, user.password);
+		const cleanEmail = sanitize(email);
+		const user = await User.findOne({ email: cleanEmail });
+
+		if (!user) {
+			return res.status(404).json({ message: "Utilisateur introuvable" });
+		}
+
+		// --- Vérification email obligatoire avant connexion ---
+		if (!user.isVerified) {
+			return res.status(403).json({
+				message:
+					"Veuillez confirmer votre adresse email avant de vous connecter.",
+				notVerified: true, // flag utile côté front pour proposer le renvoi
+			});
+		}
+
+		const isValidPwd = await bcrypt.compare(password, user.password);
 		if (!isValidPwd) {
 			return res.status(401).json({ message: "Mot de passe incorrect" });
 		}
 
-		// Créer un token JWT
-		const token = jwt.sign(
-			{
-				id: user.id,
-			},
-			process.env.JWT_SECRET,
-			{ expiresIn: process.env.JWT_EXPIRES_TOKEN },
-		);
+		const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+			expiresIn: process.env.JWT_EXPIRES_TOKEN,
+		});
 
-		// Répondre avec les informations de l'utilisateur et le token JWT
 		res.status(200).json({
 			id: user._id,
 			login: user.login,
 			role: user.role,
 			description: user.description,
 			image: user.image,
-			token: token,
+			token,
 		});
-	} catch (_error) {
-		res.status(500).json({ message: "Erreur lors de la connexion" });
+	} catch {
+		res.status(500).json({ message: "Erreur serveur" });
 	}
 };
 
-// Récupérer tous les utilisateurs
+/* =========================
+   GET ALL USERS
+========================= */
+
 export const getAllUsers = async (_req, res) => {
 	try {
-		// Récupérer les IDs des utilisateurs ayant des livres
 		const authorUserIds = await Book.distinct("userId");
 
-		// Récupérer les utilisateurs lecteurs
-		const readerUsers = await User.find({ _id: { $nin: authorUserIds } });
+		const readerUsers = await User.find({
+			_id: { $nin: authorUserIds },
+		}).select("-password");
 
-		// Récupérer les utilisateurs auteurs
-		const authorUsers = await User.find({ _id: { $in: authorUserIds } });
+		const authorUsers = await User.find({
+			_id: { $in: authorUserIds },
+		}).select("-password");
 
-		// Récupérer tous les utilisateurs
-		const users = await User.find({});
+		const users = await User.find().select("-password");
 
 		res.status(200).json({
 			readers: readerUsers,
 			authors: authorUsers,
-			users: users,
+			users,
 		});
-	} catch (error) {
-		console.error(error);
-		res.status(500).json({
-			message: "Impossible de récupérer les utilisateurs",
-		});
+	} catch {
+		res.status(500).json({ message: "Erreur serveur" });
 	}
 };
 
-// Récupérer un utilisateur par son ID
+/* =========================
+   GET ONE USER
+========================= */
+
 export const getOneUser = async (req, res) => {
 	try {
 		const { id } = req.params;
-		const user = await User.findOne({ _id: id });
+
+		if (!isValidObjectId(id)) {
+			return res.status(400).json({ message: "ID invalide" });
+		}
+
+		const user = await User.findById(id).select("-password");
 
 		if (!user) {
-			return res.status(404).json({ message: "Aucun utilisateur trouvé" });
+			return res.status(404).json({ message: "Utilisateur introuvable" });
 		}
 
 		res.status(200).json(user);
-	} catch (error) {
-		console.log(error);
-		res.status(400).json({
-			message:
-				"Une erreur est survenue lors de la récupération de l'utilisateur",
-		});
+	} catch {
+		res.status(500).json({ message: "Erreur serveur" });
 	}
 };
 
-// Mettre à jour les informations d'un utilisateur
+/* =========================
+   UPDATE USER
+========================= */
+
 export const updateUser = async (req, res) => {
 	try {
-		const user = await User.findById(req.params.id);
-		const { login, email, description } = req.body;
+		const { id } = req.params;
 
-		// Vérifier si l'utilisateur existe et si l'ID correspond
-		if (!user || !req.userId) {
-			return res.status(401).json({ message: "Non autorisé" });
+		if (!isValidObjectId(id)) {
+			return res.status(400).json({ message: "ID invalide" });
 		}
 
-		if (user._id.toString() !== req.userId) {
-			throw new Error("Vous ne pouvez mettre à jour que votre propre compte");
+		const user = await User.findById(id);
+
+		if (!user || user._id.toString() !== req.userId) {
+			return res.status(403).json({ message: "Non autorisé" });
 		}
 
-		// Vérifier si au moins un champ est fourni pour la mise à jour
-		if (
-			(!login || login.trim() === "") &&
-			(!email || email.trim() === "") &&
-			(!description || description.trim() === "") &&
-			!req.file
-		) {
-			return res.status(400).json({
-				message: "Veuillez fournir au moins un champ à mettre à jour",
-			});
-		}
-
-		// Préparer les champs à mettre à jour
 		const updateFields = {};
 
-		if (login && login.trim() !== "") {
-			updateFields.login = login.trim();
+		if (isValidString(req.body.login)) {
+			updateFields.login = sanitize(req.body.login);
 		}
 
-		if (email && email.trim() !== "") {
-			updateFields.email = email.trim();
+		if (isValidString(req.body.email)) {
+			updateFields.email = sanitize(req.body.email);
 		}
 
-		if (description && description.trim() !== "") {
-			updateFields.description = description.trim();
+		if (isValidString(req.body.description)) {
+			updateFields.description = sanitize(req.body.description);
 		}
 
-		// Mettre à jour l'image si elle est fournie dans la requête
 		if (req.file) {
 			updateFields.image = {
 				src: req.file.filename,
@@ -188,88 +309,71 @@ export const updateUser = async (req, res) => {
 			};
 		}
 
-		// Effectuer la mise à jour de l'utilisateur
-		const updatedUser = await User.updateOne(
-			{ _id: req.params.id },
-			{ $set: updateFields },
-		);
-
-		// Vérifier si des modifications ont été apportées
-		if (updatedUser.nModified === 0) {
-			return res.status(400).json({
-				message: "Aucune modification effectuée",
-			});
+		if (Object.keys(updateFields).length === 0) {
+			return res.status(400).json({ message: "Aucune donnée à mettre à jour" });
 		}
 
-		// Récupérer les données mises à jour de l'utilisateur
-		const updatedUserData = await User.findById(req.params.id).select(
-			"-password",
-		);
+		await User.updateOne({ _id: id }, { $set: updateFields });
 
-		return res.status(200).json(updatedUserData);
+		const updatedUser = await User.findById(id).select("-password");
+
+		res.status(200).json(updatedUser);
 	} catch (error) {
-		console.log(error);
-		return res.status(500).json({
-			message: "Impossible de mettre à jour l'utilisateur",
-			error: error.message,
-		});
+		res.status(500).json({ message: "Erreur serveur" });
 	}
 };
 
-// Supprimer un utilisateur et ses livres associés
+/* =========================
+   DELETE USER
+========================= */
+
 export const deleteUser = async (req, res) => {
-	try {
-		const books = await Book.deleteMany({
-			userId: req.params.id,
-		});
-
-		if (!books) {
-			res.status(404).json({ message: "Livre non trouvé" });
-		}
-
-		const user = await User.findOneAndDelete({
-			_id: req.params.id,
-		});
-
-		if (!user) {
-			return res.status(404).json({ message: "Utilisateur non trouvé" });
-		}
-
-		return res
-			.status(200)
-			.json({ message: "Utilisateur supprimé avec succès" });
-	} catch (error) {
-		return res.status(500).json({
-			message: "Impossible de supprimer l'utilisateur",
-			error: error.message,
-		});
-	}
-};
-
-// Mettre à jour le rôle d'un utilisateur par l'administrateur
-export const updateRole = async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		// Rechercher l'utilisateur par son ID
-		const user = await User.findById(id);
-
-		if (!user) {
-			return res.status(404).json({ message: "Utilisateur non trouvé!" });
+		if (!isValidObjectId(id)) {
+			return res.status(400).json({ message: "ID invalide" });
 		}
 
-		// Mettre à jour le rôle de l'utilisateur
-		const _userUpdate = await User.findByIdAndUpdate(id, {
-			role: req.body.role,
-		});
+		await Book.deleteMany({ userId: id });
 
-		res
-			.status(200)
-			.json({ message: "Le rôle de l'utilisateur a été modifié avec succès" });
-	} catch (_error) {
-		res.status(500).json({
-			message:
-				"Une erreur est survenue lors de la récupération de l'utilisateur",
-		});
+		const user = await User.findByIdAndDelete(id);
+
+		if (!user) {
+			return res.status(404).json({ message: "Utilisateur introuvable" });
+		}
+
+		res.status(200).json({ message: "Utilisateur supprimé" });
+	} catch {
+		res.status(500).json({ message: "Erreur serveur" });
+	}
+};
+
+/* =========================
+   UPDATE ROLE (ADMIN)
+========================= */
+
+export const updateRole = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const { role } = req.body;
+
+		if (!isValidObjectId(id)) {
+			return res.status(400).json({ message: "ID invalide" });
+		}
+
+		if (!["admin", "user"].includes(role)) {
+			return res.status(400).json({ message: "Rôle invalide" });
+		}
+
+		const user = await User.findByIdAndUpdate(id, { role }, { new: true });
+
+		if (!user) {
+			return res.status(404).json({ message: "Utilisateur introuvable" });
+		}
+
+		res.status(200).json({ message: "Rôle mis à jour" });
+	} catch {
+		res.status(500).json({ message: "Erreur serveur" });
 	}
 };

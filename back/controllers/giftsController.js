@@ -1,5 +1,6 @@
 import Stripe from "stripe";
 import Gift from "../models/giftModel.js";
+import User from "../models/userModel.js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -51,8 +52,14 @@ export const createGift = async (req, res) => {
 			return res.status(400).json({ error: "Le montant est requis" });
 		}
 
+		const user = await User.findById(senderId).select("email");
+		if (!user) {
+			return res.status(404).json({ error: "Utilisateur introuvable" });
+		}
+
 		const session = await stripe.checkout.sessions.create({
 			payment_method_types: ["card"],
+			customer_email: user.email,
 			mode: "payment",
 			line_items: [
 				{
@@ -92,6 +99,7 @@ export const saveDonationFromSession = async (req, res) => {
 
 	try {
 		const session = await stripe.checkout.sessions.retrieve(sessionId);
+		const email = session.customer_email;
 
 		if (session.payment_status !== "paid") {
 			return res.status(400).json({ error: "Paiement non confirmé" });
@@ -109,6 +117,7 @@ export const saveDonationFromSession = async (req, res) => {
 
 		gift = new Gift({
 			senderId: session.metadata.senderId,
+			senderEmail: email,
 			content: session.metadata.content || "",
 			price: session.amount_total / 100,
 			stripeSessionId: sessionId,

@@ -44,7 +44,7 @@ main {
 	margin-top: 10px;
 	text-decoration: none;
 	user-select: none;
-	z-index: 10000;
+	z-index: 1000;
 	gap: 5px;
 	transition: var(--transition);
 	cursor: pointer;
@@ -105,7 +105,7 @@ main {
 	color: var(--lightBeige);
 	text-decoration: none;
 	cursor: pointer;
-	z-index: 10000;
+	z-index: 1000;
 }
 
 .header__auth-mobile,

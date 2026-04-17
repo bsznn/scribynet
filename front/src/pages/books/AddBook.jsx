@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "../../assets/styles/pages/books/addbook.css";
 import fondImage from "../../assets/images/fond/fond-don.jpeg";
+import DOMPurify from "dompurify";
 
 const MAX_DESC = 500;
 
@@ -480,6 +481,18 @@ export const AddBook = () => {
 										<p style={{ fontWeight: 600, color: "var(--darkMarron)" }}>
 											{inputs.chapterTitle}
 										</p>
+										<label
+											for="chapterContent"
+											className="addbook__field-label"
+										>
+											Contenu
+										</label>
+										<p
+											style={{ color: "var(--darkMarron)" }}
+											dangerouslySetInnerHTML={{
+												__html: DOMPurify.sanitize(inputs.chapterContent),
+											}}
+										/>
 									</div>
 									{inputs.imageName && (
 										<div className="addbook__field">
