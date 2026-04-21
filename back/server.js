@@ -16,18 +16,18 @@ const app = express();
 
 // Middlewares
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); 
-app.use(express.static("public")); 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
 app.use(
 	cors({
-		origin: "http://localhost:5173", 
-		credentials: true, 
+		origin: process.env.CLIENT_URL,
+		credentials: true,
 	}),
 );
 
-dotenv.config(); 
+dotenv.config();
 
-connectDB(); 
+connectDB();
 
 // Routes
 app.use(bookRouter);

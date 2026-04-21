@@ -30,7 +30,7 @@ export default function AboutContact() {
 
 		try {
 			const res = await axios.post(
-				"http://localhost:5000/contact/new",
+				`${import.meta.env.VITE_API_URL}/contact/new`,
 				formData,
 			);
 			if (res.status === 201) {

@@ -20,7 +20,7 @@ const ChapterUpdate = () => {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/books/${bookId}`)
+			.get(`${import.meta.env.VITE_API_URL}/books/${bookId}`)
 			.then((res) => {
 				const chapter = res.data.chapters.find((ch) => ch._id === chapterId);
 				if (chapter) {
@@ -54,7 +54,7 @@ const ChapterUpdate = () => {
 
 		axios
 			.put(
-				`http://localhost:5000/books/chapter/edit/${bookId}/${chapterId}`,
+				`${import.meta.env.VITE_API_URL}/books/chapter/edit/${bookId}/${chapterId}`,
 				{
 					chapters: [
 						{ title: inputs.chapterTitle, content: inputs.chapterContent },

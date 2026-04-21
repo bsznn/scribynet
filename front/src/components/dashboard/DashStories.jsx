@@ -16,7 +16,7 @@ export default function DashStories() {
 
 	const fetchBooks = () => {
 		axios
-			.get(`http://localhost:5000/books/my-book/${user.id}`, {
+			.get(`${import.meta.env.VITE_API_URL}/books/my-book/${user.id}`, {
 				headers: token(),
 			})
 			.then((res) => setBooks(Array.isArray(res.data) ? res.data : []))
@@ -31,9 +31,12 @@ export default function DashStories() {
 	const handleDelete = (bookId) => {
 		if (!window.confirm("Supprimer cette histoire ?")) return;
 		axios
-			.delete(`http://localhost:5000/books/delete/${bookId}/${user.id}`, {
-				headers: token(),
-			})
+			.delete(
+				`${import.meta.env.VITE_API_URL}/books/delete/${bookId}/${user.id}`,
+				{
+					headers: token(),
+				},
+			)
 			.then(() => setBooks((prev) => prev.filter((b) => b._id !== bookId)))
 			.catch(() => alert("Impossible de supprimer l'histoire"));
 	};
@@ -69,7 +72,7 @@ export default function DashStories() {
 								className="dash-book__image"
 								src={
 									book.image?.src
-										? `http://localhost:5000/assets/img/${book.image.src}`
+										? `${import.meta.env.VITE_API_URL}/assets/img/${book.image.src}`
 										: defaultBook
 								}
 								alt={book.image?.alt || book.title}

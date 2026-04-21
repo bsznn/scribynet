@@ -15,7 +15,7 @@ const Answers = ({ bookId, commentId, updateAnswer, onAnswerDeleted }) => {
 	const getAnswers = () => {
 		axios
 			.get(
-				`http://localhost:5000/books/comment/answers/${bookId}/${commentId}`,
+				`${import.meta.env.VITE_API_URL}/books/comment/answers/${bookId}/${commentId}`,
 				{
 					headers: token(),
 				},

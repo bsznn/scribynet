@@ -16,7 +16,7 @@ export default function DonationSuccess() {
 	const sessionId = getSessionId();
 	useEffect(() => {
 		if (sessionId) {
-			fetch("http://localhost:5000/api/donations", {
+			fetch("${import.meta.env.VITE_API_URL}/api/donations", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",

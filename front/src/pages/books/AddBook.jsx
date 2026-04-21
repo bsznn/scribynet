@@ -37,7 +37,7 @@ export const AddBook = () => {
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/categories")
+			.get(`${import.meta.env.VITE_API_URL}/categories`)
 			.then((res) => setInputs((p) => ({ ...p, categories: res.data })))
 			.catch(console.log);
 	}, []);
@@ -97,7 +97,9 @@ export const AddBook = () => {
 		);
 
 		axios
-			.post("http://localhost:5000/books/new", fd, { headers: token() })
+			.post(`${import.meta.env.VITE_API_URL}/books/new`, fd, {
+				headers: token(),
+			})
 			.then((res) => {
 				alert(res.data.message);
 				navigate("/profil");

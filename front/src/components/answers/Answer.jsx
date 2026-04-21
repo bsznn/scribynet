@@ -24,7 +24,7 @@ const Answer = ({ bookId, commentId, answerId, onAnswerDeleted }) => {
 		if (confirmDelete) {
 			try {
 				await axios.delete(
-					`http://localhost:5000/books/comment/answer/delete/${bookId}/${commentId}/${answerId}`,
+					`${import.meta.env.VITE_API_URL}/books/comment/answer/delete/${bookId}/${commentId}/${answerId}`,
 					{
 						headers: token(),
 					},
@@ -42,7 +42,7 @@ const Answer = ({ bookId, commentId, answerId, onAnswerDeleted }) => {
 	useEffect(() => {
 		axios
 			.get(
-				`http://localhost:5000/books/comment/answer/${bookId}/${commentId}/${answerId}`,
+				`${import.meta.env.VITE_API_URL}/books/comment/answer/${bookId}/${commentId}/${answerId}`,
 				{
 					headers: token(),
 				},
@@ -68,7 +68,7 @@ const Answer = ({ bookId, commentId, answerId, onAnswerDeleted }) => {
 			};
 
 			await axios.put(
-				`http://localhost:5000/books/comment/answer/edit/${bookId}/${commentId}/${answerId}`,
+				`${import.meta.env.VITE_API_URL}/books/comment/answer/edit/${bookId}/${commentId}/${answerId}`,
 				updatedAnswer,
 				{
 					headers: token(),
@@ -91,74 +91,73 @@ const Answer = ({ bookId, commentId, answerId, onAnswerDeleted }) => {
 	};
 
 	return (
-		<main>
-			<section className="answer">
-				{answer && (
-					<>
-						<article className="answer__article--one">
-							<ul>
-								<li>
-									<img
-										src={`http://localhost:5000/assets/img/${answer.userId.image.src}`}
-										alt={answer.userId.image.alt}
-										aria-label="user-image"
-										title={answer.userId.image.alt}
-									/>
-								</li>
-								<li>
-									<h5 className="answer__login--name">{answer.userId.login}</h5>
-								</li>
-							</ul>
+		<section className="answer">
+			{answer && (
+				<>
+					<article className="answer__article--one">
+						<ul>
+							<li>
+								<img
+									src={`${import.meta.env.VITE_API_URL}/assets/img/${answer.userId.image.src}`}
+									alt={answer.userId.image.alt}
+									aria-label="user-image"
+									title={answer.userId.image.alt}
+								/>
+							</li>
+							<li>
+								<h5 className="answer__login--name">{answer.userId.login}</h5>
+							</li>
+						</ul>
 
-							{showUpdateForm ? (
-								<div className="answer__edit">
-									<textarea
-										className="answer__textarea"
-										value={updateContent}
-										onChange={(e) => setUpdateContent(e.target.value)}
-									/>
-									<div className="answer__edit-actions">
-										<button
-											type="button"
-											onClick={handleUpdate}
-											className="answer__update-btn"
-										>
-											<IoIosSend className="answer__icon" />
-											<span>Valider</span>
-										</button>
-									</div>
+						{showUpdateForm ? (
+							<div className="answer__edit">
+								<textarea
+									className="answer__textarea"
+									value={updateContent}
+									onChange={(e) => setUpdateContent(e.target.value)}
+								/>
+								<div className="answer__edit-actions">
+									<button
+										type="button"
+										onClick={handleUpdate}
+										className="answer__update-btn"
+									>
+										<IoIosSend className="answer__icon" />
+										<span>Valider</span>
+									</button>
 								</div>
-							) : (
-								<p className="answer__content">{answer.content}</p>
-							)}
+							</div>
+						) : (
+							<p className="answer__content">{answer.content}</p>
+						)}
 
-							<article className="answer__article--two">
-								Posté le {new Date(answer.date).toLocaleDateString()} à{" "}
-								{new Date(answer.date).toLocaleTimeString()}
-							</article>
+						<article className="answer__article--two">
+							Posté le {new Date(answer.date).toLocaleDateString()} à{" "}
+							{new Date(answer.date).toLocaleTimeString()}
+						</article>
 
-							{auth.user &&
-								(auth.user.id === answer.userId._id ||
-									auth.user.role === "admin") && (
-									<ul className="answer__actions">
-										<div className="answer__actions-list">
+						{auth.user &&
+							(auth.user.id === answer.userId._id ||
+								auth.user.role === "admin") && (
+								<ul className="answer__actions">
+									<div className="answer__actions-list">
+										{auth.user.id === answer.userId._id && (
 											<li className="answer__action" onClick={toggleUpdateForm}>
 												<IoIosSettings className="answer__action-icon" />
 											</li>
+										)}
+										<li className="answer__action" onClick={handleDelete}>
+											<MdDelete className="answer__action-icon" />
+										</li>
+									</div>
+								</ul>
+							)}
+					</article>
 
-											<li className="answer__action" onClick={handleDelete}>
-												<MdDelete className="answer__action-icon" />
-											</li>
-										</div>
-									</ul>
-								)}
-						</article>
-
-						{err && <span>{err}</span>}
-					</>
-				)}
-			</section>
-		</main>
+					{err && <span>{err}</span>}
+				</>
+			)}
+		</section>
 	);
 };
 

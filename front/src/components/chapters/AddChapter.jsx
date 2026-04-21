@@ -38,8 +38,15 @@ const ChapterAdd = () => {
 
 		try {
 			await axios.post(
-				`http://localhost:5000/books/chapter/new/${bookId}`,
-				{ chapters: [{ chapterTitle: inputs.chapterTitle, chapterContent: inputs.chapterContent }] },
+				`${import.meta.env.VITE_API_URL}/books/chapter/new/${bookId}`,
+				{
+					chapters: [
+						{
+							chapterTitle: inputs.chapterTitle,
+							chapterContent: inputs.chapterContent,
+						},
+					],
+				},
 				{ headers: token() },
 			);
 			setMessage("Le chapitre a bien été ajouté !");
@@ -66,18 +73,20 @@ const ChapterAdd = () => {
 		<main className="fond__addchapter" style={sectionStyle}>
 			<div className="addchapter__container">
 				<div className="addchapter">
-
 					{/* ── SIDEBAR ── */}
 					<aside className="addchapter__sidebar">
 						<div className="addchapter__brand">
-							<span className="addchapter__brand-eyebrow">Nouveau chapitre</span>
+							<span className="addchapter__brand-eyebrow">
+								Nouveau chapitre
+							</span>
 							<h1 className="addchapter__brand-title">
 								Écrivez.
 								<br />
 								<span>Continuez.</span>
 							</h1>
 							<p className="addchapter__brand-desc">
-								Chaque chapitre fait avancer votre histoire. Donnez vie à la suite et tenez vos lecteurs en haleine.
+								Chaque chapitre fait avancer votre histoire. Donnez vie à la
+								suite et tenez vos lecteurs en haleine.
 							</p>
 						</div>
 
@@ -98,7 +107,9 @@ const ChapterAdd = () => {
 
 							<div className="addchapter__fields">
 								<div className="addchapter__field">
-									<label className="addchapter__field-label">Titre du chapitre</label>
+									<label className="addchapter__field-label">
+										Titre du chapitre
+									</label>
 									<input
 										className="addchapter__field-input"
 										name="chapterTitle"
@@ -139,7 +150,6 @@ const ChapterAdd = () => {
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</main>

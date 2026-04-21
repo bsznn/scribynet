@@ -140,10 +140,13 @@ describe("Login", () => {
 		fireEvent.click(screen.getByRole("button", { name: /se connecter/i }));
 
 		await waitFor(() => {
-			expect(axios.post).toHaveBeenCalledWith("http://localhost:5000/login", {
-				email: "test@test.com",
-				password: "password123",
-			});
+			expect(axios.post).toHaveBeenCalledWith(
+				"${import.meta.env.VITE_API_URL}/login",
+				{
+					email: "test@test.com",
+					password: "password123",
+				},
+			);
 		});
 	});
 

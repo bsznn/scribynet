@@ -17,7 +17,7 @@ const LikeCounter = ({ likeAdd }) => {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/books/${id}`)
+			.get(`${import.meta.env.VITE_API_URL}/books/${id}`)
 			.then((res) => {
 				setLikes(res.data.likes);
 				isLiked = res.data.likes.filter((l) => l === auth.user.id);
@@ -32,7 +32,7 @@ const LikeCounter = ({ likeAdd }) => {
 
 	const handleLike = () => {
 		axios
-			.put(`http://localhost:5000/books/likes/${id}`, liked, {
+			.put(`${import.meta.env.VITE_API_URL}/books/likes/${id}`, liked, {
 				headers: token(),
 			})
 			.then((res) => {

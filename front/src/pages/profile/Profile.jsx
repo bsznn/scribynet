@@ -32,7 +32,7 @@ const Profile = () => {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/books/my-book/${auth.user.id}`, {
+			.get(`${import.meta.env.VITE_API_URL}/books/my-book/${auth.user.id}`, {
 				headers: token(),
 			})
 			.then((res) => setBooks(res.data))
@@ -41,32 +41,38 @@ const Profile = () => {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/books/total-views/${auth.user.id}`, {
-				headers: token(),
-			})
+			.get(
+				`${import.meta.env.VITE_API_URL}/books/total-views/${auth.user.id}`,
+				{
+					headers: token(),
+				},
+			)
 			.then((res) => setTotalViews(res.data.totalViews))
 			.catch(() => setErr("Impossible de charger les vues !"));
 	}, [auth.user.id]);
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/books/total-likes/${auth.user.id}`, {
-				headers: token(),
-			})
+			.get(
+				`${import.meta.env.VITE_API_URL}/books/total-likes/${auth.user.id}`,
+				{
+					headers: token(),
+				},
+			)
 			.then((res) => setTotalLikes(res.data.totalLikes))
 			.catch(() => setErr("Impossible de charger les likes !"));
 	}, [auth.user.id]);
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/users", { headers: token() })
+			.get(`${import.meta.env.VITE_API_URL}/users`, { headers: token() })
 			.then((res) => setAuthors(res.data.authors || []))
 			.catch(() => setErr("Impossible de charger les auteurs !"));
 	}, []);
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/books/newest-books")
+			.get(`${import.meta.env.VITE_API_URL}/books/newest-books`)
 			.then((res) => setNewBooks(res.data))
 			.catch(() => setErr("Impossible de charger le profil !"));
 	}, []);
@@ -74,7 +80,7 @@ const Profile = () => {
 	const handleDeleteUser = (id) => {
 		if (window.confirm("Êtes-vous sûr de vouloir supprimer l'utilisateur ?")) {
 			axios
-				.delete(`http://localhost:5000/users/delete/${id}`, {
+				.delete(`${import.meta.env.VITE_API_URL}/users/delete/${id}`, {
 					headers: token(),
 				})
 				.then(() => {
@@ -89,9 +95,12 @@ const Profile = () => {
 	const handleDeleteBook = (id) => {
 		if (window.confirm("Êtes-vous sûr de vouloir supprimer cette histoire ?")) {
 			axios
-				.delete(`http://localhost:5000/books/delete/${id}/${auth.user.id}`, {
-					headers: token(),
-				})
+				.delete(
+					`${import.meta.env.VITE_API_URL}/books/delete/${id}/${auth.user.id}`,
+					{
+						headers: token(),
+					},
+				)
 				.then(() => setBooks((prev) => prev.filter((b) => b._id !== id)))
 				.catch(() => alert("Impossible de supprimer l'histoire !"));
 		}
@@ -122,7 +131,7 @@ const Profile = () => {
 								<img
 									src={
 										auth.user.image
-											? `http://localhost:5000/assets/img/${auth.user.image.src}`
+											? `${import.meta.env.VITE_API_URL}/assets/img/${auth.user.image.src}`
 											: userImage
 									}
 									alt={auth.user.image?.alt || "default-image"}
@@ -246,7 +255,7 @@ const Profile = () => {
 												className="books__image"
 												src={
 													book.image?.src
-														? `http://localhost:5000/assets/img/${book.image.src}`
+														? `${import.meta.env.VITE_API_URL}/assets/img/${book.image.src}`
 														: defaultImage
 												}
 												alt={book.image?.alt || "Image par défaut"}
@@ -351,7 +360,7 @@ const Profile = () => {
 											<img
 												src={
 													author.image
-														? `http://localhost:5000/assets/img/${author.image.src}`
+														? `${import.meta.env.VITE_API_URL}/assets/img/${author.image.src}`
 														: userImage
 												}
 												alt={author.image?.alt || "default-image"}
@@ -378,7 +387,7 @@ const Profile = () => {
 											className="profile__new-book-img"
 											src={
 												book.image?.src
-													? `http://localhost:5000/assets/img/${book.image.src}`
+													? `${import.meta.env.VITE_API_URL}/assets/img/${book.image.src}`
 													: defaultImage
 											}
 											alt={book.image?.alt || "Image par défaut"}

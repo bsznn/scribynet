@@ -13,7 +13,7 @@ export default function NewestBooks() {
 	// Fonction pour récupérer les livres postés par un utilisateur
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/books/newest-books")
+			.get(`${import.meta.env.VITE_API_URL}/books/newest-books`)
 			.then((res) => {
 				console.log(res);
 				setNewBooks(res.data);
@@ -33,10 +33,7 @@ export default function NewestBooks() {
 				{/* Affichage des livres populaires */}
 				<div className="component-books__list">
 					{newBooks.map((oneNewBook) => (
-						<article
-							className="component-books__item"
-							key={oneNewBook._id}
-						>
+						<article className="component-books__item" key={oneNewBook._id}>
 							<NavLink
 								to={`/histoire/${oneNewBook._id}`}
 								className="component-books__link"
@@ -46,15 +43,13 @@ export default function NewestBooks() {
 										className="component-books__image"
 										src={
 											oneNewBook.image?.src
-												? `http://localhost:5000/assets/img/${oneNewBook.image.src}`
+												? `${import.meta.env.VITE_API_URL}/assets/img/${oneNewBook.image.src}`
 												: defaultImage
 										}
 										alt={oneNewBook.image?.alt || "Image par défaut"}
 										title={oneNewBook.image?.alt || "Image par défaut"}
 									/>
-									<p className="component-books__text">
-										{oneNewBook.title}
-									</p>
+									<p className="component-books__text">{oneNewBook.title}</p>
 								</span>
 							</NavLink>
 						</article>

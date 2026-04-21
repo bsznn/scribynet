@@ -74,8 +74,8 @@ export const createGift = async (req, res) => {
 					quantity: 1,
 				},
 			],
-			success_url: `http://localhost:5173/don-succes?session_id={CHECKOUT_SESSION_ID}`,
-			cancel_url: `http://localhost:5173/don-annule`,
+			success_url: `${process.env.CLIENT_URL}/don-succes?session_id={CHECKOUT_SESSION_ID}`,
+			cancel_url: `${process.env.CLIENT_URL}/don-annule`,
 			metadata: {
 				senderId,
 				content,

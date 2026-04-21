@@ -20,7 +20,7 @@ export default function Categories() {
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/categories/")
+			.get(`${import.meta.env.VITE_API_URL}/categories/`)
 			.then((res) => setCategories(res.data))
 			.catch((error) => {
 				console.log(error);
@@ -35,7 +35,7 @@ export default function Categories() {
 
 		if (confirmDelete) {
 			axios
-				.delete(`http://localhost:5000/categories/delete/${id}`, {
+				.delete(`${import.meta.env.VITE_API_URL}/categories/delete/${id}`, {
 					headers: token(),
 				})
 				.then(() => {
@@ -115,7 +115,7 @@ export default function Categories() {
 									className="categories__image"
 									src={
 										category.image?.src
-											? `http://localhost:5000/assets/img/${category.image.src}`
+											? `${import.meta.env.VITE_API_URL}/assets/img/${category.image.src}`
 											: defaultImage
 									}
 									alt={category.image?.alt || "Image par défaut"}

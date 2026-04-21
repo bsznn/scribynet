@@ -298,7 +298,7 @@ describe("Register", () => {
 
 		await waitFor(() => {
 			expect(axios.post).toHaveBeenCalledWith(
-				"http://localhost:5000/register",
+				"${import.meta.env.VITE_API_URL}/register",
 				{
 					login: "Alice",
 					email: "alice@test.com",

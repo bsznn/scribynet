@@ -18,7 +18,7 @@ export default function CategoryDetail() {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/books/category/${id}`)
+			.get(`${import.meta.env.VITE_API_URL}/books/category/${id}`)
 			.then((res) => {
 				setCategory(res.data.category);
 				setBooks(Array.isArray(res.data.books) ? res.data.books : []);
@@ -33,7 +33,7 @@ export default function CategoryDetail() {
 
 	const sectionStyle = category?.image?.src
 		? {
-				backgroundImage: `url(http://localhost:5000/assets/img/${category.image.src})`,
+				backgroundImage: `url(${import.meta.env.VITE_API_URL}/assets/img/${category.image.src})`,
 				backgroundSize: "cover",
 				backgroundPosition: "center",
 				backgroundRepeat: "no-repeat",
@@ -96,7 +96,7 @@ export default function CategoryDetail() {
 										className="books__image"
 										src={
 											book.image?.src
-												? `http://localhost:5000/assets/img/${book.image.src}`
+												? `${import.meta.env.VITE_API_URL}/assets/img/${book.image.src}`
 												: defaultImage
 										}
 										alt={book.image?.alt || "Image par défaut"}

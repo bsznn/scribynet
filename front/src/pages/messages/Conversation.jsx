@@ -24,7 +24,7 @@ const Conversation = () => {
 
 		try {
 			const res = await axios.get(
-				`http://localhost:5000/messages/conversation/${conversationId}`,
+				`${import.meta.env.VITE_API_URL}/messages/conversation/${conversationId}`,
 				{ headers: token() },
 			);
 			setConversation(res.data);
@@ -43,7 +43,7 @@ const Conversation = () => {
 	const markAsRead = async () => {
 		try {
 			await axios.patch(
-				`http://localhost:5000/messages/${conversationId}/read`,
+				`${import.meta.env.VITE_API_URL}/messages/${conversationId}/read`,
 				{},
 				{ headers: token() },
 			);
@@ -80,7 +80,7 @@ const Conversation = () => {
 
 		try {
 			await axios.post(
-				`http://localhost:5000/messages/${conversationId}/responses`,
+				`${import.meta.env.VITE_API_URL}/messages/${conversationId}/responses`,
 				{ content },
 				{ headers: token() },
 			);

@@ -29,7 +29,7 @@ const UserProfile = () => {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/users/${id}`, {
+			.get(`${import.meta.env.VITE_API_URL}/users/${id}`, {
 				headers: { Authorization: `Bearer ${auth.user?.token}` },
 			})
 			.then((res) => setProfileUser(res.data))
@@ -38,35 +38,35 @@ const UserProfile = () => {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/books/my-book/${id}`)
+			.get(`${import.meta.env.VITE_API_URL}/books/my-book/${id}`)
 			.then((res) => setBooks(Array.isArray(res.data) ? res.data : []))
 			.catch(() => {});
 	}, [id]);
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/books/total-views/${id}`)
+			.get(`${import.meta.env.VITE_API_URL}/books/total-views/${id}`)
 			.then((res) => setTotalViews(res.data.totalViews || 0))
 			.catch(() => {});
 	}, [id]);
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/books/total-likes/${id}`)
+			.get(`${import.meta.env.VITE_API_URL}/books/total-likes/${id}`)
 			.then((res) => setTotalLikes(res.data.totalLikes || 0))
 			.catch(() => {});
 	}, [id]);
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/users")
+			.get(`${import.meta.env.VITE_API_URL}/users`)
 			.then((res) => setAuthors(res.data.authors || []))
 			.catch(() => {});
 	}, []);
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/books/newest-books")
+			.get(`${import.meta.env.VITE_API_URL}/books/newest-books`)
 			.then((res) => setNewBooks(res.data))
 			.catch(() => {});
 	}, []);
@@ -106,7 +106,7 @@ const UserProfile = () => {
 							<img
 								src={
 									profileUser.image?.src
-										? `http://localhost:5000/assets/img/${profileUser.image.src}`
+										? `${import.meta.env.VITE_API_URL}/assets/img/${profileUser.image.src}`
 										: userImage
 								}
 								alt={profileUser.image?.alt || "avatar"}
@@ -199,7 +199,7 @@ const UserProfile = () => {
 												className="books__image"
 												src={
 													book.image?.src
-														? `http://localhost:5000/assets/img/${book.image.src}`
+														? `${import.meta.env.VITE_API_URL}/assets/img/${book.image.src}`
 														: defaultImage
 												}
 												alt={book.image?.alt || "Image par défaut"}
@@ -263,7 +263,7 @@ const UserProfile = () => {
 										<img
 											src={
 												author.image
-													? `http://localhost:5000/assets/img/${author.image.src}`
+													? `${import.meta.env.VITE_API_URL}/assets/img/${author.image.src}`
 													: userImage
 											}
 											alt={author.image?.alt || "avatar"}
@@ -290,7 +290,7 @@ const UserProfile = () => {
 											className="profile__new-book-img"
 											src={
 												book.image?.src
-													? `http://localhost:5000/assets/img/${book.image.src}`
+													? `${import.meta.env.VITE_API_URL}/assets/img/${book.image.src}`
 													: defaultImage
 											}
 											alt={book.image?.alt || "Image par défaut"}

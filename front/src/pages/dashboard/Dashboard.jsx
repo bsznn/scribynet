@@ -62,7 +62,7 @@ export default function Dashboard() {
 
 	const profileImage =
 		user?.image?.src && user.image.src !== "default-profil.png"
-			? `http://localhost:5000/assets/img/${user.image.src}`
+			? `${import.meta.env.VITE_API_URL}/assets/img/${user.image.src}`
 			: defaultProfile;
 
 	const sectionStyle = {

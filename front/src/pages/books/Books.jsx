@@ -25,7 +25,7 @@ export default function Books() {
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/books/")
+			.get(`${import.meta.env.VITE_API_URL}/books/`)
 			.then((res) => {
 				const data = Array.isArray(res.data) ? res.data : [];
 				setBooks(data);
@@ -92,9 +92,12 @@ export default function Books() {
 		if (!confirmDelete) return;
 
 		axios
-			.delete(`http://localhost:5000/books/delete/${id}/${auth.user.id}`, {
-				headers: token(),
-			})
+			.delete(
+				`${import.meta.env.VITE_API_URL}/books/delete/${id}/${auth.user.id}`,
+				{
+					headers: token(),
+				},
+			)
 			.then(() => {
 				setBooks((prev) => prev.filter((book) => book._id !== id));
 			})
@@ -157,7 +160,7 @@ export default function Books() {
 									className="books__image"
 									src={
 										oneBook.image?.src
-											? `http://localhost:5000/assets/img/${oneBook.image.src}`
+											? `${import.meta.env.VITE_API_URL}/assets/img/${oneBook.image.src}`
 											: defaultImage
 									}
 									alt={oneBook.image?.alt || "Image par défaut"}
@@ -256,7 +259,9 @@ export default function Books() {
 						type="button"
 						className="books__button"
 						onClick={nextBook}
-						disabled={(currentPage + 1) * BOOKS_PER_PAGE >= filteredBooks.length}
+						disabled={
+							(currentPage + 1) * BOOKS_PER_PAGE >= filteredBooks.length
+						}
 					>
 						Suivant
 					</button>

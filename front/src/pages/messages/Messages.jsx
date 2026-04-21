@@ -29,7 +29,7 @@ const Messages = () => {
 
 	const getMessages = () => {
 		axios
-			.get("http://localhost:5000/messages", { headers: token() })
+			.get(`${import.meta.env.VITE_API_URL}/messages`, { headers: token() })
 			.then((res) => setMessages(res.data))
 			.catch((error) => {
 				console.log(error);

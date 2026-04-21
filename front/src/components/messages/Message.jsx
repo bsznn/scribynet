@@ -30,7 +30,7 @@ const Message = ({ message, onDeleted, onUpdated, currentUserId, onRead }) => {
 
 		try {
 			const res = await fetch(
-				`http://localhost:5000/messages/${message._id}/deleteForMe`,
+				`${import.meta.env.VITE_API_URL}/messages/${message._id}/deleteForMe`,
 				{
 					method: "DELETE",
 					headers: token(),
@@ -56,7 +56,7 @@ const Message = ({ message, onDeleted, onUpdated, currentUserId, onRead }) => {
 
 		try {
 			const res = await fetch(
-				`http://localhost:5000/messages/${message._id}/deleteForAll`,
+				`${import.meta.env.VITE_API_URL}/messages/${message._id}/deleteForAll`,
 				{
 					method: "DELETE",
 					headers: token(),
@@ -82,7 +82,7 @@ const Message = ({ message, onDeleted, onUpdated, currentUserId, onRead }) => {
 
 		try {
 			const res = await fetch(
-				`http://localhost:5000/messages/edit/${message._id}`,
+				`${import.meta.env.VITE_API_URL}/messages/edit/${message._id}`,
 				{
 					method: "PUT",
 					headers: {
@@ -113,7 +113,7 @@ const Message = ({ message, onDeleted, onUpdated, currentUserId, onRead }) => {
 		<div className="message">
 			<div className="message__header">
 				<img
-					src={`http://localhost:5000/assets/img/${sender?.image?.src || defaultProfile}`}
+					src={`${import.meta.env.VITE_API_URL}/assets/img/${sender?.image?.src || defaultProfile}`}
 					alt={sender?.image?.alt || "Utilisateur"}
 					className="message__avatar"
 				/>

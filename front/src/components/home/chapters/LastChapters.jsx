@@ -10,7 +10,7 @@ export default function LastChapters() {
 	// Fonction pour récupérer les derniers chapitres
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/books/latest-chapters")
+			.get(`${import.meta.env.VITE_API_URL}/books/latest-chapters`)
 			.then((res) => {
 				console.log(res);
 				setLastUpdates(res.data);

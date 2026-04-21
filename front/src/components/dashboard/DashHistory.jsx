@@ -18,15 +18,15 @@ export default function DashHistory() {
 	useEffect(() => {
 		Promise.all([
 			axios
-				.get(`http://localhost:5000/books/my-book/${user.id}`, {
+				.get(`${import.meta.env.VITE_API_URL}/books/my-book/${user.id}`, {
 					headers: token(),
 				})
 				.catch(() => ({ data: [] })),
 			axios
-				.get("http://localhost:5000/books/", { headers: token() })
+				.get(`${import.meta.env.VITE_API_URL}/books/`, { headers: token() })
 				.catch(() => ({ data: [] })),
 			axios
-				.get(`http://localhost:5000/gifts/sent/${user.id}`, {
+				.get(`${import.meta.env.VITE_API_URL}/gifts/sent/${user.id}`, {
 					headers: token(),
 				})
 				.catch(() => ({ data: [] })),

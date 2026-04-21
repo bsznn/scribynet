@@ -23,9 +23,12 @@ const Comment = ({ bookId, commentId, onCommentDelete, bookAuthorId }) => {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/books/comment/${bookId}/${commentId}`, {
-				headers: token(),
-			})
+			.get(
+				`${import.meta.env.VITE_API_URL}/books/comment/${bookId}/${commentId}`,
+				{
+					headers: token(),
+				},
+			)
 			.then((res) => {
 				setComment(res.data);
 				setUpdateContent(res.data.content);
@@ -48,7 +51,7 @@ const Comment = ({ bookId, commentId, onCommentDelete, bookAuthorId }) => {
 			};
 
 			await axios.put(
-				`http://localhost:5000/books/comment/edit/${bookId}/${commentId}`,
+				`${import.meta.env.VITE_API_URL}/books/comment/edit/${bookId}/${commentId}`,
 				updatedComment,
 				{
 					headers: token(),
@@ -74,7 +77,7 @@ const Comment = ({ bookId, commentId, onCommentDelete, bookAuthorId }) => {
 		if (confirmDelete) {
 			axios
 				.delete(
-					`http://localhost:5000/books/comment/delete/${bookId}/${commentId}`,
+					`${import.meta.env.VITE_API_URL}/books/comment/delete/${bookId}/${commentId}`,
 					{ headers: token() },
 				)
 				.then((res) => {
@@ -113,7 +116,7 @@ const Comment = ({ bookId, commentId, onCommentDelete, bookAuthorId }) => {
 					<span className="comment__user">
 						<img
 							className="comment__avatar"
-							src={`http://localhost:5000/assets/img/${comment.userId.image.src}`}
+							src={`${import.meta.env.VITE_API_URL}/assets/img/${comment.userId.image.src}`}
 							alt={comment.userId.image.alt}
 						/>
 						<h5 className="comment__username">{comment.userId.login}</h5>

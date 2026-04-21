@@ -13,7 +13,7 @@ export default function DashLikes() {
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/books/", { headers: token() })
+			.get(`${import.meta.env.VITE_API_URL}/books/`, { headers: token() })
 			.then((res) => {
 				const data = Array.isArray(res.data) ? res.data : [];
 				// Filtrer les livres likés par l'utilisateur courant
@@ -50,7 +50,7 @@ export default function DashLikes() {
 									className="dash-book__image"
 									src={
 										book.image?.src
-											? `http://localhost:5000/assets/img/${book.image.src}`
+											? `${import.meta.env.VITE_API_URL}/assets/img/${book.image.src}`
 											: defaultBook
 									}
 									alt={book.title}

@@ -12,7 +12,7 @@ export default function DashUsers() {
 
 	const fetchUsers = () => {
 		axios
-			.get("http://localhost:5000/users", { headers: token() })
+			.get(`${import.meta.env.VITE_API_URL}/users`, { headers: token() })
 			.then((res) =>
 				setUsers(Array.isArray(res.data.users) ? res.data.users : []),
 			)
@@ -28,7 +28,7 @@ export default function DashUsers() {
 		if (!window.confirm("Supprimer cet utilisateur et tous ses livres ?"))
 			return;
 		try {
-			await axios.delete(`http://localhost:5000/users/delete/${id}`, {
+			await axios.delete(`${import.meta.env.VITE_API_URL}/users/delete/${id}`, {
 				headers: token(),
 			});
 			setUsers((prev) => prev.filter((u) => u._id !== id));
@@ -98,7 +98,7 @@ export default function DashUsers() {
 												className="dash-user__avatar"
 												src={
 													u.image?.src && u.image.src !== "default-profil.png"
-														? `http://localhost:5000/assets/img/${u.image.src}`
+														? `${import.meta.env.VITE_API_URL}/assets/img/${u.image.src}`
 														: defaultProfile
 												}
 												alt={u.login}

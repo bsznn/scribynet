@@ -12,7 +12,9 @@ export default function DashDons() {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/gifts/sent/${user.id}`, { headers: token() })
+			.get(`${import.meta.env.VITE_API_URL}/gifts/sent/${user.id}`, {
+				headers: token(),
+			})
 			.then((res) => setDons(Array.isArray(res.data) ? res.data : []))
 			.catch(() => setDons([]))
 			.finally(() => setLoading(false));

@@ -21,7 +21,7 @@ const AddMessage = ({ onMessageSent }) => {
 
 	const getUsers = () => {
 		axios
-			.get("http://localhost:5000/users", { headers: token() })
+			.get(`${import.meta.env.VITE_API_URL}/users`, { headers: token() })
 			.then((res) => {
 				const otherUsers = res.data.users.filter(
 					(oneUser) => oneUser._id !== user._id,
@@ -77,7 +77,7 @@ const AddMessage = ({ onMessageSent }) => {
 
 		axios
 			.post(
-				"http://localhost:5000/messages/new",
+				`${import.meta.env.VITE_API_URL}/messages/new`,
 				{ receiverId, title, content },
 				{ headers: token() },
 			)

@@ -12,7 +12,7 @@ export default function DashStats() {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/books/my-book/${user.id}`, {
+			.get(`${import.meta.env.VITE_API_URL}/books/my-book/${user.id}`, {
 				headers: token(),
 			})
 			.then((res) => setBooks(Array.isArray(res.data) ? res.data : []))
@@ -98,7 +98,7 @@ export default function DashStats() {
 											<img
 												src={
 													book.image?.src
-														? `http://localhost:5000/assets/img/${book.image.src}`
+														? `${import.meta.env.VITE_API_URL}/assets/img/${book.image.src}`
 														: defaultBook
 												}
 												alt={book.title}

@@ -29,8 +29,8 @@ export const EditBook = () => {
 		const fetchData = async () => {
 			try {
 				const [catRes, bookRes] = await Promise.all([
-					axios.get("http://localhost:5000/categories"),
-					axios.get(`http://localhost:5000/books/${id}`),
+					axios.get(`${import.meta.env.VITE_API_URL}/categories`),
+					axios.get(`${import.meta.env.VITE_API_URL}/books/${id}`),
 				]);
 				const book = bookRes.data;
 				setInputs({
@@ -87,7 +87,7 @@ export const EditBook = () => {
 			fd.append("categories", JSON.stringify(inputs.selectedCategories));
 			if (inputs.image) fd.append("image", inputs.image);
 
-			await axios.put(`http://localhost:5000/books/edit/${id}`, fd, {
+			await axios.put(`${import.meta.env.VITE_API_URL}/books/edit/${id}`, fd, {
 				headers: token(),
 			});
 			alert("Histoire modifiée avec succès !");

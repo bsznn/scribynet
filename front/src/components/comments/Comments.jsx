@@ -13,7 +13,7 @@ const Comments = ({ bookId, updateComment, bookAuthorId }) => {
 
 	const getComments = () => {
 		axios
-			.get(`http://localhost:5000/books/comments/${bookId}`, {
+			.get(`${import.meta.env.VITE_API_URL}/books/comments/${bookId}`, {
 				headers: token(),
 			})
 			.then((res) => {

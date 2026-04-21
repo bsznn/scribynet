@@ -34,7 +34,7 @@ const Response = ({ response, messageId, onMessageUpdate, onDeleteLocal }) => {
 
 		try {
 			const res = await fetch(
-				`http://localhost:5000/messages/${messageId}/responses/${response._id}/deleteForMe`,
+				`${import.meta.env.VITE_API_URL}/messages/${messageId}/responses/${response._id}/deleteForMe`,
 				{
 					method: "DELETE",
 					headers: token(),
@@ -61,7 +61,7 @@ const Response = ({ response, messageId, onMessageUpdate, onDeleteLocal }) => {
 
 		try {
 			const res = await fetch(
-				`http://localhost:5000/messages/${messageId}/responses/${response._id}/deleteForAll`,
+				`${import.meta.env.VITE_API_URL}/messages/${messageId}/responses/${response._id}/deleteForAll`,
 				{
 					method: "DELETE",
 					headers: token(),
@@ -83,7 +83,7 @@ const Response = ({ response, messageId, onMessageUpdate, onDeleteLocal }) => {
 	const handleUpdate = async () => {
 		try {
 			const res = await fetch(
-				`http://localhost:5000/messages/${messageId}/responses/${response._id}`,
+				`${import.meta.env.VITE_API_URL}/messages/${messageId}/responses/${response._id}`,
 				{
 					method: "PUT",
 					headers: { ...token(), "Content-Type": "application/json" },
@@ -114,7 +114,7 @@ const Response = ({ response, messageId, onMessageUpdate, onDeleteLocal }) => {
 		>
 			<div className="response__header">
 				<img
-					src={`http://localhost:5000/assets/img/${responseUser?.image?.src || defaultProfile}`}
+					src={`${import.meta.env.VITE_API_URL}/assets/img/${responseUser?.image?.src || defaultProfile}`}
 					alt={responseUser?.image?.alt || "Utilisateur"}
 					className="response__avatar"
 				/>

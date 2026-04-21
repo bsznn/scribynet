@@ -5,7 +5,6 @@ import "../../../assets/styles/components/home/books/component-books.css";
 import defaultImage from "../../../assets/images/default-book.jpg";
 import { useParams } from "react-router-dom";
 
-
 export default function PopularBooks() {
 	const [booksPopulars, setBooksPopulars] = useState([]);
 	const [err, setErr] = useState();
@@ -14,7 +13,7 @@ export default function PopularBooks() {
 	// Fonction pour récupérer les livres postés par un utilisateur
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/books/popular-books")
+			.get(`${import.meta.env.VITE_API_URL}/books/popular-books`)
 			.then((res) => {
 				console.log(res);
 				setBooksPopulars(res.data);
@@ -34,10 +33,7 @@ export default function PopularBooks() {
 				{/* Affichage des livres populaires */}
 				<div className="component-books__list">
 					{booksPopulars.map((oneBookPopular) => (
-						<article
-							className="component-books__item"
-							key={oneBookPopular._id}
-						>
+						<article className="component-books__item" key={oneBookPopular._id}>
 							<NavLink
 								to={`/histoire/${oneBookPopular._id}`}
 								className="component-books__link"
@@ -47,7 +43,7 @@ export default function PopularBooks() {
 										className="component-books__image"
 										src={
 											oneBookPopular.image?.src
-												? `http://localhost:5000/assets/img/${oneBookPopular.image.src}`
+												? `${import.meta.env.VITE_API_URL}/assets/img/${oneBookPopular.image.src}`
 												: defaultImage
 										}
 										alt={oneBookPopular.image?.alt || "Image par défaut"}

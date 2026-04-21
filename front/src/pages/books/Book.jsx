@@ -41,7 +41,7 @@ const Book = () => {
 
 	const fetchBook = () => {
 		axios
-			.get(`http://localhost:5000/books/${id}`)
+			.get(`${import.meta.env.VITE_API_URL}/books/${id}`)
 			.then((res) => {
 				const data = res.data;
 
@@ -72,7 +72,7 @@ const Book = () => {
 		fetchBook();
 
 		if (!hasViewed.current) {
-			axios.post(`http://localhost:5000/books/${id}/view`);
+			axios.post(`${import.meta.env.VITE_API_URL}/books/${id}/view`);
 			hasViewed.current = true;
 		}
 	}, [id]);
@@ -99,7 +99,7 @@ const Book = () => {
 
 		axios
 			.delete(
-				`http://localhost:5000/books/chapter/delete/${bookId}/${chapterId}`,
+				`${import.meta.env.VITE_API_URL}/books/chapter/delete/${bookId}/${chapterId}`,
 				{ headers: token() },
 			)
 			.then((res) => {
@@ -165,7 +165,7 @@ const Book = () => {
 										className="book__image"
 										src={
 											book.image?.src
-												? `http://localhost:5000/assets/img/${book.image.src}`
+												? `${import.meta.env.VITE_API_URL}/assets/img/${book.image.src}`
 												: defaultImage
 										}
 										alt={book.image.alt || "Image par défaut"}

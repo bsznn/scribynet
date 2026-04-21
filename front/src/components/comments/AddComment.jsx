@@ -33,9 +33,13 @@ const AddComment = ({ bookId, commentAdd }) => {
 			};
 
 			await axios
-				.post(`http://localhost:5000/books/comment/new/${bookId}`, comment, {
-					headers: token(),
-				})
+				.post(
+					`${import.meta.env.VITE_API_URL}/books/comment/new/${bookId}`,
+					comment,
+					{
+						headers: token(),
+					},
+				)
 				.then((res) => {
 					setInputs({
 						content: "",
@@ -62,7 +66,7 @@ const AddComment = ({ bookId, commentAdd }) => {
 							<li>
 								<img
 									className="addcomment__avatar"
-									src={`http://localhost:5000/assets/img/${auth.user.image.src}`}
+									src={`${import.meta.env.VITE_API_URL}/assets/img/${auth.user.image.src}`}
 									alt={auth.user.image.alt}
 								/>
 							</li>

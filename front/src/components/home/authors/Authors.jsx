@@ -13,7 +13,7 @@ const Authors = () => {
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/users", { headers: token() })
+			.get(`${import.meta.env.VITE_API_URL}/users`, { headers: token() })
 			.then((response) => {
 				const allUsers = response.data;
 				const authors = allUsers.authors || [];
@@ -42,7 +42,7 @@ const Authors = () => {
 										<img
 											src={
 												oneAuthor?.image && oneAuthor?.image?.src
-													? `http://localhost:5000/assets/img/${oneAuthor.image.src}`
+													? `${import.meta.env.VITE_API_URL}/assets/img/${oneAuthor.image.src}`
 													: defaultImage
 											}
 											alt={oneAuthor.image?.alt || "default-image"}

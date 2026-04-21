@@ -23,7 +23,7 @@ export default function Header() {
 
 	const profileImage =
 		auth.user?.image?.src && auth.user.image.src !== "default-profil.png"
-			? `http://localhost:5000/assets/img/${auth.user.image.src}`
+			? `${import.meta.env.VITE_API_URL}/assets/img/${auth.user.image.src}`
 			: defaultImage;
 
 	// Ferme le dropdown au clic extérieur

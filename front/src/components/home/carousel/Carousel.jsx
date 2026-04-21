@@ -17,7 +17,7 @@ export default function Carousel() {
 				setLoading(true);
 				setError(null);
 				const response = await axios.get(
-					"http://localhost:5000/books/selection-books",
+					`${import.meta.env.VITE_API_URL}/books/selection-books`,
 				);
 
 				if (Array.isArray(response.data)) {
@@ -86,7 +86,7 @@ export default function Carousel() {
 					{books.length > 0 ? (
 						books.map((book) => {
 							const coverUrl = book.image?.src?.trim()
-								? `http://localhost:5000/assets/img/${book.image.src.trim()}`
+								? `${import.meta.env.VITE_API_URL}/assets/img/${book.image.src.trim()}`
 								: defaultCover;
 
 							return (

@@ -13,7 +13,7 @@ export default function DashRoles() {
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/users", { headers: token() })
+			.get(`${import.meta.env.VITE_API_URL}/users`, { headers: token() })
 			.then((res) =>
 				setUsers(Array.isArray(res.data.users) ? res.data.users : []),
 			)
@@ -25,7 +25,7 @@ export default function DashRoles() {
 		setSaving(userId);
 		try {
 			await axios.put(
-				`http://localhost:5000/users/edit-role/${userId}`,
+				`${import.meta.env.VITE_API_URL}/users/edit-role/${userId}`,
 				{ role: newRole },
 				{ headers: token() },
 			);
@@ -97,7 +97,7 @@ export default function DashRoles() {
 												className="dash-user__avatar"
 												src={
 													u.image?.src && u.image.src !== "default-profil.png"
-														? `http://localhost:5000/assets/img/${u.image.src}`
+														? `${import.meta.env.VITE_API_URL}/assets/img/${u.image.src}`
 														: defaultProfile
 												}
 												alt={u.login}

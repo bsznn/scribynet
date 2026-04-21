@@ -5,6 +5,8 @@ import { FaTags } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
 
+import defaultImage from "../../assets/images/default-categories.jpg";
+
 /* ── Preview image ── */
 function ImagePreview({ src, alt }) {
 	if (!src) return null;
@@ -43,7 +45,7 @@ export default function DashCategories() {
 
 	const fetchCategories = () => {
 		axios
-			.get("http://localhost:5000/categories", { headers: token() })
+			.get(`${import.meta.env.VITE_API_URL}/categories`, { headers: token() })
 			.then((res) => setCategories(Array.isArray(res.data) ? res.data : []))
 			.catch(() => setCategories([]))
 			.finally(() => setLoading(false));
@@ -76,7 +78,7 @@ export default function DashCategories() {
 		fd.append("name", form.name);
 		if (file) fd.append("image", file);
 		try {
-			await axios.post("http://localhost:5000/categories/new", fd, {
+			await axios.post(`${import.meta.env.VITE_API_URL}/categories/new`, fd, {
 				headers: token(),
 			});
 			setForm({ name: "" });
@@ -99,9 +101,12 @@ export default function DashCategories() {
 		)
 			return;
 		try {
-			await axios.delete(`http://localhost:5000/categories/delete/${id}`, {
-				headers: token(),
-			});
+			await axios.delete(
+				`${import.meta.env.VITE_API_URL}/categories/delete/${id}`,
+				{
+					headers: token(),
+				},
+			);
 			setCategories((prev) => prev.filter((c) => c._id !== id));
 			alert(`Catégorie "${name}" supprimée.`);
 		} catch {
@@ -116,7 +121,7 @@ export default function DashCategories() {
 		setEditFile(null);
 		setEditPreview(
 			cat.image?.src
-				? `http://localhost:5000/assets/img/${cat.image.src}`
+				? `${import.meta.env.VITE_API_URL}/assets/img/${cat.image.src}`
 				: null,
 		);
 	};
@@ -128,9 +133,13 @@ export default function DashCategories() {
 		fd.append("name", editForm.name);
 		if (editFile) fd.append("image", editFile);
 		try {
-			await axios.put(`http://localhost:5000/categories/edit/${id}`, fd, {
-				headers: token(),
-			});
+			await axios.put(
+				`${import.meta.env.VITE_API_URL}/categories/edit/${id}`,
+				fd,
+				{
+					headers: token(),
+				},
+			);
 			setEditId(null);
 			setEditFile(null);
 			setEditPreview(null);
@@ -263,13 +272,15 @@ export default function DashCategories() {
 									/>
 								</div>
 							) : (
-								cat.image?.src && (
-									<img
-										className="dash-category-card__img"
-										src={`http://localhost:5000/assets/img/${cat.image.src}`}
-										alt={cat.image.alt || cat.name}
-									/>
-								)
+								<img
+									className="dash-category-card__img"
+									src={
+										cat.image?.src
+											? `${import.meta.env.VITE_API_URL}/assets/img/${cat.image.src}`
+											: defaultImage
+									}
+									alt={cat.image?.alt || cat.name}
+								/>
 							)}
 
 							<div className="dash-category-card__body">

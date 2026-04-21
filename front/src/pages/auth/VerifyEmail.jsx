@@ -21,7 +21,7 @@ export default function VerifyEmail() {
 		}
 
 		axios
-			.get(`http://localhost:5000/verify-email?token=${token}`)
+			.get(`${import.meta.env.VITE_API_URL}/verify-email?token=${token}`)
 			.then(() => setStatus("success"))
 			.catch((err) => {
 				const status = err.response?.status;

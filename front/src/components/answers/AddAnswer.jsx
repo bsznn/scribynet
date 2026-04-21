@@ -36,7 +36,7 @@ const AddAnswer = ({ bookId, commentId, answerAdd }) => {
 
 			axios
 				.post(
-					`http://localhost:5000/books/comment/answer/new/${bookId}/${commentId}`,
+					`${import.meta.env.VITE_API_URL}/books/comment/answer/new/${bookId}/${commentId}`,
 					answer,
 					{
 						headers: token(),
@@ -64,7 +64,7 @@ const AddAnswer = ({ bookId, commentId, answerAdd }) => {
 					<ul>
 						<li>
 							<img
-								src={`http://localhost:5000/assets/img/${auth.user.image.src}`}
+								src={`${import.meta.env.VITE_API_URL}/assets/img/${auth.user.image.src}`}
 								alt={auth.user.image.alt}
 							/>
 						</li>

@@ -13,10 +13,10 @@ export default function DashComments() {
 
 	useEffect(() => {
 		Promise.all([
-			axios.get(`http://localhost:5000/books/my-book/${user.id}`, {
+			axios.get(`${import.meta.env.VITE_API_URL}/books/my-book/${user.id}`, {
 				headers: token(),
 			}),
-			axios.get("http://localhost:5000/books"),
+			axios.get(`${import.meta.env.VITE_API_URL}/books`),
 		])
 			.then(([myRes, allRes]) => {
 				setMyBooks(Array.isArray(myRes.data) ? myRes.data : []);

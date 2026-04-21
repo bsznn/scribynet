@@ -28,7 +28,7 @@ export default function Login() {
 			return setErr("Veuillez remplir tous les champs.");
 		}
 		axios
-			.post("http://localhost:5000/login", inputs)
+			.post(`${import.meta.env.VITE_API_URL}/login`, inputs)
 			.then((res) => {
 				if (res.data.token) {
 					localStorage.setItem("token", res.data.token);

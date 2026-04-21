@@ -33,7 +33,7 @@ export default function Donation() {
 
 		try {
 			const res = await axios.post(
-				"http://localhost:5000/gifts/new",
+				`${import.meta.env.VITE_API_URL}/gifts/new`,
 				{ price: amount, content },
 				{
 					headers: {

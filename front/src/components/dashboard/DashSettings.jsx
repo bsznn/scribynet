@@ -15,7 +15,9 @@ export default function DashSettings() {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/users/${user.id}`, { headers: token() })
+			.get(`${import.meta.env.VITE_API_URL}/users/${user.id}`, {
+				headers: token(),
+			})
 			.then((res) => {
 				setForm({
 					login: res.data.login || "",
@@ -28,7 +30,7 @@ export default function DashSettings() {
 
 	const profileImage =
 		user?.image?.src && user.image.src !== "default-profil.png"
-			? `http://localhost:5000/assets/img/${user.image.src}`
+			? `${import.meta.env.VITE_API_URL}/assets/img/${user.image.src}`
 			: defaultProfile;
 
 	const handleFileChange = (e) => {
@@ -51,7 +53,7 @@ export default function DashSettings() {
 
 		try {
 			const res = await axios.put(
-				`http://localhost:5000/users/edit/${user.id}`,
+				`${import.meta.env.VITE_API_URL}/users/edit/${user.id}`,
 				fd,
 				{ headers: { ...token() } },
 			);

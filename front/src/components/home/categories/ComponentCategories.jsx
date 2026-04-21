@@ -11,7 +11,7 @@ export default function ComponentCategories() {
 	// Fonction pour récupérer les catégories
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/categories")
+			.get(`${import.meta.env.VITE_API_URL}/categories`)
 			.then((res) => {
 				console.log(res);
 				setCategories(res.data);

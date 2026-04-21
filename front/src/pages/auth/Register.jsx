@@ -163,7 +163,7 @@ export default function Register() {
 	const handleConsentAccepted = async () => {
 		setShowConsent(false);
 		try {
-			await axios.post("http://localhost:5000/register", {
+			await axios.post(`${import.meta.env.VITE_API_URL}/register`, {
 				...inputs,
 				consentGiven: true,
 			});
@@ -183,7 +183,7 @@ export default function Register() {
 
 		setTimeout(() => {
 			axios
-				.post("http://localhost:5000/resend-verification", {
+				.post(`${import.meta.env.VITE_API_URL}/resend-verification`, {
 					email: inputs.email,
 				})
 				.then(() => {
