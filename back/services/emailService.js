@@ -1,28 +1,25 @@
 // services/emailService.js
-import { MailtrapClient, MailtrapTransport } from "mailtrap";
-import nodemailer from "nodemailer";
+import { MailtrapClient } from "mailtrap";
 import dotenv from "dotenv";
 dotenv.config();
 
 const TOKEN = process.env.MAILTRAP_API_KEY;
 
-const transport = nodemailer.createTransport(
-	MailtrapTransport({
-		token: TOKEN,
-	}),
-);
+const client = new MailtrapClient({
+	token: TOKEN, // Token "Sending" dans Mailtrap > Sending Domains
+});
 
 const sender = {
-	address: process.env.EMAIL_FROM || "noreply@scribynet.fr",
+	email: process.env.EMAIL_FROM || "noreply@scribynet.fr",
 	name: "ScribyNet",
 };
 
 export const sendVerificationEmail = async (email, token) => {
 	const verificationUrl = `${process.env.CLIENT_URL}/verify-email?token=${token}`;
 
-	transport.sendMail({
+	await client.send({
 		from: sender,
-		to: [email],
+		to: [{ email }],
 		subject: "Confirmez votre adresse email",
 		html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto;">
