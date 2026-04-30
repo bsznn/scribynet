@@ -3,19 +3,9 @@ import mongoose from "mongoose";
 // Schéma MongoDB pour représenter les livres dans la base de données
 const bookSchema = new mongoose.Schema(
 	{
-		// Identifiant de l'utilisateur qui a créé le livre
-		userId: {
-			type: mongoose.Types.ObjectId,
-			ref: "User", // Référence vers le modèle User
-		},
-		// Identifiants des catégories auxquelles le livre appartient
-		categoryId: [
-			{
-				type: mongoose.Types.ObjectId,
-				ref: "Category", // Référence vers le modèle Category
-			},
-		],
-		// Titre du livre (obligatoire)
+		userId: { type: mongoose.Types.ObjectId, ref: "User" },
+		categoryId: [{ type: mongoose.Types.ObjectId, ref: "Category" }],
+
 		title: {
 			type: String,
 			required: true,
@@ -40,11 +30,7 @@ const bookSchema = new mongoose.Schema(
 			},
 		],
 		// Description du livre (obligatoire, maximum 250 caractères)
-		description: {
-			type: String,
-			required: true,
-			maxlength: 500,
-		},
+		description: { type: String, required: true, maxlength: 500 },
 		// Image associée au livre (chemin source et texte alternatif)
 		image: {
 			src: String,

@@ -440,8 +440,8 @@ export const getBooksByCategoryName = async (req, res) => {
 		}
 
 		const books = await Book.find({ categoryId: { $in: [category._id] } })
-			.populate("userId", "-password") // ← ajoute
-			.populate("categoryId"); // ← ajoute
+			.populate("userId", "-password")
+			.populate("categoryId");
 
 		res.status(200).json({ category, books });
 	} catch (error) {

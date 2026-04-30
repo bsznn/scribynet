@@ -60,8 +60,8 @@ bookRouter.get("/books/total-likes/:userId", getTotalLikesByUser);
 bookRouter.post(
 	"/books/new",
 	isLogged,
-	isAuthorized(["admin", "user"]), // Vérifie si l'utilisateur est autorisé
-	upload.single("image"), // Middleware de gestion des fichiers envoyés
+	isAuthorized(["admin", "user"]),
+	upload.single("image"),
 	addBook,
 );
 

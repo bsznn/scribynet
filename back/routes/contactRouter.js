@@ -1,19 +1,13 @@
 import express from "express";
 import {
 	addContact,
-	getAllContacts
+	getAllContacts,
 } from "../controllers/contactController.js";
 
 const contactRouter = express.Router();
 
-contactRouter.post(
-	"/contact/new",
-	addContact,
-);
+contactRouter.post("/contact/new", addContact);
 
-contactRouter.get(
-	"/contacts",
-	getAllContacts,
-);
+contactRouter.get("/contacts", getAllContacts);
 
 export default contactRouter;

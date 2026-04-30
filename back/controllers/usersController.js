@@ -45,7 +45,7 @@ export const register = async (req, res) => {
 
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		const pwdRegex =
-			/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$/;
+			/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,30}$/;
 
 		if (!emailRegex.test(cleanEmail)) {
 			return res.status(400).json({ message: "Email invalide" });

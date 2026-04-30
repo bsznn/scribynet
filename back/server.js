@@ -1,5 +1,7 @@
-import cors from "cors";
 import dotenv from "dotenv";
+dotenv.config();
+
+import cors from "cors";
 import express from "express";
 import connectDB from "./config/db.js";
 import answerRouter from "./routes/answerRouter.js";
@@ -14,7 +16,6 @@ import contactRouter from "./routes/contactRouter.js";
 
 const app = express();
 
-// Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -25,11 +26,8 @@ app.use(
 	}),
 );
 
-dotenv.config();
-
 connectDB();
 
-// Routes
 app.use(bookRouter);
 app.use(userRouter);
 app.use(commentRouter);
@@ -40,7 +38,6 @@ app.use(messageRouter);
 app.use(giftRouter);
 app.use(contactRouter);
 
-// Démarrage du serveur
 app.listen(process.env.PORT, () => {
 	console.log(`Serveur lancé à : ${process.env.BASE_URL}`);
 });
