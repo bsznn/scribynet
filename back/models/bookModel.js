@@ -30,7 +30,9 @@ const bookSchema = new mongoose.Schema(
 			},
 		],
 		// Description du livre (obligatoire, maximum 250 caractères)
+
 		description: { type: String, required: true, maxlength: 500 },
+
 		// Image associée au livre (chemin source et texte alternatif)
 		image: {
 			src: String,
