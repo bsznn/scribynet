@@ -270,7 +270,9 @@ const Book = () => {
 												<li
 													className="book__chapter-text"
 													dangerouslySetInnerHTML={{
-														__html: DOMPurify.sanitize(chapter.content),
+														__html: DOMPurify.sanitize(
+															chapter.content?.replace(/&nbsp;/g, " ") || "",
+														),
 													}}
 												/>
 											</ul>

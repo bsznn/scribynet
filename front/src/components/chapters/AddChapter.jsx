@@ -27,8 +27,8 @@ const ChapterAdd = () => {
 		setMessage("");
 	};
 
-	const handleQuill = (_v, _d, _s, editor) =>
-		setInputs((p) => ({ ...p, chapterContent: editor.getHTML() }));
+	const handleQuill = (value) =>
+		setInputs((p) => ({ ...p, chapterContent: value }));
 
 	const handleSubmit = async () => {
 		if (!inputs.chapterTitle.trim() || !inputs.chapterContent.trim()) {

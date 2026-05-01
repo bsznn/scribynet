@@ -38,7 +38,11 @@ const Message = ({ message, onDeleted, onUpdated, currentUserId, onRead }) => {
 			);
 
 			const data = await res.json();
-			if (!res.ok) throw new Error(data.error || "Erreur serveur");
+			if (!res.ok)
+				throw new Error(
+					data.error ||
+						"Impossible de supprimer le message. Veuillez réesayer à nouveau.",
+				);
 
 			alert(data.message);
 			onDeleted?.();
@@ -64,7 +68,11 @@ const Message = ({ message, onDeleted, onUpdated, currentUserId, onRead }) => {
 			);
 
 			const data = await res.json();
-			if (!res.ok) throw new Error(data.error || "Erreur serveur");
+			if (!res.ok)
+				throw new Error(
+					data.error ||
+						"Impossible de supprimer le message. Veuillez réesayer à nouveau.",
+				);
 
 			alert(data.message);
 			onDeleted?.();

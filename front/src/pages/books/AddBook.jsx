@@ -59,8 +59,7 @@ export const AddBook = () => {
 		}
 	};
 
-	const handleQuill = (_v, _d, _s, editor) =>
-		set("chapterContent", editor.getHTML());
+	const handleQuill = (value) => set("chapterContent", value);
 
 	const goNext = () => {
 		if (step === 0) {
@@ -427,7 +426,13 @@ export const AddBook = () => {
 										<label for="title" className="addbook__field-label">
 											Titre
 										</label>
-										<p style={{ fontWeight: 600, color: "var(--darkMarron)" }}>
+										<p
+											style={{
+												fontWeight: 600,
+												color: "var(--darkMarron)",
+												margin: "0.3rem 0 1rem",
+											}}
+										>
 											{inputs.title}
 										</p>
 									</div>
@@ -440,6 +445,7 @@ export const AddBook = () => {
 												fontSize: "0.88rem",
 												color: "var(--mediumMarron)",
 												lineHeight: 1.6,
+												margin: "0.3rem 0 1rem",
 											}}
 										>
 											{inputs.description}
@@ -454,6 +460,7 @@ export const AddBook = () => {
 												display: "flex",
 												flexWrap: "wrap",
 												gap: "0.4rem",
+												margin: "0.3rem 0 1.2rem",
 											}}
 										>
 											{inputs.categories
@@ -480,7 +487,13 @@ export const AddBook = () => {
 										<label for="chapterTitle" className="addbook__field-label">
 											Premier chapitre
 										</label>
-										<p style={{ fontWeight: 600, color: "var(--darkMarron)" }}>
+										<p
+											style={{
+												fontWeight: 600,
+												color: "var(--darkMarron)",
+												margin: "0.3rem 0 1rem",
+											}}
+										>
 											{inputs.chapterTitle}
 										</p>
 										<label
@@ -489,10 +502,15 @@ export const AddBook = () => {
 										>
 											Contenu
 										</label>
-										<p
-											style={{ color: "var(--darkMarron)" }}
+										<div
+											className="addbook__chapter-content"
+											style={{
+												margin: "0.3rem 0 1rem",
+											}}
 											dangerouslySetInnerHTML={{
-												__html: DOMPurify.sanitize(inputs.chapterContent),
+												__html: DOMPurify.sanitize(
+													inputs.chapterContent.replace(/&nbsp;/g, " "),
+												),
 											}}
 										/>
 									</div>

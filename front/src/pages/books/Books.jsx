@@ -28,8 +28,11 @@ export default function Books() {
 			.get(`${import.meta.env.VITE_API_URL}/books/`)
 			.then((res) => {
 				const data = Array.isArray(res.data) ? res.data : [];
-				setBooks(data);
-				setCurrentBooks(data.slice(0, BOOKS_PER_PAGE));
+				const sorted = data.sort(
+					(a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+				);
+				setBooks(sorted);
+				setCurrentBooks(sorted.slice(0, BOOKS_PER_PAGE));
 			})
 			.catch(() => {
 				setErr("Impossible de charger les données");
@@ -39,25 +42,27 @@ export default function Books() {
 	/* ==============================
 	   🔹 FILTRAGE
 	================================= */
-	const filteredBooks = books.filter((book) => {
-		const value = search.toLowerCase();
+	const filteredBooks = books
+		.filter((book) => {
+			const value = search.toLowerCase();
 
-		if (filter === "title") {
-			return book.title?.toLowerCase().includes(value);
-		}
+			if (filter === "title") {
+				return book.title?.toLowerCase().includes(value);
+			}
 
-		if (filter === "author") {
-			return book.userId?.login?.toLowerCase().includes(value);
-		}
+			if (filter === "author") {
+				return book.userId?.login?.toLowerCase().includes(value);
+			}
 
-		if (filter === "category") {
-			return book.categoryId?.some((cat) =>
-				cat.name?.toLowerCase().includes(value),
-			);
-		}
+			if (filter === "category") {
+				return book.categoryId?.some((cat) =>
+					cat.name?.toLowerCase().includes(value),
+				);
+			}
 
-		return true;
-	});
+			return true;
+		})
+		.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
 	useEffect(() => {
 		setCurrentPage(0);

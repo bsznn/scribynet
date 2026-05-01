@@ -547,6 +547,12 @@
 	min-height: 85vh;
 }
 
+.addbook__chapter-content p {
+	white-space: normal;
+	margin: 0 0 0.8rem 0;
+	text-align: justify;
+}
+
 /* ── RESPONSIVE MOBILE ── */
 @media (max-width: 989px) {
 	.addbook__sidebar {

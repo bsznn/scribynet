@@ -128,7 +128,6 @@ export const saveDonationFromSession = async (req, res) => {
 
 		res.status(201).json({ message: "Don enregistré", gift });
 	} catch (error) {
-		console.error("Erreur enregistrement don :", error);
-		res.status(500).json({ error: "Erreur serveur" });
+		res.status(500).json({ error: "Impossible d'enregistrer le don." });
 	}
 };

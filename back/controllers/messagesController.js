@@ -456,6 +456,6 @@ export const getConversation = async (req, res) => {
 		res.status(200).json(populatedMessage);
 	} catch (error) {
 		console.error(error);
-		res.status(500).json({ error: "Erreur serveur" });
+		res.status(500).json({ error: "Impossible de récupérer la conversation." });
 	}
 };

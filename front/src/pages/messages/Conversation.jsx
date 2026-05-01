@@ -33,7 +33,7 @@ const Conversation = () => {
 			if (err.response) {
 				setError(err.response.data.error);
 			} else {
-				setError("Erreur serveur");
+				setError("Impossible d'afficher la conversation.");
 			}
 		} finally {
 			setLoading(false);

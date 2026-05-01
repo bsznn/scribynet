@@ -91,7 +91,7 @@ export const EditBook = () => {
 				headers: token(),
 			});
 			alert("Histoire modifiée avec succès !");
-			navigate("/histoires");
+			navigate(`/profil/${auth.user.id}`);
 		} catch (err) {
 			console.log(err);
 			alert("Erreur lors de la modification de l'histoire");
