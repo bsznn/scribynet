@@ -98,6 +98,7 @@
 .profile__stats {
 	position: relative;
 	margin-top: 1rem;
+	z-index: 2;
 }
 
 .profile__stats ul {
@@ -130,6 +131,7 @@
 ========================== */
 .profile__actions {
 	position: relative;
+	z-index: 2;
 }
 
 .profile__actions ul {

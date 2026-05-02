@@ -56,7 +56,7 @@ const Messages = () => {
 			<img
 				src={fondImage}
 				alt="fond__messages"
-				fetchPriority="high"
+				fetchPriority="low"
 				decoding="sync"
 				className="books__header-bg"
 			/>

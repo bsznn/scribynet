@@ -5,12 +5,14 @@ import fondImage from "../../assets/images/fond/fond-tree.jpeg";
 
 const NotFound = () => {
 	return (
-		<main
-			className="notfound"
-			style={{
-				backgroundImage: `url(${fondImage})`,
-			}}
-		>
+		<main className="notfound">
+			<img
+				src={fondImage}
+				alt="fond__error"
+				fetchPriority="low"
+				decoding="async"
+				className="notfound__bg"
+			/>
 			<div className="notfound__overlay" />
 
 			<div className="notfound__box">

@@ -45,7 +45,7 @@ export default function CategoryDetail() {
 							: defaultCategory
 					}
 					alt="fond__categoryDetail"
-					fetchPriority="high"
+					fetchPriority="low"
 					decoding="sync"
 					className="cat-detail__header-bg"
 				/>

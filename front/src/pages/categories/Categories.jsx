@@ -65,7 +65,7 @@ export default function Categories() {
 				<img
 					src={fond}
 					alt="fond_categories"
-					fetchPriority="high"
+					fetchPriority="low"
 					decoding="sync"
 					className="categories__header-bg"
 				/>

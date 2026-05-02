@@ -114,7 +114,7 @@ const Conversation = () => {
 			<img
 				src={fondImage}
 				alt="fond__conversation"
-				fetchPriority="high"
+				fetchPriority="low"
 				decoding="sync"
 				className="books__header-bg"
 			/>

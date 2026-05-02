@@ -116,7 +116,7 @@ export default function Books() {
 				<img
 					src={fondImage}
 					alt="books__fond"
-					fetchPriority="high"
+					fetchPriority="low"
 					decoding="sync"
 					className="books__header-bg"
 				/>{" "}

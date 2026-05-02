@@ -10,7 +10,7 @@ import badgeUser from "../../assets/images/profile/badge-user.png";
 import badgeAdmin from "../../assets/images/profile/badge-admin.png";
 import userImage from "../../assets/images/default-profile.jpg";
 import defaultImage from "../../assets/images/default-book.jpg";
-import fondImage from "../../assets/images/profile/fond-profile.jpeg";
+import fondImage from "../../assets/images/fond/fond-profile.jpeg";
 
 const UserProfile = () => {
 	const { id } = useParams();
@@ -95,7 +95,7 @@ const UserProfile = () => {
 				<img
 					src={fondImage}
 					alt="fond__profile"
-					fetchPriority="high"
+					fetchPriority="low"
 					decoding="sync"
 					className="books__header-bg"
 				/>

@@ -149,7 +149,7 @@ const Book = () => {
 			<img
 				src={fondImage}
 				alt="fond__livre"
-				fetchPriority="high"
+				fetchPriority="low"
 				decoding="sync"
 				className="book__bg"
 			/>

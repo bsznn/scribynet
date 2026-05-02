@@ -85,11 +85,9 @@ export const register = async (req, res) => {
 		});
 	} catch (error) {
 		console.error(error);
-		res
-			.status(500)
-			.json({
-				message: "Une erreur est survenue. Impossible de créer un compte.",
-			});
+		res.status(500).json({
+			message: "Une erreur est survenue. Impossible de créer un compte.",
+		});
 	}
 };
 
@@ -217,12 +215,10 @@ export const login = async (req, res) => {
 			token,
 		});
 	} catch {
-		res
-			.status(500)
-			.json({
-				message:
-					"Une erreur est survenue. Impossible de se connecter pour le moment.",
-			});
+		res.status(500).json({
+			message:
+				"Une erreur est survenue. Impossible de se connecter pour le moment.",
+		});
 	}
 };
 
@@ -250,12 +246,10 @@ export const getAllUsers = async (_req, res) => {
 			users,
 		});
 	} catch {
-		res
-			.status(500)
-			.json({
-				message:
-					"Une erreur est survenue lors de la récupération de tous les utilisateurs.",
-			});
+		res.status(500).json({
+			message:
+				"Une erreur est survenue lors de la récupération de tous les utilisateurs.",
+		});
 	}
 };
 
@@ -332,12 +326,10 @@ export const updateUser = async (req, res) => {
 
 		res.status(200).json(updatedUser);
 	} catch (error) {
-		res
-			.status(500)
-			.json({
-				message:
-					"Impossible de modifier l'utilisateur. Veuillez réessayer plus tard.",
-			});
+		res.status(500).json({
+			message:
+				"Impossible de modifier l'utilisateur. Veuillez réessayer plus tard.",
+		});
 	}
 };
 
@@ -353,7 +345,10 @@ export const deleteUser = async (req, res) => {
 			return res.status(400).json({ message: "ID invalide" });
 		}
 
-		await Book.deleteMany({ userId: id });
+		const objectId = new mongoose.Types.ObjectId(id);
+
+		const bookResult = await Book.deleteMany({ userId: objectId });
+		console.log(`Livres supprimés : ${bookResult.deletedCount}`);
 
 		const user = await User.findByIdAndDelete(id);
 
@@ -362,15 +357,11 @@ export const deleteUser = async (req, res) => {
 		}
 
 		res.status(200).json({ message: "Utilisateur supprimé" });
-	} catch {
-		res
-			.status(500)
-			.json({
-				message: "Une erreur est survenue lors de la suppression du compte.",
-			});
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ message: "Erreur lors de la suppression." });
 	}
 };
-
 /* =========================
    UPDATE ROLE (ADMIN)
 ========================= */

@@ -12,7 +12,7 @@ import badgeAdmin from "../../assets/images/profile/badge-admin.png";
 import userImage from "../../assets/images/default-profile.jpg";
 import defaultImage from "../../assets/images/default-book.jpg";
 import fly from "../../assets/images/profile/fly.jpg";
-import fondImage from "../../assets/images/profile/fond-profile.jpeg";
+import fondImage from "../../assets/images/fond/fond-profile.jpeg";
 
 const Profile = () => {
 	const auth = useAuth();
@@ -118,7 +118,7 @@ const Profile = () => {
 				<img
 					src={fondImage}
 					alt="fond__profile"
-					fetchPriority="high"
+					fetchPriority="low"
 					decoding="sync"
 					className="books__header-bg"
 				/>
