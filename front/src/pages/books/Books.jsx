@@ -110,16 +110,16 @@ export default function Books() {
 			});
 	};
 
-	const sectionStyle = {
-		backgroundImage: `url(${fondImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-	};
-
 	return (
 		<main className="books">
-			<section className="books__header" style={sectionStyle}>
+			<section className="books__header">
+				<img
+					src={fondImage}
+					alt="books__fond"
+					fetchPriority="high"
+					decoding="sync"
+					className="books__header-bg"
+				/>{" "}
 				<article className="books__headerContent">
 					<h1 className="books__title">Histoires</h1>
 

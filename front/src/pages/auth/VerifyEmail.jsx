@@ -30,13 +30,6 @@ export default function VerifyEmail() {
 			});
 	}, []);
 
-	const sectionStyle = {
-		backgroundImage: `url(${fondImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-	};
-
 	const statusContent = {
 		loading: {
 			icon: "⏳",
@@ -67,7 +60,14 @@ export default function VerifyEmail() {
 	const { icon, title, text, link } = statusContent[status];
 
 	return (
-		<main className="register__section" style={sectionStyle}>
+		<main className="register__section">
+			<img
+				src={fondImage}
+				alt="fond__verificationEmail"
+				fetchPriority="low"
+				decoding="async"
+				className="auth__bg"
+			/>
 			<div className="register__container register__container--confirm">
 				<div className="register__confirm">
 					<h2>

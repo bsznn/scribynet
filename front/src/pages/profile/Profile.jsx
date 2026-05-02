@@ -109,18 +109,19 @@ const Profile = () => {
 		(currentPage + 1) * BOOKS_PER_PAGE,
 	);
 
-	const sectionStyle = {
-		backgroundImage: `url(${fondImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-	};
-
 	return (
 		<main className="profile">
 			{err && <span className="profile__error">{err}</span>}
 
 			{/* --- HEADER / BIO --- */}
-			<section className="profile__header" style={sectionStyle}>
+			<section className="profile__header">
+				<img
+					src={fondImage}
+					alt="fond__profile"
+					fetchPriority="high"
+					decoding="sync"
+					className="books__header-bg"
+				/>
 				{auth.user.login && (
 					<div className="profile__header--content">
 						<div className="profile__header--info">

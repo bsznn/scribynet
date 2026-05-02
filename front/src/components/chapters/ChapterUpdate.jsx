@@ -68,19 +68,15 @@ const ChapterUpdate = () => {
 			);
 	};
 
-	const isBigScreen = window.innerWidth >= 990;
-
-	const sectionStyle = isBigScreen
-		? {
-				backgroundImage: `url(${fondImage})`,
-				backgroundSize: "cover",
-				backgroundPosition: "center",
-				backgroundRepeat: "no-repeat",
-			}
-		: {};
-
 	return (
-		<main className="fond__updatechapter" style={sectionStyle}>
+		<main className="fond__updatechapter">
+			<img
+				src={fondImage}
+				alt="fond__chapitre"
+				fetchPriority="low"
+				decoding="async"
+				className="fond__updatechapter-bg"
+			/>
 			<div className="updatechapter__container">
 				<div className="updatechapter">
 					{/* ── SIDEBAR ── */}

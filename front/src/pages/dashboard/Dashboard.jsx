@@ -65,13 +65,6 @@ export default function Dashboard() {
 			? `${import.meta.env.VITE_API_URL}/assets/img/${user.image.src}`
 			: defaultProfile;
 
-	const sectionStyle = {
-		backgroundImage: `url(${fondImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-	};
-
 	const handleTabChange = (key) => {
 		setActiveTab(key);
 		setMoreOpen(false);
@@ -108,7 +101,14 @@ export default function Dashboard() {
 	const moreIsActive = moreItems.some((i) => i.key === activeTab);
 
 	return (
-		<main className="fond__dashboard" style={sectionStyle}>
+		<main className="fond__dashboard">
+			<img
+				src={fondImage}
+				alt="fond__dashboard"
+				fetchPriority="low"
+				decoding="async"
+				className="fond__dashboard-bg"
+			/>
 			<div className="dash">
 				<div className="dash__container">
 					{/* ── SIDEBAR (desktop/tablette) ── */}

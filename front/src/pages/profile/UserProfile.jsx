@@ -75,12 +75,6 @@ const UserProfile = () => {
 		});
 	};
 
-	const sectionStyle = {
-		backgroundImage: `url(${fondImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-	};
-
 	if (err)
 		return (
 			<main className="profile">
@@ -97,7 +91,14 @@ const UserProfile = () => {
 	return (
 		<main className="profile">
 			{/* --- HEADER / BIO --- */}
-			<section className="profile__header" style={sectionStyle}>
+			<section className="profile__header">
+				<img
+					src={fondImage}
+					alt="fond__profile"
+					fetchPriority="high"
+					decoding="sync"
+					className="books__header-bg"
+				/>
 				<div className="profile__header--content">
 					<div className="profile__header--info">
 						<div className="profile__avatar">

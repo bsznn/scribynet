@@ -51,15 +51,15 @@ const Messages = () => {
 		currentPage * MESSAGES_PER_PAGE,
 	);
 
-	const sectionStyle = {
-		backgroundImage: `url(${fondImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-	};
-
 	return (
-		<main className="fond__messages" style={sectionStyle}>
+		<main className="fond__messages">
+			<img
+				src={fondImage}
+				alt="fond__messages"
+				fetchPriority="high"
+				decoding="sync"
+				className="books__header-bg"
+			/>
 			<section className="messages">
 				<div className="messages__container">
 					<h1>Messagerie</h1>

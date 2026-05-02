@@ -8,20 +8,31 @@
 	position: relative;
 }
 
+.donation__bg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	z-index: 0;
+}
+
 .donation::before {
 	content: "";
 	position: absolute;
 	inset: 0;
 	background: rgba(66, 60, 57, 0.65);
+	z-index: 1;
 }
 
 .donation__area {
 	position: relative;
-	z-index: 1;
 	background: var(--bodyBeige);
 	font-family: var(--fontRegular);
 	color: var(--darkMarron);
 	margin: 4rem 0;
+	z-index: 2;
 	display: flex;
 	min-height: 80vh;
 }

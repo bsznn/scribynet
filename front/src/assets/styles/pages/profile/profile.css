@@ -37,6 +37,7 @@
 	position: absolute;
 	inset: 0;
 	background: rgba(66, 60, 57, 0.65);
+	z-index: 1;
 }
 
 .profile__header--info {
@@ -45,6 +46,7 @@
 	flex-direction: column;
 	align-items: center;
 	gap: 1rem;
+	z-index: 2;
 }
 
 .profile__avatar img {
@@ -87,6 +89,7 @@
 	font-family: var(--fontScript);
 	color: var(--lightBeige);
 	text-align: center;
+	z-index: 2;
 }
 
 /* ==========================
@@ -325,6 +328,10 @@
 
 .profile__books .books__description {
 	height: auto;
+}
+
+.profile__side {
+	z-index: 2;
 }
 
 @media (max-width: 768px) {

@@ -44,15 +44,16 @@ export default function AboutContact() {
 		}
 	};
 
-	const sectionStyle = {
-		backgroundSize: "cover",
-		backgroundImage: `url(${fondImage})`,
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-	};
-
 	return (
-		<main className="aboutContact" style={sectionStyle}>
+		<main className="aboutContact">
+			<img
+				src={fondImage}
+				alt=""
+				fetchPriority="low"
+				decoding="async"
+				className="aboutContact__bg"
+			/>
+
 			<div className="aboutContact__content">
 				<section className="aboutContact__infos">
 					<h1 className="aboutContact__title">Nos coordonnées</h1>

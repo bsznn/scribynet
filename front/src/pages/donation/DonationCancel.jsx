@@ -5,14 +5,15 @@ import fondImage from "../../assets/images/fond/fond-don.jpeg";
 import "../../assets/styles/pages/donation/donation-component.css";
 
 export default function DonationCancel() {
-	const sectionStyle = {
-		backgroundImage: `url(${fondImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-	};
 	return (
-		<main className="donation-cancel" style={sectionStyle}>
+		<main className="donation-cancel">
+			<img
+				src={fondImage}
+				alt="fond__donation"
+				fetchPriority="low"
+				decoding="async"
+				className="donation-component__bg"
+			/>
 			<div className="donation-cancel__container">
 				<div className="donation-cancel__icon">
 					<img src={cancel} alt="Don annulé" aria-label="Don annulé" />

@@ -202,17 +202,17 @@ export default function Register() {
 		}, 10000);
 	};
 
-	const sectionStyle = {
-		backgroundImage: `url(${fondImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-	};
-
 	/* ── Écran post-inscription ── */
 	if (emailSent) {
 		return (
-			<main className="register__section" style={sectionStyle}>
+			<main className="register__section">
+				<img
+					src={fondImage}
+					alt="fond__inscription"
+					fetchPriority="low"
+					decoding="async"
+					className="auth__bg"
+				/>
 				<div className="register__container register__container--confirm">
 					<div className="register__confirm">
 						<h2>📬 Confirmez votre email</h2>
@@ -247,7 +247,14 @@ export default function Register() {
 				/>
 			)}
 
-			<main className="register__section" style={sectionStyle}>
+			<main className="register__section">
+				<img
+					src={fondImage}
+					alt="fond__inscription"
+					fetchPriority="low"
+					decoding="async"
+					className="auth__bg"
+				/>
 				<div className="register__container">
 					<form className="register__form" onSubmit={handleSubmit}>
 						<h2 className="register__title">Inscription</h2>

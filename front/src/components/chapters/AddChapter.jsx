@@ -58,19 +58,15 @@ const ChapterAdd = () => {
 		}
 	};
 
-	const isBigScreen = window.innerWidth >= 990;
-
-	const sectionStyle = isBigScreen
-		? {
-				backgroundImage: `url(${fondImage})`,
-				backgroundSize: "cover",
-				backgroundPosition: "center",
-				backgroundRepeat: "no-repeat",
-			}
-		: {};
-
 	return (
-		<main className="fond__addchapter" style={sectionStyle}>
+		<main className="fond__addchapter">
+			<img
+				src={fondImage}
+				alt="fond__chapitre"
+				fetchPriority="low"
+				decoding="async"
+				className="fond__addchapter-bg"
+			/>
 			<div className="addchapter__container">
 				<div className="addchapter">
 					{/* ── SIDEBAR ── */}

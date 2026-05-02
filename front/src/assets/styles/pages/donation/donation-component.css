@@ -10,19 +10,29 @@
 	padding: 1.5rem;
 }
 
+.donation-component__bg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	z-index: 0;
+}
+
 .donation-success::before,
 .donation-cancel::before {
 	content: "";
 	position: absolute;
 	inset: 0;
 	background: rgba(66, 60, 57, 0.65);
-	z-index: 0;
+	z-index: 1;
 }
 
 .donation-success__container,
 .donation-cancel__container {
 	position: relative;
-	z-index: 1;
+	z-index: 2;
 	background: rgba(245, 241, 230, 0.95);
 	box-shadow: var(--shadow);
 	padding: 2rem;

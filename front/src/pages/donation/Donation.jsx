@@ -52,15 +52,15 @@ export default function Donation() {
 		}
 	};
 
-	const sectionStyle = {
-		backgroundImage: `url(${fondImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-	};
-
 	return (
-		<main className="donation" style={sectionStyle}>
+		<main className="donation">
+			<img
+				src={fondImage}
+				alt="donation__fond"
+				fetchPriority="low"
+				decoding="async"
+				className="donation__bg"
+			/>
 			<div className="donation__area">
 				<section className="donation__content">
 					<div className="donation__header">

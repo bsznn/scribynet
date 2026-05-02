@@ -160,21 +160,17 @@ export const AddBook = () => {
 		classNamePrefix: "addbook-rs",
 	};
 
-	const isBigScreen = window.innerWidth >= 990;
-
-	const sectionStyle = isBigScreen
-		? {
-				backgroundImage: `url(${fondImage})`,
-				backgroundSize: "cover",
-				backgroundPosition: "center",
-				backgroundRepeat: "no-repeat",
-			}
-		: {};
-
 	/* ── NON CONNECTÉ ── */
 	if (!auth.user)
 		return (
-			<div className="fond__errorbook" style={sectionStyle}>
+			<div className="fond__errorbook">
+				<img
+					src={fondImage}
+					alt="fond__ajoutImage"
+					fetchPriority="low"
+					decoding="async"
+					className="fond__errorbook-bg"
+				/>
 				<main className="addbook__gate">
 					<div className="addbook__gate-box">
 						<div className="addbook__gate-icon">✦</div>
@@ -204,7 +200,14 @@ export const AddBook = () => {
 		);
 
 	return (
-		<main className="fond__addbook" style={sectionStyle}>
+		<main className="fond__addbook">
+			<img
+				src={fondImage}
+				alt="fond__ajoutImage"
+				fetchPriority="low"
+				decoding="async"
+				className="fond__addbook-bg"
+			/>
 			<div className="addbook__container">
 				<div className="addbook">
 					{/* ── SIDEBAR ── */}

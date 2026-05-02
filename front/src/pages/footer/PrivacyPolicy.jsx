@@ -2,15 +2,15 @@ import "../../assets/styles/pages/footer/legal-notices.css";
 import headImage from "../../assets/images/header-home/grass.jpg";
 
 const PrivacyPolicy = () => {
-	const sectionStyle = {
-		backgroundImage: `url(${headImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-	};
-
 	return (
-		<main className="legal-notices" style={sectionStyle}>
+		<main className="legal-notices">
+			<img
+				src={headImage}
+				alt="fond__notices"
+				fetchPriority="low"
+				decoding="async"
+				className="legal-notices__bg"
+			/>
 			<div className="legal-notices__container">
 				<div className="legal-notices__content">
 					<h1 className="legal-notices__title">

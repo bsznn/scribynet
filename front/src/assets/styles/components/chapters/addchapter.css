@@ -25,6 +25,21 @@
 	}
 }
 
+.fond__addchapter {
+	position: relative;
+}
+
+.fond__addchapter-bg {
+	display: none;
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	z-index: 0;
+}
+
 /* ── LAYOUT ROOT ── */
 .addchapter {
 	background-color: var(--bodyBeige);
@@ -301,8 +316,11 @@
 
 @media (min-width: 990px) {
 	.fond__addchapter {
-		position: relative;
 		padding: 4rem 0;
+	}
+
+	.fond__addchapter-bg {
+		display: block;
 	}
 
 	.fond__addchapter::before {
@@ -310,11 +328,11 @@
 		position: absolute;
 		inset: 0;
 		background: rgba(66, 60, 57, 0.65);
-		z-index: 0;
+		z-index: 1;
 	}
 
 	.addchapter {
-		grid-template-columns: 380px 1fr;
+		grid-template-columns: 300px 650px;
 		border: 2px solid var(--darkMarron);
 		border-radius: 18px;
 		justify-content: center;
@@ -334,12 +352,14 @@
 		margin: 0 auto;
 		display: flex;
 		justify-content: center;
-		min-height: 70vh;
+		min-height: 85vh;
+		z-index: 2;
 	}
 }
 
 @media (min-width: 1200px) {
 	.addchapter {
+		grid-template-columns: 320px 1fr;
 		width: 1100px;
 		margin: 0 auto;
 	}

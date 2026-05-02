@@ -14,7 +14,7 @@
 	position: absolute;
 	inset: 0;
 	background: rgba(66, 60, 57, 0.62);
-	z-index: 0;
+	z-index: 1;
 }
 
 /* ─── CONVERSATION PAGE ──────────────────────────────────────── */
@@ -28,6 +28,8 @@
 	margin: 4rem auto;
 	justify-content: center;
 	width: 100%;
+	z-index: 2;
+	min-height: 80vh;
 }
 
 .conversation__container {
@@ -37,30 +39,6 @@
 	width: 90%;
 	margin: 1rem auto;
 }
-
-/* .conversation::before {
-	content: "";
-	position: fixed;
-	inset: 0;
-	background:
-		radial-gradient(
-			ellipse at 20% 15%,
-			rgba(215, 191, 168, 0.18) 0%,
-			transparent 55%
-		),
-		radial-gradient(
-			ellipse at 80% 80%,
-			rgba(182, 165, 138, 0.13) 0%,
-			transparent 55%
-		);
-	pointer-events: none;
-	z-index: 0;
-}
-
-.conversation > * {
-	position: relative;
-	z-index: 1;
-} */
 
 /* ─── TOPBAR ─────────────────────────────────────────────────── */
 

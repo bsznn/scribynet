@@ -49,15 +49,15 @@ export default function Login() {
 			});
 	};
 
-	const sectionStyle = {
-		backgroundImage: `url(${fondImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-	};
-
 	return (
-		<main className="login__section" style={sectionStyle}>
+		<main className="login__section">
+			<img
+				src={fondImage}
+				alt="fond__connexion"
+				fetchPriority="low"
+				decoding="async"
+				className="auth__bg"
+			/>
 			<div className="login__container">
 				<form className="login__form" onSubmit={handleSubmit}>
 					<h2 className="login__title">Connexion</h2>

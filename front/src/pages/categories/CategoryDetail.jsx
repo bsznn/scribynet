@@ -31,26 +31,24 @@ export default function CategoryDetail() {
 		book.title?.toLowerCase().includes(search.toLowerCase()),
 	);
 
-	const sectionStyle = category?.image?.src
-		? {
-				backgroundImage: `url(${import.meta.env.VITE_API_URL}/assets/img/${category.image.src})`,
-				backgroundSize: "cover",
-				backgroundPosition: "center",
-				backgroundRepeat: "no-repeat",
-			}
-		: {
-				backgroundImage: `url(${defaultCategory})`,
-				backgroundSize: "cover",
-				backgroundPosition: "center",
-			};
-
 	if (loading) return <div className="cat-detail__loader">Chargement…</div>;
 	if (error) return <div className="cat-detail__error">{error}</div>;
 
 	return (
 		<main className="cat-detail">
 			{/* ── HEADER ── */}
-			<section className="cat-detail__header" style={sectionStyle}>
+			<section className="cat-detail__header">
+				<img
+					src={
+						category?.image?.src
+							? `${import.meta.env.VITE_API_URL}/assets/img/${category.image.src}`
+							: defaultCategory
+					}
+					alt="fond__categoryDetail"
+					fetchPriority="high"
+					decoding="sync"
+					className="cat-detail__header-bg"
+				/>
 				<article className="cat-detail__header-content">
 					<Link to="/categories" className="cat-detail__back">
 						← Catégories

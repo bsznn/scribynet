@@ -483,7 +483,7 @@
 		position: absolute;
 		inset: 0;
 		background: rgba(66, 60, 57, 0.65);
-		z-index: 0;
+		z-index: 1;
 	}
 
 	.editbook__container {
@@ -492,10 +492,11 @@
 		position: relative;
 		padding: 3rem 0;
 		margin: 0 auto;
+		z-index: 1;
 	}
 
 	.editbook {
-		grid-template-columns: 360px 1fr;
+		grid-template-columns: 300px 650px;
 		border: 2px solid var(--darkMarron);
 		border-radius: 18px;
 		overflow: hidden;
@@ -505,6 +506,7 @@
 
 @media (min-width: 1200px) {
 	.editbook {
+		grid-template-columns: 320px 1fr;
 		width: 1100px;
 		margin: 0 auto;
 	}

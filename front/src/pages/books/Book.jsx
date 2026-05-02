@@ -144,17 +144,15 @@ const Book = () => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
 	};
 
-	/* ================= RENDER ================= */
-
-	const sectionStyle = {
-		backgroundImage: `url(${fondImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-	};
-
 	return (
-		<main className="book" style={sectionStyle}>
+		<main className="book">
+			<img
+				src={fondImage}
+				alt="fond__livre"
+				fetchPriority="high"
+				decoding="sync"
+				className="book__bg"
+			/>
 			<div className="book__content">
 				<div className="book__content--section">
 					{err && <span>{err}</span>}

@@ -3,21 +3,18 @@ import headImage from "../../../assets/images/header-home/grass.jpg";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 
-import "../../../assets/styles/components/home/head/head.css";
-
 export default function Head() {
 	const auth = useAuth();
 
-	const sectionStyle = {
-		backgroundImage: `url(${headImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-		height: 350,
-	};
-
 	return (
-		<section className="head" style={sectionStyle}>
+		<section className="head">
+			<img
+				src={headImage}
+				alt="Head_floral"
+				fetchPriority="high"
+				decoding="sync"
+				className="head__bg"
+			/>
 			<p className="head__text">Donnez vie à vos histoires avec Scriby'Net !</p>
 
 			{auth.user ? (

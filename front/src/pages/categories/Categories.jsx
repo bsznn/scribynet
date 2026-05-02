@@ -59,16 +59,16 @@ export default function Categories() {
 		? filteredCategories
 		: filteredCategories.slice(0, 12);
 
-	const sectionStyle = {
-		backgroundImage: `url(${fond})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-	};
-
 	return (
 		<main className="categories">
-			<section className="categories__header" style={sectionStyle}>
+			<section className="categories__header">
+				<img
+					src={fond}
+					alt="fond_categories"
+					fetchPriority="high"
+					decoding="sync"
+					className="categories__header-bg"
+				/>
 				<article className="categories__headerContent">
 					<span>
 						<h1 className="categories__title">Catégories</h1>

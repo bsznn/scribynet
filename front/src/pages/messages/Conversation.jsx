@@ -106,18 +106,18 @@ const Conversation = () => {
 		}
 	};
 
-	const sectionStyle = {
-		backgroundImage: `url(${fondImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-	};
-
 	if (loading) return <p className="conversation__loading">Chargement...</p>;
 	if (error) return <p className="conversation__error">{error}</p>;
 
 	return (
-		<main className="fond__conversation" style={sectionStyle}>
+		<main className="fond__conversation">
+			<img
+				src={fondImage}
+				alt="fond__conversation"
+				fetchPriority="high"
+				decoding="sync"
+				className="books__header-bg"
+			/>
 			<section className="conversation">
 				<div className="conversation__container">
 					<div className="conversation__topbar">

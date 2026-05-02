@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import gift from "../../assets/images/donation/gift.jpg";
 import fondImage from "../../assets/images/fond/fond-don.jpeg";
@@ -7,6 +7,7 @@ import "../../assets/styles/pages/donation/donation-component.css";
 
 export default function DonationSuccess() {
 	const location = useLocation();
+	const [status, setStatus] = useState(null);
 
 	const getSessionId = () => {
 		const params = new URLSearchParams(location.search);
@@ -14,6 +15,7 @@ export default function DonationSuccess() {
 	};
 
 	const sessionId = getSessionId();
+
 	useEffect(() => {
 		if (sessionId) {
 			fetch(`${import.meta.env.VITE_API_URL}/api/donations`, {
@@ -25,26 +27,31 @@ export default function DonationSuccess() {
 			})
 				.then((res) => res.json())
 				.then((data) => {
-					alert("Données enregistrées:", data);
+					setStatus({
+						type: "success",
+						message: "Don enregistré avec succès !",
+					});
 				})
-				.catch((err) => {
-					alert("Erreur lors de l'enregistrement");
+				.catch(() => {
+					setStatus({
+						type: "error",
+						message: "Erreur lors de l'enregistrement.",
+					});
 				});
 		}
 	}, [sessionId]);
 
-	const sectionStyle = {
-		backgroundImage: `url(${fondImage})`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		backgroundRepeat: "no-repeat",
-	};
-
 	return (
-		<main className="donation-success" style={sectionStyle}>
+		<main className="donation-success">
+			<img
+				src={fondImage}
+				alt="fond__donation"
+				className="donation-component__bg"
+			/>
+
 			<div className="donation-success__container">
 				<div className="donation-success__icon">
-					<img src={gift} alt="Gift" aria-label="Don confirmé" />
+					<img src={gift} alt="Gift" />
 				</div>
 
 				<div className="donation-success__content">
@@ -52,6 +59,10 @@ export default function DonationSuccess() {
 					<p className="donation-success__message">
 						Votre paiement a été confirmé avec succès.
 					</p>
+
+					{status && (
+						<p className={`donation-status ${status.type}`}>{status.message}</p>
+					)}
 				</div>
 			</div>
 		</main>

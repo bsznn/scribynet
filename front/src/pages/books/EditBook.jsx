@@ -96,16 +96,6 @@ export const EditBook = () => {
 		}
 	};
 
-	const isBigScreen = window.innerWidth >= 990;
-	const sectionStyle = isBigScreen
-		? {
-				backgroundImage: `url(${fondImage})`,
-				backgroundSize: "cover",
-				backgroundPosition: "center",
-				backgroundRepeat: "no-repeat",
-			}
-		: {};
-
 	const selectStyles = {
 		control: (b, s) => ({
 			...b,
@@ -159,7 +149,14 @@ export const EditBook = () => {
 
 	if (!auth.user)
 		return (
-			<div className="editbook__gate">
+			<div className="editbook__gate fond__errorbook">
+				<img
+					src={fondImage}
+					alt="fond__ajoutImage"
+					fetchPriority="low"
+					decoding="async"
+					className="fond__errorbook-bg"
+				/>
 				<div className="editbook__gate-box">
 					<div className="editbook__gate-icon">✦</div>
 					<h2 className="editbook__gate-title">Modifier une histoire</h2>
@@ -179,7 +176,14 @@ export const EditBook = () => {
 		);
 
 	return (
-		<main className="fond__editbook" style={sectionStyle}>
+		<main className="fond__editbook fond__addbook">
+			<img
+				src={fondImage}
+				alt="fond__editImage"
+				fetchPriority="low"
+				decoding="async"
+				className="fond__addbook-bg"
+			/>
 			<div className="editbook__container">
 				<div className="editbook">
 					{/* ── SIDEBAR ── */}
