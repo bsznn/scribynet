@@ -21,6 +21,7 @@ const STEPS = [
 export const AddBook = () => {
 	const auth = useAuth();
 	const navigate = useNavigate();
+	const [error, setError] = useState(null);
 
 	const [step, setStep] = useState(0);
 	const [inputs, setInputs] = useState({
@@ -39,7 +40,9 @@ export const AddBook = () => {
 		axios
 			.get(`${import.meta.env.VITE_API_URL}/categories`)
 			.then((res) => setInputs((p) => ({ ...p, categories: res.data })))
-			.catch(console.log);
+			.catch((err) => {
+				setError("Impossible de charger les catégories.");
+			});
 	}, []);
 
 	const set = (name, value) => setInputs((p) => ({ ...p, [name]: value }));
@@ -339,6 +342,7 @@ export const AddBook = () => {
 												}
 											/>
 										</div>
+										{error && <p className="error-message">{error}</p>}
 									</div>
 								</div>
 

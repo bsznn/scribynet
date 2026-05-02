@@ -3,9 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { token } from "../../context/token";
-import { FaBookOpen } from "react-icons/fa";
-import { IoIosSettings } from "react-icons/io";
-import { MdDelete } from "react-icons/md";
+import { BookOpen, Settings, Trash2 } from "lucide-react";
 import defaultBook from "../../assets/images/default-book.jpg";
 
 export default function DashStories() {
@@ -61,7 +59,7 @@ export default function DashStories() {
 
 			{books.length === 0 ? (
 				<div className="dash-empty">
-					<FaBookOpen className="dash-empty__icon" />
+					<BookOpen className="dash-empty__icon" />
 					<span>Vous n'avez pas encore publié d'histoire</span>
 				</div>
 			) : (
@@ -91,7 +89,7 @@ export default function DashStories() {
 									title="Modifier"
 									onClick={() => navigate(`/modifier-histoire/${book._id}`)}
 								>
-									<IoIosSettings />
+									<Settings />
 								</button>
 								<button
 									type="button"
@@ -99,7 +97,7 @@ export default function DashStories() {
 									title="Supprimer"
 									onClick={() => handleDelete(book._id)}
 								>
-									<MdDelete />
+									<Trash2 />
 								</button>
 							</div>
 						</div>

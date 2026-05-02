@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { token } from "../../context/token";
-import { IoIosSend } from "react-icons/io";
+import { Send } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import "../../assets/styles/components/comments/comments.css";
 
@@ -85,7 +85,7 @@ const AddComment = ({ bookId, commentAdd }) => {
 						/>
 
 						<button className="addcomment__button">
-							<IoIosSend className="addcomment__icon" />
+							<Send className="addcomment__icon" />
 							<span className="addcomment__button-text">Commenter</span>
 						</button>
 					</article>

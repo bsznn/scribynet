@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { IoIosAddCircle, IoIosSettings } from "react-icons/io";
-import { MdDelete } from "react-icons/md";
+import { PlusCircle, Settings, Trash2 } from "lucide-react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { token } from "../../context/token";
 
 import defaultImage from "../../assets/images/default-categories.jpg";
+import fond from "../../assets/images/fond/fond-cat.jpg";
+
 import "../../assets/styles/pages/categories/categories.css";
 
 export default function Categories() {
@@ -23,7 +24,6 @@ export default function Categories() {
 			.get(`${import.meta.env.VITE_API_URL}/categories/`)
 			.then((res) => setCategories(res.data))
 			.catch((error) => {
-				console.log(error);
 				setError("Impossible de charger les catégories");
 			});
 	}, []);
@@ -60,8 +60,7 @@ export default function Categories() {
 		: filteredCategories.slice(0, 12);
 
 	const sectionStyle = {
-		backgroundImage:
-			"url(https://images.pexels.com/photos/29087509/pexels-photo-29087509.jpeg?_gl=1*1l7uz2t*_ga*NDI0NjMwMjIzLjE3NjYwNjA1NTk.*_ga_8JE65Q40S6*czE3NzE1ODEyMTckbzIzJGcxJHQxNzcxNTgxMjkwJGo1OSRsMCRoMA..)",
+		backgroundImage: `url(${fond})`,
 		backgroundSize: "cover",
 		backgroundPosition: "center",
 		backgroundRepeat: "no-repeat",
@@ -83,7 +82,7 @@ export default function Categories() {
 									navigate("/dashboard", { state: { tab: "categories" } });
 								}}
 							>
-								<IoIosAddCircle size={28} />
+								<PlusCircle size={28} />
 							</Link>
 						)}
 					</span>
@@ -139,7 +138,7 @@ export default function Categories() {
 											navigate("/dashboard", { state: { tab: "categories" } });
 										}}
 									>
-										<IoIosSettings size={22} />
+										<Settings size={22} />
 									</Link>
 									<button
 										type="button"
@@ -149,7 +148,7 @@ export default function Categories() {
 										}}
 										className="categories__delete"
 									>
-										<MdDelete size={22} />
+										<Trash2 size={22} />
 									</button>
 								</div>
 							)}

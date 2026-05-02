@@ -85,7 +85,11 @@ export const register = async (req, res) => {
 		});
 	} catch (error) {
 		console.error(error);
-		res.status(500).json({ message: "Erreur serveur" });
+		res
+			.status(500)
+			.json({
+				message: "Une erreur est survenue. Impossible de créer un compte.",
+			});
 	}
 };
 
@@ -96,14 +100,11 @@ export const verifyEmail = async (req, res) => {
 	try {
 		const { token } = req.query;
 
-		console.log("TOKEN RECU :", token);
-
 		if (!isValidString(token)) {
 			return res.status(400).json({ message: "Token manquant ou invalide" });
 		}
 
 		const user = await User.findOne({ emailVerificationToken: token });
-		console.log("USER TROUVÉ :", user);
 
 		if (!user) {
 			return res.status(404).json({ message: "Token introuvable" });
@@ -123,7 +124,9 @@ export const verifyEmail = async (req, res) => {
 
 		res.status(200).json({ message: "Email vérifié avec succès" });
 	} catch {
-		res.status(500).json({ message: "Erreur serveur" });
+		res
+			.status(500)
+			.json({ message: "Impossible de vérifier l'adresse email." });
 	}
 };
 
@@ -141,7 +144,6 @@ export const resendVerification = async (req, res) => {
 		const user = await User.findOne({ email: sanitize(email) });
 
 		if (!user) {
-			// Réponse neutre pour éviter l'énumération d'emails
 			return res
 				.status(200)
 				.json({ message: "Si cet email existe, un lien a été renvoyé." });
@@ -165,7 +167,9 @@ export const resendVerification = async (req, res) => {
 			.json({ message: "Si cet email existe, un lien a été renvoyé." });
 	} catch (error) {
 		console.error("ERREUR resendVerification :", error);
-		res.status(500).json({ message: "Erreur serveur" });
+		res
+			.status(500)
+			.json({ message: "Erreur lors du renvoi du mail de confirmation." });
 	}
 };
 
@@ -187,7 +191,6 @@ export const login = async (req, res) => {
 			return res.status(404).json({ message: "Utilisateur introuvable" });
 		}
 
-		// --- Vérification email obligatoire avant connexion ---
 		if (!user.isVerified) {
 			return res.status(403).json({
 				message:
@@ -214,7 +217,12 @@ export const login = async (req, res) => {
 			token,
 		});
 	} catch {
-		res.status(500).json({ message: "Erreur serveur" });
+		res
+			.status(500)
+			.json({
+				message:
+					"Une erreur est survenue. Impossible de se connecter pour le moment.",
+			});
 	}
 };
 
@@ -242,7 +250,12 @@ export const getAllUsers = async (_req, res) => {
 			users,
 		});
 	} catch {
-		res.status(500).json({ message: "Erreur serveur" });
+		res
+			.status(500)
+			.json({
+				message:
+					"Une erreur est survenue lors de la récupération de tous les utilisateurs.",
+			});
 	}
 };
 
@@ -266,7 +279,7 @@ export const getOneUser = async (req, res) => {
 
 		res.status(200).json(user);
 	} catch {
-		res.status(500).json({ message: "Erreur serveur" });
+		res.status(500).json({ message: "Impossible de récupérer l'utilisateur" });
 	}
 };
 
@@ -319,7 +332,12 @@ export const updateUser = async (req, res) => {
 
 		res.status(200).json(updatedUser);
 	} catch (error) {
-		res.status(500).json({ message: "Erreur serveur" });
+		res
+			.status(500)
+			.json({
+				message:
+					"Impossible de modifier l'utilisateur. Veuillez réessayer plus tard.",
+			});
 	}
 };
 
@@ -345,7 +363,11 @@ export const deleteUser = async (req, res) => {
 
 		res.status(200).json({ message: "Utilisateur supprimé" });
 	} catch {
-		res.status(500).json({ message: "Erreur serveur" });
+		res
+			.status(500)
+			.json({
+				message: "Une erreur est survenue lors de la suppression du compte.",
+			});
 	}
 };
 
@@ -374,6 +396,8 @@ export const updateRole = async (req, res) => {
 
 		res.status(200).json({ message: "Rôle mis à jour" });
 	} catch {
-		res.status(500).json({ message: "Erreur serveur" });
+		res
+			.status(500)
+			.json({ message: "Impossible de modifier le rôle de l'utilisateur." });
 	}
 };

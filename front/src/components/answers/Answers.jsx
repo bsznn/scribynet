@@ -21,11 +21,9 @@ const Answers = ({ bookId, commentId, updateAnswer, onAnswerDeleted }) => {
 				},
 			)
 			.then((res) => {
-				console.log(res);
 				setAnswers(res.data);
 			})
-			.catch((res) => {
-				console.log(res);
+			.catch(() => {
 				setErr("Impossible de charger les données");
 			});
 	};

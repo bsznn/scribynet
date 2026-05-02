@@ -12,11 +12,9 @@ export default function LastChapters() {
 		axios
 			.get(`${import.meta.env.VITE_API_URL}/books/latest-chapters`)
 			.then((res) => {
-				console.log(res);
 				setLastUpdates(res.data);
 			})
-			.catch((res) => {
-				console.log(res);
+			.catch(() => {
 				setErr("Impossible de charger les données");
 			});
 	}, []);

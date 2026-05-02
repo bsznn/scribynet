@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { FiMapPin, FiPhone, FiMail } from "react-icons/fi";
+import { MapPin, Phone, Mail } from "lucide-react";
 import fondImage from "../../assets/images/fond/fond-arbre.jpeg";
 
 import "../../assets/styles/pages/about-contact/about-contact.css";
@@ -59,7 +59,7 @@ export default function AboutContact() {
 
 					<div className="aboutContact__infoCard">
 						<div className="aboutContact__iconWrapper">
-							<FiMapPin />
+							<MapPin />
 						</div>
 						<div>
 							<span className="aboutContact__label">Adresse</span>
@@ -73,7 +73,7 @@ export default function AboutContact() {
 
 					<div className="aboutContact__infoCard">
 						<div className="aboutContact__iconWrapper">
-							<FiPhone />
+							<Phone />
 						</div>
 						<div>
 							<span className="aboutContact__label">Téléphone</span>
@@ -83,7 +83,7 @@ export default function AboutContact() {
 
 					<div className="aboutContact__infoCard">
 						<div className="aboutContact__iconWrapper">
-							<FiMail />
+							<Mail />
 						</div>
 						<div>
 							<span className="aboutContact__label">Email</span>

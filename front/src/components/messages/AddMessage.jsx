@@ -7,6 +7,8 @@ import "../../assets/styles/pages/messages/messages.css";
 
 const AddMessage = ({ onMessageSent }) => {
 	const { user } = useAuth();
+	const [error, setError] = useState(null);
+	const [success, setSuccess] = useState(null);
 
 	const [users, setUsers] = useState([]);
 	const [search, setSearch] = useState("");
@@ -28,8 +30,8 @@ const AddMessage = ({ onMessageSent }) => {
 				);
 				setUsers(otherUsers);
 				setFilteredUsers(otherUsers);
-			})
-			.catch(console.log);
+			});
+		setError("Impossible de charger les utilisateurs.");
 	};
 
 	useEffect(() => {
@@ -70,26 +72,35 @@ const AddMessage = ({ onMessageSent }) => {
 		setShowDropdown(true);
 	};
 
-	const sendMessage = (e) => {
+	const sendMessage = async (e) => {
 		e.preventDefault();
 
-		if (!receiverId) return alert("Veuillez choisir un destinataire");
+		if (!receiverId) {
+			setError("Veuillez choisir un destinataire.");
+			return;
+		}
 
-		axios
-			.post(
+		try {
+			setError(null);
+			setSuccess(null);
+
+			await axios.post(
 				`${import.meta.env.VITE_API_URL}/messages/new`,
 				{ receiverId, title, content },
 				{ headers: token() },
-			)
-			.then(() => {
-				setReceiverId("");
-				setReceiverLogin("");
-				setTitle("");
-				setContent("");
-				setSearch("");
-				onMessageSent();
-			})
-			.catch(console.log);
+			);
+
+			setReceiverId("");
+			setReceiverLogin("");
+			setTitle("");
+			setContent("");
+			setSearch("");
+
+			setSuccess("Message envoyé avec succès !");
+			if (onMessageSent) onMessageSent();
+		} catch (err) {
+			setError("Impossible d'envoyer le message.");
+		}
 	};
 
 	return (
@@ -146,6 +157,9 @@ const AddMessage = ({ onMessageSent }) => {
 			/>
 
 			<button type="submit">Envoyer</button>
+
+			{error && <p className="error-message">{error}</p>}
+			{success && <p className="success-message">{success}</p>}
 		</form>
 	);
 };

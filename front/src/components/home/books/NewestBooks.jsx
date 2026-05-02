@@ -15,11 +15,9 @@ export default function NewestBooks() {
 		axios
 			.get(`${import.meta.env.VITE_API_URL}/books/newest-books`)
 			.then((res) => {
-				console.log(res);
 				setNewBooks(res.data);
 			})
-			.catch((res) => {
-				console.log(res);
+			.catch(() => {
 				setErr("Impossible de charger les données");
 			});
 	}, []);

@@ -7,10 +7,7 @@ import "../../assets/styles/components/comments/comments.css";
 import AddAnswer from "../answers/AddAnswer";
 import Answers from "../answers/Answers";
 
-import { IoIosSettings } from "react-icons/io";
-import { MdDelete } from "react-icons/md";
-import { RiQuestionAnswerFill } from "react-icons/ri";
-import { IoIosSend } from "react-icons/io";
+import { Settings, Trash2, MessageSquareMore, Send } from "lucide-react";
 
 const Comment = ({ bookId, commentId, onCommentDelete, bookAuthorId }) => {
 	const [comment, setComment] = useState("");
@@ -33,8 +30,7 @@ const Comment = ({ bookId, commentId, onCommentDelete, bookAuthorId }) => {
 				setComment(res.data);
 				setUpdateContent(res.data.content);
 			})
-			.catch((error) => {
-				console.log(error.response.data);
+			.catch(() => {
 				setErr("Impossible de charger le commentaire");
 			});
 		getAnswers();
@@ -135,7 +131,7 @@ const Comment = ({ bookId, commentId, onCommentDelete, bookAuthorId }) => {
 									onClick={handleUpdate}
 									className="comment__update-btn"
 								>
-									<IoIosSend className="comment__icon" />
+									<Send className="comment__icon" />
 									<span>Valider</span>
 								</button>
 							</div>
@@ -155,7 +151,7 @@ const Comment = ({ bookId, commentId, onCommentDelete, bookAuthorId }) => {
 								{/* Modifier — uniquement l'auteur */}
 								{auth.user.id === comment.userId._id && (
 									<li className="comment__action" onClick={toggleUpdateForm}>
-										<IoIosSettings className="comment__action-icon" />
+										<Settings className="comment__action-icon" />
 									</li>
 								)}
 
@@ -164,7 +160,7 @@ const Comment = ({ bookId, commentId, onCommentDelete, bookAuthorId }) => {
 									auth.user.role === "admin" ||
 									auth.user.id === bookAuthorId) && (
 									<li className="comment__action" onClick={handleDelete}>
-										<MdDelete className="comment__action-icon" />
+										<Trash2 className="comment__action-icon" />
 									</li>
 								)}
 
@@ -173,7 +169,7 @@ const Comment = ({ bookId, commentId, onCommentDelete, bookAuthorId }) => {
 									className="comment__action comment__action--answer"
 									onClick={toggleAnswerInput}
 								>
-									<RiQuestionAnswerFill className="comment__action-icon" />
+									<MessageSquareMore className="comment__action-icon" />
 									<span className="comment__text">
 										{comment.answers?.length || 0}
 									</span>

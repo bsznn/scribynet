@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { token } from "../../context/token";
-import { FaEye, FaHeart, FaComments, FaBookOpen } from "react-icons/fa";
+import { Eye, Heart, MessageSquare, BookOpen } from "lucide-react";
 import defaultBook from "../../assets/images/default-book.jpg";
 
 export default function DashStats() {
@@ -37,28 +37,28 @@ export default function DashStats() {
 			<div className="dash-stats__grid">
 				<div className="dash-stat-card">
 					<div className="dash-stat-card__icon">
-						<FaBookOpen />
+						<BookOpen />
 					</div>
 					<span className="dash-stat-card__value">{books.length}</span>
 					<span className="dash-stat-card__label">Histoires</span>
 				</div>
 				<div className="dash-stat-card">
 					<div className="dash-stat-card__icon">
-						<FaEye />
+						<Eye />
 					</div>
 					<span className="dash-stat-card__value">{totalViews}</span>
 					<span className="dash-stat-card__label">Vues totales</span>
 				</div>
 				<div className="dash-stat-card">
 					<div className="dash-stat-card__icon">
-						<FaHeart />
+						<Heart />
 					</div>
 					<span className="dash-stat-card__value">{totalLikes}</span>
 					<span className="dash-stat-card__label">Likes totaux</span>
 				</div>
 				<div className="dash-stat-card">
 					<div className="dash-stat-card__icon">
-						<FaComments />
+						<MessageSquare />
 					</div>
 					<span className="dash-stat-card__value">{totalComments}</span>
 					<span className="dash-stat-card__label">Commentaires totaux</span>
@@ -70,7 +70,7 @@ export default function DashStats() {
 
 			{books.length === 0 ? (
 				<div className="dash-empty">
-					<FaBookOpen className="dash-empty__icon" />
+					<BookOpen className="dash-empty__icon" />
 					<span>Aucune histoire publiée</span>
 				</div>
 			) : (

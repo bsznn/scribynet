@@ -118,6 +118,8 @@
 .profile__icon {
 	color: var(--darkBeige);
 	font-size: 1.2rem;
+	width: 18px;
+	height: 18px;
 }
 
 /* ==========================

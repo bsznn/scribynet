@@ -47,7 +47,6 @@ export const addAnswer = async (req, res) => {
 
 		res.status(200).json({ message: "La réponse a bien été ajoutée" });
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
 			message: "Impossible d'ajouter une nouvelle réponse",
 			error: error.message,
@@ -81,8 +80,10 @@ export const updateAnswer = async (req, res) => {
 
 		res.status(200).json({ message: "La réponse a été modifiée avec succès" });
 	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: "Impossible de modifier la réponse" });
+		res.status(500).json({
+			message: "Impossible de modifier la réponse",
+			error: error.message,
+		});
 	}
 };
 
@@ -101,8 +102,10 @@ export const deleteAnswer = async (req, res) => {
 
 		res.status(200).json({ message: "La réponse a été supprimée avec succès" });
 	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: "Impossible de supprimer la réponse" });
+		res.status(500).json({
+			message: "Impossible de supprimer la réponse",
+			error: error.message,
+		});
 	}
 };
 
@@ -170,9 +173,9 @@ export const getOneAnswerByComment = async (req, res) => {
 
 		res.status(200).json(answer); // Renvoie de la réponse peuplée
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
 			message: "Impossible de récupérer la réponse du commentaire",
+			error: error.message,
 		});
 	}
 };

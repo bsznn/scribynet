@@ -25,10 +25,10 @@ export default function DonationSuccess() {
 			})
 				.then((res) => res.json())
 				.then((data) => {
-					console.log("Données enregistrées:", data);
+					alert("Données enregistrées:", data);
 				})
 				.catch((err) => {
-					console.error("Erreur lors de l'enregistrement:", err);
+					alert("Erreur lors de l'enregistrement");
 				});
 		}
 	}, [sessionId]);

@@ -19,8 +19,7 @@ const Comments = ({ bookId, updateComment, bookAuthorId }) => {
 			.then((res) => {
 				setComments(res.data);
 			})
-			.catch((error) => {
-				console.log(error);
+			.catch(() => {
 				setErr("Impossible de charger les données");
 			});
 	};

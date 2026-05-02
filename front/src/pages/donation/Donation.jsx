@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import "../../assets/styles/pages/donation/donation.css";
-import { BsGift } from "react-icons/bs";
+import { Gift } from "lucide-react";
 
 import fondImage from "../../assets/images/fond/fond-don.jpeg";
 
@@ -146,7 +146,7 @@ export default function Donation() {
 								onClick={handleDonate}
 								className="donation__submit"
 							>
-								Faire un don <BsGift />
+								Faire un don <Gift />
 							</button>
 						)}
 					</form>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { token } from "../../context/token";
-import { FaComments } from "react-icons/fa";
+import { MessageSquare } from "lucide-react";
 
 export default function DashComments() {
 	const { user } = useAuth();
@@ -81,7 +81,7 @@ export default function DashComments() {
 
 			{displayed.length === 0 ? (
 				<div className="dash-empty">
-					<FaComments className="dash-empty__icon" />
+					<MessageSquare className="dash-empty__icon" />
 					<span>Aucun commentaire {tab === "sent" ? "envoyé" : "reçu"}</span>
 				</div>
 			) : (

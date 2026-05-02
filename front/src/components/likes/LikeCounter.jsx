@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { token } from "../../context/token";
 import { useParams } from "react-router-dom";
-import { FaHeart } from "react-icons/fa";
+import { Heart } from "lucide-react";
 
 import { useAuth } from "../../context/AuthContext";
 
@@ -36,7 +36,6 @@ const LikeCounter = ({ likeAdd }) => {
 				headers: token(),
 			})
 			.then((res) => {
-				console.log(res.data);
 				setLikes(res.data.likes);
 				setLiked((prevLiked) => !prevLiked);
 
@@ -54,7 +53,7 @@ const LikeCounter = ({ likeAdd }) => {
 			className={`btn-likecounter ${liked ? "active" : ""}`}
 		>
 			<p className="bk-text-none2">J'aime</p>
-			<FaHeart className="like-icon" />
+			<Heart className="like-icon" />
 		</button>
 	);
 };

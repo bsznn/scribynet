@@ -1,10 +1,4 @@
-import {
-	FaGithub,
-	FaLinkedin,
-	FaSlack,
-	FaXTwitter,
-	FaYoutube,
-} from "react-icons/fa6";
+import { FaGithub, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 import logo from "../../assets/images/logo-white.jpg";
@@ -35,7 +29,7 @@ const Footer = () => {
 						<FaLinkedin className="footer__icon" />
 					</a>
 					<a href="https://twitter.com" target="_blank" rel="noreferrer">
-						<FaXTwitter className="footer__icon" />
+						<FaTwitter className="footer__icon" />
 					</a>
 					<a href="https://github.com" target="_blank" rel="noreferrer">
 						<FaGithub className="footer__icon" />

@@ -45,7 +45,6 @@ export const EditBook = () => {
 				});
 				setLoading(false);
 			} catch (err) {
-				console.log(err);
 				alert("Erreur lors du chargement du livre");
 			}
 		};
@@ -93,7 +92,6 @@ export const EditBook = () => {
 			alert("Histoire modifiée avec succès !");
 			navigate(`/profil/${auth.user.id}`);
 		} catch (err) {
-			console.log(err);
 			alert("Erreur lors de la modification de l'histoire");
 		}
 	};

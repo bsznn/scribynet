@@ -33,17 +33,10 @@ export const getOneBook = async (req, res) => {
 			return res.status(404).json({ message: "Aucun livre trouvé" });
 		}
 
-		// // Incrémenter le nombre de vues du livre
-		// console.log("BEFORE INCR", book.views);
-
-		// book.views += 1;
-
-		// console.log("AFTER INCR", book.views);
 		await book.save();
 
 		res.status(200).json(book);
 	} catch (_error) {
-		// Gérer les erreurs lors de la récupération d'un livre
 		res.status(500).json({
 			message: "Une erreur est survenue lors de la récupération du livre",
 		});
@@ -64,10 +57,9 @@ export const getBooksByUser = async (req, res) => {
 
 		res.status(200).json(books);
 	} catch (error) {
-		// Gérer les erreurs lors de la récupération des livres de l'utilisateur
-		console.log(error);
 		res.status(500).json({
 			message: "Une erreur est survenue lors de la récupération de vos livres",
+			error: error.message,
 		});
 	}
 };
@@ -313,7 +305,6 @@ export const getSelectionBook = async (_req, res) => {
 
 		res.status(200).json(popularBooks);
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
 			message: "Erreur lors de la récupération des livres populaires",
 			error: error.message,
@@ -335,7 +326,6 @@ export const getPopularBooksList = async (_req, res) => {
 
 		res.status(200).json(popularBooks);
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
 			message:
 				"Une erreur est survenue lors de la récupération des livres populaires",
@@ -358,7 +348,6 @@ export const getNewestBooks = async (_req, res) => {
 
 		res.status(200).json(newestBooks);
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
 			message:
 				"Une erreur est survenue lors de la récupération des nouveaux livres",
@@ -378,7 +367,6 @@ export const getLatestBooks = async (_req, res) => {
 
 		res.status(200).json(latestBooks);
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
 			message:
 				"Une erreur est survenue lors de la récupération des derniers livres",
@@ -420,7 +408,6 @@ export const getLatestChapters = async (_req, res) => {
 
 		res.status(200).json(latestChapters);
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
 			message:
 				"Une erreur est survenue lors de la récupération des derniers chapitres",
@@ -445,7 +432,6 @@ export const getBooksByCategoryName = async (req, res) => {
 
 		res.status(200).json({ category, books });
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
 			message:
 				"Une erreur est survenue lors de la récupération des livres par catégorie",
@@ -468,7 +454,6 @@ export const getTotalViewsByUser = async (req, res) => {
 		// Retourner le nombre total de vues
 		res.status(200).json({ totalViews });
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
 			message:
 				"Une erreur est survenue lors de la récupération du nombre total de vues",
@@ -494,7 +479,6 @@ export const getTotalLikesByUser = async (req, res) => {
 		// Retourner le nombre total de likes
 		res.status(200).json({ totalLikes });
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
 			message:
 				"Une erreur est survenue lors du calcul du nombre total de likes",

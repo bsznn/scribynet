@@ -2,13 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { token } from "../../context/token";
-import {
-	FaClock,
-	FaBookOpen,
-	FaComments,
-	FaHeart,
-	FaGift,
-} from "react-icons/fa";
+import { Clock, BookOpen, MessageSquare, Gift } from "lucide-react";
 
 export default function DashHistory() {
 	const { user } = useAuth();
@@ -45,7 +39,7 @@ export default function DashHistory() {
 					timeline.push({
 						id: `book-${book._id}`,
 						type: "book",
-						icon: FaBookOpen,
+						icon: BookOpen,
 						label: `Histoire publiée : ${book.title}`,
 						date: new Date(book.createdAt),
 					});
@@ -59,7 +53,7 @@ export default function DashHistory() {
 							timeline.push({
 								id: `comment-${c._id}`,
 								type: "comment",
-								icon: FaComments,
+								icon: MessageSquare,
 								label: `Commentaire sur "${book.title}"`,
 								date: new Date(c.date),
 							});
@@ -73,7 +67,7 @@ export default function DashHistory() {
 						timeline.push({
 							id: `don-${don._id}`,
 							type: "don",
-							icon: FaGift,
+							icon: Gift,
 							label: `Don de ${don.price?.toFixed(2)} €`,
 							date: new Date(don.createdAt),
 						});
@@ -100,7 +94,7 @@ export default function DashHistory() {
 
 			{events.length === 0 ? (
 				<div className="dash-empty">
-					<FaClock className="dash-empty__icon" />
+					<Clock className="dash-empty__icon" />
 					<span>Aucune activité enregistrée</span>
 				</div>
 			) : (

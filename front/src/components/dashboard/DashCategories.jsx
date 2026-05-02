@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { token } from "../../context/token";
-import { FaTags } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { IoIosSettings } from "react-icons/io";
+import { Settings, Trash2, Tags } from "lucide-react";
 
 import defaultImage from "../../assets/images/default-categories.jpg";
 
@@ -210,7 +208,7 @@ export default function DashCategories() {
 			{/* ── Liste ── */}
 			{categories.length === 0 ? (
 				<div className="dash-empty">
-					<FaTags className="dash-empty__icon" />
+					<Tags className="dash-empty__icon" />
 					<span>Aucune catégorie</span>
 				</div>
 			) : (
@@ -332,7 +330,7 @@ export default function DashCategories() {
 												onClick={() => openEdit(cat)}
 												title="Modifier"
 											>
-												<IoIosSettings />
+												<Settings />
 											</button>
 											<button
 												type="button"
@@ -340,7 +338,7 @@ export default function DashCategories() {
 												onClick={() => handleDelete(cat._id, cat.name)}
 												title="Supprimer"
 											>
-												<MdDelete />
+												<Trash2 />
 											</button>
 										</>
 									)}

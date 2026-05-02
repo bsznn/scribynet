@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { IoIosSend } from "react-icons/io";
+import { Send } from "lucide-react";
 import axios from "axios";
 import { token } from "../../context/token";
 
@@ -50,7 +50,6 @@ const AddAnswer = ({ bookId, commentId, answerAdd }) => {
 					answerAdd();
 				});
 		} catch (error) {
-			console.log(error);
 			alert("Impossible d'ajouter la réponse au commentaire !");
 		}
 	};
@@ -83,7 +82,7 @@ const AddAnswer = ({ bookId, commentId, answerAdd }) => {
 						placeholder="Votre réponse"
 					/>
 					<button type="submit" className="addanswer__button">
-						<IoIosSend className="icon-none" />
+						<Send className="icon-none" />
 						<p className="name-none">Répondre</p>
 					</button>
 				</article>

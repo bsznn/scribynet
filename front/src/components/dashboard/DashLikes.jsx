@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { token } from "../../context/token";
-import { FaHeart } from "react-icons/fa";
+import { Heart } from "lucide-react";
 import defaultBook from "../../assets/images/default-book.jpg";
 
 export default function DashLikes() {
@@ -34,7 +34,7 @@ export default function DashLikes() {
 
 			{likedBooks.length === 0 ? (
 				<div className="dash-empty">
-					<FaHeart className="dash-empty__icon" />
+					<Heart className="dash-empty__icon" />
 					<span>Vous n'avez encore liké aucune histoire</span>
 				</div>
 			) : (
@@ -62,7 +62,7 @@ export default function DashLikes() {
 										{book.likes?.length || 0} likes
 									</p>
 								</div>
-								<FaHeart style={{ color: "var(--orange)", flexShrink: 0 }} />
+								<Heart style={{ color: "var(--orange)", flexShrink: 0 }} />
 							</div>
 						</Link>
 					))}

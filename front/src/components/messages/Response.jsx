@@ -3,9 +3,7 @@ import defaultProfile from "../../assets/images/default-profile.jpg";
 import { useAuth } from "../../context/AuthContext";
 import ResponseList from "./ResponseList";
 import { token } from "../../context/token";
-import { MdDelete } from "react-icons/md";
-import { IoIosSettings } from "react-icons/io";
-import { MdDeleteForever } from "react-icons/md";
+import { Settings, Trash2, Trash } from "lucide-react";
 
 const Response = ({ response, messageId, onMessageUpdate, onDeleteLocal }) => {
 	const auth = useAuth();
@@ -160,7 +158,7 @@ const Response = ({ response, messageId, onMessageUpdate, onDeleteLocal }) => {
 								className="response__action-btn response__action-btn--edit"
 								title="Modifier"
 							>
-								<IoIosSettings />
+								<Settings />
 							</button>
 							<button
 								type="button"
@@ -168,7 +166,7 @@ const Response = ({ response, messageId, onMessageUpdate, onDeleteLocal }) => {
 								className="response__action-btn response__action-btn--delete"
 								title="Supprimer"
 							>
-								<MdDelete />
+								<Trash2 />
 							</button>
 							<button
 								type="button"
@@ -176,7 +174,7 @@ const Response = ({ response, messageId, onMessageUpdate, onDeleteLocal }) => {
 								className="response__action-btn response__action-btn--delete-all"
 								title="Supprimer pour tous"
 							>
-								<MdDeleteForever />
+								<Trash />
 							</button>
 						</>
 					)}
@@ -187,7 +185,7 @@ const Response = ({ response, messageId, onMessageUpdate, onDeleteLocal }) => {
 							className="response__action-btn response__action-btn--delete"
 							title="Supprimer"
 						>
-							<MdDelete />
+							<Trash2 />
 						</button>
 					)}
 				</div>

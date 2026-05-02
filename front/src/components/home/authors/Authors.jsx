@@ -19,8 +19,7 @@ const Authors = () => {
 				const authors = allUsers.authors || [];
 				setAuthors(authors);
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch(() => {
 				setErr("Impossible de charger les auteurs !");
 			});
 	}, []);
@@ -52,7 +51,6 @@ const Authors = () => {
 											}
 											title={oneAuthor.image?.alt || "default-image"}
 										/>
-										{console.log("oneAuthor.image:", oneAuthor.image)}
 									</Link>
 								</li>
 							</ul>

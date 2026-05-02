@@ -49,7 +49,7 @@ const Conversation = () => {
 			);
 		} catch (err) {
 			if (err.response?.status !== 403) {
-				console.log("markAsRead error:", err.response?.data);
+				alert("markAsRead error:", err.response?.data);
 			}
 		}
 	};

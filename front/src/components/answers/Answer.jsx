@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
-import { MdDelete } from "react-icons/md";
-import { IoIosSettings } from "react-icons/io";
-import { IoIosSend } from "react-icons/io";
+import { Settings, Trash2, Send } from "lucide-react";
 import { token } from "../../context/token";
 
 import "../../assets/styles/components/answers/answers.css";
@@ -52,7 +50,6 @@ const Answer = ({ bookId, commentId, answerId, onAnswerDeleted }) => {
 				setUpdateContent(res.data.content);
 			})
 			.catch((error) => {
-				console.log(error.response.data);
 				setErr("Impossible de charger la réponse");
 			});
 	}, [bookId, commentId]);
@@ -122,7 +119,7 @@ const Answer = ({ bookId, commentId, answerId, onAnswerDeleted }) => {
 										onClick={handleUpdate}
 										className="answer__update-btn"
 									>
-										<IoIosSend className="answer__icon" />
+										<Send className="answer__icon" />
 										<span>Valider</span>
 									</button>
 								</div>
@@ -143,11 +140,11 @@ const Answer = ({ bookId, commentId, answerId, onAnswerDeleted }) => {
 									<div className="answer__actions-list">
 										{auth.user.id === answer.userId._id && (
 											<li className="answer__action" onClick={toggleUpdateForm}>
-												<IoIosSettings className="answer__action-icon" />
+												<Settings className="answer__action-icon" />
 											</li>
 										)}
 										<li className="answer__action" onClick={handleDelete}>
-											<MdDelete className="answer__action-icon" />
+											<Trash2 className="answer__action-icon" />
 										</li>
 									</div>
 								</ul>

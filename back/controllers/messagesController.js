@@ -279,8 +279,6 @@ export const addResponse = async (req, res) => {
 		const populatedMessage = message.toObject();
 		populatedMessage.responses = populatedResponses;
 
-		console.log(JSON.stringify(populatedMessage.responses, null, 2));
-
 		res.status(201).json(populatedMessage);
 	} catch (error) {
 		res.status(400).json({ error: error.message });

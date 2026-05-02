@@ -8,7 +8,6 @@ dotenv.config();
 export const isLogged = (req, res, next) => {
 	// Récupérer le token d'authentification à partir des en-têtes de la requête
 	const authToken = req.headers.authorization;
-	console.log(authToken);
 
 	// Extraire le token de l'en-tête de la requête
 	const token = authToken?.split(" ")[1];

@@ -7,14 +7,16 @@ import DOMPurify from "dompurify";
 import LikeCounter from "../../components/likes/LikeCounter";
 import { useRef } from "react";
 
-import { IoEyeSharp } from "react-icons/io5";
-import { FaHeart } from "react-icons/fa";
-import { FaComment } from "react-icons/fa";
+import {
+	MessageCircle,
+	Heart,
+	Eye,
+	PlusCircle,
+	Trash2,
+	Settings,
+} from "lucide-react";
 import defaultImage from "../../assets/images/default-book.jpg";
 
-import { IoIosAddCircle } from "react-icons/io";
-import { MdDelete } from "react-icons/md";
-import { IoIosSettings } from "react-icons/io";
 import AddComment from "../../components/comments/AddComment";
 import Comments from "../../components/comments/Comments";
 
@@ -196,17 +198,17 @@ const Book = () => {
 
 									<ul className="book__stats">
 										<li className="book__stat">
-											<IoEyeSharp className="book__icon book__icon--view" />
+											<Eye className="book__icon book__icon--view" />
 											<pre>{book.views}</pre>
 										</li>
 
 										<li className="book__stat">
-											<FaHeart className="book__icon book__icon--like" />
+											<Heart className="book__icon book__icon--like" />
 											<pre>{book.likes?.length || 0}</pre>
 										</li>
 
 										<li className="book__stat">
-											<FaComment className="bo=ok__icon book__icon--comment" />
+											<MessageCircle className="bo=ok__icon book__icon--comment" />
 											<pre>{book.comments?.length || 0}</pre>
 										</li>
 									</ul>
@@ -225,7 +227,7 @@ const Book = () => {
 														to={`/ajouter-chapitre/${book._id}`}
 														className="book__action"
 													>
-														<IoIosAddCircle className="book__action-icon" />
+														<PlusCircle className="book__action-icon" />
 													</Link>
 												</li>
 
@@ -236,7 +238,7 @@ const Book = () => {
 																to={`/modifier-chapitre/${book._id}/${handleCurrentChapter[0]._id}`}
 																className="book__action"
 															>
-																<IoIosSettings className="book__action-icon" />
+																<Settings className="book__action-icon" />
 															</Link>
 														</li>
 
@@ -249,7 +251,7 @@ const Book = () => {
 																)
 															}
 														>
-															<MdDelete className="book__action-icon" />
+															<Trash2 className="book__action-icon" />
 														</li>
 													</>
 												)}

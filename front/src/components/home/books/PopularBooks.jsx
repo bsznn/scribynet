@@ -15,11 +15,9 @@ export default function PopularBooks() {
 		axios
 			.get(`${import.meta.env.VITE_API_URL}/books/popular-books`)
 			.then((res) => {
-				console.log(res);
 				setBooksPopulars(res.data);
 			})
-			.catch((res) => {
-				console.log(res);
+			.catch(() => {
 				setErr("Impossible de charger les données");
 			});
 	}, []);

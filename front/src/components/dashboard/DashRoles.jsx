@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { FaUserShield } from "react-icons/fa";
+import { ShieldUser } from "lucide-react";
 import defaultProfile from "../../assets/images/default-profile.jpg";
 
 import { token } from "../../context/token";
@@ -69,7 +69,7 @@ export default function DashRoles() {
 
 			{filtered.length === 0 ? (
 				<div className="dash-empty">
-					<FaUserShield className="dash-empty__icon" />
+					<ShieldUser className="dash-empty__icon" />
 					<span>Aucun utilisateur trouvé</span>
 				</div>
 			) : (

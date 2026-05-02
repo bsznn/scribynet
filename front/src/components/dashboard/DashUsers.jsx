@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { token } from "../../context/token";
-import { FaUsers } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+import { Users, Trash2 } from "lucide-react";
 import defaultProfile from "../../assets/images/default-profile.jpg";
 
 export default function DashUsers() {
@@ -69,7 +68,7 @@ export default function DashUsers() {
 
 			{filtered.length === 0 ? (
 				<div className="dash-empty">
-					<FaUsers className="dash-empty__icon" />
+					<Users className="dash-empty__icon" />
 					<span>Aucun utilisateur trouvé</span>
 				</div>
 			) : (
@@ -128,7 +127,7 @@ export default function DashUsers() {
 											onClick={() => handleDelete(u._id)}
 											title="Supprimer"
 										>
-											<MdDelete />
+											<Trash2 />
 										</button>
 									</td>
 								</tr>

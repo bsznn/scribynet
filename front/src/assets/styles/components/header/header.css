@@ -278,6 +278,10 @@ main {
 	transform: scale(1.1);
 }
 
+.header .lucide-circle-arrow-right {
+	stroke-width: 1.7;
+}
+
 @media (min-width: 768px) {
 	.header__content {
 		padding: 1rem;

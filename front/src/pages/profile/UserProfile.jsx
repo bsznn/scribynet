@@ -3,9 +3,7 @@ import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
-import { IoMdChatbubbles } from "react-icons/io";
-import { FaBookOpen } from "react-icons/fa";
-import { FaHeart, FaEye } from "react-icons/fa6";
+import { MessageCircle, BookOpen, Heart, Eye } from "lucide-react";
 
 import "../../assets/styles/pages/profile/profile.css";
 import badgeUser from "../../assets/images/profile/badge-user.png";
@@ -146,13 +144,13 @@ const UserProfile = () => {
 						<div className="profile__stats">
 							<ul>
 								<li>
-									<FaEye className="profile__icon" /> {totalViews}
+									<Eye className="profile__icon" /> {totalViews}
 								</li>
 								<li>
-									<FaBookOpen className="profile__icon" /> {books.length}
+									<BookOpen className="profile__icon" /> {books.length}
 								</li>
 								<li>
-									<FaHeart className="profile__icon" /> {totalLikes}
+									<Heart className="profile__icon" /> {totalLikes}
 								</li>
 							</ul>
 						</div>
@@ -167,7 +165,7 @@ const UserProfile = () => {
 											className="profile__link"
 											onClick={handleContact}
 										>
-											<IoMdChatbubbles className="profile__icon" /> Lui écrire
+											<MessageCircle className="profile__icon" /> Lui écrire
 										</button>
 									</li>
 								</ul>

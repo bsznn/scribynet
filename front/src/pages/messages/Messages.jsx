@@ -32,7 +32,6 @@ const Messages = () => {
 			.get(`${import.meta.env.VITE_API_URL}/messages`, { headers: token() })
 			.then((res) => setMessages(res.data))
 			.catch((error) => {
-				console.log(error);
 				setErr("Impossible de charger les messages");
 			});
 	};

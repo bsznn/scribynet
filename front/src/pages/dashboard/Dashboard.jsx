@@ -7,18 +7,18 @@ import fondImage from "../../assets/images/fond/fond-don.jpeg";
 import "../../assets/styles/pages/dashboard/dashboard.css";
 
 import {
-	FaComments,
-	FaBookOpen,
-	FaChartBar,
-	FaHeart,
-	FaGift,
-	FaClock,
-	FaCog,
-	FaTags,
-	FaUsers,
-	FaUserShield,
-	FaEllipsisH,
-} from "react-icons/fa";
+	MessageSquare,
+	BookOpen,
+	BarChart2,
+	Heart,
+	Gift,
+	Clock,
+	Settings,
+	Tags,
+	Users,
+	ShieldUser,
+	Ellipsis,
+} from "lucide-react";
 import DashComments from "../../components/dashboard/DashComments";
 import DashStories from "../../components/dashboard/DashStories";
 import DashStats from "../../components/dashboard/DashStats";
@@ -32,19 +32,19 @@ import DashRoles from "../../components/dashboard/DashRoles";
 import { useLocation } from "react-router-dom";
 
 const USER_NAV = [
-	{ key: "comments", label: "Commentaires", icon: FaComments },
-	{ key: "stories", label: "Histoires", icon: FaBookOpen },
-	{ key: "stats", label: "Statistiques", icon: FaChartBar },
-	{ key: "likes", label: "Likes", icon: FaHeart },
-	{ key: "dons", label: "Mes dons", icon: FaGift },
-	{ key: "history", label: "Historique", icon: FaClock },
-	{ key: "settings", label: "Paramètres", icon: FaCog },
+	{ key: "comments", label: "Commentaires", icon: MessageSquare },
+	{ key: "stories", label: "Histoires", icon: BookOpen },
+	{ key: "stats", label: "Statistiques", icon: BarChart2 },
+	{ key: "likes", label: "Likes", icon: Heart },
+	{ key: "dons", label: "Mes dons", icon: Gift },
+	{ key: "history", label: "Historique", icon: Clock },
+	{ key: "settings", label: "Paramètres", icon: Settings },
 ];
 
 const ADMIN_EXTRA = [
-	{ key: "categories", label: "Catégories", icon: FaTags },
-	{ key: "users", label: "Utilisateurs", icon: FaUsers },
-	{ key: "roles", label: "Rôles", icon: FaUserShield },
+	{ key: "categories", label: "Catégories", icon: Tags },
+	{ key: "users", label: "Utilisateurs", icon: Users },
+	{ key: "roles", label: "Rôles", icon: ShieldUser },
 ];
 
 const BOTTOM_COUNT = 4;
@@ -176,7 +176,7 @@ export default function Dashboard() {
 								className={`dash__bottomnav-item ${moreIsActive || moreOpen ? "dash__bottomnav-item--active" : ""}`}
 								onClick={() => setMoreOpen((prev) => !prev)}
 							>
-								<FaEllipsisH />
+								<Ellipsis />
 								<span>Plus</span>
 							</button>
 						)}

@@ -21,7 +21,6 @@ export const addChapter = async (req, res) => {
 		}
 
 		const { chapters } = req.body;
-		console.log("chapters:", chapters);
 
 		if (!chapters || !Array.isArray(chapters) || chapters.length === 0) {
 			return res.status(400).json({
@@ -52,7 +51,6 @@ export const addChapter = async (req, res) => {
 
 		res.status(200).json({ message: "Le chapitre a bien été ajouté" });
 	} catch (error) {
-		console.error("Erreur dans addChapter:", error);
 		res.status(500).json({
 			message: "Impossible d'ajouter de nouveaux chapitres",
 			error: error.message,
@@ -76,22 +74,18 @@ export const updateChapter = async (req, res) => {
 			return res.status(404).json({ message: "Ce chapitre est introuvable" });
 		}
 
-		console.log("Avant:", chapter);
-
 		chapter.title = title;
 		chapter.content = content;
 
 		await book.save();
 
-		console.log("Après:", chapter);
-
 		res.status(200).json({
 			message: "Le chapitre a été modifié avec succès !",
 		});
 	} catch (error) {
-		console.error(error);
 		res.status(500).json({
 			message: "Impossible de modifier le chapitre !",
+			error: error.message,
 		});
 	}
 };
@@ -127,9 +121,10 @@ export const deleteChapter = async (req, res) => {
 			message: "Le chapitre a été supprimé avec succès",
 			bookDeleted: false,
 		});
-	} catch (_error) {
+	} catch (error) {
 		res.status(500).json({
 			message: "Le chapitre n'a pas pu être supprimé",
+			error: error.message,
 		});
 	}
 };
@@ -155,9 +150,9 @@ export const getAllChaptersByBook = async (req, res) => {
 
 		res.status(200).json(populatedChapters);
 	} catch (error) {
-		console.error(error);
 		res.status(500).json({
 			message: "Impossible de récupérer tous les chapitres",
+			error: error.message,
 		});
 	}
 };
@@ -190,9 +185,9 @@ export const getOneChapterByBook = async (req, res) => {
 
 		res.status(200).json(chapter);
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
 			message: "Impossible de récupérer le chapitre",
+			error: error.message,
 		});
 	}
 };

@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { AiOutlineLogin } from "react-icons/ai";
-import { AiOutlineClose } from "react-icons/ai";
-import { RiMenu3Fill } from "react-icons/ri";
+import { X, Menu, CircleArrowRight } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import defaultImage from "../../assets/images/default-profile.jpg";
 import Logo from "../../assets/images/logo.png";
@@ -86,7 +84,7 @@ export default function Header() {
 					onClick={handleClick}
 					className="header__burger-button"
 				>
-					{toggle ? <AiOutlineClose /> : <RiMenu3Fill />}
+					{toggle ? <X /> : <Menu />}
 				</button>
 
 				<section
@@ -249,7 +247,7 @@ export default function Header() {
 							onClick={closeMenu}
 						>
 							<span className="header__auth-text">Connexion</span>
-							<AiOutlineLogin />
+							<CircleArrowRight />
 						</NavLink>
 					)}
 				</div>

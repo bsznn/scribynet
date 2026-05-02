@@ -28,8 +28,10 @@ export const addComment = async (req, res) => {
 
 		res.status(200).json({ message: "Le commentaire a bien été ajouté" });
 	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: "Impossible d'ajouter ce commentaire" });
+		res.status(500).json({
+			message: "Impossible d'ajouter ce commentaire",
+			error: error.message,
+		});
 	}
 };
 
@@ -67,8 +69,10 @@ export const updateComment = async (req, res) => {
 			.status(200)
 			.json({ message: "Le commentaire a été modifié avec succès" });
 	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: "Impossible de modifier le commentaire" });
+		res.status(500).json({
+			message: "Impossible de modifier le commentaire",
+			error: error.message,
+		});
 	}
 };
 
@@ -87,7 +91,10 @@ export const deleteComment = async (req, res) => {
 			.status(200)
 			.json({ message: "Le commentaire a été supprimé avec succès" });
 	} catch (_error) {
-		res.status(500).json({ message: "Impossible de supprimer le commentaire" });
+		res.status(500).json({
+			message: "Impossible de supprimer le commentaire",
+			error: error.message,
+		});
 	}
 };
 
@@ -110,9 +117,9 @@ export const getAllCommentsByBook = async (req, res) => {
 
 		res.status(200).json(populatedComments);
 	} catch (error) {
-		console.error(error);
 		res.status(500).json({
 			message: "Impossible de récupérer tous les commentaires",
+			error: error.message,
 		});
 	}
 };
@@ -145,9 +152,9 @@ export const getOneCommentByBook = async (req, res) => {
 
 		res.status(200).json(comment);
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
 			message: "Impossible de récupérer le commentaire",
+			error: error.message,
 		});
 	}
 };

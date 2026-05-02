@@ -23,8 +23,10 @@ export const addGeneralCategory = async (req, res) => {
 
 		res.status(200).json({ message: "Catégorie bien créée" });
 	} catch (error) {
-		console.error("Error creating a category:", error);
-		res.status(500).json({ message: "Impossible de créer une catégorie" });
+		res.status(500).json({
+			message: "Impossible de créer une catégorie",
+			error: error.message,
+		});
 	}
 };
 
@@ -67,7 +69,6 @@ export const updateCategoryByAdmin = async (req, res) => {
 
 		res.status(200).json(updatedCategory);
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
 			message: "Impossible de mettre à jour la catégorie",
 			error: error.message,
@@ -119,7 +120,6 @@ export const getOneCategory = async (req, res) => {
 
 		res.status(200).json(category);
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
 			message:
 				"Une erreur est survenue lors de la récupération de la catégorie",

@@ -1,7 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { MdDelete } from "react-icons/md";
-import { IoIosSettings } from "react-icons/io";
+import { Settings, Trash2 } from "lucide-react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -221,7 +220,7 @@ export default function Books() {
 													title="Modifier"
 													aria-label="Modifier le livre"
 												>
-													<IoIosSettings />
+													<Settings />
 												</button>
 											</li>
 
@@ -237,7 +236,7 @@ export default function Books() {
 													title="Supprimer"
 													aria-label="Supprimer le livre"
 												>
-													<MdDelete />
+													<Trash2 />
 												</button>
 											</li>
 										</ul>

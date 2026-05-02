@@ -13,11 +13,9 @@ export default function ComponentCategories() {
 		axios
 			.get(`${import.meta.env.VITE_API_URL}/categories`)
 			.then((res) => {
-				console.log(res);
 				setCategories(res.data);
 			})
 			.catch((res) => {
-				console.log(res);
 				setErr("Impossible de charger les données");
 			});
 	}, []);

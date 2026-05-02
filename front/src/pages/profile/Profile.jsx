@@ -4,10 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { token } from "../../context/token";
 import { useAuth } from "../../context/AuthContext";
 
-import { IoIosSettings } from "react-icons/io";
-import { MdDelete } from "react-icons/md";
-import { FaBookOpen } from "react-icons/fa";
-import { FaHeart, FaEye } from "react-icons/fa6";
+import { Settings, Trash2, BookOpen, Heart, Eye } from "lucide-react";
 
 import "../../assets/styles/pages/profile/profile.css";
 import badgeUser from "../../assets/images/profile/badge-user.png";
@@ -171,13 +168,13 @@ const Profile = () => {
 							<div className="profile__stats">
 								<ul>
 									<li>
-										<FaEye className="profile__icon" /> {totalViews}
+										<Eye className="profile__icon" /> {totalViews}
 									</li>
 									<li>
-										<FaBookOpen className="profile__icon" /> {books.length}
+										<BookOpen className="profile__icon" /> {books.length}
 									</li>
 									<li>
-										<FaHeart className="profile__icon" /> {totalLikes}
+										<Heart className="profile__icon" /> {totalLikes}
 									</li>
 								</ul>
 							</div>
@@ -191,11 +188,11 @@ const Profile = () => {
 											state={{ tab: "settings" }}
 											className="profile__link"
 										>
-											<IoIosSettings className="profile__icon" /> Modifier
+											<Settings className="profile__icon" /> Modifier
 										</Link>
 									</li>
 									<li onClick={() => handleDeleteUser(auth.user.id)}>
-										<MdDelete className="profile__icon" /> Supprimer
+										<Trash2 className="profile__icon" /> Supprimer
 									</li>
 								</ul>
 							</div>
@@ -312,7 +309,7 @@ const Profile = () => {
 																	title="Modifier"
 																	aria-label="Modifier l'histoire"
 																>
-																	<IoIosSettings />
+																	<Settings />
 																</button>
 															</li>
 
@@ -328,7 +325,7 @@ const Profile = () => {
 																	title="Supprimer"
 																	aria-label="Supprimer l'histoire"
 																>
-																	<MdDelete />
+																	<Trash2 />
 																</button>
 															</li>
 														</ul>

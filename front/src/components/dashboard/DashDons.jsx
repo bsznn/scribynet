@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { token } from "../../context/token";
-import { FaGift } from "react-icons/fa";
+import { Gift } from "lucide-react";
 
 export default function DashDons() {
 	const { user } = useAuth();
@@ -48,7 +48,7 @@ export default function DashDons() {
 					style={{ marginBottom: "1.5rem", maxWidth: 220 }}
 				>
 					<div className="dash-stat-card__icon">
-						<FaGift />
+						<Gift />
 					</div>
 					<span className="dash-stat-card__value">{total.toFixed(2)} €</span>
 					<span className="dash-stat-card__label">Total donné</span>
@@ -57,7 +57,7 @@ export default function DashDons() {
 
 			{dons.length === 0 ? (
 				<div className="dash-empty">
-					<FaGift className="dash-empty__icon" />
+					<Gift className="dash-empty__icon" />
 					<span>Vous n'avez encore effectué aucun don</span>
 				</div>
 			) : (
