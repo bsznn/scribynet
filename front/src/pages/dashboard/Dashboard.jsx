@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 
 import defaultProfile from "../../assets/images/default-profile.jpg";
-import fondImage from "../../assets/images/fond/fond-don.jpeg";
+import fondImage from "../../assets/images/fond/fond-don.jpg";
 
 import "../../assets/styles/pages/dashboard/dashboard.css";
 

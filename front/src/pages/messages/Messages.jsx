@@ -5,7 +5,7 @@ import Message from "../../components/messages/Message";
 import AddMessage from "../../components/messages/AddMessage";
 
 import "../../assets/styles/pages/messages/messages.css";
-import fondImage from "../../assets/images/fond/fond-don.jpeg";
+import fondImage from "../../assets/images/fond/fond-don.jpg";
 import { useAuth } from "../../context/AuthContext";
 
 const MESSAGES_PER_PAGE = 3;

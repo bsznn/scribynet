@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../assets/styles/pages/auth/form.css";
-import fondImage from "../../assets/images/fond/fond-cafe.jpeg";
+import fondImage from "../../assets/images/fond/fond-cafe.jpg";
 
 /* ── Modal consentement ── */
 function ConsentModal({ onAccept, onClose }) {

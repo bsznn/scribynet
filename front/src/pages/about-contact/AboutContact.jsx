@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { MapPin, Phone, Mail } from "lucide-react";
-import fondImage from "../../assets/images/fond/fond-arbre.jpeg";
+import fondImage from "../../assets/images/fond/fond-arbre.jpg";
 
 import "../../assets/styles/pages/about-contact/about-contact.css";
 

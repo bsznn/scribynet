@@ -5,7 +5,7 @@ import { token } from "../../context/token";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "../../assets/styles/pages/books/editbook.css";
-import fondImage from "../../assets/images/fond/fond-don.jpeg";
+import fondImage from "../../assets/images/fond/fond-don.jpg";
 
 const MAX_DESC = 500;
 

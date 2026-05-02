@@ -5,7 +5,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 import "../../assets/styles/pages/books/books.css";
-import fondImage from "../../assets/images/fond/fond-books.jpeg";
+import fondImage from "../../assets/images/fond/fond-books.jpg";
 import defaultImage from "../../assets/images/default-bookWhite.jpg";
 import { token } from "../../context/token";
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import fondImage from "../../assets/images/fond/fond-cafe.jpeg";
+import fondImage from "../../assets/images/fond/fond-cafe.jpg";
 import "../../assets/styles/pages/auth/form.css";
 
 export default function VerifyEmail() {

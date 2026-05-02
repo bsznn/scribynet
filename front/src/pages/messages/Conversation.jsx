@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import ResponseList from "../../components/messages/ResponseList";
 
 import "../../assets/styles/pages/messages/responses.css";
-import fondImage from "../../assets/images/fond/fond-book.jpeg";
+import fondImage from "../../assets/images/fond/fond-book.jpg";
 
 const Conversation = () => {
 	const { conversationId } = useParams();

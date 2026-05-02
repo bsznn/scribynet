@@ -21,7 +21,7 @@ import AddComment from "../../components/comments/AddComment";
 import Comments from "../../components/comments/Comments";
 
 import "../../assets/styles/pages/books/book.css";
-import fondImage from "../../assets/images/fond/fond-book.jpeg";
+import fondImage from "../../assets/images/fond/fond-book.jpg";
 
 const Book = () => {
 	const [book, setBook] = useState(null);

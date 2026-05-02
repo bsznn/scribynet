@@ -1,6 +1,6 @@
 import React from "react";
 import cancel from "../../assets/images/donation/cancel.jpg";
-import fondImage from "../../assets/images/fond/fond-don.jpeg";
+import fondImage from "../../assets/images/fond/fond-don.jpg";
 
 import "../../assets/styles/pages/donation/donation-component.css";
 

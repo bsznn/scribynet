@@ -10,7 +10,7 @@ import badgeUser from "../../assets/images/profile/badge-user.png";
 import badgeAdmin from "../../assets/images/profile/badge-admin.png";
 import userImage from "../../assets/images/default-profile.jpg";
 import defaultImage from "../../assets/images/default-book.jpg";
-import fondImage from "../../assets/images/fond/fond-profile.jpeg";
+import fondImage from "../../assets/images/fond/fond-profile.jpg";
 
 const UserProfile = () => {
 	const { id } = useParams();

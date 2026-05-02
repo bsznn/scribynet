@@ -6,7 +6,7 @@ import { token } from "../../context/token";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import "../../assets/styles/components/chapters/addchapter.css";
-import fondImage from "../../assets/images/fond/fond-book.jpeg";
+import fondImage from "../../assets/images/fond/fond-book.jpg";
 
 const ChapterAdd = () => {
 	const [inputs, setInputs] = useState({

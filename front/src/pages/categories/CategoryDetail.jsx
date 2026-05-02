@@ -8,6 +8,8 @@ import "../../assets/styles/pages/books/books.css";
 import "../../assets/styles/pages/categories/categories.css";
 import "../../assets/styles/pages/categories/category-detail.css";
 
+import fond from "../../assets/images/fond/fond-cat.jpg";
+
 export default function CategoryDetail() {
 	const { id } = useParams();
 	const [category, setCategory] = useState(null);
@@ -37,18 +39,15 @@ export default function CategoryDetail() {
 	return (
 		<main className="cat-detail">
 			{/* ── HEADER ── */}
-			<section className="cat-detail__header">
+			<section className="categories__header">
 				<img
-					src={
-						category?.image?.src
-							? `${import.meta.env.VITE_API_URL}/assets/img/${category.image.src}`
-							: defaultCategory
-					}
-					alt="fond__categoryDetail"
+					src={fond}
+					alt="fond_categories"
 					fetchPriority="low"
 					decoding="sync"
-					className="cat-detail__header-bg"
+					className="categories__header-bg"
 				/>
+
 				<article className="cat-detail__header-content">
 					<Link to="/categories" className="cat-detail__back">
 						← Catégories

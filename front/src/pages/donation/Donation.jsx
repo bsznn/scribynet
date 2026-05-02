@@ -4,7 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import "../../assets/styles/pages/donation/donation.css";
 import { Gift } from "lucide-react";
 
-import fondImage from "../../assets/images/fond/fond-don.jpeg";
+import fondImage from "../../assets/images/fond/fond-don.jpg";
 
 export default function Donation() {
 	const [content, setContent] = useState("");
