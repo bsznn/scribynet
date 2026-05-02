@@ -1,5 +1,5 @@
 import "../../../assets/styles/components/home/head/head.css";
-import headImage from "../../../assets/images/header-home/grass.jpg";
+import headImage from "../../../assets/images/header-home/grass.webp";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 
