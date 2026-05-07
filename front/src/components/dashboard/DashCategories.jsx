@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { token } from "../../context/token";
-import { Settings, Trash2, Tags } from "lucide-react";
-
+import { Settings, Tags, Trash2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import defaultImage from "../../assets/images/default-categories.jpg";
+import { token } from "../../context/token";
 
 /* ── Preview image ── */
 function ImagePreview({ src, alt }) {

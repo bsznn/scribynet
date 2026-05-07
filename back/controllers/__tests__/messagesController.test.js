@@ -1,20 +1,20 @@
 import mongoose from "mongoose";
-import {
-	createMessage,
-	getAllMessages,
-	getMessageById,
-	updateMessage,
-	deleteMessageForMe,
-	deleteMessageForAll,
-	addResponse,
-	updateResponse,
-	deleteResponseForMe,
-	deleteResponseForAll,
-	markAsRead,
-	getConversation,
-} from "../messagesController.js";
 import Message from "../../models/messageModel.js";
 import User from "../../models/userModel.js";
+import {
+	addResponse,
+	createMessage,
+	deleteMessageForAll,
+	deleteMessageForMe,
+	deleteResponseForAll,
+	deleteResponseForMe,
+	getAllMessages,
+	getConversation,
+	getMessageById,
+	markAsRead,
+	updateMessage,
+	updateResponse,
+} from "../messagesController.js";
 
 jest.mock("../../models/messageModel.js");
 jest.mock("../../models/userModel.js");
@@ -1109,4 +1109,189 @@ describe("getConversation", () => {
 
 		expect(res.status).toHaveBeenCalledWith(500);
 	});
+});
+
+// ─── Couverture complémentaire ─────────────────────────────────────────────
+
+// L.207 : getAllMessages — 3e populate (responses.userId) avec réponse réelle
+describe("getAllMessages — réponses avec userId", () => {
+  beforeEach(() => jest.clearAllMocks());
+
+  it("retourne les messages avec les réponses peuplées", async () => {
+    const responseWithUser = {
+      userId: { _id: senderId, login: "Alice" },
+      content: "Une réponse",
+      deletedFor: [],
+      responses: [],
+    };
+    const msg = {
+      responses: [responseWithUser],
+      toObject: () => ({
+        ...fakeMessage,
+        responses: [responseWithUser],
+      }),
+    };
+
+    Message.find = jest.fn().mockReturnValue({
+      populate: jest.fn().mockReturnThis(),
+      sort: jest.fn().mockResolvedValue([msg]),
+    });
+
+    const req = { userId: senderId };
+    const res = mockRes();
+    await getAllMessages(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    const [data] = res.json.mock.calls[0];
+    expect(data).toHaveLength(1);
+  });
+});
+
+// L.219-224 : filterDeletedResponses — réponse dans deletedFor → exclue
+describe("getAllMessages — filterDeletedResponses", () => {
+  beforeEach(() => jest.clearAllMocks());
+
+  it("exclut les réponses dont userId est dans deletedFor", async () => {
+    const filteredOut = {
+      userId: { _id: receiverId, login: "Bob" },
+      content: "Réponse supprimée",
+      deletedFor: [senderId],   // ← senderId a supprimé cette réponse
+      responses: [],
+      toObject: () => ({
+        userId: receiverId,
+        content: "Réponse supprimée",
+        deletedFor: [senderId],
+        responses: [],
+      }),
+    };
+    const visible = {
+      userId: { _id: receiverId, login: "Bob" },
+      content: "Réponse visible",
+      deletedFor: [],
+      responses: [],
+      toObject: () => ({
+        userId: receiverId,
+        content: "Réponse visible",
+        deletedFor: [],
+        responses: [],
+      }),
+    };
+    const msg = {
+      ...fakeMessage,
+      responses: [filteredOut, visible],
+      toObject: () => ({
+        ...fakeMessage,
+        responses: [
+          { ...filteredOut.toObject() },
+          { ...visible.toObject() },
+        ],
+      }),
+    };
+
+    Message.find = jest.fn().mockReturnValue({
+      populate: jest.fn().mockReturnThis(),
+      sort: jest.fn().mockResolvedValue([msg]),
+    });
+
+    const req = { userId: senderId };
+    const res = mockRes();
+    await getAllMessages(req, res);
+
+    const [data] = res.json.mock.calls[0];
+    // Seule la réponse visible doit subsister
+    expect(data[0].responses).toHaveLength(1);
+    expect(data[0].responses[0].content).toBe("Réponse visible");
+  });
+});
+
+// L.272 : deleteResponseById récursif — réponse imbriquée dans une sous-réponse
+describe("deleteResponseForAll — réponse imbriquée (récursion)", () => {
+  beforeEach(() => jest.clearAllMocks());
+
+  it("supprime une réponse imbriquée dans une sous-réponse", async () => {
+    const nestedId = new mongoose.Types.ObjectId().toString();
+
+    const nestedResponse = {
+      _id: { toString: () => nestedId },
+      userId: { toString: () => senderId },
+      content: "Réponse imbriquée",
+      deletedFor: [],
+      responses: [],
+    };
+
+    const parentResponse = {
+      _id: { toString: () => respId },
+      userId: { toString: () => receiverId },
+      content: "Réponse parent",
+      deletedFor: [],
+      responses: [nestedResponse],
+    };
+
+    const saveMock = jest.fn().mockResolvedValue(true);
+    const msg = {
+      ...fakeMessage,
+      responses: [parentResponse],
+      save: saveMock,
+      toObject: jest.fn().mockReturnValue({ responses: [] }),
+    };
+
+    Message.findById = jest.fn().mockResolvedValue(msg);
+    User.findById = jest.fn().mockReturnValue({
+      select: jest.fn().mockResolvedValue({ login: "Alice", image: {} }),
+    });
+
+    const req = {
+      params: { messageId: msgId, responseId: nestedId },
+      userId: { toString: () => senderId },
+    };
+    const res = mockRes();
+    await deleteResponseForAll(req, res);
+
+    // La réponse imbriquée doit avoir été retirée du tableau parent
+    expect(parentResponse.responses).toHaveLength(0);
+    expect(saveMock).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(500);
+  });
+});
+
+// L.333 : populateResponseUsers — user introuvable → fallback "Utilisateur inconnu"
+describe("addResponse — user introuvable (fallback)", () => {
+  beforeEach(() => jest.clearAllMocks());
+
+  it("utilise le fallback si User.findById retourne null", async () => {
+    const responses = [];
+    const originalPush = responses.push.bind(responses);
+    jest.spyOn(responses, "push").mockImplementation((item) => {
+      item.toObject = () => ({ ...item, responses: [] });
+      item.responses = item.responses || [];
+      return originalPush(item);
+    });
+
+    const saveMock = jest.fn().mockResolvedValue(true);
+    const msg = {
+      ...fakeMessage,
+      responses,
+      save: saveMock,
+      toObject: jest.fn().mockReturnValue({ ...fakeMessage, responses: [] }),
+    };
+
+    Message.findById = jest.fn().mockResolvedValue(msg);
+    // User.findById retourne null → branche fallback L.333
+    User.findById = jest.fn().mockReturnValue({
+      select: jest.fn().mockResolvedValue(null),
+    });
+
+    const req = {
+      params: { id: msgId },
+      body: { content: "Réponse sans user" },
+      userId: senderId,
+    };
+    const res = mockRes();
+    await addResponse(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(201);
+    const [data] = res.json.mock.calls[0];
+    // Le fallback doit être appliqué au userId de la réponse
+    expect(data.responses[0].userId.login).toBe("Utilisateur inconnu");
+  });
 });

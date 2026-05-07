@@ -1,7 +1,7 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import axios from "axios";
 import { MemoryRouter } from "react-router-dom";
 import Register from "../Register.jsx";
-import axios from "axios";
 
 jest.mock("axios");
 

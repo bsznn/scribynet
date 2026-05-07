@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { token } from "../../context/token";
-import { useParams } from "react-router-dom";
 import { Heart } from "lucide-react";
-
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { token } from "../../context/token";
 
 const LikeCounter = ({ likeAdd }) => {
 	const [likes, setLikes] = useState(0);

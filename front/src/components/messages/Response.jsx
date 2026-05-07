@@ -1,9 +1,9 @@
+import { Settings, Trash, Trash2 } from "lucide-react";
 import React, { useState } from "react";
 import defaultProfile from "../../assets/images/default-profile.jpg";
 import { useAuth } from "../../context/AuthContext";
-import ResponseList from "./ResponseList";
 import { token } from "../../context/token";
-import { Settings, Trash2, Trash } from "lucide-react";
+import ResponseList from "./ResponseList";
 
 const Response = ({ response, messageId, onMessageUpdate, onDeleteLocal }) => {
 	const auth = useAuth();
@@ -45,7 +45,6 @@ const Response = ({ response, messageId, onMessageUpdate, onDeleteLocal }) => {
 			onDeleteLocal?.(response._id); // ✅ après le fetch
 			// ❌ ne pas appeler onMessageUpdate ici, sinon ça réaffiche tout
 		} catch (err) {
-			console.error(err);
 			alert(err.message);
 		}
 	};
@@ -72,7 +71,6 @@ const Response = ({ response, messageId, onMessageUpdate, onDeleteLocal }) => {
 			onDeleteLocal?.(response._id);
 			onMessageUpdate?.(data.messageData);
 		} catch (err) {
-			console.error(err);
 			alert(err.message);
 		}
 	};

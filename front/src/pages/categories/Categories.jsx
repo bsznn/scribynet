@@ -1,12 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
 import { PlusCircle, Settings, Trash2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import { token } from "../../context/token";
-
 import defaultImage from "../../assets/images/default-categories.jpg";
 import fond from "../../assets/images/fond/fond-cat.jpg";
+import { useAuth } from "../../context/AuthContext";
+import { token } from "../../context/token";
 
 import "../../assets/styles/pages/categories/categories.css";
 

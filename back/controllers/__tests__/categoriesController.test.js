@@ -1,12 +1,12 @@
+import Category from "../../models/categoryModel.js";
 import {
 	addGeneralCategory,
-	updateCategoryByAdmin,
 	deleteCategoryByAdmin,
 	getAllCategories,
-	getOneCategory,
 	getAllCategoriesWithBooks,
+	getOneCategory,
+	updateCategoryByAdmin,
 } from "../categoriesController.js";
-import Category from "../../models/categoryModel.js";
 
 jest.mock("../../models/categoryModel.js");
 

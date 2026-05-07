@@ -1,7 +1,7 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import axios from "axios";
 import { MemoryRouter } from "react-router-dom";
 import Login from "../Login.jsx";
-import axios from "axios";
 
 jest.mock("axios");
 
@@ -141,7 +141,7 @@ describe("Login", () => {
 
 		await waitFor(() => {
 			expect(axios.post).toHaveBeenCalledWith(
-				`${import.meta.env.VITE_API_URL}/login`,
+				    "http://localhost:5000/login",
 				{
 					email: "test@test.com",
 					password: "password123",

@@ -32,6 +32,30 @@ const LegalNotices = () => {
 					</section>
 
 					<section className="legal-notices__section">
+						<h2 className="legal-notices__subtitle">Hébergement</h2>
+						<p>
+							Le site Scriby'net est hébergé par la société <strong>Render Services, Inc.</strong>
+						</p>
+						<p>Adresse : 525 Brannan St, Suite 300, San Francisco, CA 94107, États-Unis</p>
+						<p>
+							Site web :{" "}
+							<a href="https://render.com" target="_blank" rel="noopener noreferrer">
+							https://render.com
+							</a>
+						</p>
+						<p>
+							Le nom de domaine <strong>scribynet.com</strong> est enregistré auprès de{" "}
+							<strong>Gandi SAS</strong>, 63-65 Boulevard Masséna, 75013 Paris, France.
+						</p>
+						<p>
+							Site web :{" "}
+							<a href="https://www.gandi.net" target="_blank" rel="noopener noreferrer">
+							https://www.gandi.net
+							</a>
+						</p>
+					</section>
+
+					<section className="legal-notices__section">
 						<h2 className="legal-notices__subtitle">
 							Propriété intellectuelle
 						</h2>

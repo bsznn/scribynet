@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import axios from "axios";
-import { token } from "../../context/token";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { token } from "../../context/token";
 
 import "../../assets/styles/components/chapters/addchapter.css";
 import fondImage from "../../assets/images/fond/fond-book.jpg";
@@ -53,7 +53,6 @@ const ChapterAdd = () => {
 			setInputs({ chapterContent: "", chapterTitle: "" });
 			navigate(`/histoire/${bookId}`);
 		} catch (error) {
-			console.error(error);
 			setErr("Une erreur est survenue lors de l'ajout du chapitre.");
 		}
 	};

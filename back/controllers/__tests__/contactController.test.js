@@ -1,5 +1,5 @@
-import { addContact, getAllContacts } from "../contactController.js";
 import Contact from "../../models/contactModel.js";
+import { addContact, getAllContacts } from "../contactController.js";
 
 jest.mock("../../models/contactModel.js");
 
@@ -141,7 +141,7 @@ describe("addContact", () => {
 		await addContact(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.json).toHaveBeenCalledWith({ error: "Erreur serveur." });
+		expect(res.json).toHaveBeenCalledWith({ error: "Une erreur est survenue lors de l'envoi du message." });
 	});
 });
 
@@ -193,6 +193,6 @@ describe("getAllContacts", () => {
 		await getAllContacts(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.json).toHaveBeenCalledWith({ error: "Erreur serveur." });
+		expect(res.json).toHaveBeenCalledWith({ error: "Impossible de récupérer tous les contacts." });
 	});
 });

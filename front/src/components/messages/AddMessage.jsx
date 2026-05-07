@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { token } from "../../context/token";
+import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { token } from "../../context/token";
 
 import "../../assets/styles/pages/messages/messages.css";
 
@@ -158,7 +158,6 @@ const AddMessage = ({ onMessageSent }) => {
 
 			<button type="submit">Envoyer</button>
 
-			{error && <p className="error-message">{error}</p>}
 			{success && <p className="success-message">{success}</p>}
 		</form>
 	);

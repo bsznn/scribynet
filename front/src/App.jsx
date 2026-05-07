@@ -1,23 +1,22 @@
-import { Suspense, lazy } from "react";
+import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-
-// ── PAGES CRITIQUES (bundle principal) ──
-import Home from "./pages/home/Home";
+import AboutContact from "./pages/about-contact/AboutContact";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
-import Books from "./pages/books/Books";
+import VerifyEmail from "./pages/auth/VerifyEmail";
 import Book from "./pages/books/Book";
+import Books from "./pages/books/Books";
 import Categories from "./pages/categories/Categories";
 import CategoryDetail from "./pages/categories/CategoryDetail";
-import AboutContact from "./pages/about-contact/AboutContact";
+import Donation from "./pages/donation/Donation";
+import NotFound from "./pages/errors/NotFound";
 import LegalNotices from "./pages/footer/LegalNotices";
 import PrivacyPolicy from "./pages/footer/PrivacyPolicy";
-import NotFound from "./pages/errors/NotFound";
-import VerifyEmail from "./pages/auth/VerifyEmail";
+// ── PAGES CRITIQUES (bundle principal) ──
+import Home from "./pages/home/Home";
 import UserProfile from "./pages/profile/UserProfile";
-import Donation from "./pages/donation/Donation";
-import PrivateRoute from "./private-route/PrivateRoute";
 import GuestRoute from "./private-route/GuestRoute";
+import PrivateRoute from "./private-route/PrivateRoute";
 
 // ── PAGES LAZY (chargées à la demande) ──
 const AddBook = lazy(() =>

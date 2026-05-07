@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
+import Book from "../../models/bookModel.js";
 import {
 	addChapter,
-	updateChapter,
 	deleteChapter,
 	getAllChaptersByBook,
 	getOneChapterByBook,
+	updateChapter,
 } from "../chaptersController.js";
-import Book from "../../models/bookModel.js";
 
 jest.mock("../../models/bookModel.js");
 
@@ -81,7 +81,6 @@ describe("addChapter", () => {
 		expect(res.json).toHaveBeenCalledWith(
 			expect.objectContaining({
 				message: "Impossible d'ajouter de nouveaux chapitres",
-				error: "Vous ne pouvez ajouter des chapitres qu'à vos propres livres",
 			}),
 		);
 	});

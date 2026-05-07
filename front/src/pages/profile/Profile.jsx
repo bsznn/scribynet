@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { BookOpen, Eye, Heart, Settings, Trash2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { token } from "../../context/token";
 import { useAuth } from "../../context/AuthContext";
-
-import { Settings, Trash2, BookOpen, Heart, Eye } from "lucide-react";
+import { token } from "../../context/token";
 
 import "../../assets/styles/pages/profile/profile.css";
-import badgeUser from "../../assets/images/profile/badge-user.png";
-import badgeAdmin from "../../assets/images/profile/badge-admin.png";
-import userImage from "../../assets/images/default-profile.jpg";
 import defaultImage from "../../assets/images/default-book.jpg";
-import fly from "../../assets/images/profile/fly.jpg";
+import userImage from "../../assets/images/default-profile.jpg";
 import fondImage from "../../assets/images/fond/fond-profile.jpg";
+import badgeAdmin from "../../assets/images/profile/badge-admin.png";
+import badgeUser from "../../assets/images/profile/badge-user.png";
+import fly from "../../assets/images/profile/fly.jpg";
 
 const Profile = () => {
 	const auth = useAuth();

@@ -1,19 +1,16 @@
+import Gift from "../../models/giftModel.js";
+import User from "../../models/userModel.js";
 import {
+	createGift,
 	getAllGifts,
 	getGiftById,
 	getGiftsReceivedByUser,
 	getGiftsSentByUser,
-	createGift,
 	saveDonationFromSession,
 } from "../giftsController.js";
-import Gift from "../../models/giftModel.js";
 
 jest.mock("../../models/giftModel.js");
-
-// ─── Mock Stripe ──────────────────────────────────────────────────────────────
-// Les variables déclarées avec const/let ne sont PAS accessibles dans le
-// factory de jest.mock (hoisting). On stocke les fns dans un objet `stripeMocks`
-// déclaré avec `var` (hoisted lui aussi) pour contourner le problème.
+jest.mock("../../models/userModel.js");
 
 var stripeMocks = {};
 
@@ -44,6 +41,8 @@ const fakeGift = {
 	isValidated: true,
 	save: jest.fn().mockResolvedValue(true),
 };
+
+// ─── getAllGifts ──────────────────────────────────────────────────────────────
 
 describe("getAllGifts", () => {
 	beforeEach(() => jest.clearAllMocks());
@@ -86,6 +85,8 @@ describe("getAllGifts", () => {
 		expect(res.json).toHaveBeenCalledWith({ error: "DB error" });
 	});
 });
+
+// ─── getGiftById ─────────────────────────────────────────────────────────────
 
 describe("getGiftById", () => {
 	beforeEach(() => jest.clearAllMocks());
@@ -130,6 +131,8 @@ describe("getGiftById", () => {
 		expect(res.json).toHaveBeenCalledWith({ error: "DB error" });
 	});
 });
+
+// ─── getGiftsReceivedByUser ───────────────────────────────────────────────────
 
 describe("getGiftsReceivedByUser", () => {
 	beforeEach(() => jest.clearAllMocks());
@@ -176,6 +179,8 @@ describe("getGiftsReceivedByUser", () => {
 	});
 });
 
+// ─── getGiftsSentByUser ───────────────────────────────────────────────────────
+
 describe("getGiftsSentByUser", () => {
 	beforeEach(() => jest.clearAllMocks());
 
@@ -221,6 +226,8 @@ describe("getGiftsSentByUser", () => {
 	});
 });
 
+// ─── createGift ───────────────────────────────────────────────────────────────
+
 describe("createGift", () => {
 	beforeEach(() => jest.clearAllMocks());
 
@@ -233,7 +240,23 @@ describe("createGift", () => {
 		expect(res.json).toHaveBeenCalledWith({ error: "Le montant est requis" });
 	});
 
+	it("retourne 404 si l'utilisateur n'existe pas", async () => {
+		User.findById = jest.fn().mockReturnValue({
+			select: jest.fn().mockResolvedValue(null),
+		});
+
+		const req = { body: { content: "Bravo !", price: 10 }, userId: "user123" };
+		const res = mockRes();
+		await createGift(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(404);
+		expect(res.json).toHaveBeenCalledWith({ error: "Utilisateur introuvable" });
+	});
+
 	it("crée une session Stripe et retourne 200 avec l'url", async () => {
+		User.findById = jest.fn().mockReturnValue({
+			select: jest.fn().mockResolvedValue({ email: "test@test.com" }),
+		});
 		stripeMocks.create.mockResolvedValueOnce({
 			url: "https://stripe.com/pay/abc",
 		});
@@ -253,7 +276,7 @@ describe("createGift", () => {
 					expect.objectContaining({
 						price_data: expect.objectContaining({
 							currency: "eur",
-							unit_amount: 1000, // 10 * 100
+							unit_amount: 1000,
 						}),
 					}),
 				]),
@@ -265,12 +288,13 @@ describe("createGift", () => {
 			}),
 		);
 		expect(res.status).toHaveBeenCalledWith(200);
-		expect(res.json).toHaveBeenCalledWith({
-			url: "https://stripe.com/pay/abc",
-		});
+		expect(res.json).toHaveBeenCalledWith({ url: "https://stripe.com/pay/abc" });
 	});
 
 	it("utilise 'Soutien au créateur' si content est absent", async () => {
+		User.findById = jest.fn().mockReturnValue({
+			select: jest.fn().mockResolvedValue({ email: "test@test.com" }),
+		});
 		stripeMocks.create.mockResolvedValueOnce({
 			url: "https://stripe.com/pay/abc",
 		});
@@ -295,6 +319,9 @@ describe("createGift", () => {
 	});
 
 	it("retourne 500 en cas d'erreur Stripe", async () => {
+		User.findById = jest.fn().mockReturnValue({
+			select: jest.fn().mockResolvedValue({ email: "test@test.com" }),
+		});
 		stripeMocks.create.mockRejectedValueOnce(new Error("Stripe error"));
 
 		const req = { body: { content: "Bravo !", price: 10 }, userId: "user123" };
@@ -305,6 +332,8 @@ describe("createGift", () => {
 		expect(res.json).toHaveBeenCalledWith({ error: "Stripe error" });
 	});
 });
+
+// ─── saveDonationFromSession ──────────────────────────────────────────────────
 
 describe("saveDonationFromSession", () => {
 	beforeEach(() => jest.clearAllMocks());
@@ -383,7 +412,7 @@ describe("saveDonationFromSession", () => {
 			expect.objectContaining({
 				senderId: "user123",
 				content: "Bravo !",
-				price: 10, // 1000 / 100
+				price: 10,
 				stripeSessionId: "sess_new",
 				isValidated: true,
 			}),
@@ -398,7 +427,7 @@ describe("saveDonationFromSession", () => {
 	it("utilise une chaîne vide si content est absent dans les metadata", async () => {
 		stripeMocks.retrieve.mockResolvedValueOnce({
 			payment_status: "paid",
-			metadata: { senderId: "user123" }, // pas de content
+			metadata: { senderId: "user123" },
 			amount_total: 500,
 		});
 		Gift.findOne = jest.fn().mockResolvedValue(null);
@@ -421,6 +450,8 @@ describe("saveDonationFromSession", () => {
 		await saveDonationFromSession(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.json).toHaveBeenCalledWith({ error: "Erreur serveur" });
+		expect(res.json).toHaveBeenCalledWith({
+			error: "Impossible d'enregistrer le don.",
+		});
 	});
 });

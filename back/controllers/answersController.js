@@ -49,7 +49,6 @@ export const addAnswer = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Impossible d'ajouter une nouvelle réponse",
-			error: error.message,
 		});
 	}
 };
@@ -82,7 +81,6 @@ export const updateAnswer = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Impossible de modifier la réponse",
-			error: error.message,
 		});
 	}
 };
@@ -104,7 +102,6 @@ export const deleteAnswer = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Impossible de supprimer la réponse",
-			error: error.message,
 		});
 	}
 };
@@ -135,7 +132,6 @@ export const getAllAnswersByComment = async (req, res) => {
 
 		res.status(200).json(populatedAnswers); // Renvoie des réponses peuplées
 	} catch (error) {
-		console.error(error);
 		res.status(500).json({
 			message: "Impossible de récupérer toutes les réponses du commentaire",
 		});
@@ -175,7 +171,6 @@ export const getOneAnswerByComment = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Impossible de récupérer la réponse du commentaire",
-			error: error.message,
 		});
 	}
 };

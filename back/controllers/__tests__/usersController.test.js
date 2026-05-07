@@ -1,22 +1,28 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
+import Book from "../../models/bookModel.js";
+import User from "../../models/userModel.js";
 import {
-	register,
-	login,
+	deleteUser,
 	getAllUsers,
 	getOneUser,
-	updateUser,
-	deleteUser,
+	login,
+	register,
+	resendVerification,
 	updateRole,
+	updateUser,
+	verifyEmail,
 } from "../usersController.js";
-import User from "../../models/userModel.js";
-import Book from "../../models/bookModel.js";
 
 jest.mock("../../models/userModel.js");
 jest.mock("../../models/bookModel.js");
 jest.mock("bcrypt");
 jest.mock("jsonwebtoken");
+// Mock emailService pour éviter les vrais envois d'email
+jest.mock("../../services/emailService.js", () => ({
+	sendVerificationEmail: jest.fn().mockResolvedValue(true),
+}));
 
 const mockRes = () => {
 	const res = {};
@@ -35,6 +41,7 @@ const fakeUser = {
 	role: "user",
 	description: "Bio",
 	image: { src: "avatar.jpg", alt: "avatar.jpg" },
+	isVerified: true,
 	save: jest.fn().mockResolvedValue(true),
 };
 
@@ -45,80 +52,148 @@ describe("register", () => {
 
 	it("retourne 400 si le login est vide", async () => {
 		const req = {
-			body: { login: "  ", email: "a@test.com", password: "Pass1!" },
+			body: {
+				login: "  ",
+				email: "a@test.com",
+				password: "Pass1!Aa",
+				consentGiven: true,
+			},
 		};
 		const res = mockRes();
 		await register(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(400);
-		expect(res.json).toHaveBeenCalledWith({
-			message: "Veuillez remplir tous les champs",
-		});
+		// Le contrôleur renvoie "Champs invalides" quand login/email/password est invalide
+		expect(res.json).toHaveBeenCalledWith({ message: "Champs invalides" });
 	});
 
 	it("retourne 400 si l'email est vide", async () => {
-		const req = { body: { login: "Alice", email: "  ", password: "Pass1!" } };
+		const req = {
+			body: {
+				login: "Alice",
+				email: "  ",
+				password: "Pass1!Aa",
+				consentGiven: true,
+			},
+		};
 		const res = mockRes();
 		await register(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(400);
+		expect(res.json).toHaveBeenCalledWith({ message: "Champs invalides" });
 	});
 
 	it("retourne 400 si le mot de passe est vide", async () => {
 		const req = {
-			body: { login: "Alice", email: "a@test.com", password: "  " },
+			body: {
+				login: "Alice",
+				email: "a@test.com",
+				password: "  ",
+				consentGiven: true,
+			},
 		};
 		const res = mockRes();
 		await register(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(400);
+		expect(res.json).toHaveBeenCalledWith({ message: "Champs invalides" });
 	});
 
-	it("retourne 401 si l'email est déjà enregistré", async () => {
-		User.findOne = jest.fn().mockResolvedValue(fakeUser);
-
+	it("retourne 400 si consentGiven est absent ou false", async () => {
 		const req = {
-			body: { login: "Alice", email: "alice@test.com", password: "Pass1!Aa" },
+			body: {
+				login: "Alice",
+				email: "alice@test.com",
+				password: "Pass1!Aa",
+				consentGiven: false,
+			},
 		};
 		const res = mockRes();
 		await register(req, res);
 
-		expect(res.status).toHaveBeenCalledWith(401);
+		expect(res.status).toHaveBeenCalledWith(400);
 		expect(res.json).toHaveBeenCalledWith({
-			message: "Cet email est déjà enregistré",
+			message:
+				"Vous devez accepter les conditions d'utilisation pour créer un compte.",
 		});
 	});
 
-	it("retourne 401 si le mot de passe ne respecte pas la complexité", async () => {
+	it("retourne 400 si l'email est invalide", async () => {
+		const req = {
+			body: {
+				login: "Alice",
+				email: "pas-un-email",
+				password: "Pass1!Aa",
+				consentGiven: true,
+			},
+		};
+		const res = mockRes();
+		await register(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(400);
+		expect(res.json).toHaveBeenCalledWith({ message: "Email invalide" });
+	});
+
+	it("retourne 400 si le mot de passe ne respecte pas la complexité", async () => {
 		User.findOne = jest.fn().mockResolvedValue(null);
 
 		const req = {
-			body: { login: "Alice", email: "alice@test.com", password: "faible" },
+			body: {
+				login: "Alice",
+				email: "alice@test.com",
+				password: "faible",
+				consentGiven: true,
+			},
 		};
 		const res = mockRes();
 		await register(req, res);
 
-		expect(res.status).toHaveBeenCalledWith(401);
-		expect(res.json).toHaveBeenCalledWith({
-			message: "Mot de passe incorrecte",
-		});
+		// Le contrôleur retourne 400 + "Mot de passe invalide"
+		expect(res.status).toHaveBeenCalledWith(400);
+		expect(res.json).toHaveBeenCalledWith({ message: "Mot de passe invalide" });
 	});
 
-	it("crée un compte et retourne 200", async () => {
+	it("retourne 409 si l'email est déjà enregistré", async () => {
+		User.findOne = jest.fn().mockResolvedValue(fakeUser);
+
+		const req = {
+			body: {
+				login: "Alice",
+				email: "alice@test.com",
+				password: "Pass1!Aa",
+				consentGiven: true,
+			},
+		};
+		const res = mockRes();
+		await register(req, res);
+
+		// Le contrôleur retourne 409 + "Email déjà utilisé"
+		expect(res.status).toHaveBeenCalledWith(409);
+		expect(res.json).toHaveBeenCalledWith({ message: "Email déjà utilisé" });
+	});
+
+	it("crée un compte et retourne 201", async () => {
 		User.findOne = jest.fn().mockResolvedValue(null);
 		const saveMock = jest.fn().mockResolvedValue(true);
 		User.mockImplementation(() => ({ save: saveMock }));
 
 		const req = {
-			body: { login: "Alice", email: "alice@test.com", password: "Pass1!Aa" },
+			body: {
+				login: "Alice",
+				email: "alice@test.com",
+				password: "Pass1!Aa",
+				consentGiven: true,
+			},
 		};
 		const res = mockRes();
 		await register(req, res);
 
 		expect(saveMock).toHaveBeenCalled();
-		expect(res.status).toHaveBeenCalledWith(200);
+		// Le contrôleur retourne 201
+		expect(res.status).toHaveBeenCalledWith(201);
 		expect(res.json).toHaveBeenCalledWith({
-			message: "Votre compte a bien été créé !",
+			message:
+				"Compte créé avec succès. Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte mail.",
 		});
 	});
 
@@ -126,14 +201,19 @@ describe("register", () => {
 		User.findOne = jest.fn().mockRejectedValue(new Error("DB error"));
 
 		const req = {
-			body: { login: "Alice", email: "alice@test.com", password: "Pass1!Aa" },
+			body: {
+				login: "Alice",
+				email: "alice@test.com",
+				password: "Pass1!Aa",
+				consentGiven: true,
+			},
 		};
 		const res = mockRes();
 		await register(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(500);
 		expect(res.json).toHaveBeenCalledWith({
-			message: "La création de compte a échoué",
+			message: "Une erreur est survenue. Impossible de créer un compte.",
 		});
 	});
 });
@@ -143,6 +223,15 @@ describe("register", () => {
 describe("login", () => {
 	beforeEach(() => jest.clearAllMocks());
 
+	it("retourne 400 si email ou password est vide", async () => {
+		const req = { body: { email: "  ", password: "Pass1!Aa" } };
+		const res = mockRes();
+		await login(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(400);
+		expect(res.json).toHaveBeenCalledWith({ message: "Champs invalides" });
+	});
+
 	it("retourne 404 si aucun utilisateur trouvé", async () => {
 		User.findOne = jest.fn().mockResolvedValue(null);
 
@@ -151,28 +240,43 @@ describe("login", () => {
 		await login(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(404);
+		// Le contrôleur renvoie "Utilisateur introuvable"
 		expect(res.json).toHaveBeenCalledWith({
-			message: "Aucun utilisateur trouvé avec cette adresse mail",
+			message: "Utilisateur introuvable",
 		});
+	});
+
+	it("retourne 403 si l'email n'est pas vérifié", async () => {
+		const unverifiedUser = { ...fakeUser, isVerified: false };
+		User.findOne = jest.fn().mockResolvedValue(unverifiedUser);
+
+		const req = { body: { email: "alice@test.com", password: "Pass1!Aa" } };
+		const res = mockRes();
+		await login(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(403);
+		expect(res.json).toHaveBeenCalledWith(
+			expect.objectContaining({ notVerified: true }),
+		);
 	});
 
 	it("retourne 401 si le mot de passe est incorrect", async () => {
 		User.findOne = jest.fn().mockResolvedValue(fakeUser);
-		bcrypt.compareSync = jest.fn().mockReturnValue(false);
+		// Le contrôleur utilise bcrypt.compare (async), pas compareSync
+		bcrypt.compare = jest.fn().mockResolvedValue(false);
 
 		const req = { body: { email: "alice@test.com", password: "mauvais" } };
 		const res = mockRes();
 		await login(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(401);
-		expect(res.json).toHaveBeenCalledWith({
-			message: "Mot de passe incorrect",
-		});
+		expect(res.json).toHaveBeenCalledWith({ message: "Mot de passe incorrect" });
 	});
 
 	it("retourne 200 avec le token et les infos utilisateur", async () => {
 		User.findOne = jest.fn().mockResolvedValue(fakeUser);
-		bcrypt.compareSync = jest.fn().mockReturnValue(true);
+		// Le contrôleur utilise bcrypt.compare (async)
+		bcrypt.compare = jest.fn().mockResolvedValue(true);
 		jwt.sign = jest.fn().mockReturnValue("fake_token");
 
 		const req = { body: { email: "alice@test.com", password: "Pass1!Aa" } };
@@ -198,8 +302,10 @@ describe("login", () => {
 		await login(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(500);
+		// Le contrôleur renvoie ce message précis
 		expect(res.json).toHaveBeenCalledWith({
-			message: "Erreur lors de la connexion",
+			message:
+				"Une erreur est survenue. Impossible de se connecter pour le moment.",
 		});
 	});
 });
@@ -211,7 +317,11 @@ describe("getAllUsers", () => {
 
 	it("retourne 200 avec readers, authors et users", async () => {
 		Book.distinct = jest.fn().mockResolvedValue(["user123"]);
-		User.find = jest.fn().mockResolvedValue([fakeUser]);
+		// Le contrôleur enchaîne 3 User.find().select("-password")
+		// On mock find() pour retourner un objet avec select()
+		User.find = jest.fn().mockReturnValue({
+			select: jest.fn().mockResolvedValue([fakeUser]),
+		});
 
 		const res = mockRes();
 		await getAllUsers({}, res);
@@ -234,8 +344,10 @@ describe("getAllUsers", () => {
 		await getAllUsers({}, res);
 
 		expect(res.status).toHaveBeenCalledWith(500);
+		// Le contrôleur renvoie ce message précis
 		expect(res.json).toHaveBeenCalledWith({
-			message: "Impossible de récupérer les utilisateurs",
+			message:
+				"Une erreur est survenue lors de la récupération de tous les utilisateurs.",
 		});
 	});
 });
@@ -245,39 +357,57 @@ describe("getAllUsers", () => {
 describe("getOneUser", () => {
 	beforeEach(() => jest.clearAllMocks());
 
+	it("retourne 400 si l'id est invalide", async () => {
+		const req = { params: { id: "id-invalide" } };
+		const res = mockRes();
+		await getOneUser(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(400);
+		expect(res.json).toHaveBeenCalledWith({ message: "ID invalide" });
+	});
+
 	it("retourne 200 avec l'utilisateur trouvé", async () => {
-		User.findOne = jest.fn().mockResolvedValue(fakeUser);
+		// Le contrôleur utilise User.findById(id).select("-password")
+		User.findById = jest.fn().mockReturnValue({
+			select: jest.fn().mockResolvedValue(fakeUser),
+		});
 
 		const req = { params: { id: userId } };
 		const res = mockRes();
 		await getOneUser(req, res);
 
-		expect(User.findOne).toHaveBeenCalledWith({ _id: userId });
+		expect(User.findById).toHaveBeenCalledWith(userId);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.json).toHaveBeenCalledWith(fakeUser);
 	});
 
 	it("retourne 404 si l'utilisateur n'existe pas", async () => {
-		User.findOne = jest.fn().mockResolvedValue(null);
-
-		const req = { params: { id: "inexistant" } };
-		const res = mockRes();
-		await getOneUser(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(404);
-		expect(res.json).toHaveBeenCalledWith({
-			message: "Aucun utilisateur trouvé",
+		User.findById = jest.fn().mockReturnValue({
+			select: jest.fn().mockResolvedValue(null),
 		});
-	});
-
-	it("retourne 400 en cas d'erreur", async () => {
-		User.findOne = jest.fn().mockRejectedValue(new Error("DB error"));
 
 		const req = { params: { id: userId } };
 		const res = mockRes();
 		await getOneUser(req, res);
 
-		expect(res.status).toHaveBeenCalledWith(400);
+		expect(res.status).toHaveBeenCalledWith(404);
+		// Le contrôleur renvoie "Utilisateur introuvable"
+		expect(res.json).toHaveBeenCalledWith({
+			message: "Utilisateur introuvable",
+		});
+	});
+
+	it("retourne 500 en cas d'erreur", async () => {
+		User.findById = jest.fn().mockReturnValue({
+			select: jest.fn().mockRejectedValue(new Error("DB error")),
+		});
+
+		const req = { params: { id: userId } };
+		const res = mockRes();
+		await getOneUser(req, res);
+
+		// Le contrôleur retourne 500 en cas d'erreur non prévue
+		expect(res.status).toHaveBeenCalledWith(500);
 	});
 });
 
@@ -286,7 +416,20 @@ describe("getOneUser", () => {
 describe("updateUser", () => {
 	beforeEach(() => jest.clearAllMocks());
 
-	it("retourne 401 si l'utilisateur n'existe pas", async () => {
+	it("retourne 400 si l'id est invalide", async () => {
+		const req = {
+			params: { id: "id-invalide" },
+			body: { login: "Alice" },
+			userId,
+		};
+		const res = mockRes();
+		await updateUser(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(400);
+		expect(res.json).toHaveBeenCalledWith({ message: "ID invalide" });
+	});
+
+	it("retourne 403 si l'utilisateur n'existe pas", async () => {
 		User.findById = jest.fn().mockResolvedValue(null);
 
 		const req = {
@@ -297,25 +440,12 @@ describe("updateUser", () => {
 		const res = mockRes();
 		await updateUser(req, res);
 
-		expect(res.status).toHaveBeenCalledWith(401);
+		// Le contrôleur retourne 403 (pas 401) quand user est null ou userId ne correspond pas
+		expect(res.status).toHaveBeenCalledWith(403);
 		expect(res.json).toHaveBeenCalledWith({ message: "Non autorisé" });
 	});
 
-	it("retourne 401 si req.userId est absent", async () => {
-		User.findById = jest.fn().mockResolvedValue(fakeUser);
-
-		const req = {
-			params: { id: userId },
-			body: { login: "Nouveau" },
-			userId: null,
-		};
-		const res = mockRes();
-		await updateUser(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(401);
-	});
-
-	it("retourne 500 si l'utilisateur tente de modifier un autre compte", async () => {
+	it("retourne 403 si req.userId ne correspond pas à l'utilisateur", async () => {
 		const autreUserId = new mongoose.Types.ObjectId().toString();
 		User.findById = jest.fn().mockResolvedValue(fakeUser);
 
@@ -327,13 +457,9 @@ describe("updateUser", () => {
 		const res = mockRes();
 		await updateUser(req, res);
 
-		// le contrôleur throw → catch → 500
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.json).toHaveBeenCalledWith(
-			expect.objectContaining({
-				error: "Vous ne pouvez mettre à jour que votre propre compte",
-			}),
-		);
+		// Le contrôleur retourne 403 quand l'id ne correspond pas
+		expect(res.status).toHaveBeenCalledWith(403);
+		expect(res.json).toHaveBeenCalledWith({ message: "Non autorisé" });
 	});
 
 	it("retourne 400 si aucun champ n'est fourni", async () => {
@@ -349,22 +475,21 @@ describe("updateUser", () => {
 		await updateUser(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(400);
+		// Le contrôleur renvoie "Aucune donnée à mettre à jour"
 		expect(res.json).toHaveBeenCalledWith({
-			message: "Veuillez fournir au moins un champ à mettre à jour",
+			message: "Aucune donnée à mettre à jour",
 		});
 	});
 
 	it("met à jour le login et retourne 200", async () => {
-		User.findById = jest.fn().mockResolvedValue(fakeUser);
-		User.updateOne = jest.fn().mockResolvedValue({ nModified: 1 });
 		const updatedUser = { ...fakeUser, login: "NouveauLogin" };
-		User.findById.mockResolvedValueOnce(fakeUser); // premier appel (vérif)
 		User.findById = jest
 			.fn()
-			.mockResolvedValueOnce(fakeUser) // findById pour vérif propriétaire
+			.mockResolvedValueOnce(fakeUser) // premier appel : vérif propriétaire
 			.mockReturnValueOnce({
 				select: jest.fn().mockResolvedValue(updatedUser),
-			}); // findById + select
+			}); // second appel : récupération après update
+		User.updateOne = jest.fn().mockResolvedValue({ nModified: 1 });
 
 		const req = {
 			params: { id: userId },
@@ -424,33 +549,45 @@ describe("updateUser", () => {
 describe("deleteUser", () => {
 	beforeEach(() => jest.clearAllMocks());
 
+	it("retourne 400 si l'id est invalide", async () => {
+		const req = { params: { id: "id-invalide" } };
+		const res = mockRes();
+		await deleteUser(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(400);
+		expect(res.json).toHaveBeenCalledWith({ message: "ID invalide" });
+	});
+
 	it("retourne 200 après suppression de l'utilisateur et de ses livres", async () => {
 		Book.deleteMany = jest.fn().mockResolvedValue({ deletedCount: 2 });
-		User.findOneAndDelete = jest.fn().mockResolvedValue(fakeUser);
+		// Le contrôleur utilise findByIdAndDelete (pas findOneAndDelete)
+		User.findByIdAndDelete = jest.fn().mockResolvedValue(fakeUser);
 
 		const req = { params: { id: userId } };
 		const res = mockRes();
 		await deleteUser(req, res);
 
-		expect(Book.deleteMany).toHaveBeenCalledWith({ userId });
-		expect(User.findOneAndDelete).toHaveBeenCalledWith({ _id: userId });
-		expect(res.status).toHaveBeenCalledWith(200);
-		expect(res.json).toHaveBeenCalledWith({
-			message: "Utilisateur supprimé avec succès",
+		// Le contrôleur convertit l'id en ObjectId pour Book.deleteMany
+		expect(Book.deleteMany).toHaveBeenCalledWith({
+			userId: expect.any(mongoose.Types.ObjectId),
 		});
+		expect(User.findByIdAndDelete).toHaveBeenCalledWith(userId);
+		expect(res.status).toHaveBeenCalledWith(200);
+		expect(res.json).toHaveBeenCalledWith({ message: "Utilisateur supprimé" });
 	});
 
 	it("retourne 404 si l'utilisateur n'existe pas", async () => {
 		Book.deleteMany = jest.fn().mockResolvedValue({ deletedCount: 0 });
-		User.findOneAndDelete = jest.fn().mockResolvedValue(null);
+		User.findByIdAndDelete = jest.fn().mockResolvedValue(null);
 
-		const req = { params: { id: "inexistant" } };
+		const req = { params: { id: userId } };
 		const res = mockRes();
 		await deleteUser(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(404);
+		// Le contrôleur renvoie "Utilisateur introuvable"
 		expect(res.json).toHaveBeenCalledWith({
-			message: "Utilisateur non trouvé",
+			message: "Utilisateur introuvable",
 		});
 	});
 
@@ -470,43 +607,281 @@ describe("deleteUser", () => {
 describe("updateRole", () => {
 	beforeEach(() => jest.clearAllMocks());
 
+	it("retourne 400 si l'id est invalide", async () => {
+		const req = { params: { id: "id-invalide" }, body: { role: "admin" } };
+		const res = mockRes();
+		await updateRole(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(400);
+		expect(res.json).toHaveBeenCalledWith({ message: "ID invalide" });
+	});
+
+	it("retourne 400 si le rôle est invalide", async () => {
+		const req = { params: { id: userId }, body: { role: "superadmin" } };
+		const res = mockRes();
+		await updateRole(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(400);
+		expect(res.json).toHaveBeenCalledWith({ message: "Rôle invalide" });
+	});
+
 	it("retourne 404 si l'utilisateur n'existe pas", async () => {
-		User.findById = jest.fn().mockResolvedValue(null);
+		// Le contrôleur utilise findByIdAndUpdate directement (pas findById avant)
+		User.findByIdAndUpdate = jest.fn().mockResolvedValue(null);
 
 		const req = { params: { id: userId }, body: { role: "admin" } };
 		const res = mockRes();
 		await updateRole(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(404);
+		// Le contrôleur renvoie "Utilisateur introuvable"
 		expect(res.json).toHaveBeenCalledWith({
-			message: "Utilisateur non trouvé!",
+			message: "Utilisateur introuvable",
 		});
 	});
 
 	it("met à jour le rôle et retourne 200", async () => {
-		User.findById = jest.fn().mockResolvedValue(fakeUser);
 		User.findByIdAndUpdate = jest.fn().mockResolvedValue(fakeUser);
 
 		const req = { params: { id: userId }, body: { role: "admin" } };
 		const res = mockRes();
 		await updateRole(req, res);
 
-		expect(User.findByIdAndUpdate).toHaveBeenCalledWith(userId, {
-			role: "admin",
-		});
+		// Le contrôleur appelle findByIdAndUpdate avec { new: true }
+		expect(User.findByIdAndUpdate).toHaveBeenCalledWith(
+			userId,
+			{ role: "admin" },
+			{ new: true },
+		);
 		expect(res.status).toHaveBeenCalledWith(200);
-		expect(res.json).toHaveBeenCalledWith({
-			message: "Le rôle de l'utilisateur a été modifié avec succès",
-		});
+		expect(res.json).toHaveBeenCalledWith({ message: "Rôle mis à jour" });
 	});
 
 	it("retourne 500 en cas d'erreur", async () => {
-		User.findById = jest.fn().mockRejectedValue(new Error("DB error"));
+		User.findByIdAndUpdate = jest
+			.fn()
+			.mockRejectedValue(new Error("DB error"));
 
 		const req = { params: { id: userId }, body: { role: "admin" } };
 		const res = mockRes();
 		await updateRole(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(500);
+	});
+});
+
+// ─── verifyEmail ──────────────────────────────────────────────────────────────
+
+describe("verifyEmail", () => {
+	beforeEach(() => jest.clearAllMocks());
+
+	it("retourne 400 si le token est absent ou invalide", async () => {
+		const req = { query: { token: "  " } };
+		const res = mockRes();
+		await verifyEmail(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(400);
+		expect(res.json).toHaveBeenCalledWith({
+			message: "Token manquant ou invalide",
+		});
+	});
+
+	it("retourne 404 si le token ne correspond à aucun utilisateur", async () => {
+		User.findOne = jest.fn().mockResolvedValue(null);
+
+		const req = { query: { token: "token-inconnu" } };
+		const res = mockRes();
+		await verifyEmail(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(404);
+		expect(res.json).toHaveBeenCalledWith({ message: "Token introuvable" });
+	});
+
+	it("retourne 410 si le token a expiré", async () => {
+		const expiredUser = {
+			...fakeUser,
+			isVerified: false,
+			emailVerificationToken: "token-expire",
+			emailVerificationExpires: new Date(Date.now() - 1000), // passé
+			save: jest.fn().mockResolvedValue(true),
+		};
+		User.findOne = jest.fn().mockResolvedValue(expiredUser);
+
+		const req = { query: { token: "token-expire" } };
+		const res = mockRes();
+		await verifyEmail(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(410);
+		expect(res.json).toHaveBeenCalledWith(
+			expect.objectContaining({ message: expect.stringContaining("expiré") }),
+		);
+	});
+
+	it("retourne 200 et vérifie le compte si le token est valide", async () => {
+		const unverifiedUser = {
+			...fakeUser,
+			isVerified: false,
+			emailVerificationToken: "token-valide",
+			emailVerificationExpires: new Date(Date.now() + 3600_000), // futur
+			save: jest.fn().mockResolvedValue(true),
+		};
+		User.findOne = jest.fn().mockResolvedValue(unverifiedUser);
+
+		const req = { query: { token: "token-valide" } };
+		const res = mockRes();
+		await verifyEmail(req, res);
+
+		expect(unverifiedUser.isVerified).toBe(true);
+		expect(unverifiedUser.save).toHaveBeenCalled();
+		expect(res.status).toHaveBeenCalledWith(200);
+		expect(res.json).toHaveBeenCalledWith({
+			message: "Email vérifié avec succès",
+		});
+	});
+
+	it("retourne 500 en cas d'erreur serveur", async () => {
+		User.findOne = jest.fn().mockRejectedValue(new Error("DB error"));
+
+		const req = { query: { token: "token-valide" } };
+		const res = mockRes();
+		await verifyEmail(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(500);
+		expect(res.json).toHaveBeenCalledWith({
+			message: "Impossible de vérifier l'adresse email.",
+		});
+	});
+});
+
+// ─── resendVerification ───────────────────────────────────────────────────────
+
+describe("resendVerification", () => {
+	beforeEach(() => jest.clearAllMocks());
+
+	it("retourne 400 si l'email est invalide", async () => {
+		const req = { body: { email: "  " } };
+		const res = mockRes();
+		await resendVerification(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(400);
+		expect(res.json).toHaveBeenCalledWith({ message: "Email invalide" });
+	});
+
+	it("retourne 200 même si l'email n'existe pas (sécurité anti-énumération)", async () => {
+		User.findOne = jest.fn().mockResolvedValue(null);
+
+		const req = { body: { email: "inconnu@test.com" } };
+		const res = mockRes();
+		await resendVerification(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(200);
+		expect(res.json).toHaveBeenCalledWith({
+			message: "Si cet email existe, un lien a été renvoyé.",
+		});
+	});
+
+	it("retourne 400 si le compte est déjà vérifié", async () => {
+		User.findOne = jest.fn().mockResolvedValue({ ...fakeUser, isVerified: true });
+
+		const req = { body: { email: "alice@test.com" } };
+		const res = mockRes();
+		await resendVerification(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(400);
+		expect(res.json).toHaveBeenCalledWith({
+			message: "Ce compte est déjà vérifié.",
+		});
+	});
+
+	it("renvoie le mail et retourne 200 si le compte n'est pas vérifié", async () => {
+		const unverifiedUser = {
+			...fakeUser,
+			isVerified: false,
+			emailVerificationToken: "old-token",
+			emailVerificationExpires: new Date(),
+			save: jest.fn().mockResolvedValue(true),
+		};
+		User.findOne = jest.fn().mockResolvedValue(unverifiedUser);
+
+		const req = { body: { email: "alice@test.com" } };
+		const res = mockRes();
+		await resendVerification(req, res);
+
+		expect(unverifiedUser.save).toHaveBeenCalled();
+		expect(res.status).toHaveBeenCalledWith(200);
+		expect(res.json).toHaveBeenCalledWith({
+			message: "Si cet email existe, un lien a été renvoyé.",
+		});
+	});
+
+	it("retourne 500 en cas d'erreur serveur", async () => {
+		User.findOne = jest.fn().mockRejectedValue(new Error("DB error"));
+
+		const req = { body: { email: "alice@test.com" } };
+		const res = mockRes();
+		await resendVerification(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(500);
+		expect(res.json).toHaveBeenCalledWith({
+			message: "Erreur lors du renvoi du mail de confirmation.",
+		});
+	});
+});
+
+// ─── updateUser — branches email & description (lignes 305, 309) ─────────────
+
+describe("updateUser — champs email et description", () => {
+	beforeEach(() => jest.clearAllMocks());
+
+	it("met à jour l'email si fourni et retourne 200", async () => {
+		const updatedUser = { ...fakeUser, email: "nouveau@test.com" };
+		User.findById = jest
+			.fn()
+			.mockResolvedValueOnce(fakeUser)
+			.mockReturnValueOnce({
+				select: jest.fn().mockResolvedValue(updatedUser),
+			});
+		User.updateOne = jest.fn().mockResolvedValue({ nModified: 1 });
+
+		const req = {
+			params: { id: userId },
+			body: { email: "nouveau@test.com" },
+			userId,
+			file: null,
+		};
+		const res = mockRes();
+		await updateUser(req, res);
+
+		expect(User.updateOne).toHaveBeenCalledWith(
+			{ _id: userId },
+			{ $set: { email: "nouveau@test.com" } },
+		);
+		expect(res.status).toHaveBeenCalledWith(200);
+	});
+
+	it("met à jour la description si fournie et retourne 200", async () => {
+		const updatedUser = { ...fakeUser, description: "Nouvelle bio" };
+		User.findById = jest
+			.fn()
+			.mockResolvedValueOnce(fakeUser)
+			.mockReturnValueOnce({
+				select: jest.fn().mockResolvedValue(updatedUser),
+			});
+		User.updateOne = jest.fn().mockResolvedValue({ nModified: 1 });
+
+		const req = {
+			params: { id: userId },
+			body: { description: "Nouvelle bio" },
+			userId,
+			file: null,
+		};
+		const res = mockRes();
+		await updateUser(req, res);
+
+		expect(User.updateOne).toHaveBeenCalledWith(
+			{ _id: userId },
+			{ $set: { description: "Nouvelle bio" } },
+		);
+		expect(res.status).toHaveBeenCalledWith(200);
 	});
 });

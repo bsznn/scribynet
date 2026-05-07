@@ -84,7 +84,6 @@ export const register = async (req, res) => {
 				"Compte créé avec succès. Un email de confirmation vous a été envoyé. Veuillez vérifier votre boîte mail.",
 		});
 	} catch (error) {
-		console.error(error);
 		res.status(500).json({
 			message: "Une erreur est survenue. Impossible de créer un compte.",
 		});
@@ -164,7 +163,6 @@ export const resendVerification = async (req, res) => {
 			.status(200)
 			.json({ message: "Si cet email existe, un lien a été renvoyé." });
 	} catch (error) {
-		console.error("ERREUR resendVerification :", error);
 		res
 			.status(500)
 			.json({ message: "Erreur lors du renvoi du mail de confirmation." });
@@ -348,7 +346,6 @@ export const deleteUser = async (req, res) => {
 		const objectId = new mongoose.Types.ObjectId(id);
 
 		const bookResult = await Book.deleteMany({ userId: objectId });
-		console.log(`Livres supprimés : ${bookResult.deletedCount}`);
 
 		const user = await User.findByIdAndDelete(id);
 
@@ -358,7 +355,6 @@ export const deleteUser = async (req, res) => {
 
 		res.status(200).json({ message: "Utilisateur supprimé" });
 	} catch (err) {
-		console.error(err);
 		res.status(500).json({ message: "Erreur lors de la suppression." });
 	}
 };

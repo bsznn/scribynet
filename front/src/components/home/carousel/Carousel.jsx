@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import "../../../assets/styles/components/home/carousel/carousel.css";
-import defaultCover from "../../../assets/images/default-book.jpg";
 import { NavLink } from "react-router-dom";
+import defaultCover from "../../../assets/images/default-book.jpg";
 
 export default function Carousel() {
 	const [books, setBooks] = useState([]);

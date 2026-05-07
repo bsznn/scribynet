@@ -2,8 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../../../assets/styles/components/home/books/component-books.css";
-import defaultImage from "../../../assets/images/default-book.jpg";
 import { useParams } from "react-router-dom";
+import defaultImage from "../../../assets/images/default-book.jpg";
 
 export default function NewestBooks() {
 	const [newBooks, setNewBooks] = useState([]);

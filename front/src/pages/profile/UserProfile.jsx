@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { BookOpen, Eye, Heart, MessageCircle } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
-import { MessageCircle, BookOpen, Heart, Eye } from "lucide-react";
-
 import "../../assets/styles/pages/profile/profile.css";
-import badgeUser from "../../assets/images/profile/badge-user.png";
-import badgeAdmin from "../../assets/images/profile/badge-admin.png";
-import userImage from "../../assets/images/default-profile.jpg";
 import defaultImage from "../../assets/images/default-book.jpg";
+import userImage from "../../assets/images/default-profile.jpg";
 import fondImage from "../../assets/images/fond/fond-profile.jpg";
+import badgeAdmin from "../../assets/images/profile/badge-admin.png";
+import badgeUser from "../../assets/images/profile/badge-user.png";
 
 const UserProfile = () => {
 	const { id } = useParams();

@@ -30,7 +30,6 @@ export const addComment = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Impossible d'ajouter ce commentaire",
-			error: error.message,
 		});
 	}
 };
@@ -71,7 +70,6 @@ export const updateComment = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Impossible de modifier le commentaire",
-			error: error.message,
 		});
 	}
 };
@@ -93,7 +91,6 @@ export const deleteComment = async (req, res) => {
 	} catch (_error) {
 		res.status(500).json({
 			message: "Impossible de supprimer le commentaire",
-			error: error.message,
 		});
 	}
 };
@@ -119,7 +116,6 @@ export const getAllCommentsByBook = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Impossible de récupérer tous les commentaires",
-			error: error.message,
 		});
 	}
 };
@@ -154,7 +150,6 @@ export const getOneCommentByBook = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Impossible de récupérer le commentaire",
-			error: error.message,
 		});
 	}
 };

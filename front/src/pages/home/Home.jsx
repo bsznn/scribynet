@@ -1,13 +1,13 @@
 import React from "react";
+import Ads from "../../components/home/ads/Ads";
+import Authors from "../../components/home/authors/Authors";
 import NewestBooks from "../../components/home/books/NewestBooks";
 import PopularBooks from "../../components/home/books/PopularBooks";
 import Carousel from "../../components/home/carousel/Carousel";
 import ComponentCategories from "../../components/home/categories/ComponentCategories";
 import LastChapters from "../../components/home/chapters/LastChapters";
-import Authors from "../../components/home/authors/Authors";
-import News from "../../components/home/news/News";
 import Head from "../../components/home/head/Head";
-import Ads from "../../components/home/ads/Ads";
+import News from "../../components/home/news/News";
 
 import "../../assets/styles/pages/home/home.css";
 

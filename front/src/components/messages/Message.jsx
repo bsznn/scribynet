@@ -77,7 +77,6 @@ const Message = ({ message, onDeleted, onUpdated, currentUserId, onRead }) => {
 			alert(data.message);
 			onDeleted?.();
 		} catch (err) {
-			console.error(err);
 			alert(err.message);
 		}
 	};
@@ -113,7 +112,6 @@ const Message = ({ message, onDeleted, onUpdated, currentUserId, onRead }) => {
 				alert(data.error);
 			}
 		} catch (err) {
-			console.error(err);
 			alert("Erreur lors de la mise à jour");
 		}
 	};

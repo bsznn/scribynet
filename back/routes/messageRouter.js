@@ -2,10 +2,10 @@ import express from "express";
 import {
 	addResponse,
 	createMessage,
-	deleteMessageForMe,
 	deleteMessageForAll,
-	deleteResponseForMe,
+	deleteMessageForMe,
 	deleteResponseForAll,
+	deleteResponseForMe,
 	getAllMessages,
 	getConversation,
 	getMessageById,

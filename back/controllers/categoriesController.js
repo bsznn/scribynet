@@ -25,7 +25,6 @@ export const addGeneralCategory = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Impossible de créer une catégorie",
-			error: error.message,
 		});
 	}
 };
@@ -71,7 +70,6 @@ export const updateCategoryByAdmin = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Impossible de mettre à jour la catégorie",
-			error: error.message,
 		});
 	}
 };
@@ -89,7 +87,6 @@ export const deleteCategoryByAdmin = async (req, res) => {
 	} catch (error) {
 		return res.status(500).json({
 			message: "Impossible de supprimer la catégorie",
-			error: error.message,
 		});
 	}
 };
@@ -102,7 +99,6 @@ export const getAllCategories = async (_req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Impossible de récupérer les catégories",
-			error: error.message,
 		});
 	}
 };
@@ -123,7 +119,6 @@ export const getOneCategory = async (req, res) => {
 		res.status(500).json({
 			message:
 				"Une erreur est survenue lors de la récupération de la catégorie",
-			error: error.message,
 		});
 	}
 };
@@ -147,7 +142,6 @@ export const getAllCategoriesWithBooks = async (_req, res) => {
 		res.status(500).json({
 			message:
 				"Impossible de récupérer les catégories avec les livres associés",
-			error: error.message,
 		});
 	}
 };

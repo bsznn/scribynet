@@ -1,6 +1,8 @@
 // services/emailService.js
-import { MailtrapClient } from "mailtrap";
+
 import dotenv from "dotenv";
+import { MailtrapClient } from "mailtrap";
+
 dotenv.config();
 
 const TOKEN = process.env.MAILTRAP_API_KEY;

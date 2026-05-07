@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Send, Settings, Trash2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { Settings, Trash2, Send } from "lucide-react";
 import { token } from "../../context/token";
 
 import "../../assets/styles/components/answers/answers.css";
@@ -31,7 +31,6 @@ const Answer = ({ bookId, commentId, answerId, onAnswerDeleted }) => {
 				setAnswer(null);
 				alert("Votre réponse a bien été supprimée !");
 			} catch (err) {
-				console.error(err);
 				alert("Impossible de supprimer la réponse");
 			}
 		}

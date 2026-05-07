@@ -59,7 +59,6 @@ export const getBooksByUser = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Une erreur est survenue lors de la récupération de vos livres",
-			error: error.message,
 		});
 	}
 };
@@ -120,7 +119,6 @@ export const addBook = async (req, res) => {
 
 		res.status(200).json({ message: "Votre livre a bien été créé !" });
 	} catch (error) {
-		console.error("Erreur lors de la création d'un livre :", error);
 		res
 			.status(500)
 			.json({ message: "Impossible d'ajouter un nouveau livre !" });
@@ -131,6 +129,11 @@ export const addBook = async (req, res) => {
 export const likeBook = async (req, res) => {
 	try {
 		const book = await Book.findById(req.params.id);
+
+		if (!book) {
+			return res.status(404).json({ message: "Livre non trouvé" });
+		}
+
 		const updateBook = await Book.findByIdAndUpdate(
 			req.params.id,
 			{
@@ -141,12 +144,6 @@ export const likeBook = async (req, res) => {
 			{ new: true },
 		);
 
-		if (!book) {
-			// Gérer le cas où aucun livre n'est trouvé avec l'ID donné
-			return res.status(404).json({ message: "Livre non trouvé" });
-		}
-
-		// Retourner le message approprié selon que l'utilisateur a aimé ou non le livre
 		return res.status(200).json({
 			message: updateBook.likes.includes(req.userId)
 				? "Vous avez enlevé votre like avec succès"
@@ -157,7 +154,6 @@ export const likeBook = async (req, res) => {
 		// Gérer les erreurs lors de l'action de like
 		return res.status(500).json({
 			message: "Impossible de traiter l'action de like",
-			error: error.message,
 		});
 	}
 };
@@ -263,10 +259,8 @@ export const updateBook = async (req, res) => {
 
 		return res.status(200).json(updatedBook);
 	} catch (error) {
-		console.error("Erreur updateBook :", error);
 		return res.status(500).json({
 			message: "Impossible de mettre à jour le livre",
-			error: error.message,
 		});
 	}
 };
@@ -290,7 +284,6 @@ export const deleteBook = async (req, res) => {
 		// Gérer les erreurs lors de la suppression du livre
 		return res.status(500).json({
 			message: "Impossible de supprimer le livre",
-			error: error.message,
 		});
 	}
 };
@@ -307,7 +300,6 @@ export const getSelectionBook = async (_req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Erreur lors de la récupération des livres populaires",
-			error: error.message,
 		});
 	}
 };
@@ -329,7 +321,6 @@ export const getPopularBooksList = async (_req, res) => {
 		res.status(500).json({
 			message:
 				"Une erreur est survenue lors de la récupération des livres populaires",
-			error: error.message,
 		});
 	}
 };
@@ -351,7 +342,6 @@ export const getNewestBooks = async (_req, res) => {
 		res.status(500).json({
 			message:
 				"Une erreur est survenue lors de la récupération des nouveaux livres",
-			error: error.message,
 		});
 	}
 };
@@ -370,7 +360,6 @@ export const getLatestBooks = async (_req, res) => {
 		res.status(500).json({
 			message:
 				"Une erreur est survenue lors de la récupération des derniers livres",
-			error: error.message,
 		});
 	}
 };
@@ -411,7 +400,6 @@ export const getLatestChapters = async (_req, res) => {
 		res.status(500).json({
 			message:
 				"Une erreur est survenue lors de la récupération des derniers chapitres",
-			error: error.message,
 		});
 	}
 };
@@ -435,7 +423,6 @@ export const getBooksByCategoryName = async (req, res) => {
 		res.status(500).json({
 			message:
 				"Une erreur est survenue lors de la récupération des livres par catégorie",
-			error: error.message,
 		});
 	}
 };
@@ -482,7 +469,6 @@ export const getTotalLikesByUser = async (req, res) => {
 		res.status(500).json({
 			message:
 				"Une erreur est survenue lors du calcul du nombre total de likes",
-			error: error.message,
 		});
 	}
 };

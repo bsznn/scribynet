@@ -47,7 +47,6 @@ export default function Donation() {
 				window.location.href = res.data.url;
 			}
 		} catch (err) {
-			console.error(err);
 			alert("Erreur lors de la création du don");
 		}
 	};

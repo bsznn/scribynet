@@ -1,5 +1,5 @@
+import { CircleArrowRight, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { X, Menu, CircleArrowRight } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import defaultImage from "../../assets/images/default-profile.jpg";
 import Logo from "../../assets/images/logo.png";

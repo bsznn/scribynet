@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import defaultProfile from "../../assets/images/default-profile.jpg";
 import { useAuth } from "../../context/AuthContext";
 import { token } from "../../context/token";
-import defaultProfile from "../../assets/images/default-profile.jpg";
 
 export default function DashSettings() {
 	const { user, login: updateUser } = useAuth();

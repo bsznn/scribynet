@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { token } from "../../context/token";
 import "../../assets/styles/components/comments/comments.css";
 
+import { MessageSquareMore, Send, Settings, Trash2 } from "lucide-react";
 import AddAnswer from "../answers/AddAnswer";
 import Answers from "../answers/Answers";
-
-import { Settings, Trash2, MessageSquareMore, Send } from "lucide-react";
 
 const Comment = ({ bookId, commentId, onCommentDelete, bookAuthorId }) => {
 	const [comment, setComment] = useState("");

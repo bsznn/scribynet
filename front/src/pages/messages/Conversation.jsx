@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { token } from "../../context/token";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import ResponseList from "../../components/messages/ResponseList";
+import { token } from "../../context/token";
 
 import "../../assets/styles/pages/messages/responses.css";
 import fondImage from "../../assets/images/fond/fond-book.jpg";
@@ -91,7 +91,6 @@ const Conversation = () => {
 			}
 			getConversation();
 		} catch (err) {
-			console.error(err);
 			alert(
 				err.response?.data?.error || "Erreur lors de l'envoi de la réponse",
 			);

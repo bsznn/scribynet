@@ -1,27 +1,24 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import { token } from "../../context/token";
 import DOMPurify from "dompurify";
-import LikeCounter from "../../components/likes/LikeCounter";
-import { useRef } from "react";
-
 import {
-	MessageCircle,
-	Heart,
 	Eye,
+	Heart,
+	MessageCircle,
 	PlusCircle,
-	Trash2,
 	Settings,
+	Trash2,
 } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import defaultImage from "../../assets/images/default-book.jpg";
-
 import AddComment from "../../components/comments/AddComment";
 import Comments from "../../components/comments/Comments";
+import LikeCounter from "../../components/likes/LikeCounter";
+import { useAuth } from "../../context/AuthContext";
+import { token } from "../../context/token";
 
 import "../../assets/styles/pages/books/book.css";
-import fondImage from "../../assets/images/fond/fond-book.jpg";
+import fondImage from "../../assets/images/fond/fond-don.jpg";
 
 const Book = () => {
 	const [book, setBook] = useState(null);
@@ -149,7 +146,7 @@ const Book = () => {
 			<img
 				src={fondImage}
 				alt="fond__livre"
-				fetchPriority="low"
+				fetchPriority="high"
 				decoding="sync"
 				className="book__bg"
 			/>

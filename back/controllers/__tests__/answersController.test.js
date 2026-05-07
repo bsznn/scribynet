@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
+import Book from "../../models/bookModel.js";
 import {
 	addAnswer,
-	updateAnswer,
 	deleteAnswer,
 	getAllAnswersByComment,
 	getOneAnswerByComment,
+	updateAnswer,
 } from "../answersController.js";
-import Book from "../../models/bookModel.js";
 
 jest.mock("../../models/bookModel.js");
 

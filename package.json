@@ -1,11 +1,12 @@
 {
 	"devDependencies": {
-		"@biomejs/biome": "2.0.6"
+		"@biomejs/biome": "2.0.6",
+		"babel-plugin-transform-import-meta": "^2.3.3"
 	},
 	"scripts": {
 		"lint": "biome check --write ./",
 		"lint-unsafe": "biome check --write --unsafe ./",
-		"test": "jest -c jest.config.cjs --colors --coverage",
+		"test": "jest -c jest.config.js --colors --coverage",
 		"test:watch": "jest --watch",
 		"test:coverage": "jest --coverage"
 	},
@@ -13,11 +14,11 @@
 		"@babel/core": "^7.29.0",
 		"@babel/preset-env": "^7.29.0",
 		"@babel/preset-react": "^7.28.5",
+		"@stripe/react-stripe-js": "^3.9.0",
+		"@stripe/stripe-js": "^7.8.0",
 		"@testing-library/jest-dom": "^6.9.1",
 		"@testing-library/react": "^16.3.2",
 		"@testing-library/user-event": "^14.6.1",
-		"@stripe/react-stripe-js": "^3.9.0",
-		"@stripe/stripe-js": "^7.8.0",
 		"babel-jest": "^30.3.0",
 		"jest": "^30.3.0",
 		"jest-environment-jsdom": "^30.3.0",

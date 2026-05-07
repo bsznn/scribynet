@@ -1,35 +1,34 @@
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
-
 import defaultProfile from "../../assets/images/default-profile.jpg";
 import fondImage from "../../assets/images/fond/fond-don.jpg";
+import { useAuth } from "../../context/AuthContext";
 
 import "../../assets/styles/pages/dashboard/dashboard.css";
 
 import {
-	MessageSquare,
-	BookOpen,
 	BarChart2,
-	Heart,
-	Gift,
+	BookOpen,
 	Clock,
+	Ellipsis,
+	Gift,
+	Heart,
+	MessageSquare,
 	Settings,
+	ShieldUser,
 	Tags,
 	Users,
-	ShieldUser,
-	Ellipsis,
 } from "lucide-react";
+import { useLocation } from "react-router-dom";
+import DashCategories from "../../components/dashboard/DashCategories";
 import DashComments from "../../components/dashboard/DashComments";
-import DashStories from "../../components/dashboard/DashStories";
-import DashStats from "../../components/dashboard/DashStats";
-import DashLikes from "../../components/dashboard/DashLikes";
 import DashDons from "../../components/dashboard/DashDons";
 import DashHistory from "../../components/dashboard/DashHistory";
-import DashSettings from "../../components/dashboard/DashSettings";
-import DashCategories from "../../components/dashboard/DashCategories";
-import DashUsers from "../../components/dashboard/DashUsers";
+import DashLikes from "../../components/dashboard/DashLikes";
 import DashRoles from "../../components/dashboard/DashRoles";
-import { useLocation } from "react-router-dom";
+import DashSettings from "../../components/dashboard/DashSettings";
+import DashStats from "../../components/dashboard/DashStats";
+import DashStories from "../../components/dashboard/DashStories";
+import DashUsers from "../../components/dashboard/DashUsers";
 
 const USER_NAV = [
 	{ key: "comments", label: "Commentaires", icon: MessageSquare },

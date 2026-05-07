@@ -1,1 +1,475 @@
-import{c as y,a as C,u as S,r as d,j as e,f as u,L as p,b as c,t as M}from"./index-DV15eqUG.js";import{S as B}from"./react-select.esm-Bb5LWOgu.js";const g=500,P=()=>{const{id:l}=y(),m=C(),x=S(),[a,_]=d.useState({title:"",description:"",categories:[],selectedCategories:[],image:null,imageName:""}),[b,h]=d.useState(!1),[k,f]=d.useState(!0);d.useEffect(()=>{(async()=>{try{const[s,o]=await Promise.all([c.get("http://localhost:5000/categories"),c.get(`http://localhost:5000/books/${l}`)]),t=o.data;_({title:t.title||"",description:t.description||"",categories:s.data||[],selectedCategories:t.categoryId?t.categoryId.map(N=>N._id):[],image:null,imageName:""}),f(!1)}catch{alert("Erreur lors du chargement du livre")}})()},[l]);const r=(i,s)=>_(o=>({...o,[i]:s})),n=i=>{var t;const{name:s,value:o}=i.target;s==="image"?(r("image",i.target.files[0]),r("imageName",((t=i.target.files[0])==null?void 0:t.name)||"")):s==="description"?o.length<=g?(r("description",o),h(!1)):h(!0):r(s,o)},j=async i=>{if(i.preventDefault(),!a.title.trim()||!a.description.trim()||a.selectedCategories.length===0)return alert("Veuillez remplir tous les champs !");if(b)return alert("La description dépasse 500 caractères.");try{const s=new FormData;s.append("title",a.title),s.append("description",a.description),s.append("categories",JSON.stringify(a.selectedCategories)),a.image&&s.append("image",a.image),await c.put(`http://localhost:5000/books/edit/${l}`,s,{headers:M()}),alert("Histoire modifiée avec succès !"),m("/profil")}catch{alert("Erreur lors de la modification de l'histoire")}},v={control:(i,s)=>({...i,border:`1.5px solid ${s.isFocused?"var(--darkMarron)":"var(--mediumBeige)"}`,borderRadius:"10px",background:"var(--lightBeige)",boxShadow:s.isFocused?"0 0 0 3px rgba(66,60,57,0.08)":"none",minHeight:"46px","&:hover":{borderColor:"var(--darkMarron)"}}),menu:i=>({...i,borderRadius:"10px",border:"1px solid var(--mediumBeige)",boxShadow:"0 8px 24px rgba(0,0,0,0.1)"}),option:(i,s)=>({...i,background:s.isSelected?"var(--darkMarron)":s.isFocused?"var(--hoverLightBeige)":"transparent",color:s.isSelected?"var(--lightBeige)":"var(--darkMarron)",cursor:"pointer"}),multiValue:i=>({...i,background:"var(--darkMarron)",borderRadius:"6px"}),multiValueLabel:i=>({...i,color:"var(--lightBeige)",fontSize:"0.78rem"}),multiValueRemove:i=>({...i,color:"var(--lightBeige)","&:hover":{background:"var(--mediumMarron)",color:"var(--lightBeige)"}}),placeholder:i=>({...i,color:"var(--darkBeige)",opacity:.6}),indicatorSeparator:()=>({display:"none"}),classNamePrefix:"editbook-rs"};return k?e.jsx("div",{className:"editbook__loading",children:"Chargement…"}):x.user?e.jsxs("main",{className:"fond__editbook fond__addbook",children:[e.jsx("img",{src:u,alt:"fond__editImage",fetchPriority:"low",decoding:"async",className:"fond__addbook-bg"}),e.jsx("div",{className:"editbook__container",children:e.jsxs("div",{className:"editbook",children:[e.jsxs("aside",{className:"editbook__sidebar",children:[e.jsxs("div",{className:"editbook__brand",children:[e.jsx("span",{className:"editbook__brand-eyebrow",children:"Modifier l'histoire"}),e.jsxs("h1",{className:"editbook__brand-title",children:["Affinez.",e.jsx("br",{}),e.jsx("span",{children:"Améliorez."})]}),e.jsx("p",{className:"editbook__brand-desc",children:"Retouchez les informations de votre histoire — titre, description, catégories et couverture. Les chapitres se modifient directement depuis la page de lecture."})]}),e.jsxs("div",{className:"editbook__sidebar-info",children:[e.jsxs("div",{className:"editbook__info-item",children:[e.jsx("span",{className:"editbook__info-dot"}),e.jsxs("div",{children:[e.jsx("div",{className:"editbook__info-label",children:"Titre"}),e.jsx("div",{className:"editbook__info-sub",children:a.title||"—"})]})]}),e.jsxs("div",{className:"editbook__info-item",children:[e.jsx("span",{className:"editbook__info-dot"}),e.jsxs("div",{children:[e.jsx("div",{className:"editbook__info-label",children:"Catégories"}),e.jsx("div",{className:"editbook__info-sub",children:a.categories.filter(i=>a.selectedCategories.includes(i._id)).map(i=>i.name).join(", ")||"—"})]})]}),e.jsxs("div",{className:"editbook__info-item",children:[e.jsx("span",{className:"editbook__info-dot"}),e.jsxs("div",{children:[e.jsx("div",{className:"editbook__info-label",children:"Couverture"}),e.jsx("div",{className:"editbook__info-sub",children:a.imageName||"Inchangée"})]})]})]}),e.jsx(p,{to:"/histoires",className:"editbook__back",children:"← Retour aux histoires"})]}),e.jsx("main",{className:"editbook__main",children:e.jsxs("div",{className:"editbook__panel",children:[e.jsx("h2",{className:"editbook__panel-title",children:"Modifier l'histoire"}),e.jsx("p",{className:"editbook__panel-sub",children:"Les modifications seront visibles immédiatement."}),e.jsxs("form",{onSubmit:j,encType:"multipart/form-data",children:[e.jsxs("div",{className:"editbook__fields",children:[e.jsxs("div",{className:"editbook__field",children:[e.jsx("label",{className:"editbook__field-label",children:"Couverture"}),e.jsxs("div",{className:"editbook__upload",children:[e.jsx("input",{type:"file",name:"image",accept:"image/*",onChange:n}),e.jsx("span",{className:"editbook__upload-icon",children:"🖼"}),e.jsx("span",{className:"editbook__upload-label",children:a.imageName||"Glissez ou cliquez pour changer"}),e.jsx("span",{className:"editbook__upload-sub",children:"JPG, PNG, WebP — max 5 Mo"})]})]}),e.jsxs("div",{className:"editbook__field",children:[e.jsx("label",{className:"editbook__field-label",children:"Titre"}),e.jsx("input",{className:"editbook__field-input",name:"title",value:a.title,onChange:n,placeholder:"Titre de l'histoire…"})]}),e.jsxs("div",{className:"editbook__field",children:[e.jsx("label",{className:"editbook__field-label",children:"Description"}),e.jsx("textarea",{className:"editbook__field-textarea",name:"description",value:a.description,onChange:n,placeholder:"Description de l'histoire…"}),e.jsxs("span",{className:"editbook__field-hint",children:[a.description.length,"/",g]}),b&&e.jsx("span",{className:"editbook__error-msg",children:"500 caractères maximum."})]}),e.jsxs("div",{className:"editbook__field",children:[e.jsx("label",{className:"editbook__field-label",children:"Catégories"}),e.jsx("div",{className:"editbook__select",children:e.jsx(B,{isMulti:!0,placeholder:"Sélectionnez…",classNamePrefix:"editbook-rs",styles:v,value:a.categories.filter(i=>a.selectedCategories.includes(i._id)).map(i=>({value:i._id,label:i.name})),options:a.categories.map(i=>({value:i._id,label:i.name})),onChange:i=>r("selectedCategories",i?i.map(s=>s.value):[])})})]})]}),e.jsxs("div",{className:"editbook__nav",children:[e.jsx("button",{type:"button",className:"editbook__btn editbook__btn--ghost",onClick:()=>m(-1),children:"← Annuler"}),e.jsx("button",{type:"submit",className:"editbook__btn editbook__btn--primary",children:"Sauvegarder ✦"})]})]})]})})]})})]}):e.jsxs("div",{className:"editbook__gate fond__errorbook",children:[e.jsx("img",{src:u,alt:"fond__ajoutImage",fetchPriority:"low",decoding:"async",className:"fond__errorbook-bg"}),e.jsxs("div",{className:"editbook__gate-box",children:[e.jsx("div",{className:"editbook__gate-icon",children:"✦"}),e.jsx("h2",{className:"editbook__gate-title",children:"Modifier une histoire"}),e.jsx("p",{className:"editbook__gate-text",children:"Vous devez être connecté(e) pour modifier une histoire."}),e.jsx("div",{className:"editbook__gate-actions",children:e.jsx(p,{to:"/se-connecter",className:"editbook__btn editbook__btn--primary",children:"Se connecter"})})]})]})};export{P as EditBook};
+import {
+	a as C,
+	b as c,
+	r as d,
+	j as e,
+	t as M,
+	L as p,
+	u as S,
+	f as u,
+	c as y,
+} from "./index-DV15eqUG.js";
+import { S as B } from "./react-select.esm-Bb5LWOgu.js";
+
+const g = 500,
+	P = () => {
+		const { id: l } = y(),
+			m = C(),
+			x = S(),
+			[a, _] = d.useState({
+				title: "",
+				description: "",
+				categories: [],
+				selectedCategories: [],
+				image: null,
+				imageName: "",
+			}),
+			[b, h] = d.useState(!1),
+			[k, f] = d.useState(!0);
+		d.useEffect(() => {
+			(async () => {
+				try {
+					const [s, o] = await Promise.all([
+							c.get("http://localhost:5000/categories"),
+							c.get(`http://localhost:5000/books/${l}`),
+						]),
+						t = o.data;
+					_({
+						title: t.title || "",
+						description: t.description || "",
+						categories: s.data || [],
+						selectedCategories: t.categoryId
+							? t.categoryId.map((N) => N._id)
+							: [],
+						image: null,
+						imageName: "",
+					}),
+						f(!1);
+				} catch {
+					alert("Erreur lors du chargement du livre");
+				}
+			})();
+		}, [l]);
+		const r = (i, s) => _((o) => ({ ...o, [i]: s })),
+			n = (i) => {
+				var t;
+				const { name: s, value: o } = i.target;
+				s === "image"
+					? (r("image", i.target.files[0]),
+						r(
+							"imageName",
+							((t = i.target.files[0]) == null ? void 0 : t.name) || "",
+						))
+					: s === "description"
+						? o.length <= g
+							? (r("description", o), h(!1))
+							: h(!0)
+						: r(s, o);
+			},
+			j = async (i) => {
+				if (
+					(i.preventDefault(),
+					!a.title.trim() ||
+						!a.description.trim() ||
+						a.selectedCategories.length === 0)
+				)
+					return alert("Veuillez remplir tous les champs !");
+				if (b) return alert("La description dépasse 500 caractères.");
+				try {
+					const s = new FormData();
+					s.append("title", a.title),
+						s.append("description", a.description),
+						s.append("categories", JSON.stringify(a.selectedCategories)),
+						a.image && s.append("image", a.image),
+						await c.put(`http://localhost:5000/books/edit/${l}`, s, {
+							headers: M(),
+						}),
+						alert("Histoire modifiée avec succès !"),
+						m("/profil");
+				} catch {
+					alert("Erreur lors de la modification de l'histoire");
+				}
+			},
+			v = {
+				control: (i, s) => ({
+					...i,
+					border: `1.5px solid ${s.isFocused ? "var(--darkMarron)" : "var(--mediumBeige)"}`,
+					borderRadius: "10px",
+					background: "var(--lightBeige)",
+					boxShadow: s.isFocused ? "0 0 0 3px rgba(66,60,57,0.08)" : "none",
+					minHeight: "46px",
+					"&:hover": { borderColor: "var(--darkMarron)" },
+				}),
+				menu: (i) => ({
+					...i,
+					borderRadius: "10px",
+					border: "1px solid var(--mediumBeige)",
+					boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
+				}),
+				option: (i, s) => ({
+					...i,
+					background: s.isSelected
+						? "var(--darkMarron)"
+						: s.isFocused
+							? "var(--hoverLightBeige)"
+							: "transparent",
+					color: s.isSelected ? "var(--lightBeige)" : "var(--darkMarron)",
+					cursor: "pointer",
+				}),
+				multiValue: (i) => ({
+					...i,
+					background: "var(--darkMarron)",
+					borderRadius: "6px",
+				}),
+				multiValueLabel: (i) => ({
+					...i,
+					color: "var(--lightBeige)",
+					fontSize: "0.78rem",
+				}),
+				multiValueRemove: (i) => ({
+					...i,
+					color: "var(--lightBeige)",
+					"&:hover": {
+						background: "var(--mediumMarron)",
+						color: "var(--lightBeige)",
+					},
+				}),
+				placeholder: (i) => ({ ...i, color: "var(--darkBeige)", opacity: 0.6 }),
+				indicatorSeparator: () => ({ display: "none" }),
+				classNamePrefix: "editbook-rs",
+			};
+		return k
+			? e.jsx("div", {
+					className: "editbook__loading",
+					children: "Chargement…",
+				})
+			: x.user
+				? e.jsxs("main", {
+						className: "fond__editbook fond__addbook",
+						children: [
+							e.jsx("img", {
+								src: u,
+								alt: "fond__editImage",
+								fetchPriority: "low",
+								decoding: "async",
+								className: "fond__addbook-bg",
+							}),
+							e.jsx("div", {
+								className: "editbook__container",
+								children: e.jsxs("div", {
+									className: "editbook",
+									children: [
+										e.jsxs("aside", {
+											className: "editbook__sidebar",
+											children: [
+												e.jsxs("div", {
+													className: "editbook__brand",
+													children: [
+														e.jsx("span", {
+															className: "editbook__brand-eyebrow",
+															children: "Modifier l'histoire",
+														}),
+														e.jsxs("h1", {
+															className: "editbook__brand-title",
+															children: [
+																"Affinez.",
+																e.jsx("br", {}),
+																e.jsx("span", { children: "Améliorez." }),
+															],
+														}),
+														e.jsx("p", {
+															className: "editbook__brand-desc",
+															children:
+																"Retouchez les informations de votre histoire — titre, description, catégories et couverture. Les chapitres se modifient directement depuis la page de lecture.",
+														}),
+													],
+												}),
+												e.jsxs("div", {
+													className: "editbook__sidebar-info",
+													children: [
+														e.jsxs("div", {
+															className: "editbook__info-item",
+															children: [
+																e.jsx("span", {
+																	className: "editbook__info-dot",
+																}),
+																e.jsxs("div", {
+																	children: [
+																		e.jsx("div", {
+																			className: "editbook__info-label",
+																			children: "Titre",
+																		}),
+																		e.jsx("div", {
+																			className: "editbook__info-sub",
+																			children: a.title || "—",
+																		}),
+																	],
+																}),
+															],
+														}),
+														e.jsxs("div", {
+															className: "editbook__info-item",
+															children: [
+																e.jsx("span", {
+																	className: "editbook__info-dot",
+																}),
+																e.jsxs("div", {
+																	children: [
+																		e.jsx("div", {
+																			className: "editbook__info-label",
+																			children: "Catégories",
+																		}),
+																		e.jsx("div", {
+																			className: "editbook__info-sub",
+																			children:
+																				a.categories
+																					.filter((i) =>
+																						a.selectedCategories.includes(
+																							i._id,
+																						),
+																					)
+																					.map((i) => i.name)
+																					.join(", ") || "—",
+																		}),
+																	],
+																}),
+															],
+														}),
+														e.jsxs("div", {
+															className: "editbook__info-item",
+															children: [
+																e.jsx("span", {
+																	className: "editbook__info-dot",
+																}),
+																e.jsxs("div", {
+																	children: [
+																		e.jsx("div", {
+																			className: "editbook__info-label",
+																			children: "Couverture",
+																		}),
+																		e.jsx("div", {
+																			className: "editbook__info-sub",
+																			children: a.imageName || "Inchangée",
+																		}),
+																	],
+																}),
+															],
+														}),
+													],
+												}),
+												e.jsx(p, {
+													to: "/histoires",
+													className: "editbook__back",
+													children: "← Retour aux histoires",
+												}),
+											],
+										}),
+										e.jsx("main", {
+											className: "editbook__main",
+											children: e.jsxs("div", {
+												className: "editbook__panel",
+												children: [
+													e.jsx("h2", {
+														className: "editbook__panel-title",
+														children: "Modifier l'histoire",
+													}),
+													e.jsx("p", {
+														className: "editbook__panel-sub",
+														children:
+															"Les modifications seront visibles immédiatement.",
+													}),
+													e.jsxs("form", {
+														onSubmit: j,
+														encType: "multipart/form-data",
+														children: [
+															e.jsxs("div", {
+																className: "editbook__fields",
+																children: [
+																	e.jsxs("div", {
+																		className: "editbook__field",
+																		children: [
+																			e.jsx("label", {
+																				className: "editbook__field-label",
+																				children: "Couverture",
+																			}),
+																			e.jsxs("div", {
+																				className: "editbook__upload",
+																				children: [
+																					e.jsx("input", {
+																						type: "file",
+																						name: "image",
+																						accept: "image/*",
+																						onChange: n,
+																					}),
+																					e.jsx("span", {
+																						className: "editbook__upload-icon",
+																						children: "🖼",
+																					}),
+																					e.jsx("span", {
+																						className: "editbook__upload-label",
+																						children:
+																							a.imageName ||
+																							"Glissez ou cliquez pour changer",
+																					}),
+																					e.jsx("span", {
+																						className: "editbook__upload-sub",
+																						children:
+																							"JPG, PNG, WebP — max 5 Mo",
+																					}),
+																				],
+																			}),
+																		],
+																	}),
+																	e.jsxs("div", {
+																		className: "editbook__field",
+																		children: [
+																			e.jsx("label", {
+																				className: "editbook__field-label",
+																				children: "Titre",
+																			}),
+																			e.jsx("input", {
+																				className: "editbook__field-input",
+																				name: "title",
+																				value: a.title,
+																				onChange: n,
+																				placeholder: "Titre de l'histoire…",
+																			}),
+																		],
+																	}),
+																	e.jsxs("div", {
+																		className: "editbook__field",
+																		children: [
+																			e.jsx("label", {
+																				className: "editbook__field-label",
+																				children: "Description",
+																			}),
+																			e.jsx("textarea", {
+																				className: "editbook__field-textarea",
+																				name: "description",
+																				value: a.description,
+																				onChange: n,
+																				placeholder:
+																					"Description de l'histoire…",
+																			}),
+																			e.jsxs("span", {
+																				className: "editbook__field-hint",
+																				children: [
+																					a.description.length,
+																					"/",
+																					g,
+																				],
+																			}),
+																			b &&
+																				e.jsx("span", {
+																					className: "editbook__error-msg",
+																					children: "500 caractères maximum.",
+																				}),
+																		],
+																	}),
+																	e.jsxs("div", {
+																		className: "editbook__field",
+																		children: [
+																			e.jsx("label", {
+																				className: "editbook__field-label",
+																				children: "Catégories",
+																			}),
+																			e.jsx("div", {
+																				className: "editbook__select",
+																				children: e.jsx(B, {
+																					isMulti: !0,
+																					placeholder: "Sélectionnez…",
+																					classNamePrefix: "editbook-rs",
+																					styles: v,
+																					value: a.categories
+																						.filter((i) =>
+																							a.selectedCategories.includes(
+																								i._id,
+																							),
+																						)
+																						.map((i) => ({
+																							value: i._id,
+																							label: i.name,
+																						})),
+																					options: a.categories.map((i) => ({
+																						value: i._id,
+																						label: i.name,
+																					})),
+																					onChange: (i) =>
+																						r(
+																							"selectedCategories",
+																							i ? i.map((s) => s.value) : [],
+																						),
+																				}),
+																			}),
+																		],
+																	}),
+																],
+															}),
+															e.jsxs("div", {
+																className: "editbook__nav",
+																children: [
+																	e.jsx("button", {
+																		type: "button",
+																		className:
+																			"editbook__btn editbook__btn--ghost",
+																		onClick: () => m(-1),
+																		children: "← Annuler",
+																	}),
+																	e.jsx("button", {
+																		type: "submit",
+																		className:
+																			"editbook__btn editbook__btn--primary",
+																		children: "Sauvegarder ✦",
+																	}),
+																],
+															}),
+														],
+													}),
+												],
+											}),
+										}),
+									],
+								}),
+							}),
+						],
+					})
+				: e.jsxs("div", {
+						className: "editbook__gate fond__errorbook",
+						children: [
+							e.jsx("img", {
+								src: u,
+								alt: "fond__ajoutImage",
+								fetchPriority: "low",
+								decoding: "async",
+								className: "fond__errorbook-bg",
+							}),
+							e.jsxs("div", {
+								className: "editbook__gate-box",
+								children: [
+									e.jsx("div", {
+										className: "editbook__gate-icon",
+										children: "✦",
+									}),
+									e.jsx("h2", {
+										className: "editbook__gate-title",
+										children: "Modifier une histoire",
+									}),
+									e.jsx("p", {
+										className: "editbook__gate-text",
+										children:
+											"Vous devez être connecté(e) pour modifier une histoire.",
+									}),
+									e.jsx("div", {
+										className: "editbook__gate-actions",
+										children: e.jsx(p, {
+											to: "/se-connecter",
+											className: "editbook__btn editbook__btn--primary",
+											children: "Se connecter",
+										}),
+									}),
+								],
+							}),
+						],
+					});
+	};
+export { P as EditBook };

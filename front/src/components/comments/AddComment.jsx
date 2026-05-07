@@ -1,8 +1,8 @@
-import React, { useState } from "react";
 import axios from "axios";
-import { token } from "../../context/token";
 import { Send } from "lucide-react";
+import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { token } from "../../context/token";
 import "../../assets/styles/components/comments/comments.css";
 
 const AddComment = ({ bookId, commentAdd }) => {
@@ -48,7 +48,6 @@ const AddComment = ({ bookId, commentAdd }) => {
 					commentAdd();
 				});
 		} catch (error) {
-			console.error(error);
 			alert("Impossible d'ajouter le commentaire !");
 		}
 	};

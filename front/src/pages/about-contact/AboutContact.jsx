@@ -1,6 +1,6 @@
-import React, { useState } from "react";
 import axios from "axios";
-import { MapPin, Phone, Mail } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
+import React, { useState } from "react";
 import fondImage from "../../assets/images/fond/fond-arbre.jpg";
 
 import "../../assets/styles/pages/about-contact/about-contact.css";
@@ -39,7 +39,6 @@ export default function AboutContact() {
 				e.target.reset();
 			}
 		} catch (error) {
-			console.error(error);
 			setStatus("Une erreur est survenue. Veuillez réessayer.");
 		}
 	};

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import axios from "axios";
-import { token } from "../../context/token";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { token } from "../../context/token";
 
 import "../../assets/styles/components/chapters/updatechapter.css";
 import fondImage from "../../assets/images/fond/fond-book.jpg";

@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
-import { token } from "../../context/token";
-import { Users, Trash2 } from "lucide-react";
+import { Trash2, Users } from "lucide-react";
+import { useEffect, useState } from "react";
 import defaultProfile from "../../assets/images/default-profile.jpg";
+import { token } from "../../context/token";
 
 export default function DashUsers() {
 	const [users, setUsers] = useState([]);

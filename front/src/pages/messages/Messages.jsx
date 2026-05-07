@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
-import { token } from "../../context/token";
-import Message from "../../components/messages/Message";
+import { useEffect, useState } from "react";
 import AddMessage from "../../components/messages/AddMessage";
+import Message from "../../components/messages/Message";
+import { token } from "../../context/token";
 
 import "../../assets/styles/pages/messages/messages.css";
 import fondImage from "../../assets/images/fond/fond-don.jpg";

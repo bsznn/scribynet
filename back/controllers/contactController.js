@@ -5,12 +5,10 @@ export const addContact = async (req, res) => {
 		const { content, name, subject, email } = req.body;
 
 		if (!content || !name || !subject || !email) {
-			return res
-				.status(400)
-				.json({
-					error:
-						"Tous les champs sont obligatoires : content, name, subject, email.",
-				});
+			return res.status(400).json({
+				error:
+					"Tous les champs sont obligatoires : content, name, subject, email.",
+			});
 		}
 
 		const emailRegex = /.+@.+\..+/;
@@ -23,12 +21,10 @@ export const addContact = async (req, res) => {
 		const contact = new Contact({ content, name, subject, email });
 		await contact.save();
 
-		return res
-			.status(201)
-			.json({
-				message: "Message de contact enregistré avec succès.",
-				data: contact,
-			});
+		return res.status(201).json({
+			message: "Message de contact enregistré avec succès.",
+			data: contact,
+		});
 	} catch (error) {
 		return res
 			.status(500)

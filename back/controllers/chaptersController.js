@@ -53,7 +53,6 @@ export const addChapter = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Impossible d'ajouter de nouveaux chapitres",
-			error: error.message,
 		});
 	}
 };
@@ -85,7 +84,6 @@ export const updateChapter = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Impossible de modifier le chapitre !",
-			error: error.message,
 		});
 	}
 };
@@ -124,7 +122,6 @@ export const deleteChapter = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Le chapitre n'a pas pu être supprimé",
-			error: error.message,
 		});
 	}
 };
@@ -152,7 +149,6 @@ export const getAllChaptersByBook = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Impossible de récupérer tous les chapitres",
-			error: error.message,
 		});
 	}
 };
@@ -187,7 +183,6 @@ export const getOneChapterByBook = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			message: "Impossible de récupérer le chapitre",
-			error: error.message,
 		});
 	}
 };

@@ -1,24 +1,24 @@
 import mongoose from "mongoose";
-import {
-	getAllBooks,
-	getOneBook,
-	getBooksByUser,
-	addBook,
-	likeBook,
-	addView,
-	updateBook,
-	deleteBook,
-	getSelectionBook,
-	getPopularBooksList,
-	getNewestBooks,
-	getLatestBooks,
-	getLatestChapters,
-	getBooksByCategoryName,
-	getTotalViewsByUser,
-	getTotalLikesByUser,
-} from "../booksController.js";
 import Book from "../../models/bookModel.js";
 import Category from "../../models/categoryModel.js";
+import {
+	addBook,
+	addView,
+	deleteBook,
+	getAllBooks,
+	getBooksByCategoryName,
+	getBooksByUser,
+	getLatestBooks,
+	getLatestChapters,
+	getNewestBooks,
+	getOneBook,
+	getPopularBooksList,
+	getSelectionBook,
+	getTotalLikesByUser,
+	getTotalViewsByUser,
+	likeBook,
+	updateBook,
+} from "../booksController.js";
 
 jest.mock("../../models/bookModel.js");
 jest.mock("../../models/categoryModel.js");
@@ -176,9 +176,11 @@ describe("getBooksByUser", () => {
 		await getBooksByUser(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.json).toHaveBeenCalledWith({
-			message: "Une erreur est survenue lors de la récupération de vos livres",
-		});
+		expect(res.json).toHaveBeenCalledWith(
+			expect.objectContaining({   
+				message: "Une erreur est survenue lors de la récupération de vos livres",
+			})
+		);
 	});
 });
 
@@ -369,6 +371,17 @@ describe("likeBook", () => {
 			}),
 		);
 	});
+
+	it("retourne 404 si le livre n'existe pas", async () => {
+		Book.findById = jest.fn().mockResolvedValue(null);
+
+		const req = { params: { id: "inexistant" }, userId: "user123" };
+		const res = mockRes();
+		await likeBook(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(404);
+		expect(res.json).toHaveBeenCalledWith({ message: "Livre non trouvé" });
+	});
 });
 
 describe("addView", () => {
@@ -535,6 +548,24 @@ describe("updateBook", () => {
 				title: "Nouveau titre",
 				categories: JSON.stringify(["cat123"]),
 			},
+			file: null,
+		};
+		const res = mockRes();
+		await updateBook(req, res);
+
+		expect(res.status).toHaveBeenCalledWith(200);
+		expect(res.json).toHaveBeenCalledWith(updatedBook);
+	});
+
+	it("retourne 200 avec une description mise à jour", async () => {
+		Book.findById = jest.fn().mockResolvedValue(bookOwnedByUser);
+		const updatedBook = { ...fakeBook, description: "Nouvelle description" };
+		Book.findByIdAndUpdate = jest.fn().mockResolvedValue(updatedBook);
+
+		const req = {
+			params: { id: "book123" },
+			userId: "user123",
+			body: { description: "Nouvelle description" },
 			file: null,
 		};
 		const res = mockRes();
