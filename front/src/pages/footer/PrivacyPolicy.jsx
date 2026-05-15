@@ -1,5 +1,5 @@
 import "../../assets/styles/pages/footer/legal-notices.css";
-import headImage from "../../assets/images/header-home/grass.webp";
+import headImage from "../../assets/images/fond/fond-books.jpg";
 
 const PrivacyPolicy = () => {
 	return (

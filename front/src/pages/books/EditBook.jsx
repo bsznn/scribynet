@@ -149,13 +149,13 @@ export const EditBook = () => {
 
 	if (!auth.user)
 		return (
-			<div className="editbook__gate fond__errorbook">
+			<div className="fond__addbook">
 				<img
 					src={fondImage}
 					alt="fond__ajoutImage"
 					fetchPriority="low"
 					decoding="async"
-					className="fond__errorbook-bg"
+					className="fond__addbook-bg"
 				/>
 				<div className="editbook__gate-box">
 					<div className="editbook__gate-icon">✦</div>
@@ -182,7 +182,7 @@ export const EditBook = () => {
 				alt="fond__editImage"
 				fetchPriority="low"
 				decoding="async"
-				className="fond__addbook-bg"
+				className="fond__editbook-bg"
 			/>
 			<div className="editbook__container">
 				<div className="editbook">
