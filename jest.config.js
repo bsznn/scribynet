@@ -1,17 +1,15 @@
 module.exports = {
-  testEnvironment: "jsdom",
-  transform: { "^.+\\.[jt]sx?$": "babel-jest" },
+  testEnvironment: "node", // jsdom est pour le front, pas pour des tests back avec mongoose
+  transform: {
+    "^.+\\.[jt]sx?$": "babel-jest",
+    "^.+\\.mjs$": "babel-jest",
+  },
   moduleNameMapper: {
     "\\.(css|less|scss|sass)$": "<rootDir>/__mocks__/fileMock.cjs",
     "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/__mocks__/fileMock.cjs",
   },
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   transformIgnorePatterns: [
-    "node_modules/(?!(bson|mongodb|mongoose|@mongodb-js|mongodb-connection-string-url|whatwg-url)/)"
+    "node_modules/(?!(bson|mongodb|mongodb-memory-server|mongodb-memory-server-core|mongoose|@mongodb-js|mongodb-connection-string-url|whatwg-url)/)"
   ],
-  extensionsToTreatAsEsm: [],
-  transform: {
-    "^.+\\.[jt]sx?$": "babel-jest",
-    "^.+\\.mjs$": "babel-jest",  // <- crucial pour bson.mjs
-  },
 };

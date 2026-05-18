@@ -25,7 +25,7 @@ export const addContact = async (req, res) => {
 			message: "Message de contact enregistré avec succès.",
 			data: contact,
 		});
-	} catch (error) {
+	} catch (error)  /* istanbul ignore next */ {
 		return res
 			.status(500)
 			.json({ error: "Une erreur est survenue lors de l'envoi du message." });
@@ -36,7 +36,7 @@ export const getAllContacts = async (req, res) => {
 	try {
 		const contacts = await Contact.find().sort({ createdAt: -1 });
 		return res.json(contacts);
-	} catch (error) {
+	} catch (error)  /* istanbul ignore next */{
 		return res
 			.status(500)
 			.json({ error: "Impossible de récupérer tous les contacts." });

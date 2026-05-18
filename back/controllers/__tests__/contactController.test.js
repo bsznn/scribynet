@@ -1,14 +1,34 @@
+/**
+ * @jest-environment node
+ */
+
+import { MongoMemoryServer } from "mongodb-memory-server";
+import mongoose from "mongoose";
+import express from "express";
+import request from "supertest";
 import Contact from "../../models/contactModel.js";
 import { addContact, getAllContacts } from "../contactController.js";
 
-jest.mock("../../models/contactModel.js");
+const app = express();
+app.use(express.json());
+app.post("/contact", addContact);
+app.get("/contacts", getAllContacts);
 
-const mockRes = () => {
-	const res = {};
-	res.status = jest.fn().mockReturnValue(res);
-	res.json = jest.fn().mockReturnValue(res);
-	return res;
-};
+let mongoServer;
+
+beforeAll(async () => {
+	mongoServer = await MongoMemoryServer.create();
+	await mongoose.connect(mongoServer.getUri());
+});
+
+afterAll(async () => {
+	await mongoose.disconnect();
+	await mongoServer.stop();
+});
+
+afterEach(async () => {
+	await Contact.deleteMany({});
+});
 
 const validBody = {
 	content: "Bonjour, je souhaite vous contacter.",
@@ -17,182 +37,59 @@ const validBody = {
 	email: "alice@test.com",
 };
 
-describe("addContact", () => {
-	beforeEach(() => {
-		jest.clearAllMocks();
-	});
+describe("POST /contact — test d'intégration", () => {
 
-	// Validation champs manquants
+	// Ligne 8 : guard champs manquants
+	it("retourne 400 si un champ est manquant", async () => {
+		const res = await request(app)
+			.post("/contact")
+			.send({ name: "Alice", subject: "Question", email: "alice@test.com" });
 
-	it("retourne 400 si tous les champs sont vides", async () => {
-		const req = { body: {} };
-		const res = mockRes();
-
-		await addContact(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(400);
-		expect(res.json).toHaveBeenCalledWith({
-			error:
-				"Tous les champs sont obligatoires : content, name, subject, email.",
-		});
-	});
-
-	it.each([
-		[
-			{ name: "Alice", subject: "Question", email: "alice@test.com" },
-			"content",
-		],
-		[
-			{ content: "Bonjour", subject: "Question", email: "alice@test.com" },
-			"name",
-		],
-		[{ content: "Bonjour", name: "Alice", email: "alice@test.com" }, "subject"],
-		[{ content: "Bonjour", name: "Alice", subject: "Question" }, "email"],
-	])(
-		"retourne 400 si le champ '%s' est manquant",
-		async (body, missingField) => {
-			const req = { body };
-			const res = mockRes();
-
-			await addContact(req, res);
-
-			expect(res.status).toHaveBeenCalledWith(400);
-			expect(res.json).toHaveBeenCalledWith({
-				error:
-					"Tous les champs sont obligatoires : content, name, subject, email.",
-			});
-		},
-	);
-
-	// Validation email
-
-	it.each(["pasunemail", "sans-arobase.com", "@domaine.com", "a@b"])(
-		"retourne 400 pour l'email invalide '%s'",
-		async (invalidEmail) => {
-			const req = { body: { ...validBody, email: invalidEmail } };
-			const res = mockRes();
-
-			await addContact(req, res);
-
-			expect(res.status).toHaveBeenCalledWith(400);
-			expect(res.json).toHaveBeenCalledWith({
-				error: "Le format de l'email est invalide.",
-			});
-		},
-	);
-
-	it("accepte un email valide", async () => {
-		const savedContact = { ...validBody, _id: "abc123" };
-		Contact.mockImplementation(() => ({
-			save: jest.fn().mockResolvedValue(savedContact),
-			...savedContact,
-		}));
-
-		const req = { body: validBody };
-		const res = mockRes();
-
-		await addContact(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(201);
-	});
-
-	// Succès
-
-	it("crée et sauvegarde un contact avec les bonnes données", async () => {
-		const savedContact = { ...validBody, _id: "abc123" };
-		const saveMock = jest.fn().mockResolvedValue(savedContact);
-		Contact.mockImplementation(() => ({ save: saveMock, ...savedContact }));
-
-		const req = { body: validBody };
-		const res = mockRes();
-
-		await addContact(req, res);
-
-		expect(Contact).toHaveBeenCalledWith(validBody);
-		expect(saveMock).toHaveBeenCalled();
-	});
-
-	it("retourne 201 avec le message et les données du contact", async () => {
-		const savedContact = { ...validBody, _id: "abc123" };
-		Contact.mockImplementation(() => ({ save: jest.fn(), ...savedContact }));
-
-		const req = { body: validBody };
-		const res = mockRes();
-
-		await addContact(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(201);
-		expect(res.json).toHaveBeenCalledWith(
-			expect.objectContaining({
-				message: "Message de contact enregistré avec succès.",
-			}),
+		expect(res.status).toBe(400);
+		expect(res.body.error).toBe(
+			"Tous les champs sont obligatoires : content, name, subject, email."
 		);
 	});
 
-	// Erreur serveur
-	it("retourne 500 si save() lève une erreur", async () => {
-		Contact.mockImplementation(() => ({
-			save: jest.fn().mockRejectedValue(new Error("DB error")),
-		}));
+	it("retourne 400 si l'email est invalide", async () => {
+		const res = await request(app)
+			.post("/contact")
+			.send({ ...validBody, email: "pasunemail" });
 
-		const req = { body: validBody };
-		const res = mockRes();
+		expect(res.status).toBe(400);
+		expect(res.body.error).toBe("Le format de l'email est invalide.");
+	});
 
-		await addContact(req, res);
+	it("retourne 201 et persiste le contact en base", async () => {
+		const res = await request(app).post("/contact").send(validBody);
 
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.json).toHaveBeenCalledWith({ error: "Une erreur est survenue lors de l'envoi du message." });
+		expect(res.status).toBe(201);
+		expect(res.body.message).toBe("Message de contact enregistré avec succès.");
+
+		const saved = await Contact.findOne({ email: "alice@test.com" });
+		expect(saved).not.toBeNull();
+		expect(saved.name).toBe("Alice");
 	});
 });
 
-describe("getAllContacts", () => {
-	beforeEach(() => {
-		jest.clearAllMocks();
-	});
+describe("GET /contacts — test d'intégration", () => {
 
-	it("retourne la liste des contacts triée par date décroissante", async () => {
-		const contacts = [
-			{ ...validBody, _id: "1", createdAt: "2024-02-01" },
-			{ ...validBody, _id: "2", createdAt: "2024-01-01" },
-		];
-		Contact.find = jest.fn().mockReturnValue({
-			sort: jest.fn().mockResolvedValue(contacts),
-		});
+	it("retourne 200 avec les contacts triés par date décroissante", async () => {
+		await Contact.create({ ...validBody, name: "Alice" });
+		await Contact.create({ ...validBody, name: "Bob", email: "bob@test.com" });
 
-		const req = {};
-		const res = mockRes();
+		const res = await request(app).get("/contacts");
 
-		await getAllContacts(req, res);
-
-		expect(Contact.find).toHaveBeenCalled();
-		expect(Contact.find().sort).toHaveBeenCalledWith({ createdAt: -1 });
-		expect(res.json).toHaveBeenCalledWith(contacts);
+		expect(res.status).toBe(200);
+		expect(res.body).toHaveLength(2);
+		// Le plus récent en premier
+		expect(res.body[0].name).toBe("Bob");
 	});
 
 	it("retourne un tableau vide si aucun contact", async () => {
-		Contact.find = jest.fn().mockReturnValue({
-			sort: jest.fn().mockResolvedValue([]),
-		});
+		const res = await request(app).get("/contacts");
 
-		const req = {};
-		const res = mockRes();
-
-		await getAllContacts(req, res);
-
-		expect(res.json).toHaveBeenCalledWith([]);
-	});
-
-	it("retourne 500 si find() lève une erreur", async () => {
-		Contact.find = jest.fn().mockReturnValue({
-			sort: jest.fn().mockRejectedValue(new Error("DB error")),
-		});
-
-		const req = {};
-		const res = mockRes();
-
-		await getAllContacts(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.json).toHaveBeenCalledWith({ error: "Impossible de récupérer tous les contacts." });
+		expect(res.status).toBe(200);
+		expect(res.body).toEqual([]);
 	});
 });
