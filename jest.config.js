@@ -1,5 +1,5 @@
 module.exports = {
-  testEnvironment: "node", // jsdom est pour le front, pas pour des tests back avec mongoose
+  testEnvironment: "node", 
   transform: {
     "^.+\\.[jt]sx?$": "babel-jest",
     "^.+\\.mjs$": "babel-jest",
@@ -13,3 +13,4 @@ module.exports = {
     "node_modules/(?!(bson|mongodb|mongodb-memory-server|mongodb-memory-server-core|mongoose|@mongodb-js|mongodb-connection-string-url|whatwg-url)/)"
   ],
 };
+

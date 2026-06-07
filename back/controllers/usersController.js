@@ -298,11 +298,9 @@ export const updateUser = async (req, res) => {
 		if (isValidString(req.body.login)) {
 			updateFields.login = sanitize(req.body.login);
 		}
-
 		if (isValidString(req.body.email)) {
 			updateFields.email = sanitize(req.body.email);
 		}
-
 		if (isValidString(req.body.description)) {
 			updateFields.description = sanitize(req.body.description);
 		}

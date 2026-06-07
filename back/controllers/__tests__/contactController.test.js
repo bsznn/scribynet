@@ -82,7 +82,6 @@ describe("GET /contacts — test d'intégration", () => {
 
 		expect(res.status).toBe(200);
 		expect(res.body).toHaveLength(2);
-		// Le plus récent en premier
 		expect(res.body[0].name).toBe("Bob");
 	});
 

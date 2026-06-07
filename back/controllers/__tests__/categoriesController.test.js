@@ -10,8 +10,6 @@ import {
 
 jest.mock("../../models/categoryModel.js");
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
 const mockRes = () => {
 	const res = {};
 	res.status = jest.fn().mockReturnValue(res);
@@ -24,8 +22,6 @@ const fakeCategory = {
 	name: "Fantasy",
 	image: { src: "fantasy.jpg", alt: "fantasy.jpg" },
 };
-
-// ─── addGeneralCategory ───────────────────────────────────────────────────────
 
 describe("addGeneralCategory", () => {
 	beforeEach(() => jest.clearAllMocks());
@@ -92,8 +88,6 @@ describe("addGeneralCategory", () => {
 		});
 	});
 });
-
-// ─── updateCategoryByAdmin ────────────────────────────────────────────────────
 
 describe("updateCategoryByAdmin", () => {
 	beforeEach(() => jest.clearAllMocks());
@@ -202,8 +196,6 @@ describe("updateCategoryByAdmin", () => {
 	});
 });
 
-// ─── deleteCategoryByAdmin ────────────────────────────────────────────────────
-
 describe("deleteCategoryByAdmin", () => {
 	beforeEach(() => jest.clearAllMocks());
 
@@ -250,8 +242,6 @@ describe("deleteCategoryByAdmin", () => {
 	});
 });
 
-// ─── getAllCategories ─────────────────────────────────────────────────────────
-
 describe("getAllCategories", () => {
 	beforeEach(() => jest.clearAllMocks());
 
@@ -291,8 +281,6 @@ describe("getAllCategories", () => {
 		);
 	});
 });
-
-// ─── getOneCategory ───────────────────────────────────────────────────────────
 
 describe("getOneCategory", () => {
 	beforeEach(() => jest.clearAllMocks());
@@ -338,8 +326,6 @@ describe("getOneCategory", () => {
 		);
 	});
 });
-
-// ─── getAllCategoriesWithBooks ─────────────────────────────────────────────────
 
 describe("getAllCategoriesWithBooks", () => {
 	beforeEach(() => jest.clearAllMocks());
