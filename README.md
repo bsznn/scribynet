@@ -66,11 +66,11 @@ Run the project:
 
 ```bash
 # Backend
-cd server
+cd back
 npm start
 
 # Frontend
-cd client
+cd front
 npm run dev
 ```
 
