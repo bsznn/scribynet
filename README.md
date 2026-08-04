@@ -7,7 +7,7 @@ A collaborative writing platform where authors can create, publish and share the
 * User authentication
 * Story creation and management
 * Online writing editor
-* Comments and favorites
+* Comments
 * Search and discovery
 * Responsive design
 
