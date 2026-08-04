@@ -46,10 +46,10 @@ cd scribynet
 Install dependencies:
 
 ```bash
-cd client
+cd front
 npm install
 
-cd ../server
+cd back
 npm install
 ```
 
